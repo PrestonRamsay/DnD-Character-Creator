@@ -7,7 +7,7 @@ using System.Text;
 namespace DnD_Character_Creator.Races
 {
     public class Race
-    {
+    {        
         public Race()
         {
             MaxAgeEnd = 100;
@@ -42,30 +42,8 @@ namespace DnD_Character_Creator.Races
         public List<string> Proficiencies { get; set; } = new List<string>();
         public List<string> Spells { get; set; } = new List<string>();
         public List<string> Feats { get; set; } = new List<string>();
-        public static Dictionary<string, Race> AllRaces { get; set; } = new Dictionary<string, Race>
-        {
-            { "dragonborn", Dragonborn() },
-            { "hill dwarf", HillDwarf() },
-            { "mountain dwarf", MountainDwarf() },
-            { "drow" , Drow() },
-            { "high elf", HighElf() },
-            { "wood elf", WoodElf() },
-            { "forest gnome", ForestGnome() },
-            { "rock gnome", RockGnome() },
-            { "half-elf", HalfElf() },
-            { "half-orc", HalfOrc() },
-            { "lightfoot halfling", LightfootHalfling() },
-            { "stout halfling", StoutHalfling() },
-            { "variant human", VariantHuman() },
-            { "human", Human() },
-            { "tiefling", Tiefling() }
-        };        
-        public static bool IsValid(string race)
-        {
-            return AllRaces.ContainsKey(race);
-        }
         public static Race Dragonborn()
-        {
+        {           
             Race result = new Race();
             Console.WriteLine("Pick a dragon color for your ancestry from: Black, Blue, Brass, Bronze, Copper, Gold, Green, " +
                 "Red, Silver, White.");
@@ -152,7 +130,7 @@ namespace DnD_Character_Creator.Races
 
             return result;
         }
-        private static Race HillDwarf()
+        public static Race HillDwarf()
         {
             Race result = new Race();
             Console.WriteLine("Pick a Tool Proficiency from: Brewer's Supplies, Mason's Tools, or Smith's Tools by " +
@@ -196,7 +174,7 @@ namespace DnD_Character_Creator.Races
 
             return result;
         }
-        private static Race MountainDwarf()
+        public static Race MountainDwarf()
         {
             Race result = new Race();
             Console.WriteLine("Pick a Tool Proficiency from: Brewer's Supplies, Mason's Tools, or Smith's Tools by " +
@@ -241,7 +219,7 @@ namespace DnD_Character_Creator.Races
 
             return result;
         }
-        private static Race Drow()
+        public static Race Drow()
         {
             Race result = new Race();
 
@@ -269,12 +247,11 @@ namespace DnD_Character_Creator.Races
             result.Proficiencies.Add("Shortsword");
             result.Proficiencies.Add("Rapier");
             result.Proficiencies.Add("Hand Crossbow");
-            Console.WriteLine("Pick a ");
             result.Spells.Add("(cantrip)Dancing Lights - use Cha to cast");
 
             return result;
         }
-        private static Race HighElf()
+        public static Race HighElf()
         {
             Race result = new Race();
 
@@ -306,7 +283,7 @@ namespace DnD_Character_Creator.Races
 
             return result;
         }
-        private static Race WoodElf()
+        public static Race WoodElf()
         {
             Race result = new Race();
 
@@ -336,7 +313,7 @@ namespace DnD_Character_Creator.Races
 
             return result;
         }
-        private static Race ForestGnome()
+        public static Race ForestGnome()
         {
             Race result = new Race();
 
@@ -363,7 +340,7 @@ namespace DnD_Character_Creator.Races
             return result;
         }
 
-        private static Race RockGnome()
+        public static Race RockGnome()
         {
             Race result = new Race();
 
@@ -393,7 +370,7 @@ namespace DnD_Character_Creator.Races
 
             return result;
         }
-        private static Race HalfElf()
+        public static Race HalfElf()
         {
             Race result = new Race();
 
@@ -483,7 +460,7 @@ namespace DnD_Character_Creator.Races
 
             return result;
         }
-        private static Race HalfOrc()
+        public static Race HalfOrc()
         {
             Race result = new Race();
 
@@ -506,7 +483,7 @@ namespace DnD_Character_Creator.Races
 
             return result;
         }
-        private static Race LightfootHalfling()
+        public static Race LightfootHalfling()
         {
             Race result = new Race();
 
@@ -531,7 +508,7 @@ namespace DnD_Character_Creator.Races
 
             return result;
         }
-        private static Race StoutHalfling()
+        public static Race StoutHalfling()
         {
             Race result = new Race();
 
@@ -555,7 +532,7 @@ namespace DnD_Character_Creator.Races
 
             return result;
         }
-        private static Race VariantHuman()
+        public static Race VariantHuman()
         {
             Race result = new Race();
 
@@ -650,7 +627,7 @@ namespace DnD_Character_Creator.Races
 
             return result;
         }
-        private static Race Human()
+        public static Race Human()
         {
             Race result = new Race();
 
@@ -681,7 +658,7 @@ namespace DnD_Character_Creator.Races
 
             return result;
         }
-        private static Race Tiefling()
+        public static Race Tiefling()
         {
             Race result = new Race();
 

@@ -39,10 +39,6 @@ namespace DnD_Character_Creator.Backgrounds
             { "soldier", Soldier() },
             { "urchin", Urchin() }
         };
-        public static bool IsValid(string background)
-        {
-            return AllBackgrounds.ContainsKey(background);
-        }
         public static Background Acolyte()
         {
             Background result = new Background();

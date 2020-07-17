@@ -57,6 +57,39 @@ namespace DnD_Character_Creator
 
             return userInput;
         }
+        public static string GetSkill(List<string> list, List<string> knownSkills)
+        {
+            string userInput = String.Empty;
+            bool gettingStringInList = true;
+            var listForHelper = new List<string>();
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                listForHelper.Add(list[i].ToLower());
+            }
+            do
+            {
+                userInput = Console.ReadLine().ToLower();
+                if (listForHelper.Contains(userInput))
+                {
+                    if (!knownSkills.Contains(userInput))
+                    {
+                        gettingStringInList = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("You are already trained in that skill, pick another.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("That is not a valid option. Please try again");
+                }
+            }
+            while (gettingStringInList);
+
+            return userInput;
+        }
         public static int GetNumber()
         {
             string userInput = String.Empty;
@@ -116,11 +149,18 @@ namespace DnD_Character_Creator
         public static int ConvertHeightToInches(string heightString)
         {
             string[] height = heightString.Split(new char[] { '\'' });
-            height[0].Trim();
-            height[1].Replace("\"", "").Trim();
+            string secondNumber = "";
+            if (height[1].Length > 2)
+            {
+                secondNumber = height[1].Substring(0, 2);
+            }
+            else
+            {
+                secondNumber = height[1].Substring(0, 1);
+            }
 
             int feet = int.Parse(height[0]) * 12;
-            int inches = int.Parse(height[1]);
+            int inches = int.Parse(secondNumber);
             int heightInInches = feet + inches;
 
             return heightInInches;

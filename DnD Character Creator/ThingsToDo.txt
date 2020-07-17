@@ -1,3 +1,5 @@
 ﻿
 create classes
-do runAddLvl
+
+skill dups for half-elf and human
+fix martial melee weapon and simple wepon in the addClass class

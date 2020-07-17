@@ -7,6 +7,22 @@ namespace DnD_Character_Creator.Helper_Classes
 {
     public static class Options
     {
+        public static List<string> Classes { get; set; } = new List<string>
+        {
+            "Barbarian",
+            "Bard",
+            "Cleric",
+            "Druid",
+            "Fighter",
+            "Monk",
+            "Paladin",
+            "Ranger",
+            "Rogue",
+            "Sorcerer",
+            "Warlock",
+            "Wizard",
+            "see options"
+        };
         public static List<string> Races { get; set; } = new List<string>
         {
             "Dragonborn",
@@ -140,6 +156,58 @@ namespace DnD_Character_Creator.Helper_Classes
             "Weapon Master",
             "see options"            
         };
+        public static List<string> Weapons { get; set; } = new List<string>
+        {
+            "",
+            "",
+            "",
+            "Handaxe(1D slashing, Light, Thrown 20/60)(5gp, 2lb.)",
+            "Javelin(1D6 piercing, Thrown 30/120)(5sp, 2lb.)",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Greataxe(2D6 slashing, Heavy, Two-Handed)(30gp, 7lb.)",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        };
+        public static List<string> Packs { get; set; } = new List<string>
+        {
+            "Burglar's Pack()",
+            "Diplomat's Pack()",
+            "Dungeoneer's Pack()",
+            "Entertainer's Pack()",
+            "Explorer's Pack(backpack, bedroll, mess kit, tinderbox, 10 torches, 10 days of rations, waterskin, 50ft of rope)",
+            "Priest's Pack()",
+            "Scholar's Pack()"
+        };
         public static List<string> MusicalInstruments { get; set; } = new List<string>
         {
             "Bagpipes",
@@ -189,7 +257,8 @@ namespace DnD_Character_Creator.Helper_Classes
             if (entry == "see options")
             {
                 Console.Clear();
-                for (int i = 0; i < list.Count - 1; i++)
+                list.Remove("see options");
+                for (int i = 0; i < list.Count; i++)
                 {
                     Console.WriteLine(list[i]);
                 }

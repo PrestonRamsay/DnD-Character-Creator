@@ -19,13 +19,13 @@ namespace DnD_Character_Creator
         }
         public static string PickOption(string characterPiece, List<string> pieceList)
         {
-            Console.Clear();
             Console.WriteLine(Prompt(characterPiece));
             string newPiece = CLIHelper.GetStringInList(pieceList);
             if (newPiece == "see options")
             {
                 Console.Clear();
-                for (int i = 0; i < pieceList.Count - 1; i++)
+                pieceList.Remove("see options");
+                for (int i = 0; i < pieceList.Count; i++)
                 {
                     Console.WriteLine(pieceList[i]);
                 }
