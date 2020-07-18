@@ -1,4 +1,5 @@
-﻿using DnD_Character_Creator.Helper_Classes;
+﻿using DnD_Character_Creator.CharacterPieces;
+using DnD_Character_Creator.Helper_Classes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -43,6 +44,7 @@ namespace DnD_Character_Creator.Races
         public static CharacterClass Barbarian(Character character)
         {
             var result = new CharacterClass(character.Lvl);
+            result = BarbarianSpecifics.Features(result);
 
             var classSkills = new List<string>() { "Animal Handling", "Athletics", "Intimidation", "Nature", "Perception", "Survival" };
 
