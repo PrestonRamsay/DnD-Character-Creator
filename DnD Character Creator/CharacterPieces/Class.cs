@@ -56,15 +56,17 @@ namespace DnD_Character_Creator.Races
             result.Proficiencies.Add("Martial weapons");
             result.Saves.Add("Str");
             result.Saves.Add("Con");
-            Console.WriteLine("Pick 2 skills from(one at a time):");
+            Console.WriteLine("Pick 2 skills from the Barbarian's class skill list (enter them one at a time):");
             for (int i = 0; i < classSkills.Count; i++)
             {
                 Console.WriteLine(classSkills[i]);
             }
             string firstSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            firstSkill = CLIHelper.CapitalizeFirstLetter(firstSkill);
+            character.SkillProficiencies.Add(firstSkill);
             string secondSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
-            result.SkillProficiencies.Add(firstSkill);
-            result.SkillProficiencies.Add(secondSkill);
+            secondSkill = CLIHelper.CapitalizeFirstLetter(secondSkill);
+            character.SkillProficiencies.Add(secondSkill);
             Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
             Console.WriteLine("(1) Greataxe");
             Console.WriteLine("(2) Any martial melee weapon");
@@ -99,7 +101,7 @@ namespace DnD_Character_Creator.Races
         {
             var result = new CharacterClass(character.Lvl);
 
-            var classSkills = new List<string>() { "Animal Handling", "Athletics", "Intimidation", "Nature", "Perception", "Survival" };
+            List<string> classSkills = Options.Skills;
 
             result.HitDie = 12;
             result.Proficiencies.Add("");
@@ -109,15 +111,21 @@ namespace DnD_Character_Creator.Races
             result.Proficiencies.Add("");
             result.Saves.Add("");
             result.Saves.Add("");
-            Console.WriteLine("Pick 2 skills from(one at a time):");
+            Console.WriteLine("Pick 3 skills from the Bard's class skill list (enter them one at a time):");
             for (int i = 0; i < classSkills.Count; i++)
             {
                 Console.WriteLine(classSkills[i]);
             }
             string firstSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            firstSkill = CLIHelper.CapitalizeFirstLetter(firstSkill);
+            character.SkillProficiencies.Add(firstSkill);
             string secondSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
-            result.SkillProficiencies.Add(firstSkill);
-            result.SkillProficiencies.Add(secondSkill);
+            secondSkill = CLIHelper.CapitalizeFirstLetter(secondSkill);
+            character.SkillProficiencies.Add(secondSkill);
+            string thirdSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            thirdSkill = CLIHelper.CapitalizeFirstLetter(thirdSkill);
+            character.SkillProficiencies.Add(thirdSkill);
+
             Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
             Console.WriteLine("(1) ");
             Console.WriteLine("(2) ");

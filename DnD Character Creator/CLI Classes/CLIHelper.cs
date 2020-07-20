@@ -57,20 +57,25 @@ namespace DnD_Character_Creator
 
             return userInput;
         }
-        public static string GetSkill(List<string> list, List<string> knownSkills)
+        public static string GetSkill(List<string> list1, List<string> list2)
         {
             string userInput = String.Empty;
             bool gettingStringInList = true;
-            var listForHelper = new List<string>();
+            var classSkills = new List<string>();
+            var knownSkills = new List<string>();
 
-            for (int i = 0; i < list.Count; i++)
+            for (int i = 0; i < list1.Count; i++)
             {
-                listForHelper.Add(list[i].ToLower());
+                classSkills.Add(list1[i].ToLower());
+            }
+            for (int i = 0; i < list2.Count; i++)
+            {
+                knownSkills.Add(list2[i].ToLower());
             }
             do
             {
                 userInput = Console.ReadLine().ToLower();
-                if (listForHelper.Contains(userInput))
+                if (classSkills.Contains(userInput))
                 {
                     if (!knownSkills.Contains(userInput))
                     {
@@ -78,12 +83,12 @@ namespace DnD_Character_Creator
                     }
                     else
                     {
-                        Console.WriteLine("You are already trained in that skill, pick another.");
+                        Console.WriteLine("You are already trained in that skill, pick a different skill.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("That is not a valid option. Please try again");
+                    Console.WriteLine("That is not one of your class skills. Try again");
                 }
             }
             while (gettingStringInList);
@@ -164,6 +169,32 @@ namespace DnD_Character_Creator
             int heightInInches = feet + inches;
 
             return heightInInches;
+        }
+        public static List<string> CreateTossAwayList(List<string> list)
+        {
+            var tossAwayList = new List<string>();
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                tossAwayList.Add(list[i].ToLower());
+            }
+
+            return tossAwayList;
+        }
+        public static string CapitalizeFirstLetter(string word)
+        {
+            string returnString = "";
+
+            if (word.Length > 1)
+            {
+                returnString = char.ToUpper(word[0]) + word.Substring(1);
+            }
+            else if (word.Length == 1)
+            {
+                returnString = word.ToUpper();
+            }
+
+            return returnString;
         }
     }
 }

@@ -24,15 +24,24 @@ namespace DnD_Character_Creator
             Console.WriteLine(@"| |___| | | | (_| | | | (_| | (__| ||  __/ |    | |___| | |  __/ (_| | || (_) | |   ");
             Console.WriteLine(@" \____|_| |_|\__,_|_|  \__,_|\___|\__\___|_|     \____|_|  \___|\__,_|\__\___/|_|   ");
             Console.WriteLine("\n Welcome, hit enter to continue");
-            CLIHelper.GetString();
+            Console.ReadLine();
         }
         public void RunAddStats(Character character)
         {
             List<int> stats = Stats.FindStats();
             var statsDisplay = new Stats();
             character = statsDisplay.AssignStats(character, stats);
+            Console.WriteLine("Select an option based on your DM's preferences:");
+            Console.WriteLine("(1) Stats will max at 20");
+            Console.WriteLine("(2) There will not be a max for stats");
+            int input = CLIHelper.GetNumberInRange(1, 2);
 
-            Console.WriteLine("You've finished your character's stats!");
+            if (input == 2)
+            {
+                character.StatMax = false;
+            }
+
+            Console.WriteLine("\nYou've finished your character's stats!\n");
         }
         public void RunAddRace(Character character)
         {
@@ -106,7 +115,8 @@ namespace DnD_Character_Creator
             {
                 Console.Write(alignment + "  ");
             }
-            character.Alignment = CLIHelper.GetStringInList(raceObject.Alignment);
+            character.Alignment = CLIHelper.GetStringInList(raceObject.Alignment).ToUpper();
+            Console.WriteLine();
 
             if (raceObject.MaxAgeEnd > 150)
             {
@@ -127,7 +137,8 @@ namespace DnD_Character_Creator
             AddRace.AddWeight(character, raceObject);
             AddRace.AddLanguages(character, raceObject);
 
-            Console.WriteLine("You've finished adding your race!");
+            Console.Clear();
+            Console.WriteLine("\nYou've finished adding your race!\n");
         }
         public void RunAddBackground(Character character)
         {            
@@ -176,7 +187,7 @@ namespace DnD_Character_Creator
                 for (int i = 0; i < routines; i++)
                 {
                     int routineIndex = Prompts.BackgroundPrompts("routine", backgroundObject.Routine);
-                    character.Routine = backgroundObject.Routine[routineIndex];
+                    character.Routines.Add(backgroundObject.Routine[routineIndex]);
                 }
             }
             else if (backgroundString == "folk hero")
@@ -254,12 +265,17 @@ namespace DnD_Character_Creator
             Console.WriteLine("Every background has a personality trait, an ideal, a bond and a flaw." +
                 "\nFor each you can either pick one from a list or you can roll it randomly.");
             AddBackground.BackgroundSpecifics(character, backgroundObject);
+
+            Console.Clear();
+            Console.WriteLine("\nYou've finished adding your background!\n");
         }
-        public Character RunGetLvl(Character character)
+        public void RunGetLvl(Character character)
         {
             Console.WriteLine("Pick the level your want your character to be. Must be between 1 and 20.");
             int level = CLIHelper.GetNumberInRange(1, 20);
             character.Lvl = level;
+            var xp = new XPDecider(level);
+            xp.SetXP(character);
 
             if (character.ChosenRace == "drow")
             {
@@ -283,8 +299,6 @@ namespace DnD_Character_Creator
                     character.Spells.Add("(2nd)Entrall - 1/long rest, use Cha to cast");
                 }
             }
-
-            return character;
         }
         public void RunAddClass(Character character)
         {
@@ -292,6 +306,10 @@ namespace DnD_Character_Creator
             character.ChosenClass = classString;
             var classObject = new CharacterClass(character.Lvl);
 
+            if (classString == "barbarian")
+            {
+                classObject = CharacterClass.Barbarian(character);
+            }
             if (classString == "bard" || classString == "cleric" || classString == "druid" || classString == "sorcerer" || classString == "warlock" || classString == "wizard")
             {
                 if (character.Lvl > 3)
@@ -303,6 +321,141 @@ namespace DnD_Character_Creator
                     classObject.CantripsKnown++;
                 }
             }
+
+            AddClass.ClassSpecifics(character, classObject);
+            AddClass.DetermineHP(character, classObject);
+            AddClass.ModifySkills(character);
+
+            Console.Clear();
+            Console.WriteLine("\nYou've finished adding your character's class!\n");
+        }
+        public void PrintCharacter(Character character)
+        {
+            string name = CLIHelper.GetString("Enter your character's name here:");
+            character.Name = CLIHelper.CapitalizeFirstLetter(name);
+            string deity = CLIHelper.GetString("Enter the name of your deity here:");
+            character.Deity = CLIHelper.CapitalizeFirstLetter(deity);
+            string height = CLIHelper.ConvertHeight(character.Height);
+            string @class = CLIHelper.CapitalizeFirstLetter(character.ChosenClass);
+            string race = CLIHelper.CapitalizeFirstLetter(character.ChosenRace);
+            string background = CLIHelper.CapitalizeFirstLetter(character.ChosenBackground);
+            string saves = ListConcatenator(character.Saves);
+            string lang = ListConcatenator(character.Languages);
+            string additionalBackgroundInfo = WriteAdditionalBackgroundProperty(character);
+
+            Console.Clear();
+            Console.WriteLine($"Name: {character.Name}           Height: {height}             Class: {@class}");
+            Console.WriteLine($"Age: {character.Age}                Weight: {character.Weight} lbs.              Level: {character.Lvl}");
+            //Console.WriteLine($"Race: {race}                Deity: {character.Deity}                GP: {character.GP}");
+            Console.WriteLine($"Alignment: {character.Alignment}                Speed: {character.Speed}                XP: {character.XP}");
+            //Console.WriteLine($"Background: {background}        Vision: {character.Vision}");
+            Console.WriteLine("----------------------------------------------------------------------------------------------------------------");
+            Console.WriteLine($"Str: {character.Str} + {character.StrMod}| Init: {character.Init}");
+            Console.WriteLine($"Dex: {character.Dex} + {character.DexMod}| Proficiency Bonus + {character.ProficiencyBonus}");
+            Console.WriteLine($"Con: {character.Con} + {character.ConMod}| AC: {character.AC} + Armor Bonuses");
+            Console.WriteLine($"Int: {character.Int} + {character.IntMod}| HP: {character.HP}");
+            Console.WriteLine($"Wis: {character.Wis} + {character.WisMod}| Saves: ");
+            Console.WriteLine($"Cha: {character.Cha} + {character.ChaMod}");
+            //Console.WriteLine($"Languages: {lang}");
+            Console.WriteLine("\nSkills:");
+            Console.WriteLine("---------------------");
+            foreach (string skill in character.Skills.Keys)
+            {
+                Console.WriteLine($"{skill} + {character.Skills[skill]}");
+            }
+            Console.WriteLine($"\nPersonality Trait: {character.PersonalityTrait}");
+            Console.WriteLine($"\nIdeal: {character.Ideal}");
+            Console.WriteLine($"\nBond: {character.Bond}");
+            Console.WriteLine($"\nFlaw: {character.Flaw}");
+            Console.WriteLine($"\nBackground Feature: {character.BackgroundFeature}");
+            Console.WriteLine($"{additionalBackgroundInfo}");
+            Console.WriteLine($"\nRacial Traits:");
+            Console.WriteLine("---------------------");
+            foreach (string trait in character.RacialTraits)
+            {
+                Console.WriteLine($"{trait}");
+            }
+            Console.WriteLine($"\nFeats:");
+            Console.WriteLine("---------------------");
+            foreach (string feat in character.Feats)
+            {
+                Console.WriteLine($"{feat}");
+            }
+            Console.WriteLine("\nInventory:");
+            Console.WriteLine("---------------------");
+            foreach (string item in character.Equipment)
+            {
+                Console.WriteLine($"{item}");
+            }
+            Console.WriteLine("\nClass Features:");
+            Console.WriteLine("---------------------");
+            foreach (string feature in character.ClassFeatures)
+            {
+                Console.WriteLine(feature);
+            }
+            Console.WriteLine("\nSpells:");
+            Console.WriteLine("---------------------");
+            foreach (string spell in character.Spells)
+            {
+                Console.WriteLine(spell);
+            }
+            Console.WriteLine("\nYou've finished creating your character! Scroll up to see all the data");
+        }
+        public string ListConcatenator(List<string> list)
+        {
+            string returnString = list[0];
+
+            for (int i = 1; i < list.Count; i++)
+            {
+                returnString += $", {list[i]}";
+            }
+            
+            return returnString;
+        }
+        public string WriteAdditionalBackgroundProperty(Character character)
+        {
+            string backgroundString = character.ChosenBackground;
+            string returnString = "";
+            
+            if (backgroundString == "charltan")
+            {
+                returnString = $"Favorite Scam: {character.FavoriteScam}";
+            }
+            else if (backgroundString == "criminal")
+            {
+                returnString = $"Specialty: {character.Specialty}";
+            }
+            else if (backgroundString == "entertainer")
+            {
+                string routines = ListConcatenator(character.Routines);
+               returnString = $"Routines: {routines}";
+            }
+            else if (backgroundString == "folk hero")
+            {
+                returnString = $"Defining Event: {character.DefiningEvent}";
+            }
+            else if (backgroundString == "guild artisan")
+            {
+                returnString = $"Guild Business: {character.GuildBusiness}";
+            }
+            else if (backgroundString == "hermit")
+            {
+                returnString = $"Life of Seclusion: {character.LifeOfSeclusion}";
+            }
+            else if (backgroundString == "outlander")
+            {
+                returnString = $"Origin: {character.Origin}";
+            }
+            else if (backgroundString == "sage")
+            {
+                returnString = $"Specialty: {character.Specialty}";
+            }
+            else if (backgroundString == "soldier")
+            {
+                returnString = $"Specialty: {character.Specialty}";
+            }
+
+            return returnString;
         }
     }
 }

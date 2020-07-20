@@ -131,8 +131,7 @@ namespace DnD_Character_Creator
                 if (allStats.Count == 6)
                 {
                     Console.WriteLine(PrintStats(allStats));
-                    Console.WriteLine("If you'd like to start over: enter 'yes'. If you'd like to keep your stats: enter any key");
-                    string input2 = CLIHelper.GetString();
+                    string input2 = CLIHelper.GetString("If you'd like to start over: enter 'yes'. If you'd like to keep your stats: enter any key");
                     if (input2 == "yes")
                     {
                         points = 27;

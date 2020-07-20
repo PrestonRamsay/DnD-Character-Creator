@@ -63,7 +63,7 @@ namespace DnD_Character_Creator
                     DieRoll dx = new DieRoll(backgroundProperty.Length);
                     index = dx.RollDie() - 1;
                     Console.WriteLine($"Your {backgroundPiece} is:" +
-                        $"\n {backgroundProperty[index]}");
+                        $"\n{backgroundProperty[index]}");
                     Console.WriteLine($"If you'd like to keep that {backgroundPiece} enter 'keep', if not enter any key.");
                     string input = CLIHelper.GetString();
 

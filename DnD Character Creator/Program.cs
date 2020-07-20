@@ -20,6 +20,9 @@ namespace DnD_Character_Creator
             cli.RunAddBackground(newCharacter);
             cli.RunGetLvl(newCharacter);
             cli.RunAddClass(newCharacter);
+            cli.PrintCharacter(newCharacter);
+            Console.ReadLine();
+            Console.ReadLine();
         }    
     }
 }

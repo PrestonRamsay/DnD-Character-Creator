@@ -55,61 +55,61 @@ namespace DnD_Character_Creator.Races
             {
                 result.RacialTraits.Add("Damage Resistance: gain Resistance to Acid");
                 result.RacialTraits.Add("Breath Weapon: deals 2D6 + (1D6 per 5 levels above 1st) damage, " +
-                    "recharge SR or LR, Con-based DC. 5 by 30ft line of Acid - Dex save");
+                    "\nrecharge SR or LR, Con-based DC. 5 by 30ft line of Acid - Dex save");
             }
             else if (color == "blue")
             {
                 result.RacialTraits.Add("Damage Resistance: gain Resistance to Lightning");
                 result.RacialTraits.Add("Breath Weapon: deals 2D6 + (1D6 per 5 levels above 1st) damage, " +
-                    "recharge SR or LR, Con-based DC. 5 by 30ft line of Lightning - Dex save");
+                    "\nrecharge SR or LR, Con-based DC. 5 by 30ft line of Lightning - Dex save");
             }
             else if (color == "brass")
             {
                 result.RacialTraits.Add("Damage Resistance: gain Resistance to Fire");
                 result.RacialTraits.Add("Breath Weapon: deals 2D6 + (1D6 per 5 levels above 1st) damage, " +
-                    "recharge SR or LR, Con-based DC. 5 by 30ft line of Fire - Dex save");
+                    "\nrecharge SR or LR, Con-based DC. 5 by 30ft line of Fire - Dex save");
             }
             else if (color == "bronze")
             {
                 result.RacialTraits.Add("Damage Resistance: gain Resistance to Lightning");
                 result.RacialTraits.Add("Breath Weapon: deals 2D6 + (1D6 per 5 levels above 1st) damage, " +
-                    "recharge SR or LR, Con-based DC. 5 by 30ft line of Lightning - Dex save");
+                    "\nrecharge SR or LR, Con-based DC. 5 by 30ft line of Lightning - Dex save");
             }
             else if (color == "copper")
             {
                 result.RacialTraits.Add("Damage Resistance: gain Resistance to Acid");
                 result.RacialTraits.Add("Breath Weapon: deals 2D6 + (1D6 per 5 levels above 1st) damage, " +
-                    "recharge SR or LR, Con-based DC. 5 by 30ft line of Acid - Dex save");
+                    "\nrecharge SR or LR, Con-based DC. 5 by 30ft line of Acid - Dex save");
             }
             else if (color == "gold")
             {
                 result.RacialTraits.Add("Damage Resistance: gain Resistance to Fire");
                 result.RacialTraits.Add("Breath Weapon: deals 2D6 + (1D6 per 5 levels above 1st) damage, " +
-                    "recharge SR or LR, Con-based DC. 15ft cone of Fire - Dex save");
+                    "\nrecharge SR or LR, Con-based DC. 15ft cone of Fire - Dex save");
             }
             else if (color == "green")
             {
                 result.RacialTraits.Add("Damage Resistance: gain Resistance to Poison");
                 result.RacialTraits.Add("Breath Weapon: deals 2D6 + (1D6 per 5 levels above 1st) damage, " +
-                    "recharge SR or LR, Con-based DC. 15ft cone of Poison - Con save");
+                    "\nrecharge SR or LR, Con-based DC. 15ft cone of Poison - Con save");
             }
             else if (color == "red")
             {
                 result.RacialTraits.Add("Damage Resistance: gain Resistance to Fire");
                 result.RacialTraits.Add("Breath Weapon: deals 2D6 + (1D6 per 5 levels above 1st) damage, " +
-                    "recharge SR or LR, Con-based DC. 15ft cone of Fire - Dex save");
+                    "\nrecharge SR or LR, Con-based DC. 15ft cone of Fire - Dex save");
             }
             else if (color == "silver")
             {
                 result.RacialTraits.Add("Damage Resistance: gain Resistance to Cold");
                 result.RacialTraits.Add("Breath Weapon: deals 2D6 + (1D6 per 5 levels above 1st) damage, " +
-                    "recharge SR or LR, Con-based DC. 15ft cone of Cold - Con save");
+                    "\nrecharge SR or LR, Con-based DC. 15ft cone of Cold - Con save");
             }
             else
             {
                 result.RacialTraits.Add("Damage Resistance: gain Resistance to Cold");
                 result.RacialTraits.Add("Breath Weapon: deals 2D6 + (1D6 per 5 levels above 1st) damage, " +
-                    "recharge SR or LR, Con-based DC. 15ft cone of Cold - Con save");
+                    "\nrecharge SR or LR, Con-based DC. 15ft cone of Cold - Con save");
             }
 
             result.RacialStr = 2;
@@ -134,7 +134,7 @@ namespace DnD_Character_Creator.Races
         {
             Race result = new Race();
             Console.WriteLine("Pick a Tool Proficiency from: Brewer's Supplies, Mason's Tools, or Smith's Tools by " +
-                "entering 'brewer', 'mason', or 'smith'.");
+                "\nentering 'brewer', 'mason', or 'smith'.");
             List<string> toolsList = new List<string> { "brewer", "mason", "smith" };
             string toolProficiency = CLIHelper.GetStringInList(toolsList);
             if (toolProficiency == "brewer")
@@ -154,7 +154,7 @@ namespace DnD_Character_Creator.Races
             result.RacialWis = 1;
             result.RacialTraits.Add("Dwarven Resilience: gain Resistance to Poison, and advantage on saves vs Poison");
             result.RacialTraits.Add("Stonecunning: History checks on stonework are treated as if you are proficient and " +
-                "gain add your Proficiency bonus x2");
+                "\ngain add your Proficiency bonus x2");
             result.RacialTraits.Add("Dwarven Toughness");
             result.MinHeight = 48;
             result.MaxHeight = 60;
@@ -178,7 +178,7 @@ namespace DnD_Character_Creator.Races
         {
             Race result = new Race();
             Console.WriteLine("Pick a Tool Proficiency from: Brewer's Supplies, Mason's Tools, or Smith's Tools by " +
-                "entering 'brewer', 'mason', or 'smith'.");
+                "\nentering 'brewer', 'mason', or 'smith'.");
             List<string> toolsList = new List<string> { "brewer", "mason", "smith" };
             string toolProficiency = CLIHelper.GetStringInList(toolsList);
             if (toolProficiency == "brewer")
@@ -198,7 +198,7 @@ namespace DnD_Character_Creator.Races
             result.RacialCon = 2;
             result.RacialTraits.Add("Dwarven Resilience: gain Resistance to Poison, and Advantage on saves vs Poison");
             result.RacialTraits.Add("Stonecunning: History checks on stonework are treated as if you are proficient and " +
-                "gain add your Proficiency bonus x2");
+                "\ngain add your Proficiency bonus x2");
             result.MinHeight = 48;
             result.MaxHeight = 60;
             result.MinWeight = 100;
@@ -227,9 +227,9 @@ namespace DnD_Character_Creator.Races
             result.RacialCha = 1;
             result.RacialTraits.Add("Fey Ancestry: gain Advantage on saves vs charms and magic can't put you to sleep");
             result.RacialTraits.Add("Trance: you don't need sleep, instead you meditate in a semiconscious state for 4hr. " +
-                "After resting in such a way, you gain the benefits of a long rest");
+                "\nAfter resting in such a way, you gain the benefits of a long rest");
             result.RacialTraits.Add("Sunlight Sensitivity: take a Disadvantage on attacks and Perception checks that rely " +
-                "on sight while you or the target of your check/attack is in direct sunlight");
+                "\non sight while you or the target of your check/attack is in direct sunlight");
             result.MinHeight = 60;
             result.MaxHeight = 72;
             result.MinWeight = 120;
@@ -259,7 +259,7 @@ namespace DnD_Character_Creator.Races
             result.RacialInt = 1;
             result.RacialTraits.Add("Fey Ancestry: gain Advantage on saves vs charms and magic can't put you to sleep");
             result.RacialTraits.Add("Trance: you don't need sleep, instead you meditate in a semiconscious state for 4hr. " +
-                "After resting in such a way, you gain the benefits of a long rest");
+                "\nAfter resting in such a way, you gain the benefits of a long rest");
             result.MinHeight = 60;
             result.MaxHeight = 72;
             result.MinWeight = 120;
@@ -291,9 +291,9 @@ namespace DnD_Character_Creator.Races
             result.RacialWis = 1;
             result.RacialTraits.Add("Fey Ancestry: gain Advantage on saves vs charms and magic can't put you to sleep");
             result.RacialTraits.Add("Trance: you don't need sleep, instead you meditate in a semiconscious state for 4hr. " +
-                "After resting in such a way, you gain the benefits of a long rest");
+                "\nAfter resting in such a way, you gain the benefits of a long rest");
             result.RacialTraits.Add("Mask of the Wild: you can attempt to hide even when you are only lightly obscured " +
-                "by foliage, heavy rain, falling snow, mist, and other natural phenomena.");
+                "\nby foliage, heavy rain, falling snow, mist, and other natural phenomena.");
             result.MinHeight = 60;
             result.MaxHeight = 72;
             result.MinWeight = 120;
@@ -321,7 +321,7 @@ namespace DnD_Character_Creator.Races
             result.RacialDex = 1;
             result.RacialTraits.Add("Gnome Cunning: you gain Advantage on Int, Wis, and Cha saves vs magic");
             result.RacialTraits.Add("Speak with Small Beasts: Through sounds and gestures, you can communicate with " +
-                "simple ideas to small or smaller beasts");            
+                "\nsimple ideas to small or smaller beasts");            
             result.MinHeight = 36;
             result.MaxHeight = 48;
             result.Size = "Small";
@@ -348,12 +348,12 @@ namespace DnD_Character_Creator.Races
             result.RacialCon = 1;
             result.RacialTraits.Add("Gnome Cunning: you gain Advantage on Int, Wis, and Cha saves vs magic");
             result.RacialTraits.Add("Artificer's Lore: History checks on items or devices that are based on magic, " +
-                "technology, or alchemy are treated as if you are proficient and add your Proficiency bonus x2");
+                "\ntechnology, or alchemy are treated as if you are proficient and add your Proficiency bonus x2");
             result.RacialTraits.Add("Tinker: you can spend 1hr and 10gp to create a tiny clockwork device that has 1HP and " +
-                "an AC of 5. The device ceases to function after 24hr unless you spend 1hr to repair it. You can also use " +
-                "your action to dismantle the device and reclaim it's materials. You can make: a fire starter(creates " +
-                "miniature flame), a music box(single song at a moderate volume), or a clockwork toy(moves 5ft in a random " +
-                "direction and makes noise approriate to the creature it represents).");
+                "\nan AC of 5. The device ceases to function after 24hr unless you spend 1hr to repair it. You can also use " +
+                "\nyour action to dismantle the device and reclaim it's materials. You can make: a fire starter(creates " +
+                "\nminiature flame), a music box(single song at a moderate volume), or a clockwork toy(moves 5ft in a random " +
+                "\ndirection and makes noise approriate to the creature it represents).");
             result.MinHeight = 36;
             result.MaxHeight = 48;
             result.Size = "Small";
@@ -374,41 +374,34 @@ namespace DnD_Character_Creator.Races
         {
             Race result = new Race();
 
-            Console.WriteLine("Pick a stat to increase by 1 by typing 'Str', 'Dex', 'Con', 'Int', 'Wis', or 'Cha'.");
-            var statOptions = Options.Stats;
+            Console.WriteLine("Pick a stat to increase by 1 by typing 'Str', 'Dex', 'Con', 'Int', or 'Wis'.");
+            var statOptions = CLIHelper.CreateTossAwayList(Options.Stats);
+            statOptions.Remove("Cha");
             string firstStat = CLIHelper.GetStringInList(statOptions);
             if (firstStat == "Str")
             {
                 result.RacialStr = 1;
-                statOptions.Remove("Str");
             }
             else if (firstStat == "Dex")
             {
                 result.RacialDex = 1;
-                statOptions.Remove("Dex");
             }
             else if (firstStat == "Con")
             {
                 result.RacialCon = 1;
-                statOptions.Remove("Con");
             }
             else if (firstStat == "Int")
             {
                 result.RacialInt = 1;
-                statOptions.Remove("Int");
             }
             else if (firstStat == "Wis")
             {
                 result.RacialWis = 1;
-                statOptions.Remove("Wis");
-            }            
-            else
-            {
-                result.RacialCha = 1;
-                statOptions.Remove("Cha");
             }
-            Console.WriteLine("Pick another stat to increase by 1 by typing 'Str', 'Dex', 'Con', 'Int', 'Wis', or 'Cha'." +
-                "\n(Note you can't pick the same stat as you picked last time.)");
+            statOptions.Remove(firstStat);
+
+            Console.WriteLine("Pick another stat to increase by 1 by typing 'Str', 'Dex', 'Con', 'Int', or 'Wis'." +
+                "\n(Note you can't pick the same stat that you picked last time.)");
             string secondStat = CLIHelper.GetStringInList(statOptions);
             if (secondStat == "Str")
             {
@@ -430,10 +423,6 @@ namespace DnD_Character_Creator.Races
             {
                 result.RacialWis = 1;
             }
-            else
-            {
-                result.RacialCha = 1;
-            }
 
             result.RacialCha = 2;
             result.RacialTraits.Add("Fey Ancestry: gain Advantage on saves vs charms and magic can't put you to sleep");
@@ -451,11 +440,15 @@ namespace DnD_Character_Creator.Races
 
             Console.WriteLine("Half-Elves are very versatile. You get you pick two extra skill proficiencies." +
                 "\nEnter your first skill here. If you want to see the options enter 'see options'.");
-            string firstSkill = Options.GetOption(Options.Skills);
+            List<string> skillList = CLIHelper.CreateTossAwayList(Options.Skills);
+            string firstSkill = Options.GetOption(skillList);
+            firstSkill = CLIHelper.CapitalizeFirstLetter(firstSkill);
             result.SkillProficiencies.Add(firstSkill);
+            skillList.Remove(firstSkill);
 
-            Console.WriteLine("Enter your first skill here. If you want to see the options enter 'see options'.");
-            string secondSkill = Options.GetOption(Options.Skills);            
+            Console.WriteLine("Enter your second skill here. If you want to see the options enter 'see options'.");
+            string secondSkill = Options.GetOption(skillList);
+            secondSkill = CLIHelper.CapitalizeFirstLetter(secondSkill);
             result.SkillProficiencies.Add(secondSkill);
 
             return result;
@@ -597,7 +590,6 @@ namespace DnD_Character_Creator.Races
                 result.RacialCha = 1;
             }
 
-            result.RacialTraits.Add("");
             result.MinHeight = 60;
             result.MaxHeight = 78;
             result.MinWeight = 100;
@@ -619,6 +611,7 @@ namespace DnD_Character_Creator.Races
             Console.WriteLine("You get to pick an extra skill proficiency. Enter the skill you'd like here." +
                 "\nIf you want to see the options enter 'see options'.");
             string pickedSkill = Options.GetOption(Options.Skills);
+            pickedSkill = CLIHelper.CapitalizeFirstLetter(pickedSkill);
             result.SkillProficiencies.Add(pickedSkill);
             Console.WriteLine("You get to pick a feat. Enter the feat you'd like here." +
                 "\nIf you want to see the options enter 'see options'.");

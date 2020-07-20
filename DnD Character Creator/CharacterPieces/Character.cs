@@ -11,6 +11,7 @@ namespace DnD_Character_Creator
         public Character()
         {
             GP = 0;
+            StatMax = true;
         }
         public string Name { get; set; }
         public int Age { get; set; }
@@ -30,38 +31,93 @@ namespace DnD_Character_Creator
         public string ChosenClass { get; set; }
         public int Lvl { get; set; }
         public double XP { get; set; }
+        public bool StatMax { get; set; }
         public int Str { get; set; }
         public int Dex { get; set; }
         public int Con { get; set; }
         public int Int { get; set; }
         public int Wis { get; set; }
         public int Cha { get; set; }
-        public int Init { get; set; }
+        public int StrMod
+        {
+            get
+            {
+                return (Str - 10) / 2;
+            }
+        }
+        public int DexMod
+        {
+            get
+            {
+                return (Dex - 10) / 2;
+            }
+        }
+        public int ConMod
+        {
+            get
+            {
+                return (Con - 10) / 2;
+            }
+        }
+        public int IntMod
+        {
+            get
+            {
+                return (Int - 10) / 2;
+            }
+        }
+        public int WisMod
+        {
+            get
+            {
+                return (Wis - 10) / 2;
+            }
+        }
+        public int ChaMod
+        {
+            get
+            {
+                return (Cha - 10) / 2;
+            }
+        }
+        public int Init
+        {
+            get
+            {
+                return DexMod;
+            }
+        }
         public int ProficiencyBonus { get; set; }
-        public int AC { get; set; }
+        public int AC
+        {
+            get
+            {
+                return 10 + DexMod;
+            }
+        }
         public int HP { get; set; }
         public List<string> Saves { get; set; } = new List<string>();
         public List<string> Languages { get; set; } = new List<string> { "Common" };
         public Dictionary<string, int> Skills { get; set; } = new Dictionary<string, int>
         {
-            { "Acrobatics", 0 },
-            { "Animal Handling", 0 },
-            { "Arcana", 0 },
-            { "Athletics", 0 },
-            { "Deception", 0 },
-            { "History", 0 },
-            { "Insight", 0 },
-            { "Intimidation", 0 },
-            { "Investigation", 0 },
-            { "Medicine", 0 },
-            { "Nature", 0 },
-            { "Perception", 0 },
-            { "Performance", 0 },
-            { "Persuasion", 0 },
-            { "Religion", 0 },
-            { "Sleight of Hand", 0 },
-            { "Stealth", 0 },
-            { "Survival", 0 }
+            { "Acrobatics(Dex)", 0 },
+            { "Animal Handling(Wis)", 0 },
+            { "Arcana(Int)", 0 },
+            { "Athletics(Str)", 0 },
+            { "Deception(Cha)", 0 },
+            { "History(Int)", 0 },
+            { "Insight(Wis)", 0 },
+            { "Intimidation(Cha)", 0 },
+            { "Investigation(Int)", 0 },
+            { "Medicine(Wis)", 0 },
+            { "Nature(Int)", 0 },
+            { "Perception(Wis)", 0 },
+            { "Performance(Cha)", 0 },
+            { "Persuasion(Cha)", 0 },
+            { "Religion(Int)", 0 },
+            { "Sleight of Hand(Dex)", 0 },
+            { "Stealth(Dex)", 0 },
+            { "Survival(Wis)", 0 }
         };
         public List<string> SkillProficiencies { get; set; } = new List<string>();
         public List<string> Proficiencies { get; set; } = new List<string>();
@@ -72,7 +128,7 @@ namespace DnD_Character_Creator
         public string Flaw { get; set; }
         public string FavoriteScam { get; set; }
         public string Specialty { get; set; }
-        public string Routine { get; set; }
+        public List<string> Routines { get; set; } = new List<string>();
         public string DefiningEvent { get; set; }
         public string GuildBusiness { get; set; }
         public string LifeOfSeclusion { get; set; }
