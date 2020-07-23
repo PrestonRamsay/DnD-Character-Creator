@@ -77,7 +77,7 @@ namespace DnD_Character_Creator.Races
 
             if (input1 == 1)
             {
-                result.Equipment.Add(Options.Weapons[19]);
+                result.Equipment.Add(Options.MartialMeleeWeapons[3]);
             }
             else
             {
@@ -85,7 +85,7 @@ namespace DnD_Character_Creator.Races
             }
             if (input1 == 1)
             {
-                result.Equipment.Add($"2 {Options.Weapons[3]}");
+                result.Equipment.Add($"2 {Options.SimpleMeleeWeapons[3]}");
             }
             else
             {
@@ -93,7 +93,7 @@ namespace DnD_Character_Creator.Races
             }
 
             result.Equipment.Add(Options.Packs[5]);
-            result.Equipment.Add($"4 {Options.Weapons[4]}");
+            result.Equipment.Add($"4 {Options.SimpleMeleeWeapons[4]}");
 
             return result;
         }
@@ -103,7 +103,622 @@ namespace DnD_Character_Creator.Races
 
             List<string> classSkills = Options.Skills;
 
-            result.HitDie = 12;
+            result.HitDie = 8;
+            result.Proficiencies.Add("Light armor");
+            result.Proficiencies.Add("Simple weapons");
+            result.Proficiencies.Add("Hand crossbows");
+            result.Proficiencies.Add("Longswords");
+            result.Proficiencies.Add("Rapiers");
+            result.Proficiencies.Add("Shortswords");
+            result.Proficiencies.Add("3 Musical Instruments");
+            result.Saves.Add("Dex");
+            result.Saves.Add("Cha");
+            Console.WriteLine("Pick 3 skills from the Bard's class skill list (enter them one at a time):");
+            for (int i = 0; i < classSkills.Count; i++)
+            {
+                Console.WriteLine(classSkills[i]);
+            }
+            string firstSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            firstSkill = CLIHelper.CapitalizeFirstLetter(firstSkill);
+            character.SkillProficiencies.Add(firstSkill);
+            string secondSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            secondSkill = CLIHelper.CapitalizeFirstLetter(secondSkill);
+            character.SkillProficiencies.Add(secondSkill);
+            string thirdSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            thirdSkill = CLIHelper.CapitalizeFirstLetter(thirdSkill);
+            character.SkillProficiencies.Add(thirdSkill);
+
+            Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
+            Console.WriteLine("(1) Rapier");
+            Console.WriteLine("(2) Longsword");
+            Console.WriteLine("(3) Any simple weapon");
+            int input1 = CLIHelper.GetNumberInRange(1, 3);
+            Console.WriteLine("(1) Diplomat's pack");
+            Console.WriteLine("(2) Entertainer's pack");
+            int input2 = CLIHelper.GetNumberInRange(1, 2);
+            Console.WriteLine("(1) Lute");
+            Console.WriteLine("(2) Musical Instrument");
+            int input3 = CLIHelper.GetNumberInRange(1, 2);
+
+            if (input1 == 1)
+            {
+                result.Equipment.Add(Options.MartialMeleeWeapons[11]);
+            }
+            else if (input1 == 2)
+            {
+                result.Equipment.Add(Options.MartialMeleeWeapons[7]);
+            }
+            else
+            {
+                result.Equipment.Add("Simple weapon");
+            }
+            if (input2 == 1)
+            {
+                result.Equipment.Add(Options.Packs[1]);
+            }
+            else
+            {
+                result.Equipment.Add(Options.Packs[3]);
+            }
+            if (input3 == 1)
+            {
+                result.Equipment.Add("Lute");
+            }
+            else
+            {
+                result.Equipment.Add("Musical Instrument");
+            }
+
+            result.Equipment.Add(Options.LightArmor[1]);
+            result.Equipment.Add(Options.SimpleMeleeWeapons[1]);
+            result.CantripsKnown = 2;
+
+            return result;
+        }
+        public static CharacterClass Cleric(Character character)
+        {
+            var result = new CharacterClass(character.Lvl);
+
+            List<string> classSkills = new List<string>() { "History", "Insight", "Medicine", "Persuasion", "Religion" };
+
+            result.HitDie = 8;
+            result.Proficiencies.Add("Light Armor");
+            result.Proficiencies.Add("Medium Armor");
+            result.Proficiencies.Add("Shields");
+            result.Proficiencies.Add("Simple Weapons");
+            result.Saves.Add("Wis");
+            result.Saves.Add("Cha");
+            Console.WriteLine("Pick 2 skills from the Cleric's class skill list (enter them one at a time):");
+            for (int i = 0; i < classSkills.Count; i++)
+            {
+                Console.WriteLine(classSkills[i]);
+            }
+            string firstSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            firstSkill = CLIHelper.CapitalizeFirstLetter(firstSkill);
+            character.SkillProficiencies.Add(firstSkill);
+            string secondSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            secondSkill = CLIHelper.CapitalizeFirstLetter(secondSkill);
+            character.SkillProficiencies.Add(secondSkill);            
+
+            Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
+            Console.WriteLine("(1) ");
+            Console.WriteLine("(2) ");
+            int input1 = CLIHelper.GetNumberInRange(1, 2);
+            Console.WriteLine("(1) ");
+            Console.WriteLine("(2) ");
+            int input2 = CLIHelper.GetNumberInRange(1, 2);
+
+            if (input1 == 1)
+            {
+                result.Equipment.Add("");
+            }
+            else
+            {
+                result.Equipment.Add("");
+            }
+            if (input1 == 1)
+            {
+                result.Equipment.Add("");
+            }
+            else
+            {
+                result.Equipment.Add("");
+            }
+
+            result.Equipment.Add("");
+            result.Equipment.Add("");
+            result.CantripsKnown = 2;
+
+            return result;
+        }
+        public static CharacterClass Druid(Character character)
+        {
+            var result = new CharacterClass(character.Lvl);
+
+            List<string> classSkills = Options.Skills;
+
+            result.HitDie = 8;
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Saves.Add("");
+            result.Saves.Add("");
+            Console.WriteLine("Pick 3 skills from the Bard's class skill list (enter them one at a time):");
+            for (int i = 0; i < classSkills.Count; i++)
+            {
+                Console.WriteLine(classSkills[i]);
+            }
+            string firstSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            firstSkill = CLIHelper.CapitalizeFirstLetter(firstSkill);
+            character.SkillProficiencies.Add(firstSkill);
+            string secondSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            secondSkill = CLIHelper.CapitalizeFirstLetter(secondSkill);
+            character.SkillProficiencies.Add(secondSkill);
+            string thirdSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            thirdSkill = CLIHelper.CapitalizeFirstLetter(thirdSkill);
+            character.SkillProficiencies.Add(thirdSkill);
+
+            Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
+            Console.WriteLine("(1) ");
+            Console.WriteLine("(2) ");
+            int input1 = CLIHelper.GetNumberInRange(1, 2);
+            Console.WriteLine("(1) ");
+            Console.WriteLine("(2) ");
+            int input2 = CLIHelper.GetNumberInRange(1, 2);
+
+            if (input1 == 1)
+            {
+                result.Equipment.Add("");
+            }
+            else
+            {
+                result.Equipment.Add("");
+            }
+            if (input1 == 1)
+            {
+                result.Equipment.Add("");
+            }
+            else
+            {
+                result.Equipment.Add("");
+            }
+
+            result.Equipment.Add("");
+            result.Equipment.Add("");
+            result.CantripsKnown = 2;
+
+            return result;
+        }
+        public static CharacterClass Fighter(Character character)
+        {
+            var result = new CharacterClass(character.Lvl);
+
+            List<string> classSkills = Options.Skills;
+
+            result.HitDie = 10;
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Saves.Add("");
+            result.Saves.Add("");
+            Console.WriteLine("Pick 3 skills from the Bard's class skill list (enter them one at a time):");
+            for (int i = 0; i < classSkills.Count; i++)
+            {
+                Console.WriteLine(classSkills[i]);
+            }
+            string firstSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            firstSkill = CLIHelper.CapitalizeFirstLetter(firstSkill);
+            character.SkillProficiencies.Add(firstSkill);
+            string secondSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            secondSkill = CLIHelper.CapitalizeFirstLetter(secondSkill);
+            character.SkillProficiencies.Add(secondSkill);
+            string thirdSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            thirdSkill = CLIHelper.CapitalizeFirstLetter(thirdSkill);
+            character.SkillProficiencies.Add(thirdSkill);
+
+            Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
+            result.Equipment.Add("Shield(+2 AC)(10gp, 6lb.)");
+            Console.WriteLine("(1) ");
+            Console.WriteLine("(2) ");
+            int input1 = CLIHelper.GetNumberInRange(1, 2);
+            Console.WriteLine("(1) ");
+            Console.WriteLine("(2) ");
+            int input2 = CLIHelper.GetNumberInRange(1, 2);
+
+            if (input1 == 1)
+            {
+                result.Equipment.Add("");
+            }
+            else
+            {
+                result.Equipment.Add("");
+            }
+            if (input1 == 1)
+            {
+                result.Equipment.Add("");
+            }
+            else
+            {
+                result.Equipment.Add("");
+            }
+
+            result.Equipment.Add("");
+            result.Equipment.Add("");
+            result.CantripsKnown = 2;
+
+            return result;
+        }
+        public static CharacterClass Monk(Character character)
+        {
+            var result = new CharacterClass(character.Lvl);
+
+            List<string> classSkills = Options.Skills;
+
+            result.HitDie = 8;
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Saves.Add("");
+            result.Saves.Add("");
+            Console.WriteLine("Pick 3 skills from the Bard's class skill list (enter them one at a time):");
+            for (int i = 0; i < classSkills.Count; i++)
+            {
+                Console.WriteLine(classSkills[i]);
+            }
+            string firstSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            firstSkill = CLIHelper.CapitalizeFirstLetter(firstSkill);
+            character.SkillProficiencies.Add(firstSkill);
+            string secondSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            secondSkill = CLIHelper.CapitalizeFirstLetter(secondSkill);
+            character.SkillProficiencies.Add(secondSkill);
+            string thirdSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            thirdSkill = CLIHelper.CapitalizeFirstLetter(thirdSkill);
+            character.SkillProficiencies.Add(thirdSkill);
+
+            Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
+            Console.WriteLine("(1) ");
+            Console.WriteLine("(2) ");
+            int input1 = CLIHelper.GetNumberInRange(1, 2);
+            Console.WriteLine("(1) ");
+            Console.WriteLine("(2) ");
+            int input2 = CLIHelper.GetNumberInRange(1, 2);
+
+            if (input1 == 1)
+            {
+                result.Equipment.Add("");
+            }
+            else
+            {
+                result.Equipment.Add("");
+            }
+            if (input1 == 1)
+            {
+                result.Equipment.Add("");
+            }
+            else
+            {
+                result.Equipment.Add("");
+            }
+
+            result.Equipment.Add("");
+            result.Equipment.Add("");
+            result.CantripsKnown = 2;
+
+            return result;
+        }
+        public static CharacterClass Paladin(Character character)
+        {
+            var result = new CharacterClass(character.Lvl);
+
+            List<string> classSkills = Options.Skills;
+
+            result.HitDie = 10;
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Saves.Add("");
+            result.Saves.Add("");
+            Console.WriteLine("Pick 3 skills from the Bard's class skill list (enter them one at a time):");
+            for (int i = 0; i < classSkills.Count; i++)
+            {
+                Console.WriteLine(classSkills[i]);
+            }
+            string firstSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            firstSkill = CLIHelper.CapitalizeFirstLetter(firstSkill);
+            character.SkillProficiencies.Add(firstSkill);
+            string secondSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            secondSkill = CLIHelper.CapitalizeFirstLetter(secondSkill);
+            character.SkillProficiencies.Add(secondSkill);
+            string thirdSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            thirdSkill = CLIHelper.CapitalizeFirstLetter(thirdSkill);
+            character.SkillProficiencies.Add(thirdSkill);
+
+            Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
+            Console.WriteLine("(1) ");
+            Console.WriteLine("(2) ");
+            int input1 = CLIHelper.GetNumberInRange(1, 2);
+            Console.WriteLine("(1) ");
+            Console.WriteLine("(2) ");
+            int input2 = CLIHelper.GetNumberInRange(1, 2);
+
+            if (input1 == 1)
+            {
+                result.Equipment.Add("");
+            }
+            else
+            {
+                result.Equipment.Add("");
+            }
+            if (input1 == 1)
+            {
+                result.Equipment.Add("");
+            }
+            else
+            {
+                result.Equipment.Add("");
+            }
+
+            result.Equipment.Add("");
+            result.Equipment.Add("");
+            result.CantripsKnown = 2;
+
+            return result;
+        }
+        public static CharacterClass Ranger(Character character)
+        {
+            var result = new CharacterClass(character.Lvl);
+
+            List<string> classSkills = Options.Skills;
+
+            result.HitDie = 10;
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Saves.Add("");
+            result.Saves.Add("");
+            Console.WriteLine("Pick 3 skills from the Bard's class skill list (enter them one at a time):");
+            for (int i = 0; i < classSkills.Count; i++)
+            {
+                Console.WriteLine(classSkills[i]);
+            }
+            string firstSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            firstSkill = CLIHelper.CapitalizeFirstLetter(firstSkill);
+            character.SkillProficiencies.Add(firstSkill);
+            string secondSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            secondSkill = CLIHelper.CapitalizeFirstLetter(secondSkill);
+            character.SkillProficiencies.Add(secondSkill);
+            string thirdSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            thirdSkill = CLIHelper.CapitalizeFirstLetter(thirdSkill);
+            character.SkillProficiencies.Add(thirdSkill);
+
+            Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
+            Console.WriteLine("(1) ");
+            Console.WriteLine("(2) ");
+            int input1 = CLIHelper.GetNumberInRange(1, 2);
+            Console.WriteLine("(1) ");
+            Console.WriteLine("(2) ");
+            int input2 = CLIHelper.GetNumberInRange(1, 2);
+
+            if (input1 == 1)
+            {
+                result.Equipment.Add("");
+            }
+            else
+            {
+                result.Equipment.Add("");
+            }
+            if (input1 == 1)
+            {
+                result.Equipment.Add("");
+            }
+            else
+            {
+                result.Equipment.Add("");
+            }
+
+            result.Equipment.Add("");
+            result.Equipment.Add("");
+            result.CantripsKnown = 2;
+
+            return result;
+        }
+        public static CharacterClass Rogue(Character character)
+        {
+            var result = new CharacterClass(character.Lvl);
+
+            List<string> classSkills = Options.Skills;
+
+            result.HitDie = 8;
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Saves.Add("");
+            result.Saves.Add("");
+            Console.WriteLine("Pick 3 skills from the Bard's class skill list (enter them one at a time):");
+            for (int i = 0; i < classSkills.Count; i++)
+            {
+                Console.WriteLine(classSkills[i]);
+            }
+            string firstSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            firstSkill = CLIHelper.CapitalizeFirstLetter(firstSkill);
+            character.SkillProficiencies.Add(firstSkill);
+            string secondSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            secondSkill = CLIHelper.CapitalizeFirstLetter(secondSkill);
+            character.SkillProficiencies.Add(secondSkill);
+            string thirdSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            thirdSkill = CLIHelper.CapitalizeFirstLetter(thirdSkill);
+            character.SkillProficiencies.Add(thirdSkill);
+
+            Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
+            Console.WriteLine("(1) ");
+            Console.WriteLine("(2) ");
+            int input1 = CLIHelper.GetNumberInRange(1, 2);
+            Console.WriteLine("(1) ");
+            Console.WriteLine("(2) ");
+            int input2 = CLIHelper.GetNumberInRange(1, 2);
+
+            if (input1 == 1)
+            {
+                result.Equipment.Add("");
+            }
+            else
+            {
+                result.Equipment.Add("");
+            }
+            if (input1 == 1)
+            {
+                result.Equipment.Add("");
+            }
+            else
+            {
+                result.Equipment.Add("");
+            }
+
+            result.Equipment.Add("");
+            result.Equipment.Add("");
+            result.CantripsKnown = 2;
+
+            return result;
+        }
+        public static CharacterClass Sorcerer(Character character)
+        {
+            var result = new CharacterClass(character.Lvl);
+
+            List<string> classSkills = Options.Skills;
+
+            result.HitDie = 6;
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Saves.Add("");
+            result.Saves.Add("");
+            Console.WriteLine("Pick 3 skills from the Bard's class skill list (enter them one at a time):");
+            for (int i = 0; i < classSkills.Count; i++)
+            {
+                Console.WriteLine(classSkills[i]);
+            }
+            string firstSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            firstSkill = CLIHelper.CapitalizeFirstLetter(firstSkill);
+            character.SkillProficiencies.Add(firstSkill);
+            string secondSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            secondSkill = CLIHelper.CapitalizeFirstLetter(secondSkill);
+            character.SkillProficiencies.Add(secondSkill);
+            string thirdSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            thirdSkill = CLIHelper.CapitalizeFirstLetter(thirdSkill);
+            character.SkillProficiencies.Add(thirdSkill);
+
+            Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
+            Console.WriteLine("(1) ");
+            Console.WriteLine("(2) ");
+            int input1 = CLIHelper.GetNumberInRange(1, 2);
+            Console.WriteLine("(1) ");
+            Console.WriteLine("(2) ");
+            int input2 = CLIHelper.GetNumberInRange(1, 2);
+
+            if (input1 == 1)
+            {
+                result.Equipment.Add("");
+            }
+            else
+            {
+                result.Equipment.Add("");
+            }
+            if (input1 == 1)
+            {
+                result.Equipment.Add("");
+            }
+            else
+            {
+                result.Equipment.Add("");
+            }
+
+            result.Equipment.Add("");
+            result.Equipment.Add("");
+            result.CantripsKnown = 2;
+
+            return result;
+        }
+        public static CharacterClass Warlock(Character character)
+        {
+            var result = new CharacterClass(character.Lvl);
+
+            List<string> classSkills = Options.Skills;
+
+            result.HitDie = 8;
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Proficiencies.Add("");
+            result.Saves.Add("");
+            result.Saves.Add("");
+            Console.WriteLine("Pick 3 skills from the Bard's class skill list (enter them one at a time):");
+            for (int i = 0; i < classSkills.Count; i++)
+            {
+                Console.WriteLine(classSkills[i]);
+            }
+            string firstSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            firstSkill = CLIHelper.CapitalizeFirstLetter(firstSkill);
+            character.SkillProficiencies.Add(firstSkill);
+            string secondSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            secondSkill = CLIHelper.CapitalizeFirstLetter(secondSkill);
+            character.SkillProficiencies.Add(secondSkill);
+            string thirdSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
+            thirdSkill = CLIHelper.CapitalizeFirstLetter(thirdSkill);
+            character.SkillProficiencies.Add(thirdSkill);
+
+            Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
+            Console.WriteLine("(1) ");
+            Console.WriteLine("(2) ");
+            int input1 = CLIHelper.GetNumberInRange(1, 2);
+            Console.WriteLine("(1) ");
+            Console.WriteLine("(2) ");
+            int input2 = CLIHelper.GetNumberInRange(1, 2);
+
+            if (input1 == 1)
+            {
+                result.Equipment.Add("");
+            }
+            else
+            {
+                result.Equipment.Add("");
+            }
+            if (input1 == 1)
+            {
+                result.Equipment.Add("");
+            }
+            else
+            {
+                result.Equipment.Add("");
+            }
+
+            result.Equipment.Add("");
+            result.Equipment.Add("");
+            result.CantripsKnown = 2;
+
+            return result;
+        }
+        public static CharacterClass Wizard(Character character)
+        {
+            var result = new CharacterClass(character.Lvl);
+
+            List<string> classSkills = Options.Skills;
+
+            result.HitDie = 6;
             result.Proficiencies.Add("");
             result.Proficiencies.Add("");
             result.Proficiencies.Add("");

@@ -167,10 +167,10 @@ namespace DnD_Character_Creator.Races
             result.AdultAge = 50;
             result.MaxAgeStart = 350;
             result.Languages.Add("Dwarven");
-            result.Proficiencies.Add("Battleaxe");
-            result.Proficiencies.Add("Handaxe");
-            result.Proficiencies.Add("Throwing Hammer");
-            result.Proficiencies.Add("Warhammer");
+            result.Proficiencies.Add("Battleaxes");
+            result.Proficiencies.Add("Handaxes");
+            result.Proficiencies.Add("Throwing Hammers");
+            result.Proficiencies.Add("Warhammers");
 
             return result;
         }
@@ -212,10 +212,10 @@ namespace DnD_Character_Creator.Races
             result.Languages.Add("Dwarven");
             result.Proficiencies.Add("Light Armor");
             result.Proficiencies.Add("Medium Armor");
-            result.Proficiencies.Add("Battleaxe");
-            result.Proficiencies.Add("Handaxe");
-            result.Proficiencies.Add("Throwing Hammer");
-            result.Proficiencies.Add("Warhammer");
+            result.Proficiencies.Add("Battleaxes");
+            result.Proficiencies.Add("Handaxes");
+            result.Proficiencies.Add("Throwing Hammers");
+            result.Proficiencies.Add("Warhammers");
 
             return result;
         }
@@ -243,10 +243,10 @@ namespace DnD_Character_Creator.Races
             result.MaxAgeStart = 750;
             result.Languages.Add("Elven");
             result.Languages.Add("Undercommon");
-            result.SkillProficiencies.Add("Perception");
-            result.Proficiencies.Add("Shortsword");
-            result.Proficiencies.Add("Rapier");
-            result.Proficiencies.Add("Hand Crossbow");
+            result.SkillProficiencies.Add("Perceptions");
+            result.Proficiencies.Add("Shortswords");
+            result.Proficiencies.Add("Rapiers");
+            result.Proficiencies.Add("Hand Crossbows");
             result.Spells.Add("(cantrip)Dancing Lights - use Cha to cast");
 
             return result;
@@ -273,10 +273,10 @@ namespace DnD_Character_Creator.Races
             result.Languages.Add("Elven");
             result.Languages.Add("Choice");
             result.SkillProficiencies.Add("Perception");
-            result.Proficiencies.Add("Shortsword");
-            result.Proficiencies.Add("Shortbow");
-            result.Proficiencies.Add("Longsword");
-            result.Proficiencies.Add("Longbow");
+            result.Proficiencies.Add("Shortswords");
+            result.Proficiencies.Add("Shortbows");
+            result.Proficiencies.Add("Longswords");
+            result.Proficiencies.Add("Longbows");
             Console.WriteLine("Pick a cantrip from the Wizard's spell list. If you want to see the options enter 'see options'.");
             string cantrip = Options.GetOption(WizardSpells.Cantrips);
             result.Spells.Add($"{cantrip} - use Int to cast");
@@ -306,10 +306,10 @@ namespace DnD_Character_Creator.Races
             result.MaxAgeStart = 750;
             result.Languages.Add("Elven");
             result.SkillProficiencies.Add("Perception");
-            result.Proficiencies.Add("Shortsword");
-            result.Proficiencies.Add("Shortbow");
-            result.Proficiencies.Add("Longsword");
-            result.Proficiencies.Add("Longbow");
+            result.Proficiencies.Add("Shortswords");
+            result.Proficiencies.Add("Shortbows");
+            result.Proficiencies.Add("Longswords");
+            result.Proficiencies.Add("Longbows");
 
             return result;
         }
