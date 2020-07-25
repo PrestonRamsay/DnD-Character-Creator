@@ -41,6 +41,8 @@ namespace DnD_Character_Creator.Races
         public Dictionary<string, string> ClassFeatures { get; set; } = new Dictionary<string, string>();
         public int CantripsKnown { get; set; }
         public int SpellsKnown { get; set; }
+        public List<string> Cantrips { get; set; } = new List<string>();
+        public Dictionary<int, string> Spells { get; set; } = new Dictionary<int, string>();
         public Dictionary<int, int> SpellSlots { get; set; } = new Dictionary<int, int>();
         public static void Get2Skills(Character character, string className, List<string> classSkills)
         {
@@ -143,9 +145,18 @@ namespace DnD_Character_Creator.Races
             result.Proficiencies.Add("Longswords");
             result.Proficiencies.Add("Rapiers");
             result.Proficiencies.Add("Shortswords");
-            result.ToolProficiencies.Add("Musical Instrument");
-            result.ToolProficiencies.Add("Musical Instrument2");
-            result.ToolProficiencies.Add("Musical Instrument3");
+            List<string> instruments = Options.MusicalInstruments;
+            Console.WriteLine("Pick 3 musical instruments you'd like to be proficient with. Enter them one at a time." +
+                $"\n{Options.SeeOptions}");
+            string instrument1 = Options.GetOption(instruments);
+            result.ToolProficiencies.Add(instrument1);
+            instruments.Remove(instrument1);
+            string instrument2 = Options.GetOption(instruments);
+            result.ToolProficiencies.Add(instrument2);
+            instruments.Remove(instrument2);
+            string instrument3 = Options.GetOption(instruments);
+            result.ToolProficiencies.Add(instrument3);
+            instruments.Remove(instrument3);
             result.Saves.Add("Dex");
             result.Saves.Add("Cha");
 
@@ -427,11 +438,13 @@ namespace DnD_Character_Creator.Races
 
             if (choice == 1)
             {
-                result.ToolProficiencies.Add("Artisan's Tools");
+                int index = Options.GetOptionIndex(Options.ArtisanTools, "Pick a set of artisan tools by entering a number.");
+                result.ToolProficiencies.Add(Options.ArtisanTools[index]);
             }
             else
             {
-                result.ToolProficiencies.Add("Musical instrument");
+                int index = Options.GetOptionIndex(Options.MusicalInstruments, "Pick a musical instrument you'd like to be proficient with.");
+                result.Equipment.Add(Options.MusicalInstruments[index]);
             }
 
             result.Saves.Add("Str");
@@ -683,8 +696,7 @@ namespace DnD_Character_Creator.Races
             }
             else
             {
-                Console.WriteLine($"Pick an arcane focus.");
-                int index = Options.GetOptionIndex(Options.ArcaneFocuses);
+                int index = Options.GetOptionIndex(Options.ArcaneFocuses, "Pick an arcane focus.");
                 result.Equipment.Add(Options.ArcaneFocuses[index]);
             }
             if (input3 == 1)
@@ -738,8 +750,7 @@ namespace DnD_Character_Creator.Races
             }
             else
             {
-                Console.WriteLine($"Pick an arcane focus.");
-                int index = Options.GetOptionIndex(Options.ArcaneFocuses);
+                int index = Options.GetOptionIndex(Options.ArcaneFocuses, "Pick an arcane focus.");
                 result.Equipment.Add(Options.ArcaneFocuses[index]);
             }
             if (input3 == 1)
@@ -806,8 +817,7 @@ namespace DnD_Character_Creator.Races
             }
             else
             {
-                Console.WriteLine($"Pick an arcane focus.");
-                int index = Options.GetOptionIndex(Options.ArcaneFocuses);
+                int index = Options.GetOptionIndex(Options.ArcaneFocuses, "Pick an arcane focus.");
                 result.Equipment.Add(Options.ArcaneFocuses[index]);
             }
             if (input3 == 1)

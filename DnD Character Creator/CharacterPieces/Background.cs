@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DnD_Character_Creator.Helper_Classes;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -678,12 +679,8 @@ namespace DnD_Character_Creator.Backgrounds
 
             if (trophyChoice == 1)
             {
-                for (int i = 0; i < trophyExamples.Count; i++)
-                {
-                    Console.WriteLine($"({i + 1}) {trophyExamples[i]}");
-                }
-                int answer = CLIHelper.GetNumberInRange(1, 3);
-                string trophy = trophyExamples[answer - 1];
+                int index = Options.GetOptionIndex(trophyExamples);
+                string trophy = trophyExamples[index];
                 result.Equipment.Add(trophy + " from a fallen enemy");
             }
             else if (trophyChoice == 2)

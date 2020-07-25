@@ -9,23 +9,23 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
     {
         public static List<string> Cantrips { get; set; } = new List<string>
         {
-            "(cantrip)Acid Splash",
-            "(cantrip)Blade Ward",
-            "(cantrip)Chill Touch",
-            "(cantrip)Dancing Lights",
-            "(cantrip)Fire Bolt",
-            "(cantrip)Friends",
-            "(cantrip)Light",
-            "(cantrip)Mage Hand",
-            "(cantrip)Mending",
-            "(cantrip)Message",
-            "(cantrip)Minor Illusion",
-            "(cantrip)Poison Spray",
-            "(cantrip)Prestidigitation",
-            "(cantrip)Ray of Frost",
-            "(cantrip)Shocking Grasp",
-            "(cantrip)True Strike",
-            "see options"
+            "Acid Splash",
+            "Blade Ward",
+            "Chill Touch",
+            "Dancing Lights",
+            "Fire Bolt",
+            "Friends",
+            "Light",
+            "Mage Hand",
+            "Mending",
+            "Message",
+            "Minor Illusion",
+            "Poison Spray",
+            "Prestidigitation",
+            "Ray of Frost",
+            "Shocking Grasp",
+            "True Strike",
+            "1"
         };
     }
 }

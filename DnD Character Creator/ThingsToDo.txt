@@ -1,5 +1,4 @@
 ﻿
-create classes
-in addClass implement martial melee weapon, martial weapon, simple weapon, and simple melee weapon
-martial weapon2, simple melee weapon2
-when adding proficiencies make sure not to add dups
+create class specifics
+spells
+write spells to sheet

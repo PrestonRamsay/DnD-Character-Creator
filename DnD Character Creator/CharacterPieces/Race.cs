@@ -41,7 +41,7 @@ namespace DnD_Character_Creator.Races
         public List<string> SkillProficiencies { get; set; } = new List<string>();
         public List<string> ToolProficiencies { get; set; } = new List<string>();
         public List<string> Proficiencies { get; set; } = new List<string>();
-        public List<string> Spells { get; set; } = new List<string>();
+        public List<string> Cantrips { get; set; } = new List<string>();
         public List<string> Feats { get; set; } = new List<string>();
         public static Race Dragonborn()
         {           
@@ -248,7 +248,7 @@ namespace DnD_Character_Creator.Races
             result.Proficiencies.Add("Shortswords");
             result.Proficiencies.Add("Rapiers");
             result.Proficiencies.Add("Hand Crossbows");
-            result.Spells.Add("(cantrip)Dancing Lights - use Cha to cast");
+            result.Cantrips.Add("Dancing Lights - use Cha to cast");
 
             return result;
         }
@@ -278,9 +278,9 @@ namespace DnD_Character_Creator.Races
             result.Proficiencies.Add("Shortbows");
             result.Proficiencies.Add("Longswords");
             result.Proficiencies.Add("Longbows");
-            Console.WriteLine($"Pick a cantrip from the Wizard's spell list. {Options.SeeOptions}");
-            string cantrip = Options.GetOption(WizardSpells.Cantrips);
-            result.Spells.Add($"{cantrip} - use Int to cast");
+            int index = Options.GetOptionIndex(WizardSpells.Cantrips, $"Pick a cantrip from the Wizard's spell list. {Options.SeeOptions}");
+            string cantrip = WizardSpells.Cantrips[index];
+            result.Cantrips.Add($"{cantrip} - use Int to cast");
 
             return result;
         }
@@ -336,7 +336,7 @@ namespace DnD_Character_Creator.Races
             result.MaxAgeStart = 350;
             result.MaxAgeEnd = 500;
             result.Languages.Add("Gnomish");
-            result.Spells.Add("(cantrip)Minor Illusion - use Int to cast");
+            result.Cantrips.Add("Minor Illusion - use Int to cast");
 
             return result;
         }
@@ -670,7 +670,7 @@ namespace DnD_Character_Creator.Races
             result.AdultAge = 18;
             result.MaxAgeStart = 80;
             result.Languages.Add("Infernal");
-            result.Spells.Add("(cantrip)Vicious Mockery - use Cha to cast");
+            result.Cantrips.Add("Vicious Mockery - use Cha to cast");
 
             return result;
         }

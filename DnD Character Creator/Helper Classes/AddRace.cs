@@ -23,7 +23,7 @@ namespace DnD_Character_Creator.CLI_Classes
             character.SkillProficiencies.AddRange(race.SkillProficiencies);
             character.ToolProficiencies.AddRange(race.ToolProficiencies);
             character.Proficiencies.AddRange(race.Proficiencies);
-            character.Spells.AddRange(race.Spells);
+            character.Cantrips.AddRange(race.Cantrips);
             character.Feats.AddRange(race.Feats);
         }
         public static void AddHeight(Character character, Race race)

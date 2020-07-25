@@ -20,10 +20,10 @@ namespace DnD_Character_Creator
         {
             Console.WriteLine(Prompt(characterPiece));
             string newPiece = CLIHelper.GetStringInList(pieceList);
-            if (newPiece == "see options")
+            if (newPiece == "1")
             {
                 Console.Clear();
-                pieceList.Remove("see options");
+                pieceList.Remove("1");
                 for (int i = 0; i < pieceList.Count; i++)
                 {
                     Console.WriteLine(pieceList[i]);
@@ -48,11 +48,7 @@ namespace DnD_Character_Creator
             if (answer == "pick")
             {
                 Console.WriteLine($"Enter the number next to the {backgroundPiece} you want.");
-                for (int i = 0; i < backgroundProperty.Length; i++)
-                {
-                    Console.WriteLine($"({i + 1}) {backgroundProperty[i]}");
-                }
-                index = CLIHelper.GetNumberInRange(1, backgroundProperty.Length) - 1;
+                index = Options.GetOptionIndex(backgroundProperty);
             }
             else
             {
@@ -60,14 +56,26 @@ namespace DnD_Character_Creator
                 while (gettingPiece)
                 {
                     DieRoll dx = new DieRoll(backgroundProperty.Length);
-                    index = dx.RollDie() - 1;
+                    int dieRoll = dx.RollDie() - 1;
+                    if (index == dieRoll)
+                    {
+                        dieRoll = dx.RollDie() - 1;
+                    }
+                    index = dieRoll;
                     Console.WriteLine($"Your {backgroundPiece} is:" +
                         $"\n{backgroundProperty[index]}");
-                    Console.WriteLine($"If you'd like to keep that {backgroundPiece} enter 'keep', if not enter any key.");
+                    Console.WriteLine($"If you'd like to keep that {backgroundPiece} enter 'keep', if not enter any key." +
+                        $"\nIf you'd like to pick from the list instead, enter 'pick'.");
                     string input = CLIHelper.GetString();
 
                     if (input == "keep")
                     {
+                        gettingPiece = false;
+                    }
+                    if (input == "pick")
+                    {
+                        Console.WriteLine($"Enter the number next to the {backgroundPiece} you want.");
+                        index = Options.GetOptionIndex(backgroundProperty);
                         gettingPiece = false;
                     }
                 }                

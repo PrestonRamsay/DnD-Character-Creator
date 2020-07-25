@@ -136,8 +136,12 @@ namespace DnD_Character_Creator
         public string Origin { get; set; }
         public List<string> Equipment { get; set; } = new List<string>();
         public int GP { get; set; }
-        public List<string> ClassFeatures { get; set; } = new List<string>();
-        public List<string> Spells { get; set; } = new List<string>();
+        public Dictionary<string, string> ClassFeatures { get; set; } = new Dictionary<string, string>();
+        public int CantripsKnown { get; set; }
+        public int SpellsKnown { get; set; }
+        public List<string> Cantrips { get; set; } = new List<string>();
+        public Dictionary<int, string> Spells { get; set; } = new Dictionary<int, string>();
+        public Dictionary<int, int> SpellSlots { get; set; } = new Dictionary<int, int>();
         public List<string> Feats { get; set; } = new List<string>();
     }
 }

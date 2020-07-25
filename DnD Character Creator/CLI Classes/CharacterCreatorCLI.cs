@@ -280,22 +280,22 @@ namespace DnD_Character_Creator
             {
                 if (level >= 3)
                 {
-                    character.Spells.Add("(1st)Faerie Fire - 1/day, use Cha to cast");
+                    character.Spells.Add(1, "Faerie Fire - 1/day, use Cha to cast");
                 }
                 if (level >= 5)
                 {
-                    character.Spells.Add("(2nd)Darkness - 1/day, use Cha to cast");
+                    character.Spells.Add(2, "Darkness - 1/day, use Cha to cast");
                 }
             }
             if (character.ChosenRace == "tiefling")
             {
                 if (level >= 3)
                 {
-                    character.Spells.Add("(1st)Charm Person - 1/long rest, use Cha to cast");
+                    character.Spells.Add(1, "Charm Person - 1/long rest, use Cha to cast");
                 }
                 if (level >= 5)
                 {
-                    character.Spells.Add("(2nd)Entrall - 1/long rest, use Cha to cast");
+                    character.Spells.Add(2, "Entrall - 1/long rest, use Cha to cast");
                 }
             }
         }
@@ -321,9 +321,11 @@ namespace DnD_Character_Creator
                 }
             }
 
-            AddClass.ClassSpecifics(character, classObject);
             AddClass.DetermineHP(character, classObject);
             AddClass.ModifySkills(character);
+            AddClass.AddProficiencies(character, classObject);
+            AddClass.ClassSpecifics(character, classObject);
+            AddClass.AddEquipment(character, classObject);
 
             Console.Clear();
             Console.WriteLine("\nYou've finished adding your character's class!\n");
@@ -397,15 +399,15 @@ namespace DnD_Character_Creator
             }
             Console.WriteLine("\nClass Features:");
             Console.WriteLine("---------------------");
-            foreach (string feature in character.ClassFeatures)
+            foreach (string feature in character.ClassFeatures.Keys)
             {
-                Console.WriteLine(feature);
+                Console.WriteLine($"{feature}: {character.ClassFeatures[feature]}");
             }
             Console.WriteLine("\nSpells:");
             Console.WriteLine("---------------------");
-            foreach (string spell in character.Spells)
+            foreach (int spellLvl in character.Spells.Keys)
             {
-                Console.WriteLine(spell);
+                Console.WriteLine();
             }
             Console.WriteLine("\nYou've finished creating your character! Scroll up to see all the data");
         }

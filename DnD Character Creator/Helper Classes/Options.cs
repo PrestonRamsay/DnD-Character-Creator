@@ -7,7 +7,7 @@ namespace DnD_Character_Creator.Helper_Classes
 {
     public static class Options
     {
-        public static string SeeOptions = "If you would like to see the options enter 'see options'.";
+        public static string SeeOptions = "If you would like to see the options enter '1'.";
         public static List<string> Classes { get; set; } = new List<string>
         {
             "Barbarian",
@@ -22,7 +22,7 @@ namespace DnD_Character_Creator.Helper_Classes
             "Sorcerer",
             "Warlock",
             "Wizard",
-            "see options"
+            "1"
         };
         public static List<string> Races { get; set; } = new List<string>
         {
@@ -41,7 +41,7 @@ namespace DnD_Character_Creator.Helper_Classes
             "Human",
             "Variant Human",
             "Tiefling",
-            "see options"
+            "1"
         };
         public static List<string> Languages { get; set; } = new List<string>
         {
@@ -61,7 +61,7 @@ namespace DnD_Character_Creator.Helper_Classes
             "Primordial",
             "Sylvan",
             "Undercommon",
-            "see options"
+            "1"
         };
         public static List<string> Backgrounds { get; set; } = new List<string>
         {
@@ -78,7 +78,7 @@ namespace DnD_Character_Creator.Helper_Classes
             "Sailor",
             "Soldier",
             "Urchin",
-            "see options"
+            "1"
         };
         public static List<string> Skills { get; set; } = new List<string>
         {
@@ -100,7 +100,7 @@ namespace DnD_Character_Creator.Helper_Classes
             "Sleight of Hand",
             "Stealth",
             "Survival",
-            "see options"
+            "1"
         };
         public static List<string> Stats { get; set; } = new List<string>
         {
@@ -155,7 +155,7 @@ namespace DnD_Character_Creator.Helper_Classes
             "Tough",
             "War Caster",
             "Weapon Master",
-            "see options"            
+            "1"            
         };
         public static List<string> LightArmor { get; set; } = new List<string>
         {
@@ -272,7 +272,7 @@ namespace DnD_Character_Creator.Helper_Classes
             "Pan flute",
             "Shawm",
             "Viol",
-            "see options"
+            "1"
         };
         public static List<string> ArtisanTools { get; set; } = new List<string>
         {
@@ -293,7 +293,7 @@ namespace DnD_Character_Creator.Helper_Classes
             "Tinker’s tools",
             "Weaver’s tools",
             "Woodcarver's tools",
-            "see options"
+            "1"
         };
         public static List<string> GamingSets { get; set; } = new List<string>
         {
@@ -301,15 +301,15 @@ namespace DnD_Character_Creator.Helper_Classes
             "Dragonchess set",
             "Playing card set",
             "Three-Dragon Ante set",
-            "see options"
+            "1"
         };
         public static string GetOption(List<string> list)
         {
             string entry = CLIHelper.GetStringInList(list);
-            if (entry == "see options")
+            if (entry == "1")
             {
                 Console.Clear();
-                list.Remove("see options");
+                list.Remove("1");
                 for (int i = 0; i < list.Count; i++)
                 {
                     Console.WriteLine(list[i]);
@@ -326,6 +326,27 @@ namespace DnD_Character_Creator.Helper_Classes
                 Console.WriteLine($"({i + 1}) {list[i]}");
             }
             int entry = CLIHelper.GetNumberInRange(1, list.Count);
+
+            return entry - 1;
+        }
+        public static int GetOptionIndex(List<string> list, string msg)
+        {
+            Console.WriteLine(msg);
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.WriteLine($"({i + 1}) {list[i]}");
+            }
+            int entry = CLIHelper.GetNumberInRange(1, list.Count);
+
+            return entry - 1;
+        }
+        public static int GetOptionIndex(string[] list)
+        {
+            for (int i = 0; i < list.Length; i++)
+            {
+                Console.WriteLine($"({i + 1}) {list[i]}");
+            }
+            int entry = CLIHelper.GetNumberInRange(1, list.Length);
 
             return entry - 1;
         }
