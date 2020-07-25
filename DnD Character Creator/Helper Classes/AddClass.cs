@@ -15,8 +15,7 @@ namespace DnD_Character_Creator.Helper_Classes
         public static void DetermineHP(Character character, CharacterClass class1)
         {
             Console.WriteLine("Would you like to roll for your HP or take the average?");
-            Console.WriteLine("(1) Take average");
-            Console.WriteLine("(2) Roll");
+            CLIHelper.Print2Choices("Take average", "Roll");
             int input = CLIHelper.GetNumberInRange(1, 2);
             int firstLvlHP = class1.HitDie + character.ConMod;
             int remainingLvls = class1.Lvl - 1;

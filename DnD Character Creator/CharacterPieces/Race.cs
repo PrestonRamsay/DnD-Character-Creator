@@ -39,6 +39,7 @@ namespace DnD_Character_Creator.Races
         public int MaxAgeEnd { get; set; }
         public List<string> Languages { get; set; } = new List<string>();
         public List<string> SkillProficiencies { get; set; } = new List<string>();
+        public List<string> ToolProficiencies { get; set; } = new List<string>();
         public List<string> Proficiencies { get; set; } = new List<string>();
         public List<string> Spells { get; set; } = new List<string>();
         public List<string> Feats { get; set; } = new List<string>();
@@ -139,15 +140,15 @@ namespace DnD_Character_Creator.Races
             string toolProficiency = CLIHelper.GetStringInList(toolsList);
             if (toolProficiency == "brewer")
             {
-                result.Proficiencies.Add("Brewer's Supplies");
+                result.ToolProficiencies.Add("Brewer's Supplies");
             }
             else if (toolProficiency == "mason")
             {
-                result.Proficiencies.Add("Mason's Tools");
+                result.ToolProficiencies.Add("Mason's Tools");
             }
             else
             {
-                result.Proficiencies.Add("Smith's Tools");
+                result.ToolProficiencies.Add("Smith's Tools");
             }
 
             result.RacialCon = 2;
@@ -183,15 +184,15 @@ namespace DnD_Character_Creator.Races
             string toolProficiency = CLIHelper.GetStringInList(toolsList);
             if (toolProficiency == "brewer")
             {
-                result.Proficiencies.Add("Brewer's Supplies");
+                result.ToolProficiencies.Add("Brewer's Supplies");
             }
             else if (toolProficiency == "mason")
             {
-                result.Proficiencies.Add("Mason's Tools");
+                result.ToolProficiencies.Add("Mason's Tools");
             }
             else
             {
-                result.Proficiencies.Add("Smith's Tools");
+                result.ToolProficiencies.Add("Smith's Tools");
             }
 
             result.RacialStr = 2;
@@ -277,7 +278,7 @@ namespace DnD_Character_Creator.Races
             result.Proficiencies.Add("Shortbows");
             result.Proficiencies.Add("Longswords");
             result.Proficiencies.Add("Longbows");
-            Console.WriteLine("Pick a cantrip from the Wizard's spell list. If you want to see the options enter 'see options'.");
+            Console.WriteLine($"Pick a cantrip from the Wizard's spell list. {Options.SeeOptions}");
             string cantrip = Options.GetOption(WizardSpells.Cantrips);
             result.Spells.Add($"{cantrip} - use Int to cast");
 
@@ -439,14 +440,14 @@ namespace DnD_Character_Creator.Races
             result.Languages.Add("Choice");
 
             Console.WriteLine("Half-Elves are very versatile. You get you pick two extra skill proficiencies." +
-                "\nEnter your first skill here. If you want to see the options enter 'see options'.");
+                $"\nEnter your first skill here. {Options.SeeOptions}");
             List<string> skillList = CLIHelper.CreateTossAwayList(Options.Skills);
             string firstSkill = Options.GetOption(skillList);
             firstSkill = CLIHelper.CapitalizeFirstLetter(firstSkill);
             result.SkillProficiencies.Add(firstSkill);
             skillList.Remove(firstSkill);
 
-            Console.WriteLine("Enter your second skill here. If you want to see the options enter 'see options'.");
+            Console.WriteLine($"Enter your second skill here. {Options.SeeOptions}");
             string secondSkill = Options.GetOption(skillList);
             secondSkill = CLIHelper.CapitalizeFirstLetter(secondSkill);
             result.SkillProficiencies.Add(secondSkill);
@@ -609,12 +610,12 @@ namespace DnD_Character_Creator.Races
             result.MaxAgeStart = 80;
             result.Languages.Add("Choice");
             Console.WriteLine("You get to pick an extra skill proficiency. Enter the skill you'd like here." +
-                "\nIf you want to see the options enter 'see options'.");
+                $"\n{Options.SeeOptions}");
             string pickedSkill = Options.GetOption(Options.Skills);
             pickedSkill = CLIHelper.CapitalizeFirstLetter(pickedSkill);
             result.SkillProficiencies.Add(pickedSkill);
             Console.WriteLine("You get to pick a feat. Enter the feat you'd like here." +
-                "\nIf you want to see the options enter 'see options'.");
+                $"\n{Options.SeeOptions}");
             string feat = Options.GetOption(Options.Feats);
             result.Feats.Add(feat);
 

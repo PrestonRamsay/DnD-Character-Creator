@@ -7,7 +7,7 @@ namespace DnD_Character_Creator.Backgrounds
     public class Background
     {
         public List<string> SkillProficiencies { get; set; } = new List<string>();
-        public List<string> Proficiencies { get; protected set; } = new List<string>();
+        public List<string> ToolProficiencies { get; set; } = new List<string>();
         public List<string> Languages { get; set; } = new List<string>();
         public List<string> Equipment { get; set; } = new List<string>();
         public int GP { get; set; }
@@ -93,8 +93,8 @@ namespace DnD_Character_Creator.Backgrounds
 
             result.SkillProficiencies.Add("Deception");
             result.SkillProficiencies.Add("Sleight of Hand");
-            result.Proficiencies.Add("Disguise kit");
-            result.Proficiencies.Add("Forgery kit");
+            result.ToolProficiencies.Add("Disguise kit");
+            result.ToolProficiencies.Add("Forgery kit");
             result.Equipment.Add("Fine clothes");
             result.Equipment.Add("Disguise kit");
             result.Equipment.Add("Belt pouch for coins");
@@ -142,8 +142,8 @@ namespace DnD_Character_Creator.Backgrounds
 
             result.SkillProficiencies.Add("Deception");
             result.SkillProficiencies.Add("Stealth");
-            result.Proficiencies.Add("Gaming set");
-            result.Proficiencies.Add("Thieves' tools");
+            result.ToolProficiencies.Add("Gaming set");
+            result.ToolProficiencies.Add("Thieves' tools");
             result.Equipment.Add("Crowbar");
             result.Equipment.Add("Dark common clothes with a hood");
             result.Equipment.Add("Belt pouch for coins");
@@ -192,10 +192,7 @@ namespace DnD_Character_Creator.Backgrounds
             Background result = new Background();
 
             Console.WriteLine("You have the favor of an admirer. Pick an object to represent that by entering the number next to it.");
-            Console.WriteLine("(1) Love letter from an admirer");
-            Console.WriteLine("(2) Lock of hair from an admirer");
-            Console.WriteLine("(3) Trinket from an admirer");
-
+            CLIHelper.Print3Choices("Love letter from an admirer", "Lock of hair from an admirer", "Trinket from an admirer");
             int choice = CLIHelper.GetNumberInRange(1, 3);
 
             if (choice == 1)
@@ -213,8 +210,8 @@ namespace DnD_Character_Creator.Backgrounds
 
             result.SkillProficiencies.Add("Acrobatics");
             result.SkillProficiencies.Add("Performance");
-            result.Proficiencies.Add("Disguise kit");
-            result.Proficiencies.Add("Musical instrument");
+            result.ToolProficiencies.Add("Disguise kit");
+            result.ToolProficiencies.Add("Musical instrument");
             result.Equipment.Add("Musical instrument");
             result.Equipment.Add("Costume");
             result.Equipment.Add("Belt pouch for coins");
@@ -268,8 +265,8 @@ namespace DnD_Character_Creator.Backgrounds
 
             result.SkillProficiencies.Add("Animal Handling");
             result.SkillProficiencies.Add("Survival");
-            result.Proficiencies.Add("Artisan tools");
-            result.Proficiencies.Add("Vehicles(land)");
+            result.ToolProficiencies.Add("Artisan's tools");
+            result.ToolProficiencies.Add("Vehicles(land)");
             result.Equipment.Add("Artisan's tools");
             result.Equipment.Add("Shovel");
             result.Equipment.Add("Iron pot");
@@ -324,7 +321,7 @@ namespace DnD_Character_Creator.Backgrounds
 
             result.SkillProficiencies.Add("Insight");
             result.SkillProficiencies.Add("Persuasion");
-            result.Proficiencies.Add("Artisan tools");
+            result.ToolProficiencies.Add("Artisan's tools");
             result.Languages.Add("Choice");
             result.Equipment.Add("Artisan's tools,");
             result.Equipment.Add("Letter of introduction from the guild");
@@ -392,7 +389,7 @@ namespace DnD_Character_Creator.Backgrounds
 
             result.SkillProficiencies.Add("Medicine");
             result.SkillProficiencies.Add("Religion");
-            result.Proficiencies.Add("Herbalism kit");
+            result.ToolProficiencies.Add("Herbalism kit");
             result.Languages.Add("Choice");
             result.Equipment.Add("Scroll case stuffed full of notes");
             result.Equipment.Add("Winter blanket");
@@ -445,7 +442,7 @@ namespace DnD_Character_Creator.Backgrounds
 
             result.SkillProficiencies.Add("History");
             result.SkillProficiencies.Add("Persuasion");
-            result.Proficiencies.Add("Gaming set");
+            result.ToolProficiencies.Add("Gaming set");
             result.Languages.Add("Choice");
             result.Equipment.Add("Fine clothes");
             result.Equipment.Add("Signet ring");
@@ -491,7 +488,7 @@ namespace DnD_Character_Creator.Backgrounds
 
             result.SkillProficiencies.Add("Athletics");
             result.SkillProficiencies.Add("Survival");
-            result.Proficiencies.Add("Musical Instrument");
+            result.ToolProficiencies.Add("Musical Instrument");
             result.Languages.Add("Choice");
             result.Equipment.Add("Staff");
             result.Equipment.Add("Hunting trap");
@@ -600,9 +597,7 @@ namespace DnD_Character_Creator.Backgrounds
             Background result = new Background();
             var luckyCharmExamples = new List<string>() { "rabbit foot", "small stone with a hole in the center", "random Trinket"};
             Console.WriteLine("Sailors get a lucky charm as a part of their equipment. Pick an option to determine it.");
-            Console.WriteLine("(1) See a list of examples, and write-in your own.");
-            Console.WriteLine("(2) Leave it as 'Lucky charm'.");
-
+            CLIHelper.Print2Choices("See a list of examples, and write-in your own.", "Leave it as 'Lucky charm'.");
             int choice = CLIHelper.GetNumberInRange(1, 2);
 
             if (choice == 1)
@@ -621,8 +616,8 @@ namespace DnD_Character_Creator.Backgrounds
 
             result.SkillProficiencies.Add("Athletics");
             result.SkillProficiencies.Add("Perception");
-            result.Proficiencies.Add("Navigator's tools");
-            result.Proficiencies.Add("Vehicles(water)");
+            result.ToolProficiencies.Add("Navigator's tools");
+            result.ToolProficiencies.Add("Vehicles(water)");
             result.Equipment.Add("Belaying Pin(can be used as a club)");
             result.Equipment.Add("50ft of silk rope");
             result.Equipment.Add("Common clothes");
@@ -664,9 +659,7 @@ namespace DnD_Character_Creator.Backgrounds
         {
             Background result = new Background();
             Console.WriteLine("Pick 1 or 2 to add to your equipment");
-            Console.WriteLine("(1) Bone dice");
-            Console.WriteLine("(2) Deck of cards");
-
+            CLIHelper.Print2Choices("Bone dice", "Deck of cards");
             int gamingChoice = CLIHelper.GetNumberInRange(1, 2);
 
             if (gamingChoice == 1)
@@ -680,10 +673,7 @@ namespace DnD_Character_Creator.Backgrounds
 
             var trophyExamples = new List<string>() { "Dagger", "Broken blade", "Piece of a banner" };
             Console.WriteLine("Soldiers get a trophy taken from a fallen enemy as a part of their equipment. Pick an option to determine it.");
-            Console.WriteLine("(1) See a list of examples to pick from");
-            Console.WriteLine("(2) Leave it as 'Trophy taken from a fallen enemy'.");
-            Console.WriteLine("(3) Write-in your own trophy.");
-
+            CLIHelper.Print3Choices("See a list of examples to pick from", "Leave it as 'Trophy taken from a fallen enemy'.", "Write-in your own trophy.");
             int trophyChoice = CLIHelper.GetNumberInRange(1, 3);
 
             if (trophyChoice == 1)
@@ -709,8 +699,8 @@ namespace DnD_Character_Creator.Backgrounds
 
             result.SkillProficiencies.Add("Athletics");
             result.SkillProficiencies.Add("Intimidation");
-            result.Proficiencies.Add("Gaming set");
-            result.Proficiencies.Add("Vehicles(land)");
+            result.ToolProficiencies.Add("Gaming set");
+            result.ToolProficiencies.Add("Vehicles(land)");
             result.Equipment.Add("Insignia of rank");
             result.Equipment.Add("Common clothes");
             result.Equipment.Add("Belt pouch for coins");
@@ -761,8 +751,8 @@ namespace DnD_Character_Creator.Backgrounds
 
             result.SkillProficiencies.Add("Sleight of Hand");
             result.SkillProficiencies.Add("Stealth");
-            result.Proficiencies.Add("Disguise kit");
-            result.Proficiencies.Add("Thieves' tools");
+            result.ToolProficiencies.Add("Disguise kit");
+            result.ToolProficiencies.Add("Thieves' tools");
             result.Equipment.Add("Small knife");
             result.Equipment.Add("Map of your home city");
             result.Equipment.Add("Pet mouse");

@@ -32,8 +32,7 @@ namespace DnD_Character_Creator
             var statsDisplay = new Stats();
             character = statsDisplay.AssignStats(character, stats);
             Console.WriteLine("Select an option based on your DM's preferences:");
-            Console.WriteLine("(1) Stats will max at 20");
-            Console.WriteLine("(2) There will not be a max for stats");
+            CLIHelper.Print2Choices("Stats will max at 20", "There will not be a max for stats");
             int input = CLIHelper.GetNumberInRange(1, 2);
 
             if (input == 2)
@@ -331,6 +330,7 @@ namespace DnD_Character_Creator
         }
         public void PrintCharacter(Character character)
         {
+            PickHolySymbol(character);
             string name = CLIHelper.GetString("Enter your character's name here:");
             character.Name = CLIHelper.CapitalizeFirstLetter(name);
             string deity = CLIHelper.GetString("Enter the name of your deity here:");
@@ -341,22 +341,24 @@ namespace DnD_Character_Creator
             string background = CLIHelper.CapitalizeFirstLetter(character.ChosenBackground);
             string saves = ListConcatenator(character.Saves);
             string lang = ListConcatenator(character.Languages);
+            string profs = ListConcatenator(character.Proficiencies);
+            string toolProfs = ListConcatenator(character.ToolProficiencies);
             string additionalBackgroundInfo = WriteAdditionalBackgroundProperty(character);
 
             Console.Clear();
             Console.WriteLine($"Name: {character.Name}           Height: {height}             Class: {@class}");
             Console.WriteLine($"Age: {character.Age}                Weight: {character.Weight} lbs.              Level: {character.Lvl}");
-            //Console.WriteLine($"Race: {race}                Deity: {character.Deity}                GP: {character.GP}");
+            Console.WriteLine($"Race: {race}                Deity: {character.Deity}                GP: {character.GP}");
             Console.WriteLine($"Alignment: {character.Alignment}                Speed: {character.Speed}                XP: {character.XP}");
-            //Console.WriteLine($"Background: {background}        Vision: {character.Vision}");
+            Console.WriteLine($"Background: {background}        Vision: {character.Vision}");
             Console.WriteLine("----------------------------------------------------------------------------------------------------------------");
             Console.WriteLine($"Str: {character.Str} + {character.StrMod}| Init: {character.Init}");
             Console.WriteLine($"Dex: {character.Dex} + {character.DexMod}| Proficiency Bonus + {character.ProficiencyBonus}");
             Console.WriteLine($"Con: {character.Con} + {character.ConMod}| AC: {character.AC} + Armor Bonuses");
             Console.WriteLine($"Int: {character.Int} + {character.IntMod}| HP: {character.HP}");
-            Console.WriteLine($"Wis: {character.Wis} + {character.WisMod}| Saves: ");
+            Console.WriteLine($"Wis: {character.Wis} + {character.WisMod}| Saves: {saves}");
             Console.WriteLine($"Cha: {character.Cha} + {character.ChaMod}");
-            //Console.WriteLine($"Languages: {lang}");
+            Console.WriteLine($"Languages: {lang}");
             Console.WriteLine("\nSkills:");
             Console.WriteLine("---------------------");
             foreach (string skill in character.Skills.Keys)
@@ -381,6 +383,12 @@ namespace DnD_Character_Creator
             {
                 Console.WriteLine($"{feat}");
             }
+            Console.WriteLine("\nProficiencies:");
+            Console.WriteLine("---------------------");
+            Console.WriteLine($"{profs}");
+            Console.WriteLine("\nTool Proficiencies:");
+            Console.WriteLine("---------------------");
+            Console.WriteLine($"{toolProfs}");
             Console.WriteLine("\nInventory:");
             Console.WriteLine("---------------------");
             foreach (string item in character.Equipment)
@@ -401,18 +409,23 @@ namespace DnD_Character_Creator
             }
             Console.WriteLine("\nYou've finished creating your character! Scroll up to see all the data");
         }
-        public string ListConcatenator(List<string> list)
+        public static string ListConcatenator(List<string> list)
         {
-            string returnString = list[0];
+            string returnString = "";
 
-            for (int i = 1; i < list.Count; i++)
+            if (list.Count > 0)
             {
-                returnString += $", {list[i]}";
-            }
+                returnString = list[0];
+
+                for (int i = 1; i < list.Count; i++)
+                {
+                    returnString += $", {list[i]}";
+                }
+            }            
             
             return returnString;
         }
-        public string WriteAdditionalBackgroundProperty(Character character)
+        public static string WriteAdditionalBackgroundProperty(Character character)
         {
             string backgroundString = character.ChosenBackground;
             string returnString = "";
@@ -456,6 +469,29 @@ namespace DnD_Character_Creator
             }
 
             return returnString;
+        }
+        public static void PickHolySymbol(Character character)
+        {
+            if (character.Equipment.Contains("Holy symbol"))
+            {
+                character.Equipment.Remove("Holy symbol");
+                Console.WriteLine("Pick a holy symbol from:");
+                CLIHelper.Print3Choices("Amulet", "Emblem", "Reliquary");
+                int input = CLIHelper.GetNumberInRange(1, 3);
+
+                if (input == 1)
+                {
+                    character.Equipment.Add(Options.HolySymbols[0]);
+                }
+                else if (input == 2)
+                {
+                    character.Equipment.Add(Options.HolySymbols[1]);
+                }
+                else
+                {
+                    character.Equipment.Add(Options.HolySymbols[2]);
+                }
+            }
         }
     }
 }

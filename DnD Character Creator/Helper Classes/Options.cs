@@ -7,6 +7,7 @@ namespace DnD_Character_Creator.Helper_Classes
 {
     public static class Options
     {
+        public static string SeeOptions = "If you would like to see the options enter 'see options'.";
         public static List<string> Classes { get; set; } = new List<string>
         {
             "Barbarian",
@@ -164,18 +165,18 @@ namespace DnD_Character_Creator.Helper_Classes
         };
         public static List<string> MediumArmor { get; set; } = new List<string>
         {
-            "(+2 AC)(10gp, 12lb.)",
-            "(+3 AC)(50gp, 20lb.)",
-            "(+4 AC, Stealth disadv)(50gp, 45lb.)",
-            "(+4 AC)(400gp, 20lb.)",
-            "(+5 AC, Stealth disadv)(750gp, 40lb.)"
+            "Hide(+2 AC)(10gp, 12lb.)",
+            "Chain shirt(+3 AC)(50gp, 20lb.)",
+            "Scale mail(+4 AC, Stealth disadv)(50gp, 45lb.)",
+            "Breastplate(+4 AC)(400gp, 20lb.)",
+            "Half plate(+5 AC, Stealth disadv)(750gp, 40lb.)"
         };
         public static List<string> HeavyArmor { get; set; } = new List<string>
         {
-            "(+4 AC, Stealth disadv)(30gp, 40lb.)",
-            "(+6 AC, Stealth disadv)(75gp, 55lb.)",
-            "(+7 AC, Stealth disadv)(200gp, 60lb.)",
-            "(+8 AC, Stealth disadv)(1,500gp, 65lb.)"
+            "Ring mail(+4 AC, Stealth disadv)(30gp, 40lb.)",
+            "Chain mail(+6 AC, Stealth disadv)(75gp, 55lb.)",
+            "Splint(+7 AC, Stealth disadv)(200gp, 60lb.)",
+            "Plate(+8 AC, Stealth disadv)(1,500gp, 65lb.)"
         };
         public static List<string> SimpleMeleeWeapons { get; set; } = new List<string>
         {
@@ -195,7 +196,7 @@ namespace DnD_Character_Creator.Helper_Classes
             "Light crossbow(1D8 piercing, Ammo 80/320, Loading, Two-Handed)(25gp, 5lb.)",
             "Dart(1D4 piercing, Finesse, Thrown 20/60)(5cp, 1/4lb.)",
             "Shortbow(1D6 piercing, Ammo 80/320, Two-Handed)(25gp, 2lb.)",
-            "Sling(1D4 bludgeoning, Ammo 30/120)(1sp, 0lb.)",
+            "Sling(1D4 bludgeoning, Ammo 30/120)(1sp, 0lb.)"
         };
         public static List<string> MartialMeleeWeapons { get; set; } = new List<string>
         {
@@ -228,13 +229,36 @@ namespace DnD_Character_Creator.Helper_Classes
         };
         public static List<string> Packs { get; set; } = new List<string>
         {
-            "Burglar's Pack()",
-            "Diplomat's Pack()",
-            "Dungeoneer's Pack()",
-            "Entertainer's Pack()",
+            "Burglar's Pack(backpack, 1000 ball bearings, 10ft of string, bell, 5 candles, crowbar, hammer, 10 pitons, hooded lantern," +
+            "\n2 flasks of oil, 5 days of rations, tinderbox, waterskin, 50ft of rope)",
+            "Diplomat's Pack(chest, 2 cases for maps/scrolls, fine clothes, bottle of ink, ink pen, lamp, 2 flasks of oil, 5 sheets of paper," +
+            "\nvial of perfume, sealing wax, soap)",
+            "Dungeoneer's Pack(backpack, crowbar, hammer, 10 pitons, 10 torches, tinderbox, 10 days of rations, waterskin, 50ft of rope)",
+            "Entertainer's Pack(backpack, bedroll, 2 costumes, 5 candles, 5 days of rations, waterskin, disguise kit",
             "Explorer's Pack(backpack, bedroll, mess kit, tinderbox, 10 torches, 10 days of rations, waterskin, 50ft of rope)",
-            "Priest's Pack()",
-            "Scholar's Pack()"
+            "Priest's Pack(backpack, blanket, 10 candles, tinderbox, alms box, 2 blocks of incense, censer, vestments, 2 days of rations, waterskin)",
+            "Scholar's Pack(backpack, book of lore, bottle of ink, ink pen, 10 sheets of parchment, little bag of sand, small knife)"
+        };
+        public static List<string> HolySymbols { get; set; } = new List<string>
+        {
+            "Holy symbol(amulet)",
+            "Holy symbol(emblem)",
+            "Holy symbol(reliquary)"
+        };
+        public static List<string> DruidicFocuses { get; set; } = new List<string>
+        {
+            "Druidic Focus(Sprig of mistletoe)",
+            "Druidic Focus(Totem)",
+            "Druidic Focus(Wooden Staff)",
+            "Druidic Focus(Yew wand)"
+        };
+        public static List<string> ArcaneFocuses { get; set; } = new List<string>
+        {
+            "Arcane Focus(Crystal)",
+            "Arcane Focus(Orb)",
+            "Arcane Focus(Rod)",
+            "Arcane Focus(Staff)",
+            "Arcane Focus(Wand)"
         };
         public static List<string> MusicalInstruments { get; set; } = new List<string>
         {
@@ -294,6 +318,16 @@ namespace DnD_Character_Creator.Helper_Classes
             }
 
             return entry;
+        }
+        public static int GetOptionIndex(List<string> list)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.WriteLine($"({i + 1}) {list[i]}");
+            }
+            int entry = CLIHelper.GetNumberInRange(1, list.Count);
+
+            return entry - 1;
         }
     }
 }

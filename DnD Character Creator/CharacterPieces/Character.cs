@@ -120,6 +120,7 @@ namespace DnD_Character_Creator
             { "Survival(Wis)", 0 }
         };
         public List<string> SkillProficiencies { get; set; } = new List<string>();
+        public List<string> ToolProficiencies { get; set; } = new List<string>();
         public List<string> Proficiencies { get; set; } = new List<string>();
         public string BackgroundFeature { get; set; }
         public string PersonalityTrait { get; set; }

@@ -29,9 +29,9 @@ namespace DnD_Character_Creator.CharacterPieces
             {
                 numberOfRages++;
                 Console.WriteLine("Pick a Primal Path that will give you features at levels 3, 6, 10, and 14.");
-                Console.WriteLine("(1) Path of the Berserker");
-                Console.WriteLine("(2) Path of the Totem Warrior");
+                CLIHelper.Print2Choices("Path of the Berserker", "Path of the Totem Warrior");
                 int input = CLIHelper.GetNumberInRange(1, 2);
+
                 if (input == 1)
                 {
                     PathName = "Path of the Berserker";
@@ -42,10 +42,9 @@ namespace DnD_Character_Creator.CharacterPieces
                 {
                     PathName = "Path of the Totem Warrior";
                     Console.WriteLine("Pick an animal to determine your feature.");
-                    Console.WriteLine("(1) Bear");
-                    Console.WriteLine("(2) Eagle");
-                    Console.WriteLine("(3) Wolf");
+                    CLIHelper.Print3Choices("Bear", "Eagle", "Wolf");
                     int animal = CLIHelper.GetNumberInRange(1, 3);
+
                     if (animal == 1)
                     {
                         result.ClassFeatures.Add("Totem Spirit(Bear)", "While raging, gain Resistance to all dmg except Psychic");
@@ -76,10 +75,9 @@ namespace DnD_Character_Creator.CharacterPieces
                 else
                 {
                     Console.WriteLine("Pick an animal to determine your feature.");
-                    Console.WriteLine("(1) Bear");
-                    Console.WriteLine("(2) Eagle");
-                    Console.WriteLine("(3) Wolf");
+                    CLIHelper.Print3Choices("Bear", "Eagle", "Wolf");
                     int animal = CLIHelper.GetNumberInRange(1, 3);
+
                     if (animal == 1)
                     {
                         result.ClassFeatures.Add("Aspect of the Beast(Bear)", "Double your carrying capacity, and gain adv on Str checks to" +
@@ -142,10 +140,9 @@ namespace DnD_Character_Creator.CharacterPieces
                 else
                 {
                     Console.WriteLine("Pick an animal to determine your feature.");
-                    Console.WriteLine("(1) Bear");
-                    Console.WriteLine("(2) Eagle");
-                    Console.WriteLine("(3) Wolf");
+                    CLIHelper.Print3Choices("Bear", "Eagle", "Wolf");
                     int animal = CLIHelper.GetNumberInRange(1, 3);
+
                     if (animal == 1)
                     {
                         result.ClassFeatures.Add("Totemic Attunement(Bear)", "While raging, hostile creatures within 5ft have disadv on atks that aren't against you." +

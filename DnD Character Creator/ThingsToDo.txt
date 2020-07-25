@@ -1,5 +1,5 @@
 ﻿
 create classes
-
-skill dups for half-elf and human
-fix martial melee weapon and simple wepon in the addClass class
+in addClass implement martial melee weapon, martial weapon, simple weapon, and simple melee weapon
+martial weapon2, simple melee weapon2
+when adding proficiencies make sure not to add dups

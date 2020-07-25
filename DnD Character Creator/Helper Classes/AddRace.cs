@@ -21,6 +21,7 @@ namespace DnD_Character_Creator.CLI_Classes
             
             character.Age = CLIHelper.GetNumberInRange(race.AdultAge, race.MaxAgeStart + 50);
             character.SkillProficiencies.AddRange(race.SkillProficiencies);
+            character.ToolProficiencies.AddRange(race.ToolProficiencies);
             character.Proficiencies.AddRange(race.Proficiencies);
             character.Spells.AddRange(race.Spells);
             character.Feats.AddRange(race.Feats);
@@ -43,8 +44,7 @@ namespace DnD_Character_Creator.CLI_Classes
             {
                 race.Languages.Remove("Choice");
                 race.Languages.AddRange(race.Languages);
-                Console.WriteLine("This race gets to know one language of your choice, enter it now. " +
-                    "If you'd like to see the options enter 'see options'.");
+                Console.WriteLine($"This race gets to know one language of your choice, enter it now. {Options.SeeOptions}");
                 string input = Options.GetOption(Options.Languages);
                 character.Languages.Add(input);
             }

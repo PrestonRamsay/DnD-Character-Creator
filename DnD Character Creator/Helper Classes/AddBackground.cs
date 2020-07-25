@@ -27,42 +27,42 @@ namespace DnD_Character_Creator.Helper_Classes
         }
         public static void AddProficiencies(Character character, Background background)
         {
-            if (background.Proficiencies.Contains("Musical instrument"))
+            if (background.ToolProficiencies.Contains("Musical instrument"))
             {
-                background.Proficiencies.Remove("Musical instrument");
-                Console.WriteLine("Enter a musical instrument you'd like to be proficient with. If you'd like to see the options enter 'see options'.");
+                background.ToolProficiencies.Remove("Musical instrument");
+                Console.WriteLine($"Enter a musical instrument you'd like to be proficient with. {Options.SeeOptions}");
                 string input = Options.GetOption(Options.MusicalInstruments);
-                background.Proficiencies.Add(input);
+                background.ToolProficiencies.Add(input);
             }
-            if (background.Proficiencies.Contains("Artisan's tools"))
+            if (background.ToolProficiencies.Contains("Artisan's tools"))
             {
-                background.Proficiencies.Remove("Artisan's tools");
-                Console.WriteLine("Enter a set of artisan's tools you'd like to be proficient with. If you'd like to see the options enter 'see options'.");
+                background.ToolProficiencies.Remove("Artisan's tools");
+                Console.WriteLine($"Enter a set of artisan's tools you'd like to be proficient with. {Options.SeeOptions}");
                 string input = Options.GetOption(Options.ArtisanTools);
-                background.Proficiencies.Add(input);
+                background.ToolProficiencies.Add(input);
             }
-            if (background.Proficiencies.Contains("Gaming set"))
+            if (background.ToolProficiencies.Contains("Gaming set"))
             {
-                background.Proficiencies.Remove("Gaming set");
-                Console.WriteLine("Enter a gaming set you'd like to be proficient with. If you'd like to see the options enter 'see options'.");
+                background.ToolProficiencies.Remove("Gaming set");
+                Console.WriteLine($"Enter a gaming set you'd like to be proficient with. {Options.SeeOptions}");
                 string input = Options.GetOption(Options.GamingSets);
-                background.Proficiencies.Add(input);
+                background.ToolProficiencies.Add(input);
             }
 
-            character.Proficiencies.AddRange(background.Proficiencies);
+            character.Proficiencies.AddRange(background.ToolProficiencies);
         }
         public static void AddLanguages(Character character, Background background)
         {
             if (background.Languages.Contains("Choice2"))
             {
                 Console.WriteLine("This background gets to know two languages of your choice, enter the first language now." +
-                    "\nIf you'd like to see the options enter 'see options'.");
+                    $"\n{Options.SeeOptions}");
                 background.Languages.Remove("Choice");
                 background.Languages.Remove("Choice2");
                 string firstLanguage = Options.GetOption(Options.Languages);
                 character.Languages.Add(firstLanguage);
 
-                Console.WriteLine("Enter the second langauge now. If you'd like to see the options enter 'see options'.");
+                Console.WriteLine($"Enter the second langauge now. {Options.SeeOptions}");
                 string secondLanguage = Options.GetOption(Options.Languages);
                 character.Languages.Add(secondLanguage);
 
@@ -70,7 +70,7 @@ namespace DnD_Character_Creator.Helper_Classes
             else if (background.Languages.Contains("Choice"))
             {
                 Console.WriteLine("This background gets to know one language of your choice, enter it now." +
-                    "\nIf you'd like to see the options enter 'see options'.");
+                    $"\n{Options.SeeOptions}");
                 background.Languages.Remove("Choice");
                 string input = Options.GetOption(Options.Languages);
                 character.Languages.Add(input);
@@ -81,21 +81,21 @@ namespace DnD_Character_Creator.Helper_Classes
             if (background.Equipment.Contains("Musical instrument"))
             {
                 background.Equipment.Remove("Musical instrument");
-                Console.WriteLine("Enter a musical instrument you'd like to add to your inventory. If you'd like to see the options enter 'see options'.");
+                Console.WriteLine($"Enter a musical instrument you'd like to add to your inventory. {Options.SeeOptions}");
                 string input = Options.GetOption(Options.MusicalInstruments);
                 background.Equipment.Add(input);
             }
             if (background.Equipment.Contains("Artisan's tools"))
             {
                 background.Equipment.Remove("Artisan's tools");
-                Console.WriteLine("Enter a set of artisan's tools you'd like to add to your inventory. If you'd like to see the options enter 'see options'.");
+                Console.WriteLine($"Enter a set of artisan's tools you'd like to add to your inventory. {Options.SeeOptions}");
                 string input = Options.GetOption(Options.ArtisanTools);
                 background.Equipment.Add(input);
             }
             if (background.Equipment.Contains("Gaming set"))
             {
                 background.Equipment.Remove("Gaming set");
-                Console.WriteLine("Enter a gaming set you'd like to add to your inventory. If you'd like to see the options enter 'see options'.");
+                Console.WriteLine($"Enter a gaming set you'd like to add to your inventory. {Options.SeeOptions}");
                 string input = Options.GetOption(Options.GamingSets);
                 background.Equipment.Add(input);
             }

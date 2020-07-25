@@ -93,7 +93,7 @@ namespace DnD_Character_Creator
             }
             while (gettingStringInList);
 
-            return userInput;
+            return CapitalizeFirstLetter(userInput);
         }
         public static int GetNumber()
         {
@@ -195,6 +195,22 @@ namespace DnD_Character_Creator
             }
 
             return returnString;
+        }
+        public static void Print2Choices(string str1, string str2)
+        {
+            var list = new List<string> { str1, str2 };
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.WriteLine($"({i + 1}) {list[i]}");
+            }
+        }
+        public static void Print3Choices(string str1, string str2, string str3)
+        {
+            var list = new List<string> { str1, str2, str3 };
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.WriteLine($"({i + 1}) {list[i]}");
+            }
         }
     }
 }

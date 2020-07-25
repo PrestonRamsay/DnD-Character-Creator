@@ -1,5 +1,4 @@
-﻿using DnD_Character_Creator.Backgrounds;
-using DnD_Character_Creator.Races;
+﻿using DnD_Character_Creator.Helper_Classes;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +10,7 @@ namespace DnD_Character_Creator
         public static string Prompt(string characterPiece)
         {
             return $"Type the name of the {characterPiece} you'd like your character to have. " +
-                $"If you want to see the options enter 'see options'.";
+                $"{Options.SeeOptions}";
         }
         public static string Prompt2(string characterPiece)
         {
