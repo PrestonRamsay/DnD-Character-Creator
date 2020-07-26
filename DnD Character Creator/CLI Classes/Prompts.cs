@@ -45,7 +45,7 @@ namespace DnD_Character_Creator
             Console.WriteLine();
             int index = 0;
             
-            if (answer == "pick")
+            if (answer == "Pick")
             {
                 Console.WriteLine($"Enter the number next to the {backgroundPiece} you want.");
                 index = Options.GetOptionIndex(backgroundProperty);
@@ -68,11 +68,11 @@ namespace DnD_Character_Creator
                         $"\nIf you'd like to pick from the list instead, enter 'pick'.");
                     string input = CLIHelper.GetString();
 
-                    if (input == "keep")
+                    if (input == "Keep")
                     {
                         gettingPiece = false;
                     }
-                    if (input == "pick")
+                    if (input == "Pick")
                     {
                         Console.WriteLine($"Enter the number next to the {backgroundPiece} you want.");
                         index = Options.GetOptionIndex(backgroundProperty);

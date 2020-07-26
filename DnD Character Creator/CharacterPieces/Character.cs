@@ -140,8 +140,9 @@ namespace DnD_Character_Creator
         public int CantripsKnown { get; set; }
         public int SpellsKnown { get; set; }
         public List<string> Cantrips { get; set; } = new List<string>();
-        public Dictionary<int, string> Spells { get; set; } = new Dictionary<int, string>();
+        public List<List<string>> Spells { get; set; } = new List<List<string>>();
         public Dictionary<int, int> SpellSlots { get; set; } = new Dictionary<int, int>();
         public List<string> Feats { get; set; } = new List<string>();
+        public string DragonColor { get; set; }
     }
 }

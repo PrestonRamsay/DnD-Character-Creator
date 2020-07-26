@@ -23,19 +23,19 @@ namespace DnD_Character_Creator
                 var answerList = new List<string> { "roll", "buy", "custom" };
                 string answer = CLIHelper.GetStringInList(answerList);
 
-                if (answer == "roll")
+                if (answer == "Roll")
                 {
                     Roll(stats);
                     Console.WriteLine(PrintStats(stats));
                     isValidEntry = true;
                 }
-                else if (answer == "buy")
+                else if (answer == "Buy")
                 {
                     Buy(stats);
                     Console.WriteLine(PrintStats(stats));
                     isValidEntry = true;
                 }
-                else if (answer == "custom")
+                else if (answer == "Custom")
                 {
                     Custom(stats);
                     Console.WriteLine(PrintStats(stats));
@@ -90,7 +90,7 @@ namespace DnD_Character_Creator
                         $"\nPoints remaining: {points}\n");
                     Dictionary<int, int> costOf = SetCosts();
 
-                    if (input == "see costs")
+                    if (input == "See costs")
                     {
                         Console.WriteLine(DisplayStatPointCosts(costOf));
                         Console.WriteLine("Enter a value between 8 and 15.");
@@ -132,7 +132,7 @@ namespace DnD_Character_Creator
                 {
                     Console.WriteLine(PrintStats(allStats));
                     string input2 = CLIHelper.GetString("If you'd like to start over: enter 'yes'. If you'd like to keep your stats: enter any key");
-                    if (input2 == "yes")
+                    if (input2 == "Yes")
                     {
                         points = 27;
                         allStats.Clear();

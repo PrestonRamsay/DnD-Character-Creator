@@ -48,63 +48,63 @@ namespace DnD_Character_Creator
             character.ChosenRace = raceString;
             var raceObject = new Race();
 
-            if (raceString == "dragonborn")
+            if (raceString == "Dragonborn")
             {
                 raceObject = Race.Dragonborn();
             }
-            else if (raceString == "hill dwarf")
+            else if (raceString == "Hill dwarf")
             {
                 raceObject = Race.HillDwarf();
             }
-            else if (raceString == "mountain dwarf")
+            else if (raceString == "Mountain dwarf")
             {
                 raceObject = Race.MountainDwarf();
             }
-            else if (raceString == "drow")
+            else if (raceString == "Drow")
             {
                 raceObject = Race.Drow();
             }
-            else if (raceString == "high elf")
+            else if (raceString == "High elf")
             {
                 raceObject = Race.HighElf();
             }
-            else if (raceString == "wood elf")
+            else if (raceString == "Wood elf")
             {
                 raceObject = Race.WoodElf();
             }
-            else if (raceString == "forest gnome")
+            else if (raceString == "Forest gnome")
             {
                 raceObject = Race.ForestGnome();
             }
-            else if (raceString == "rock gnome")
+            else if (raceString == "Rock gnome")
             {
                 raceObject = Race.RockGnome();
             }
-            else if (raceString == "half-elf")
+            else if (raceString == "Half-elf")
             {
                 raceObject = Race.HalfElf();
             }
-            else if (raceString == "half-orc")
+            else if (raceString == "Half-orc")
             {
                 raceObject = Race.HalfOrc();
             }
-            else if (raceString == "lightfoot halfling")
+            else if (raceString == "Lightfoot halfling")
             {
                 raceObject = Race.LightfootHalfling();
             }
-            else if (raceString == "stout halfling")
+            else if (raceString == "Stout halfling")
             {
                 raceObject = Race.StoutHalfling();
             }
-            else if (raceString == "variant human")
+            else if (raceString == "Variant human")
             {
                 raceObject = Race.VariantHuman();
             }
-            else if (raceString == "human")
+            else if (raceString == "Human")
             {
                 raceObject = Race.Human();
             }
-            else if (raceString == "tiefling")
+            else if (raceString == "Tiefling")
             {
                  raceObject = Race.Tiefling();
             }
@@ -145,11 +145,11 @@ namespace DnD_Character_Creator
             character.ChosenBackground = backgroundString;
             var backgroundObject = new Background();
 
-            if (backgroundString == "acolyte")
+            if (backgroundString == "Acolyte")
             {
                 backgroundObject = Background.Acolyte();
             }
-            else if (backgroundString == "charltan")
+            else if (backgroundString == "Charltan")
             {
                 backgroundObject = Background.Charltan();
                 Console.WriteLine("Every charltan has an angle he/she uses in preference to other schemes.");
@@ -173,11 +173,11 @@ namespace DnD_Character_Creator
                     character.Equipment.Add("10 stoppered bottles of colored liquid");
                 }
             }
-            else if (backgroundString == "criminal")
+            else if (backgroundString == "Criminal")
             {
                 backgroundObject = Background.Criminal();
             }
-            else if (backgroundString == "entertainer")
+            else if (backgroundString == "Entertainer")
             {
                 backgroundObject = Background.Entertainer();
                 Console.WriteLine("A good entertainer is versatile, spicing things up every performance with a variety of different routines." +
@@ -189,62 +189,62 @@ namespace DnD_Character_Creator
                     character.Routines.Add(backgroundObject.Routine[routineIndex]);
                 }
             }
-            else if (backgroundString == "folk hero")
+            else if (backgroundString == "Folk hero")
             {
                 backgroundObject = Background.FolkHero();
                 Console.WriteLine("You previously lived a simple life, but something happened that set you on a different path and marked you for greatness.");
                 int eventIndex = Prompts.BackgroundPrompts("defining event", backgroundObject.DefiningEvent);
                 character.DefiningEvent = backgroundObject.DefiningEvent[eventIndex];
             }
-            else if (backgroundString == "guild artisan")
+            else if (backgroundString == "Guild artisan")
             {
                 backgroundObject = Background.GuildArtisan();
                 Console.WriteLine("Guilds are groups of several artisans who practice the same trade.");
                 int businessIndex = Prompts.BackgroundPrompts("nature of your guild business", backgroundObject.GuildBusiness);
                 character.GuildBusiness = backgroundObject.GuildBusiness[businessIndex];
             }
-            else if (backgroundString == "hermit")
+            else if (backgroundString == "Hermit")
             {
                 backgroundObject = Background.Hermit();
                 Console.WriteLine("What was the reason for your isolation? What changed allowing you to end your solitude?");
                 int seclusionIndex = Prompts.BackgroundPrompts("nature of your seclusion", backgroundObject.LifeOfSeclusion);
                 character.LifeOfSeclusion = backgroundObject.LifeOfSeclusion[seclusionIndex];
             }
-            else if (backgroundString == "noble")
+            else if (backgroundString == "Noble")
             {
                 backgroundObject = Background.Noble();
             }
-            else if (backgroundString == "outlander")
+            else if (backgroundString == "Outlander")
             {
                 backgroundObject = Background.Outlander();
                 Console.WriteLine("What was your occupation during your wild in the wild?");
                 int originIndex = Prompts.BackgroundPrompts("origin", backgroundObject.Origin);
                 character.Origin = backgroundObject.Origin[originIndex];
             }
-            else if (backgroundString == "sage")
+            else if (backgroundString == "Sage")
             {
                 backgroundObject = Background.Sage();
             }
-            else if (backgroundString == "sailor")
+            else if (backgroundString == "Sailor")
             {
                 backgroundObject = Background.Sailor();
             }
-            else if (backgroundString == "soldier")
+            else if (backgroundString == "Soldier")
             {
                 backgroundObject = Background.Soldier();
             }
-            else if (backgroundString == "urchin")
+            else if (backgroundString == "Urchin")
             {
                 backgroundObject = Background.Urchin();
             }
 
-            if (backgroundString == "criminal" || backgroundString == "sage" || backgroundString == "soldier")
+            if (backgroundString == "Criminal" || backgroundString == "Sage" || backgroundString == "Soldier")
             {
-                if (backgroundString == "criminal")
+                if (backgroundString == "Criminal")
                 {
                     Console.WriteLine("There are many kinds of criminals, but every criminal has a preference for certain kinds of crime.");
                 }
-                else if (backgroundString == "sage")
+                else if (backgroundString == "Sage")
                 {
                     Console.WriteLine("What was the nature of your scholarly training?");
                 }
@@ -276,28 +276,28 @@ namespace DnD_Character_Creator
             var xp = new XPDecider(level);
             xp.SetXP(character);
 
-            if (character.ChosenRace == "drow")
-            {
-                if (level >= 3)
-                {
-                    character.Spells.Add(1, "Faerie Fire - 1/day, use Cha to cast");
-                }
-                if (level >= 5)
-                {
-                    character.Spells.Add(2, "Darkness - 1/day, use Cha to cast");
-                }
-            }
-            if (character.ChosenRace == "tiefling")
-            {
-                if (level >= 3)
-                {
-                    character.Spells.Add(1, "Charm Person - 1/long rest, use Cha to cast");
-                }
-                if (level >= 5)
-                {
-                    character.Spells.Add(2, "Entrall - 1/long rest, use Cha to cast");
-                }
-            }
+            //if (character.ChosenRace == "Drow")
+            //{
+            //    if (level >= 3)
+            //    {
+            //        character.Spells.Add(1, "Faerie Fire - 1/day, use Cha to cast");
+            //    }
+            //    if (level >= 5)
+            //    {
+            //        character.Spells.Add(2, "Darkness - 1/day, use Cha to cast");
+            //    }
+            //}
+            //if (character.ChosenRace == "Tiefling")
+            //{
+            //    if (level >= 3)
+            //    {
+            //        character.Spells.Add(1, "Charm Person - 1/long rest, use Cha to cast");
+            //    }
+            //    if (level >= 5)
+            //    {
+            //        character.Spells.Add(2, "Entrall - 1/long rest, use Cha to cast");
+            //    }
+            //}
         }
         public void RunAddClass(Character character)
         {
@@ -305,11 +305,11 @@ namespace DnD_Character_Creator
             character.ChosenClass = classString;
             var classObject = new CharacterClass(character.Lvl);
 
-            if (classString == "barbarian")
+            if (classString == "Barbarian")
             {
                 classObject = CharacterClass.Barbarian(character);
             }
-            if (classString == "bard" || classString == "cleric" || classString == "druid" || classString == "sorcerer" || classString == "warlock" || classString == "wizard")
+            if (classString == "Bard" || classString == "Cleric" || classString == "Druid" || classString == "Sorcerer" || classString == "Warlock" || classString == "Wizard")
             {
                 if (character.Lvl > 3)
                 {
@@ -333,14 +333,9 @@ namespace DnD_Character_Creator
         public void PrintCharacter(Character character)
         {
             PickHolySymbol(character);
-            string name = CLIHelper.GetString("Enter your character's name here:");
-            character.Name = CLIHelper.CapitalizeFirstLetter(name);
-            string deity = CLIHelper.GetString("Enter the name of your deity here:");
-            character.Deity = CLIHelper.CapitalizeFirstLetter(deity);
+            character.Name = CLIHelper.GetString("Enter your character's name here:");
+            character.Deity = CLIHelper.GetString("Enter the name of your deity here:");
             string height = CLIHelper.ConvertHeight(character.Height);
-            string @class = CLIHelper.CapitalizeFirstLetter(character.ChosenClass);
-            string race = CLIHelper.CapitalizeFirstLetter(character.ChosenRace);
-            string background = CLIHelper.CapitalizeFirstLetter(character.ChosenBackground);
             string saves = ListConcatenator(character.Saves);
             string lang = ListConcatenator(character.Languages);
             string profs = ListConcatenator(character.Proficiencies);
@@ -348,11 +343,15 @@ namespace DnD_Character_Creator
             string additionalBackgroundInfo = WriteAdditionalBackgroundProperty(character);
 
             Console.Clear();
-            Console.WriteLine($"Name: {character.Name}           Height: {height}             Class: {@class}");
+            Console.WriteLine($"Name: {character.Name}           Height: {height}             Class: {character.ChosenClass}");
             Console.WriteLine($"Age: {character.Age}                Weight: {character.Weight} lbs.              Level: {character.Lvl}");
-            Console.WriteLine($"Race: {race}                Deity: {character.Deity}                GP: {character.GP}");
+            Console.WriteLine($"Race: {character.ChosenRace}                Deity: {character.Deity}                GP: {character.GP}");
             Console.WriteLine($"Alignment: {character.Alignment}                Speed: {character.Speed}                XP: {character.XP}");
-            Console.WriteLine($"Background: {background}        Vision: {character.Vision}");
+            if (character.ChosenRace == "Dragonborn")
+            {
+                Console.Write($"Dragon color: {character.DragonColor}       ");
+            }
+            Console.WriteLine($"Background: {character.ChosenBackground}        Vision: {character.Vision}");
             Console.WriteLine("----------------------------------------------------------------------------------------------------------------");
             Console.WriteLine($"Str: {character.Str} + {character.StrMod}| Init: {character.Init}");
             Console.WriteLine($"Dex: {character.Dex} + {character.DexMod}| Proficiency Bonus + {character.ProficiencyBonus}");
@@ -405,10 +404,10 @@ namespace DnD_Character_Creator
             }
             Console.WriteLine("\nSpells:");
             Console.WriteLine("---------------------");
-            foreach (int spellLvl in character.Spells.Keys)
-            {
-                Console.WriteLine();
-            }
+            //foreach (int spellLvl in character.Spells.Keys)
+            //{
+            //    Console.WriteLine();
+            //}
             Console.WriteLine("\nYou've finished creating your character! Scroll up to see all the data");
         }
         public static string ListConcatenator(List<string> list)

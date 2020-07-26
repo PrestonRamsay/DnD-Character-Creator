@@ -25,6 +25,7 @@ namespace DnD_Character_Creator.CLI_Classes
             character.Proficiencies.AddRange(race.Proficiencies);
             character.Cantrips.AddRange(race.Cantrips);
             character.Feats.AddRange(race.Feats);
+            character.DragonColor = race.DragonColor;
         }
         public static void AddHeight(Character character, Race race)
         {            

@@ -43,6 +43,7 @@ namespace DnD_Character_Creator.Races
         public List<string> Proficiencies { get; set; } = new List<string>();
         public List<string> Cantrips { get; set; } = new List<string>();
         public List<string> Feats { get; set; } = new List<string>();
+        public string DragonColor { get; set; }
         public static Race Dragonborn()
         {           
             Race result = new Race();
@@ -51,56 +52,57 @@ namespace DnD_Character_Creator.Races
             List<string> colorList = new List<string> { "black", "blue", "brass", "bronze", "copper", "gold", "green",
                 "red", "silver", "white" };
             string color = CLIHelper.GetStringInList(colorList);
+            result.DragonColor = color;
 
-            if (color == "black")
+            if (color == "Black")
             {
                 result.RacialTraits.Add("Damage Resistance: gain Resistance to Acid");
                 result.RacialTraits.Add("Breath Weapon: deals 2D6 + (1D6 per 5 levels above 1st) damage, " +
                     "\nrecharge SR or LR, Con-based DC. 5 by 30ft line of Acid - Dex save");
             }
-            else if (color == "blue")
+            else if (color == "Blue")
             {
                 result.RacialTraits.Add("Damage Resistance: gain Resistance to Lightning");
                 result.RacialTraits.Add("Breath Weapon: deals 2D6 + (1D6 per 5 levels above 1st) damage, " +
                     "\nrecharge SR or LR, Con-based DC. 5 by 30ft line of Lightning - Dex save");
             }
-            else if (color == "brass")
+            else if (color == "Brass")
             {
                 result.RacialTraits.Add("Damage Resistance: gain Resistance to Fire");
                 result.RacialTraits.Add("Breath Weapon: deals 2D6 + (1D6 per 5 levels above 1st) damage, " +
                     "\nrecharge SR or LR, Con-based DC. 5 by 30ft line of Fire - Dex save");
             }
-            else if (color == "bronze")
+            else if (color == "Bronze")
             {
                 result.RacialTraits.Add("Damage Resistance: gain Resistance to Lightning");
                 result.RacialTraits.Add("Breath Weapon: deals 2D6 + (1D6 per 5 levels above 1st) damage, " +
                     "\nrecharge SR or LR, Con-based DC. 5 by 30ft line of Lightning - Dex save");
             }
-            else if (color == "copper")
+            else if (color == "Copper")
             {
                 result.RacialTraits.Add("Damage Resistance: gain Resistance to Acid");
                 result.RacialTraits.Add("Breath Weapon: deals 2D6 + (1D6 per 5 levels above 1st) damage, " +
                     "\nrecharge SR or LR, Con-based DC. 5 by 30ft line of Acid - Dex save");
             }
-            else if (color == "gold")
+            else if (color == "Gold")
             {
                 result.RacialTraits.Add("Damage Resistance: gain Resistance to Fire");
                 result.RacialTraits.Add("Breath Weapon: deals 2D6 + (1D6 per 5 levels above 1st) damage, " +
                     "\nrecharge SR or LR, Con-based DC. 15ft cone of Fire - Dex save");
             }
-            else if (color == "green")
+            else if (color == "Green")
             {
                 result.RacialTraits.Add("Damage Resistance: gain Resistance to Poison");
                 result.RacialTraits.Add("Breath Weapon: deals 2D6 + (1D6 per 5 levels above 1st) damage, " +
                     "\nrecharge SR or LR, Con-based DC. 15ft cone of Poison - Con save");
             }
-            else if (color == "red")
+            else if (color == "Red")
             {
                 result.RacialTraits.Add("Damage Resistance: gain Resistance to Fire");
                 result.RacialTraits.Add("Breath Weapon: deals 2D6 + (1D6 per 5 levels above 1st) damage, " +
                     "\nrecharge SR or LR, Con-based DC. 15ft cone of Fire - Dex save");
             }
-            else if (color == "silver")
+            else if (color == "Silver")
             {
                 result.RacialTraits.Add("Damage Resistance: gain Resistance to Cold");
                 result.RacialTraits.Add("Breath Weapon: deals 2D6 + (1D6 per 5 levels above 1st) damage, " +
@@ -138,11 +140,11 @@ namespace DnD_Character_Creator.Races
                 "\nentering 'brewer', 'mason', or 'smith'.");
             List<string> toolsList = new List<string> { "brewer", "mason", "smith" };
             string toolProficiency = CLIHelper.GetStringInList(toolsList);
-            if (toolProficiency == "brewer")
+            if (toolProficiency == "Brewer")
             {
                 result.ToolProficiencies.Add("Brewer's Supplies");
             }
-            else if (toolProficiency == "mason")
+            else if (toolProficiency == "Mason")
             {
                 result.ToolProficiencies.Add("Mason's Tools");
             }
@@ -182,11 +184,11 @@ namespace DnD_Character_Creator.Races
                 "\nentering 'brewer', 'mason', or 'smith'.");
             List<string> toolsList = new List<string> { "brewer", "mason", "smith" };
             string toolProficiency = CLIHelper.GetStringInList(toolsList);
-            if (toolProficiency == "brewer")
+            if (toolProficiency == "Brewer")
             {
                 result.ToolProficiencies.Add("Brewer's Supplies");
             }
-            else if (toolProficiency == "mason")
+            else if (toolProficiency == "Mason")
             {
                 result.ToolProficiencies.Add("Mason's Tools");
             }
@@ -376,7 +378,8 @@ namespace DnD_Character_Creator.Races
             Race result = new Race();
 
             Console.WriteLine("Pick a stat to increase by 1 by typing 'Str', 'Dex', 'Con', 'Int', or 'Wis'.");
-            var statOptions = CLIHelper.CreateTossAwayList(Options.Stats);
+            var statOptions = new List<string>();
+            statOptions.AddRange(Options.Stats);
             statOptions.Remove("Cha");
             string firstStat = CLIHelper.GetStringInList(statOptions);
             if (firstStat == "Str")
@@ -441,7 +444,8 @@ namespace DnD_Character_Creator.Races
 
             Console.WriteLine("Half-Elves are very versatile. You get you pick two extra skill proficiencies." +
                 $"\nEnter your first skill here. {Options.SeeOptions}");
-            List<string> skillList = CLIHelper.CreateTossAwayList(Options.Skills);
+            var skillList = new List<string>();
+            skillList.AddRange(Options.Skills);
             string firstSkill = Options.GetOption(skillList);
             firstSkill = CLIHelper.CapitalizeFirstLetter(firstSkill);
             result.SkillProficiencies.Add(firstSkill);

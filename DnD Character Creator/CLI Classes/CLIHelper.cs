@@ -29,7 +29,7 @@ namespace DnD_Character_Creator
             }
             while (String.IsNullOrEmpty(userInput));
 
-            return userInput;
+            return CapitalizeFirstLetter(userInput);
         }
         public static string GetStringInList(List<string> list)
         {
@@ -55,7 +55,7 @@ namespace DnD_Character_Creator
             }
             while (gettingStringInList);
 
-            return userInput;
+            return CapitalizeFirstLetter(userInput);
         }
         public static string GetSkill(List<string> list1, List<string> list2)
         {
@@ -169,17 +169,6 @@ namespace DnD_Character_Creator
             int heightInInches = feet + inches;
 
             return heightInInches;
-        }
-        public static List<string> CreateTossAwayList(List<string> list)
-        {
-            var tossAwayList = new List<string>();
-
-            for (int i = 0; i < list.Count; i++)
-            {
-                tossAwayList.Add(list[i].ToLower());
-            }
-
-            return tossAwayList;
         }
         public static string CapitalizeFirstLetter(string word)
         {

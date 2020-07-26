@@ -42,7 +42,7 @@ namespace DnD_Character_Creator.Races
         public int CantripsKnown { get; set; }
         public int SpellsKnown { get; set; }
         public List<string> Cantrips { get; set; } = new List<string>();
-        public Dictionary<int, string> Spells { get; set; } = new Dictionary<int, string>();
+        public List<List<string>> Spells { get; set; } = new List<List<string>>();
         public Dictionary<int, int> SpellSlots { get; set; } = new Dictionary<int, int>();
         public static void Get2Skills(Character character, string className, List<string> classSkills)
         {
@@ -145,7 +145,8 @@ namespace DnD_Character_Creator.Races
             result.Proficiencies.Add("Longswords");
             result.Proficiencies.Add("Rapiers");
             result.Proficiencies.Add("Shortswords");
-            List<string> instruments = Options.MusicalInstruments;
+            var instruments = new List<string>();
+            instruments.AddRange(Options.MusicalInstruments);
             Console.WriteLine("Pick 3 musical instruments you'd like to be proficient with. Enter them one at a time." +
                 $"\n{Options.SeeOptions}");
             string instrument1 = Options.GetOption(instruments);

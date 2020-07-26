@@ -67,7 +67,7 @@ namespace DnD_Character_Creator.Backgrounds
             result.PersonalityTrait[5] = "I am tolerant(or intolerant) of other faiths and respect (or condemn) the worship of other gods.";
             result.PersonalityTrait[6] = "I've enjoyed fine food, drink, and high society among my temple’s elite. Rough living grates on me.";
             result.PersonalityTrait[7] = "I’ve spent so long in the temple that I have little practical experience";
-            result.Ideal[0] = "Tradition. The ancient traditions o f worship and sacrifice must be preserved and upheld. (Lawful)";
+            result.Ideal[0] = "Tradition. The ancient traditions of worship and sacrifice must be preserved and upheld. (Lawful)";
             result.Ideal[1] = "Charity. I always try to help those in need, no matter what the personal cost. (Good)";
             result.Ideal[2] = "Change. We must help bring about the changes the gods are constantly working in the world. (Chaotic)";
             result.Ideal[3] = "Power. I hope to one day rise to the top of my faith’s religious hierarchy. (Lawful)";
@@ -598,17 +598,13 @@ namespace DnD_Character_Creator.Backgrounds
             Background result = new Background();
             var luckyCharmExamples = new List<string>() { "rabbit foot", "small stone with a hole in the center", "random Trinket"};
             Console.WriteLine("Sailors get a lucky charm as a part of their equipment. Pick an option to determine it.");
-            CLIHelper.Print2Choices("See a list of examples, and write-in your own.", "Leave it as 'Lucky charm'.");
+            CLIHelper.Print2Choices("Pick from a list of examples.", "Leave it as 'Lucky charm'.");
             int choice = CLIHelper.GetNumberInRange(1, 2);
 
             if (choice == 1)
             {
-                foreach (var item in luckyCharmExamples)
-                {
-                    Console.WriteLine(item);
-                }
-                string luckyCharm = CLIHelper.GetString();
-                result.Equipment.Add(luckyCharm);
+                int index = Options.GetOptionIndex(luckyCharmExamples);
+                result.Equipment.Add(luckyCharmExamples[index]);
             }
             else
             {
@@ -691,6 +687,7 @@ namespace DnD_Character_Creator.Backgrounds
             else
             {
                 string trophy = CLIHelper.GetString();
+                trophy = CLIHelper.CapitalizeFirstLetter(trophy);
                 result.Equipment.Add(trophy);
             }
 
