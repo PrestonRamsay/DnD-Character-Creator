@@ -29,8 +29,7 @@ namespace DnD_Character_Creator.Helper_Classes
         {
             if (background.ToolProficiencies.Contains("Musical instrument"))
             {
-                background.ToolProficiencies.
-                    ("Musical instrument");
+                background.ToolProficiencies.Remove("Musical instrument");
                 Console.WriteLine($"Enter a musical instrument you'd like to be proficient with. {Options.SeeOptions}");
                 string input = Options.GetOption(Options.MusicalInstruments);
                 background.ToolProficiencies.Add(input);

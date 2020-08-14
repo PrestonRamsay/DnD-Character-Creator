@@ -22,22 +22,26 @@ namespace DnD_Character_Creator
                 Console.WriteLine("Would you like to roll your stats, do the point buy system, or use another way? Enter 'roll' or 'buy' or 'custom'.");
                 var answerList = new List<string> { "roll", "buy", "custom" };
                 string answer = CLIHelper.GetStringInList(answerList);
+                Console.Clear();
 
                 if (answer == "Roll")
                 {
                     Roll(stats);
+                    Console.WriteLine();
                     Console.WriteLine(PrintStats(stats));
                     isValidEntry = true;
                 }
                 else if (answer == "Buy")
                 {
                     Buy(stats);
+                    Console.WriteLine();
                     Console.WriteLine(PrintStats(stats));
                     isValidEntry = true;
                 }
                 else if (answer == "Custom")
                 {
                     Custom(stats);
+                    Console.WriteLine();
                     Console.WriteLine(PrintStats(stats));
                     isValidEntry = true;
                 }

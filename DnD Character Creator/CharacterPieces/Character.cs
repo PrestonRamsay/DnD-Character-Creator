@@ -12,6 +12,10 @@ namespace DnD_Character_Creator
         {
             GP = 0;
             StatMax = true;
+            for (int i = 0; i < 9; i++)
+            {
+                Spells.Add(new List<string>());
+            }
         }
         public string Name { get; set; }
         public int Age { get; set; }

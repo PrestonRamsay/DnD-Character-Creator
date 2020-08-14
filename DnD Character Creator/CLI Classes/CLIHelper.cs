@@ -8,7 +8,7 @@ namespace DnD_Character_Creator
     {
         public static string GetString()
         {
-            string input = Console.ReadLine().ToLower();
+            string input = Console.ReadLine();
             return input;
         }        
         public static string GetString(string message)

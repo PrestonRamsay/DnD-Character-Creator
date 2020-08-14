@@ -64,9 +64,8 @@ namespace DnD_Character_Creator
                     index = dieRoll;
                     Console.WriteLine($"Your {backgroundPiece} is:" +
                         $"\n{backgroundProperty[index]}");
-                    Console.WriteLine($"If you'd like to keep that {backgroundPiece} enter 'keep', if not enter any key." +
+                    string input = CLIHelper.GetString($"If you'd like to keep that {backgroundPiece} enter 'keep', if not enter any key." +
                         $"\nIf you'd like to pick from the list instead, enter 'pick'.");
-                    string input = CLIHelper.GetString();
 
                     if (input == "Keep")
                     {

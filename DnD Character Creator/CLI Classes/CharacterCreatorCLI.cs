@@ -4,6 +4,7 @@ using DnD_Character_Creator.Helper_Classes;
 using DnD_Character_Creator.Races;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
@@ -23,7 +24,7 @@ namespace DnD_Character_Creator
             Console.WriteLine(@"| |   | '_ \ / _` | '__/ _` |/ __| __/ _ \ '__| | |   | '__/ _ \/ _` | __/ _ \| '__|");
             Console.WriteLine(@"| |___| | | | (_| | | | (_| | (__| ||  __/ |    | |___| | |  __/ (_| | || (_) | |   ");
             Console.WriteLine(@" \____|_| |_|\__,_|_|  \__,_|\___|\__\___|_|     \____|_|  \___|\__,_|\__\___/|_|   ");
-            Console.WriteLine("\n Welcome, hit enter to continue");
+            Console.WriteLine("\nWelcome, hit enter to continue");
             Console.ReadLine();
         }
         public void RunAddStats(Character character)
@@ -367,10 +368,10 @@ namespace DnD_Character_Creator
                 Console.WriteLine($"{skill} + {character.Skills[skill]}");
             }
             Console.WriteLine($"\nPersonality Trait: {character.PersonalityTrait}");
-            Console.WriteLine($"\nIdeal: {character.Ideal}");
-            Console.WriteLine($"\nBond: {character.Bond}");
-            Console.WriteLine($"\nFlaw: {character.Flaw}");
-            Console.WriteLine($"\nBackground Feature: {character.BackgroundFeature}");
+            Console.WriteLine($"Ideal: {character.Ideal}");
+            Console.WriteLine($"Bond: {character.Bond}");
+            Console.WriteLine($"Flaw: {character.Flaw}");
+            Console.WriteLine($"Background Feature: {character.BackgroundFeature}");
             Console.WriteLine($"{additionalBackgroundInfo}");
             Console.WriteLine($"\nRacial Traits:");
             Console.WriteLine("---------------------");
@@ -409,6 +410,100 @@ namespace DnD_Character_Creator
             //    Console.WriteLine();
             //}
             Console.WriteLine("\nYou've finished creating your character! Scroll up to see all the data");
+        }
+        public void WriteCharacterToDocument(Character character)
+        {
+            string currentDirectory = Directory.GetCurrentDirectory();
+            string characterSheet = "Character.txt";
+            string fullPath = Path.Combine(currentDirectory, characterSheet);
+
+            using (StreamWriter sw = new StreamWriter(fullPath, true))
+            {
+                string height = CLIHelper.ConvertHeight(character.Height);
+                string saves = ListConcatenator(character.Saves);
+                string lang = ListConcatenator(character.Languages);
+                string profs = ListConcatenator(character.Proficiencies);
+                string toolProfs = ListConcatenator(character.ToolProficiencies);
+                string additionalBackgroundInfo = WriteAdditionalBackgroundProperty(character);
+
+                sw.WriteLine($"Name: {character.Name}           Height: {height}             Class: {character.ChosenClass}");
+                sw.WriteLine($"Age: {character.Age}                Weight: {character.Weight} lbs.              Level: {character.Lvl}");
+                sw.WriteLine($"Race: {character.ChosenRace}                Deity: {character.Deity}                GP: {character.GP}");
+                sw.WriteLine($"Alignment: {character.Alignment}                Speed: {character.Speed}                XP: {character.XP}");
+                if (character.ChosenRace == "Dragonborn")
+                {
+                    sw.Write($"Dragon color: {character.DragonColor}       ");
+                }
+                sw.WriteLine($"Background: {character.ChosenBackground}        Vision: {character.Vision}");
+                sw.WriteLine("----------------------------------------------------------------------------------------------------------------");
+                sw.WriteLine($"Str: {character.Str} + {character.StrMod}| Init: {character.Init}");
+                sw.WriteLine($"Dex: {character.Dex} + {character.DexMod}| Proficiency Bonus + {character.ProficiencyBonus}");
+                sw.WriteLine($"Con: {character.Con} + {character.ConMod}| AC: {character.AC} + Armor Bonuses");
+                sw.WriteLine($"Int: {character.Int} + {character.IntMod}| HP: {character.HP}");
+                sw.WriteLine($"Wis: {character.Wis} + {character.WisMod}| Saves: {saves}");
+                sw.WriteLine($"Cha: {character.Cha} + {character.ChaMod}");
+                sw.WriteLine($"Languages: {lang}");
+                sw.WriteLine("\nSkills:");
+                sw.WriteLine("---------------------");
+                foreach (string skill in character.Skills.Keys)
+                {
+                    sw.WriteLine($"{skill} + {character.Skills[skill]}");
+                }
+                sw.WriteLine($"\nPersonality Trait: {character.PersonalityTrait}");
+                sw.WriteLine($"Ideal: {character.Ideal}");
+                sw.WriteLine($"Bond: {character.Bond}");
+                sw.WriteLine($"Flaw: {character.Flaw}");
+                sw.WriteLine($"Background Feature: {character.BackgroundFeature}");
+                sw.WriteLine($"{additionalBackgroundInfo}");
+                sw.WriteLine($"\nRacial Traits:");
+                sw.WriteLine("---------------------");
+                foreach (string trait in character.RacialTraits)
+                {
+                    sw.WriteLine($"{trait}");
+                }
+                sw.WriteLine($"\nFeats:");
+                sw.WriteLine("---------------------");
+                foreach (string feat in character.Feats)
+                {
+                    sw.WriteLine($"{feat}");
+                }
+                sw.WriteLine("\nProficiencies:");
+                sw.WriteLine("---------------------");
+                sw.WriteLine($"{profs}");
+                sw.WriteLine("\nTool Proficiencies:");
+                sw.WriteLine("---------------------");
+                sw.WriteLine($"{toolProfs}");
+                sw.WriteLine("\nInventory:");
+                sw.WriteLine("---------------------");
+                foreach (string item in character.Equipment)
+                {
+                    sw.WriteLine($"{item}");
+                }
+                sw.WriteLine("\nClass Features:");
+                sw.WriteLine("---------------------");
+                foreach (string feature in character.ClassFeatures.Keys)
+                {
+                    sw.WriteLine($"{feature}: {character.ClassFeatures[feature]}");
+                }
+                sw.WriteLine("\nSpells:");
+                sw.WriteLine("---------------------");
+                //foreach (int spellLvl in character.Spells.Keys)
+                //{
+                //    sw.WriteLine();
+                //}
+            }
+        }
+        public bool FinalPrompt()
+        {
+            bool returnBool = true;
+            string input = CLIHelper.GetString("\nDo you want to create another character? If yes enter 'yes' if not hit any key.");
+
+            if (input == "Yes")
+            {
+                returnBool = false;
+            }
+
+            return returnBool;
         }
         public static string ListConcatenator(List<string> list)
         {

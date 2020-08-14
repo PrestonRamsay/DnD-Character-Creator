@@ -164,7 +164,7 @@ namespace DnD_Character_Creator.Helper_Classes
         {
             for (int i = 0; i < class1.Spells.Count; i++)
             {
-                character.Spells[i].AddRange(class1.Spells[i]);
+                character.Spells[i].Add("");
             }
         }
     }

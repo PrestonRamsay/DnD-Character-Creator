@@ -10,19 +10,24 @@ namespace DnD_Character_Creator
     class Program
     {
         static void Main()
-        {            
+        {
+            bool creatingCharacter = true;
             CharacterCreatorCLI cli = new CharacterCreatorCLI();
-            Character newCharacter = new Character();
             cli.PrintHeader();
 
-            cli.RunAddStats(newCharacter);
-            cli.RunAddRace(newCharacter);
-            cli.RunAddBackground(newCharacter);
-            cli.RunGetLvl(newCharacter);
-            cli.RunAddClass(newCharacter);
-            cli.PrintCharacter(newCharacter);
-            Console.ReadLine();
-            Console.ReadLine();
+            while (creatingCharacter)
+            {
+                Character newCharacter = new Character();
+
+                cli.RunAddStats(newCharacter);
+                cli.RunAddRace(newCharacter);
+                cli.RunAddBackground(newCharacter);
+                cli.RunGetLvl(newCharacter);
+                cli.RunAddClass(newCharacter);
+                cli.PrintCharacter(newCharacter);
+
+                creatingCharacter = cli.FinalPrompt();
+            }
         }    
     }
 }
