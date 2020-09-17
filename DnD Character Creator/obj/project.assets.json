@@ -8,23 +8,19 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "C:\\Users\\Student\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\15136\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Student\\Desktop\\DnD Character Creator\\DnD Character Creator\\DnD Character Creator.csproj",
+      "projectUniqueName": "C:\\Users\\15136\\Documents\\Projects\\DnD-Character-Creator\\DnD Character Creator\\DnD Character Creator.csproj",
       "projectName": "DnD Character Creator",
-      "projectPath": "C:\\Users\\Student\\Desktop\\DnD Character Creator\\DnD Character Creator\\DnD Character Creator.csproj",
-      "packagesPath": "C:\\Users\\Student\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Student\\Desktop\\DnD Character Creator\\DnD Character Creator\\obj\\",
+      "projectPath": "C:\\Users\\15136\\Documents\\Projects\\DnD-Character-Creator\\DnD Character Creator\\DnD Character Creator.csproj",
+      "packagesPath": "C:\\Users\\15136\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\15136\\Documents\\Projects\\DnD-Character-Creator\\DnD Character Creator\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Student\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\15136\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -62,7 +58,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
       }
     }
   }
