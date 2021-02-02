@@ -603,7 +603,7 @@ namespace DnD_Character_Creator.Backgrounds
 
             if (choice == 1)
             {
-                int index = Options.GetOptionIndex(luckyCharmExamples);
+                int index = CLIHelper.PrintChoices(luckyCharmExamples);
                 result.Equipment.Add(luckyCharmExamples[index]);
             }
             else
@@ -675,7 +675,7 @@ namespace DnD_Character_Creator.Backgrounds
 
             if (trophyChoice == 1)
             {
-                int index = Options.GetOptionIndex(trophyExamples);
+                int index = CLIHelper.PrintChoices(trophyExamples);
                 string trophy = trophyExamples[index];
                 result.Equipment.Add(trophy + " from a fallen enemy");
             }
@@ -686,7 +686,7 @@ namespace DnD_Character_Creator.Backgrounds
             }
             else
             {
-                string trophy = CLIHelper.GetString();
+                string trophy = Console.ReadLine().ToLower().Trim();
                 trophy = CLIHelper.CapitalizeFirstLetter(trophy);
                 result.Equipment.Add(trophy);
             }

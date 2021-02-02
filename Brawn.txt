@@ -1,0 +1,101 @@
+Name: Brawn, the beast           Height: 6' 1"             Class: Paladin
+Age: 29                Weight: 200 lbs.              Level: 3
+Race: Variant human                Deity: N/a                GP: 140
+Alignment: C-N                Speed: 30ft                XP: 900
+Background: Soldier        Vision: Lowlight 60ft
+----------------------------------------------------------------------------------------------------------------
+Str: 18 + 4| Init: 2
+Dex: 14 + 2| Proficiency Bonus: +2
+Con: 15 + 2| AC: 12 + Armor Bonuses
+Int: 12 + 1| HP: 28
+Wis: 15 + 2| Saves: Wis, Cha
+Cha: 16 + 3
+Languages: Common, Sylvan
+
+Skills:
+------------------------------------
+Acrobatics(Dex) + 2
+Animal Handling(Wis) + 2
+Arcana(Int) + 1
+Athletics(Str) + 6
+Deception(Cha) + 3
+History(Int) + 1
+Insight(Wis) + 4
+Intimidation(Cha) + 3
+Investigation(Int) + 1
+Medicine(Wis) + 2
+Nature(Int) + 3
+Perception(Wis) + 2
+Performance(Cha) + 3
+Persuasion(Cha) + 3
+Religion(Int) + 3
+Sleight of Hand(Dex) + 2
+Stealth(Dex) + 2
+Survival(Wis) + 2
+
+Personality Trait: I enjoy being strong and like breaking things.
+Ideal: Independence. When people follow orders blindly, they embrace a kind of tyranny. (Chaotic)
+Bond: Those who fight beside me are those worth dying for.
+Flaw: I have little respect for anyone who is not a proven warrior.
+Background Feature: Military Rank: soldiers loyal to your former military organization still recognize your authority,
+deferring to you if they are a lower rank. You can exert your influence over other soldiers and requisition simple
+equipment or horses for temporary use. You can usually gain access to friendly military encampments/fortresses.
+
+
+Racial Traits:
+------------------------------------
+
+Feats:
+------------------------------------
+Great weapon master
+
+Proficiencies:
+------------------------------------
+Vehicles(land), Dice set, Light armor, Medium armor, Heavy armor, Shields, Simple weapons, Martial weapons
+
+Tool Proficiencies:
+------------------------------------
+
+
+Inventory:
+------------------------------------
+Bone dice
+Trophy taken from a fallen enemy
+Insignia of rank
+Common clothes
+Belt pouch for coins
+5 Javelin(1D6 piercing, Thrown 30/120)(5sp, 2lb.)
+Priest's Pack(backpack, blanket, 10 candles, tinderbox, alms box, 2 blocks of incense, censer, vestments,
+2 days of rations, waterskin)
+Chain mail(+6 AC, Stealth disadv)(75gp, 55lb.)
+Greatsword(2D6 slashing, Heavy, Two-Handed)(50gp, 6lb.)
+Morningstar(1D8 piercing)(15gp, 4lb.)
+Holy symbol(emblem)
+
+Class Features:
+------------------------------------
+Divine Sense: action, 60ft, 1 + Cha/LR, know location and type of celestials, fiend, undead
+Lay on Hands: heal lvl x 5 HP
+Divine Smite: 2D8 + 1D8/lvl(above 1), +1D8 if undead/fiend
+Fighting Style(Great Weapon Fighting): reroll 1s and 2s on dmg with two-handed/versatile wep
+Divine Health: disease immunity
+Channel Divinity(Nature's Wrath): action, 10ft, Str/Dex save - restrain
+Channel Divinity(Turn the Faithless): action, 30ft, 1min, Wis save, turn fiend/fey
+
+Spells:
+------------------------------------
+1- Ensnaring Strike*, Speak with Animals*
+2- 
+3- 
+4- 
+5- 
+6- 
+7- 
+8- 
+9- 
+
+
+
+End of character sheet
+
+

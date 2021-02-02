@@ -1,6 +1,4 @@
-﻿using DnD_Character_Creator.Backgrounds;
-using DnD_Character_Creator.Races;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,11 +9,9 @@ namespace DnD_Character_Creator
         public Character()
         {
             GP = 0;
-            StatMax = true;
-            for (int i = 0; i < 9; i++)
-            {
-                Spells.Add(new List<string>());
-            }
+            StatMax = 20;
+            SpellsKnown = 0;
+            Archetype = "";
         }
         public string Name { get; set; }
         public int Age { get; set; }
@@ -33,55 +29,60 @@ namespace DnD_Character_Creator
         public string Speed { get; set; }
         public string Vision { get; set; }
         public string ChosenClass { get; set; }
+        public string Archetype { get; set; }
         public int Lvl { get; set; }
         public double XP { get; set; }
-        public bool StatMax { get; set; }
+        public int StatMax { get; set; }
         public int Str { get; set; }
         public int Dex { get; set; }
         public int Con { get; set; }
         public int Int { get; set; }
         public int Wis { get; set; }
         public int Cha { get; set; }
+        private int GetMod(int stat)
+        {
+            return (stat - 10) / 2;
+        }
         public int StrMod
         {
             get
             {
-                return (Str - 10) / 2;
+                return GetMod(Str);
             }
         }
         public int DexMod
         {
             get
             {
-                return (Dex - 10) / 2;
+                return GetMod(Dex);
             }
         }
         public int ConMod
         {
             get
             {
-                return (Con - 10) / 2;
+                return GetMod(Con);
             }
         }
         public int IntMod
         {
             get
             {
-                return (Int - 10) / 2;
+                return GetMod(Int);
             }
         }
         public int WisMod
         {
             get
             {
-                return (Wis - 10) / 2;
+                return GetMod(Wis);
             }
         }
         public int ChaMod
         {
             get
             {
-                return (Cha - 10) / 2;
+                return GetMod(Cha);
             }
         }
         public int Init
@@ -144,8 +145,30 @@ namespace DnD_Character_Creator
         public int CantripsKnown { get; set; }
         public int SpellsKnown { get; set; }
         public List<string> Cantrips { get; set; } = new List<string>();
-        public List<List<string>> Spells { get; set; } = new List<List<string>>();
-        public Dictionary<int, int> SpellSlots { get; set; } = new Dictionary<int, int>();
+        public Dictionary<int, List<string>> Spells { get; set; } = new Dictionary<int, List<string>>
+        {
+            { 1, new List<string>() },
+            { 2, new List<string>() },
+            { 3, new List<string>() },
+            { 4, new List<string>() },
+            { 5, new List<string>() },
+            { 6, new List<string>() },
+            { 7, new List<string>() },
+            { 8, new List<string>() },
+            { 9, new List<string>() }
+        };
+        public Dictionary<int, int> SpellSlots { get; set; } = new Dictionary<int, int>
+        {
+            { 1, 0 },
+            { 2, 0 },
+            { 3, 0 },
+            { 4, 0 },
+            { 5, 0 },
+            { 6, 0 },
+            { 7, 0 },
+            { 8, 0 },
+            { 9, 0 }
+        };
         public List<string> Feats { get; set; } = new List<string>();
         public string DragonColor { get; set; }
     }

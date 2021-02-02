@@ -1,5 +1,4 @@
-﻿using DnD_Character_Creator.Races;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,13 +18,14 @@ namespace DnD_Character_Creator
             {
                 Character newCharacter = new Character();
 
+                cli.RunGetLvl(newCharacter);
                 cli.RunAddStats(newCharacter);
                 cli.RunAddRace(newCharacter);
                 cli.RunAddBackground(newCharacter);
-                cli.RunGetLvl(newCharacter);
-                cli.RunAddClass(newCharacter);
+                cli.RunAddClass(newCharacter, newCharacter.ChosenClass);
                 cli.PrintCharacter(newCharacter);
-
+                cli.WriteCharacterToDocument(newCharacter);
+                 
                 creatingCharacter = cli.FinalPrompt();
             }
         }    

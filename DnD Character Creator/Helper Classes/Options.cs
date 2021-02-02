@@ -21,8 +21,7 @@ namespace DnD_Character_Creator.Helper_Classes
             "Rogue",
             "Sorcerer",
             "Warlock",
-            "Wizard",
-            "1"
+            "Wizard"
         };
         public static List<string> Races { get; set; } = new List<string>
         {
@@ -40,12 +39,10 @@ namespace DnD_Character_Creator.Helper_Classes
             "Stout Halfling",
             "Human",
             "Variant Human",
-            "Tiefling",
-            "1"
+            "Tiefling"
         };
         public static List<string> Languages { get; set; } = new List<string>
         {
-            "Common",
             "Dwarven",
             "Elven",
             "Giant",
@@ -60,8 +57,7 @@ namespace DnD_Character_Creator.Helper_Classes
             "Infernal",
             "Primordial",
             "Sylvan",
-            "Undercommon",
-            "1"
+            "Undercommon"
         };
         public static List<string> Backgrounds { get; set; } = new List<string>
         {
@@ -77,8 +73,7 @@ namespace DnD_Character_Creator.Helper_Classes
             "Sage",
             "Sailor",
             "Soldier",
-            "Urchin",
-            "1"
+            "Urchin"
         };
         public static List<string> Skills { get; set; } = new List<string>
         {
@@ -99,8 +94,7 @@ namespace DnD_Character_Creator.Helper_Classes
             "Religion",
             "Sleight of Hand",
             "Stealth",
-            "Survival",
-            "1"
+            "Survival"
         };
         public static List<string> Stats { get; set; } = new List<string>
         {
@@ -113,6 +107,7 @@ namespace DnD_Character_Creator.Helper_Classes
         };
         public static List<string> Feats { get; set; } = new List<string>
         {
+            "Acute Fighting",
             "Alert",
             "Athlete",
             "Actor",
@@ -123,12 +118,16 @@ namespace DnD_Character_Creator.Helper_Classes
             "Dungeon Delver",
             "Durable",
             "Elemental Adept",
+            "Finesse Weapon Master",
             "Grappler",
             "Great Weapon Master",
             "Healer",
             "Heavily Armored",
             "Heavy Armor Master",
+            "Improved Critical",
+            "Insightful Reflexes",
             "Inspiring Leader",
+            "Jack of All Trades",
             "Keen Mind",
             "Lightly Armored",
             "Linguist",
@@ -141,7 +140,10 @@ namespace DnD_Character_Creator.Helper_Classes
             "Moderately Armored",
             "Mounted Combatant",
             "Observant",
+            "Point Blank Shot",
             "Polearm Master",
+            "Rapid Shot",
+            "Regeneration",
             "Resilient",
             "Ritual Caster",
             "Savage Attacker",
@@ -149,13 +151,17 @@ namespace DnD_Character_Creator.Helper_Classes
             "Sharpshooter",
             "Shield Master",
             "Skilled",
+            "Skirmisher",
             "Skulker",
+            "Spell Focus",
             "Spell Sniper",
             "Tavern Brawler",
             "Tough",
+            "Unarmored Defense",
             "War Caster",
+            "Weapon Focus",
             "Weapon Master",
-            "1"            
+            "Whirlwind Attack"        
         };
         public static List<string> LightArmor { get; set; } = new List<string>
         {
@@ -236,7 +242,8 @@ namespace DnD_Character_Creator.Helper_Classes
             "Dungeoneer's Pack(backpack, crowbar, hammer, 10 pitons, 10 torches, tinderbox, 10 days of rations, waterskin, 50ft of rope)",
             "Entertainer's Pack(backpack, bedroll, 2 costumes, 5 candles, 5 days of rations, waterskin, disguise kit",
             "Explorer's Pack(backpack, bedroll, mess kit, tinderbox, 10 torches, 10 days of rations, waterskin, 50ft of rope)",
-            "Priest's Pack(backpack, blanket, 10 candles, tinderbox, alms box, 2 blocks of incense, censer, vestments, 2 days of rations, waterskin)",
+            "Priest's Pack(backpack, blanket, 10 candles, tinderbox, alms box, 2 blocks of incense, censer, vestments," +
+            "\n2 days of rations, waterskin)",
             "Scholar's Pack(backpack, book of lore, bottle of ink, ink pen, 10 sheets of parchment, little bag of sand, small knife)"
         };
         public static List<string> HolySymbols { get; set; } = new List<string>
@@ -276,22 +283,22 @@ namespace DnD_Character_Creator.Helper_Classes
         };
         public static List<string> ArtisanTools { get; set; } = new List<string>
         {
-            "Alchemist’s supplies",
-            "Brewer’s supplies",
+            "Alchemist's supplies",
+            "Brewer's supplies",
             "Calligrapher's supplies",
-            "Carpenter’s tools",
-            "Cartographer’s tools ",
-            "Cobbler’s tools",
-            "Cook’s utensils",
-            "Glassblower’s tools",
-            "Jeweler’s tools",
-            "Leatherworker’s tools",
-            "Mason’s tools",
-            "Painter’s supplies",
-            "Potter’s tools",
-            "Smith’s tools",
-            "Tinker’s tools",
-            "Weaver’s tools",
+            "Carpenter's tools",
+            "Cartographer's tools ",
+            "Cobbler's tools",
+            "Cook's utensils",
+            "Glassblower's tools",
+            "Jeweler's tools",
+            "Leatherworker's tools",
+            "Mason's tools",
+            "Painter's supplies",
+            "Potter's tools",
+            "Smith's tools",
+            "Tinker's tools",
+            "Weaver's tools",
             "Woodcarver's tools",
             "1"
         };
@@ -300,55 +307,70 @@ namespace DnD_Character_Creator.Helper_Classes
             "Dice set",
             "Dragonchess set",
             "Playing card set",
-            "Three-Dragon Ante set",
-            "1"
+            "Three-Dragon Ante set"
         };
-        public static string GetOption(List<string> list)
+        public static Dictionary<string, string> FightingStyles { get; set; } = new Dictionary<string, string>
         {
-            string entry = CLIHelper.GetStringInList(list);
-            if (entry == "1")
-            {
-                Console.Clear();
-                list.Remove("1");
-                for (int i = 0; i < list.Count; i++)
-                {
-                    Console.WriteLine(list[i]);
-                }
-                entry = CLIHelper.GetStringInList(list);
-            }
-
-            return entry;
-        }
-        public static int GetOptionIndex(List<string> list)
+            { "Archery", "+2 atk with ranged wep" },
+            { "Defense", "+1 AC in armor" },
+            { "Dueling", "+2 dmg when only wielding one-handed wep" },
+            { "Great Weapon Fighting", "reroll 1s and 2s on dmg with two-handed/versatile wep" },
+            { "Protection", "when adj ally is attacked, use reaction to impose disadv, must wield shield" },
+            { "Two-Weapon Fighting", "off-hand dmg adds stat mod" }
+        };
+        public static Dictionary<string, string> Maneuvers { get; set; } = new Dictionary<string, string>
         {
-            for (int i = 0; i < list.Count; i++)
-            {
-                Console.WriteLine($"({i + 1}) {list[i]}");
-            }
-            int entry = CLIHelper.GetNumberInRange(1, list.Count);
-
-            return entry - 1;
-        }
-        public static int GetOptionIndex(List<string> list, string msg)
+            { "Commander's Strike", "bonus, forgo atk to have ally use reaction to atk + SD" },
+            { "Disarming Strike", "on hit, dmg + SD, Str save to disarm" },
+            { "Distracting Strike", "on hit, dmg + SD, next atk gets adv" },
+            { "Evasive Footwork", "on move, AC + SD until movement ends" },
+            { "Feinting Attack", "bonus, adv on atk - on hit, dmg + SD" },
+            { "Goading Attack", "on hit, dmg + SD, Wis save to impose disadv" },
+            { "Lunging Attack", "+5ft reach on atk, dmg + SD" },
+            { "Manuevering Attack", "on hit, dmg + SD, ally use reaction to move 1/2 speed without atk op" },
+            { "Menacing Attack", "on hit, dmg + SD, Wis save for fear 1 turn" },
+            { "Parry", "reaction, reduce dmg by Dex + SD" },
+            { "Precision Attack", "atk + SD, before or after roll" },
+            { "Pushing Attack", "on hit, dmg + SD, Str save push 15ft" },
+            { "Rally", "bonus, ally gains temp HP = Cha + SD" },
+            { "Riposte", "on enemy miss, reaction - make melee atk, dmg + SD" },
+            { "Sweeping Attack", "on hit, use atk roll against adj enemy - deal SD dmg" },
+            { "Trip Attack", "on hit, dmg + SD, Str save to knock prone" }
+        };
+        public static Dictionary<string, string> Invocations { get; set; } = new Dictionary<string, string>
         {
-            Console.WriteLine(msg);
-            for (int i = 0; i < list.Count; i++)
-            {
-                Console.WriteLine($"({i + 1}) {list[i]}");
-            }
-            int entry = CLIHelper.GetNumberInRange(1, list.Count);
-
-            return entry - 1;
-        }
-        public static int GetOptionIndex(string[] list)
-        {
-            for (int i = 0; i < list.Length; i++)
-            {
-                Console.WriteLine($"({i + 1}) {list[i]}");
-            }
-            int entry = CLIHelper.GetNumberInRange(1, list.Length);
-
-            return entry - 1;
-        }
+            { "Agonizing Blast", "" },
+            { "Armor of Shadows", "" },
+            { "Ascendant Step", "" },
+            { "Beast Speech", "" },
+            { "Beguiling Influence", "" },
+            { "Bewitching Whispers", "" },
+            { "Book of Ancient Secrets", "" },
+            { "Chains of Carceri", "" },
+            { "Devil's Sight", "" },
+            { "Dreadful Word", "" },
+            { "Eldritch Sight", "" },
+            { "Eldritch Spear", "" },
+            { "Eyes of the Rune Keeper", "" },
+            { "Fiendish Vigor", "" },
+            { "Gaze of Two Minds", "" },
+            { "Lifedrinker", "" },
+            { "Mask of Many Faces", "" },
+            { "Master of Myriad Forms", "" },
+            { "Minions of Chaos", "" },
+            { "Mire the Mind", "" },
+            { "Misty Visions", "" },
+            { "One with Shadows", "" },
+            { "Otherworldly Leap", "" },
+            { "Repelling Blast", "" },
+            { "Sculptor of Flesh", "" },
+            { "Sign of Ill Omen", "" },
+            { "Thief of Five Fates", "" },
+            { "Thirsting Blade", "" },
+            { "Visions of Distant Realms", "" },
+            { "Voice of the Chain Master", "" },
+            { "Whispers of the Grave", "" },
+            { "Witch Sight", "" }
+        };
     }
 }

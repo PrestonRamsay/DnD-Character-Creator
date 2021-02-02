@@ -5,29 +5,11 @@ using System.Text;
 namespace DnD_Character_Creator
 {
     public static class CLIHelper
-    {
-        public static string GetString()
-        {
-            string input = Console.ReadLine();
-            return input;
-        }        
+    {      
         public static string GetString(string message)
         {
-            string userInput = String.Empty;
-            int numberOfAttempts = 0;
-
-            do
-            {
-                if (numberOfAttempts > 0)
-                {
-                    Console.WriteLine("Invalid input format. Please try again");
-                }
-
-                Console.Write(message + " ");
-                userInput = Console.ReadLine().ToLower();
-                numberOfAttempts++;
-            }
-            while (String.IsNullOrEmpty(userInput));
+            Console.WriteLine(message);
+            string userInput = Console.ReadLine().ToLower().Trim();
 
             return CapitalizeFirstLetter(userInput);
         }
@@ -41,7 +23,7 @@ namespace DnD_Character_Creator
             {
                 listForHelper.Add(list[i].ToLower());
             }
-            do
+            while(gettingStringInList)
             {
                 userInput = Console.ReadLine().ToLower();
                 if (listForHelper.Contains(userInput))
@@ -53,66 +35,80 @@ namespace DnD_Character_Creator
                     Console.WriteLine("That is not a valid option. Please try again");
                 }
             }
-            while (gettingStringInList);
 
             return CapitalizeFirstLetter(userInput);
         }
-        public static string GetSkill(List<string> list1, List<string> list2)
-        {
-            string userInput = String.Empty;
-            bool gettingStringInList = true;
-            var classSkills = new List<string>();
-            var knownSkills = new List<string>();
+        //public static string GetSkill(List<string> list1, List<string> list2)
+        //{
+        //    string userInput = String.Empty;
+        //    bool gettingStringInList = true;
+        //    var classSkills = new List<string>();
+        //    var knownSkills = new List<string>();
 
-            for (int i = 0; i < list1.Count; i++)
-            {
-                classSkills.Add(list1[i].ToLower());
-            }
-            for (int i = 0; i < list2.Count; i++)
-            {
-                knownSkills.Add(list2[i].ToLower());
-            }
+        //    for (int i = 0; i < list1.Count; i++)
+        //    {
+        //        classSkills.Add(list1[i].ToLower());
+        //    }
+        //    for (int i = 0; i < list2.Count; i++)
+        //    {
+        //        knownSkills.Add(list2[i].ToLower());
+        //    }
+        //    do
+        //    {
+        //        userInput = Console.ReadLine().ToLower();
+        //        if (classSkills.Contains(userInput))
+        //        {
+        //            if (!knownSkills.Contains(userInput))
+        //            {
+        //                gettingStringInList = false;
+        //            }
+        //            else
+        //            {
+        //                Console.WriteLine("You are already trained in that skill, pick a different skill.");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("That is not one of your class skills. Try again");
+        //        }
+        //    }
+        //    while (gettingStringInList);
+
+        //    return CapitalizeFirstLetter(userInput);
+        //}
+        public static string GetNew(List<string> mainList, List<string> knownList, string pickMsg, string alreadyHaveMsg)
+        {
+            int userInput = 0;
+            string newItem = String.Empty;
+            bool gettingStringInList = true;
+            var list1 = new List<string>();
+            var list2 = new List<string>();
+            list1.AddRange(mainList);
+            list2.AddRange(knownList);
+
             do
             {
-                userInput = Console.ReadLine().ToLower();
-                if (classSkills.Contains(userInput))
+                userInput = PrintChoices(pickMsg, list1);
+                newItem = list1[userInput].ToLower();
+                if (list1.Contains(newItem))
                 {
-                    if (!knownSkills.Contains(userInput))
+                    if (!list2.Contains(newItem))
                     {
                         gettingStringInList = false;
                     }
                     else
                     {
-                        Console.WriteLine("You are already trained in that skill, pick a different skill.");
+                        Console.WriteLine(alreadyHaveMsg);
                     }
                 }
                 else
                 {
-                    Console.WriteLine("That is not one of your class skills. Try again");
+                    Console.WriteLine("That is not a valid option");
                 }
             }
             while (gettingStringInList);
 
-            return CapitalizeFirstLetter(userInput);
-        }
-        public static int GetNumber()
-        {
-            string userInput = String.Empty;
-            int intValue = 0;
-            int numberOfAttempts = 0;
-
-            do
-            {
-                if (numberOfAttempts > 0)
-                {
-                    Console.WriteLine("Invalid input format. Please try again");
-                }                
-                userInput = Console.ReadLine();
-                numberOfAttempts++;
-            }
-            while (!int.TryParse(userInput, out intValue));
-
-            return intValue;
+            return CapitalizeFirstLetter(newItem);
         }
         public static int GetNumberInRange(int min, int max)
         {
@@ -151,25 +147,6 @@ namespace DnD_Character_Creator
 
             return height;
         }
-        public static int ConvertHeightToInches(string heightString)
-        {
-            string[] height = heightString.Split(new char[] { '\'' });
-            string secondNumber = "";
-            if (height[1].Length > 2)
-            {
-                secondNumber = height[1].Substring(0, 2);
-            }
-            else
-            {
-                secondNumber = height[1].Substring(0, 1);
-            }
-
-            int feet = int.Parse(height[0]) * 12;
-            int inches = int.Parse(secondNumber);
-            int heightInInches = feet + inches;
-
-            return heightInInches;
-        }
         public static string CapitalizeFirstLetter(string word)
         {
             string returnString = "";
@@ -200,6 +177,36 @@ namespace DnD_Character_Creator
             {
                 Console.WriteLine($"({i + 1}) {list[i]}");
             }
+        }
+        public static int PrintChoices(string msg, List<string> list)
+        {
+            Console.WriteLine(msg);
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.WriteLine($"({i + 1}) {list[i]}");
+            }
+
+            return GetNumberInRange(1, list.Count) - 1;
+        }
+        public static int PrintChoices(List<string> list)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.WriteLine($"({i + 1}) {list[i]}");
+            }
+
+            return GetNumberInRange(1, list.Count) - 1;
+        }
+        public static int PrintChoices(string[] list)
+        {
+            for (int i = 0; i < list.Length; i++)
+            {
+                Console.WriteLine($"({i + 1}) {list[i]}");
+            }
+            int entry = CLIHelper.GetNumberInRange(1, list.Length);
+
+            return entry - 1;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using DnD_Character_Creator.Races;
+﻿using DnD_Character_Creator.Classes;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,25 +12,27 @@ namespace DnD_Character_Creator.Helper_Classes
             character.ProficiencyBonus = class1.ProfBonus;
             character.Saves.AddRange(class1.Saves);
             character.ClassFeatures = class1.ClassFeatures;
+            character.GP += class1.GP;
         }
         public static void AddEquipment(Character character, CharacterClass class1)
         {
             string str1 = "Pick a weapon to add to your inventory by entering the number next to it.";
-            string str2 = "Pick two weapons to add to your inventory. Enter them one at a time.";
+            string str2 = "Pick two weapons to add to your inventory.";
             
             if (class1.Equipment.Contains("Simple melee weapon2"))
             {
                 class1.Equipment.Remove("Simple melee weapon");
                 class1.Equipment.Remove("Simple melee weapon2");
-                int index1 = Options.GetOptionIndex(Options.SimpleMeleeWeapons, str2);
-                int index2 = CLIHelper.GetNumberInRange(1, Options.SimpleMeleeWeapons.Count);
+                Console.WriteLine(str2);
+                int index1 = CLIHelper.PrintChoices(str1, Options.SimpleMeleeWeapons);
+                int index2 = CLIHelper.PrintChoices(str1, Options.SimpleMeleeWeapons);
                 class1.Equipment.Add(Options.SimpleMeleeWeapons[index1]);
                 class1.Equipment.Add(Options.SimpleMeleeWeapons[index2]);
             }
             else if (class1.Equipment.Contains("Simple melee weapon"))
             {
                 class1.Equipment.Remove("Simple melee weapon");
-                int index = Options.GetOptionIndex(Options.SimpleMeleeWeapons, str1);
+                int index = CLIHelper.PrintChoices(str1, Options.SimpleMeleeWeapons);
                 class1.Equipment.Add(Options.SimpleMeleeWeapons[index]);
             }
             if (class1.Equipment.Contains("Martial weapon2"))
@@ -40,8 +42,9 @@ namespace DnD_Character_Creator.Helper_Classes
                 var martialWeapons = new List<string>();
                 martialWeapons.AddRange(Options.MartialMeleeWeapons);
                 martialWeapons.AddRange(Options.MartialRangedWeapons);
-                int index1 = Options.GetOptionIndex(martialWeapons, str2);
-                int index2 = CLIHelper.GetNumberInRange(1, martialWeapons.Count);
+                Console.WriteLine(str2);
+                int index1 = CLIHelper.PrintChoices(str1, martialWeapons);
+                int index2 = CLIHelper.PrintChoices(str1, martialWeapons);
                 class1.Equipment.Add(martialWeapons[index1]);
                 class1.Equipment.Add(martialWeapons[index2]);
             }
@@ -51,14 +54,14 @@ namespace DnD_Character_Creator.Helper_Classes
                 var martialWeapons = new List<string>();
                 martialWeapons.AddRange(Options.MartialMeleeWeapons);
                 martialWeapons.AddRange(Options.MartialRangedWeapons);
-                int index = Options.GetOptionIndex(martialWeapons, str1);
+                int index = CLIHelper.PrintChoices(str1, martialWeapons);
                 class1.Equipment.Add(martialWeapons[index]);
 
             }
             if (class1.Equipment.Contains("Martial melee weapon"))
             {
                 class1.Equipment.Remove("Martial melee weapon");
-                int index = Options.GetOptionIndex(Options.MartialMeleeWeapons, str1);
+                int index = CLIHelper.PrintChoices(str1, Options.MartialMeleeWeapons);
                 class1.Equipment.Add(Options.MartialMeleeWeapons[index]);
             }
             if (class1.Equipment.Contains("Simple weapon"))
@@ -67,7 +70,7 @@ namespace DnD_Character_Creator.Helper_Classes
                 var simpleWeapons = new List<string>();
                 simpleWeapons.AddRange(Options.SimpleMeleeWeapons);
                 simpleWeapons.AddRange(Options.SimpleRangedWeapons);
-                int index = Options.GetOptionIndex(simpleWeapons, str1);
+                int index = CLIHelper.PrintChoices(str1, simpleWeapons);
                 class1.Equipment.Add(simpleWeapons[index]);
             }
 
@@ -160,11 +163,170 @@ namespace DnD_Character_Creator.Helper_Classes
                 }
             }            
         }
+        public static void AddSpellsKnown(Character character, CharacterClass class1)
+        {
+            string classString = character.ChosenClass;
+            int lvl = character.Lvl;
+            var cantrips = new List<string> { "Bard", "Cleric", "Druid", "Sorcerer", "Warlock", "Wizard" };
+
+            if (cantrips.Contains(classString))
+            {
+                class1.CantripsKnown = 2;
+
+                if (classString == "Cleric" || classString == "Wizard")
+                {
+                    class1.CantripsKnown++;
+                }
+                if (lvl >= 4)
+                {
+                    class1.CantripsKnown++;
+                }
+                if (lvl >= 10)
+                {
+                    class1.CantripsKnown++;
+                }
+            }
+            if (classString == "Sorcerer")
+            {
+                class1.CantripsKnown += 2;
+                class1.SpellsKnown = 2;
+                for (int i = 2; i <= lvl; i++)
+                {
+                    if (i <= 11 || i == 13 || i == 15 || i == 17)
+                    {
+                        class1.SpellsKnown++;
+                    }
+                }
+            }
+            if (classString == "Bard")
+            {
+                class1.SpellsKnown = 4;
+                for (int i = 2; i <= lvl; i++)
+                {
+                    if (i <= 9 || i == 11 || i == 15 || i == 17)
+                    {
+                        class1.SpellsKnown++;
+                    }
+                    if (i == 10 || i == 14 || i == 18)
+                    {
+                        class1.SpellsKnown += 2;
+                    }
+                }
+            }
+            if (classString == "Warlock")
+            {
+                class1.SpellsKnown = 2;
+                for (int i = 2; i <= lvl; i++)
+                {
+                    if (i <= 9 || i == 11 || i == 13 || i == 15 || i == 17 || i == 19)
+                    {
+                        class1.SpellsKnown++;
+                    }
+                }
+            }
+        }
+        public static void AddSpellSlots(Character character, CharacterClass class1)
+        {
+            string classString = character.ChosenClass;
+            int lvl = character.Lvl;
+            var classes = new List<string> { "Bard", "Cleric", "Druid", "Sorcerer", "Wizard" };
+
+            if (classes.Contains(classString))
+            {
+                int spellSlotLvl = 0;
+                int lvlToInc = 5;
+                for (int i = 1; i <= lvl; i++)
+                {
+                    if (i % 2 != 0 && i <= 17)
+                    {
+                        spellSlotLvl++;
+                        if (i <= 5)
+                        {
+                            class1.SpellSlots[spellSlotLvl] += 2;
+                        }
+                        else
+                        {
+                            class1.SpellSlots[spellSlotLvl] += 1;
+                        }
+                    }
+                    if (i % 2 == 0 && i <= 10)
+                    {
+                        class1.SpellSlots[spellSlotLvl]++;
+                    }
+                    if (i >= 18)
+                    {
+                        class1.SpellSlots[lvlToInc]++;
+                        lvlToInc++;
+                    }
+                }
+            }
+            if (classString == "Warlock")
+            {
+                int spellSlotLvl = 2;
+
+                for (int i = 1; i <= lvl; i++)
+                {
+                    if (i <= 2)
+                    {
+                        class1.SpellSlots[1]++;
+                    }
+                    if (i % 2 != 0 && i <= 9)
+                    {
+                        class1.SpellSlots.Remove(spellSlotLvl - 1);
+                        class1.SpellSlots[spellSlotLvl] += 2;
+                        spellSlotLvl++;
+                    }
+                    if (i == 11 || i == 17)
+                    {
+                        class1.SpellSlots[5]++;
+                    }
+                }
+            }
+            if (classString == "Paladin" || classString == "Ranger")
+            {
+                int spellSlotLvl = 1;
+                if (lvl >= 2)
+                {
+                    class1.SpellSlots[1] += 2;
+                }
+                for (int i = 3; i <= lvl; i++)
+                {
+                    if (i % 2 != 0)
+                    {
+                        if (spellSlotLvl <= 1 || i == 7 || i == 11 || i == 15 || i == 17)
+                        {
+                            class1.SpellSlots[spellSlotLvl]++;
+                        }
+                        if (i == 5 || i == 9)
+                        {
+                            spellSlotLvl++;
+                            class1.SpellSlots[spellSlotLvl] += 2;
+                        }
+                        if (i == 13 || i == 17)
+                        {
+                            spellSlotLvl++;
+                            class1.SpellSlots[spellSlotLvl]++;
+                        }
+                    }
+                }
+            }
+        }
         public static void AddSpells(Character character, CharacterClass class1)
         {
-            for (int i = 0; i < class1.Spells.Count; i++)
+            string classString = character.ChosenClass;
+            if (classString != "Monk" && classString != "Rogue")
             {
-                character.Spells[i].Add("");
+                character.CantripsKnown = class1.CantripsKnown;
+                character.Cantrips.AddRange(class1.Cantrips);
+                character.SpellsKnown = class1.SpellsKnown;
+                for (int i = 1; i < class1.SpellSlots.Count; i++)
+                {
+                    character.SpellSlots[i] = class1.SpellSlots[i];
+                }
+                for (int i = 1; i < class1.Spells.Count; i++)
+                {
+                    character.Spells[i].AddRange(class1.Spells[i]);
+                }
             }
         }
     }

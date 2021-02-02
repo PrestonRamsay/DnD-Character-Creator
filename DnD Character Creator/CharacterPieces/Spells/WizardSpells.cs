@@ -10,12 +10,16 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
         public static List<string> Cantrips { get; set; } = new List<string>
         {
             "Acid Splash",
+            "Booming Blade",
             "Blade Ward",
             "Chill Touch",
             "Dancing Lights",
             "Fire Bolt",
             "Friends",
+            "Frostbite",
+            "Green-Flame blade",
             "Light",
+            "Lightning Lure",
             "Mage Hand",
             "Mending",
             "Message",
@@ -24,6 +28,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Prestidigitation",
             "Ray of Frost",
             "Shocking Grasp",
+            "Thunderclap",
             "True Strike",
             "1"
         };

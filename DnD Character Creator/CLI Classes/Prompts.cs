@@ -1,54 +1,33 @@
 ﻿using DnD_Character_Creator.Helper_Classes;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DnD_Character_Creator
 {
     public static class Prompts
     {
-        public static string Prompt(string characterPiece)
-        {
-            return $"Type the name of the {characterPiece} you'd like your character to have. " +
-                $"{Options.SeeOptions}";
-        }
-        public static string Prompt2(string characterPiece)
-        {
-            return $"Enter the {characterPiece} you'd like to choose.";
-        }
         public static string PickOption(string characterPiece, List<string> pieceList)
         {
-            Console.WriteLine(Prompt(characterPiece));
-            string newPiece = CLIHelper.GetStringInList(pieceList);
-            if (newPiece == "1")
-            {
-                Console.Clear();
-                pieceList.Remove("1");
-                for (int i = 0; i < pieceList.Count; i++)
-                {
-                    Console.WriteLine(pieceList[i]);
-                }
+            string pickMsg = $"Pick a {characterPiece} you'd like your character to have.";
+            int newPiece = CLIHelper.PrintChoices(pickMsg, pieceList);
+            string choice = pieceList[newPiece];
+            Console.WriteLine($"You've picked {choice}.");
 
-                Console.WriteLine($"\n{Prompt2(characterPiece)}");
-                newPiece = CLIHelper.GetStringInList(pieceList);
-            }
-
-            return newPiece;
+            return choice;
         }
         public static int BackgroundPrompts(string backgroundPiece, string[] backgroundProperty)
         {
             Console.Clear();
-            Console.WriteLine($"If you'd like to pick your {backgroundPiece} enter 'pick'." +
-                $"\nIf you want to roll it randomly enter 'roll'.");
-            var answerList = new List<string> { "pick", "roll" };
-            string answer = CLIHelper.GetStringInList(answerList);            
+            Console.WriteLine($"If you'd like to pick your {backgroundPiece} enter '1'." +
+                            $"\nIf you want to roll it randomly enter '2'.");
+            int answer = CLIHelper.GetNumberInRange(1, 2);           
             Console.WriteLine();
             int index = 0;
             
-            if (answer == "Pick")
+            if (answer == 1)
             {
                 Console.WriteLine($"Enter the number next to the {backgroundPiece} you want.");
-                index = Options.GetOptionIndex(backgroundProperty);
+                index = CLIHelper.PrintChoices(backgroundProperty);
             }
             else
             {
@@ -64,17 +43,18 @@ namespace DnD_Character_Creator
                     index = dieRoll;
                     Console.WriteLine($"Your {backgroundPiece} is:" +
                         $"\n{backgroundProperty[index]}");
-                    string input = CLIHelper.GetString($"If you'd like to keep that {backgroundPiece} enter 'keep', if not enter any key." +
-                        $"\nIf you'd like to pick from the list instead, enter 'pick'.");
+                    Console.WriteLine($"If you'd like to keep that {backgroundPiece} enter '1', if not hit enter." +
+                        $"\nIf you'd like to pick from the list instead, enter '2'.");
+                    int input = CLIHelper.GetNumberInRange(1, 2);
 
-                    if (input == "Keep")
+                    if (input == 1)
                     {
                         gettingPiece = false;
                     }
-                    if (input == "Pick")
+                    if (input == 2)
                     {
                         Console.WriteLine($"Enter the number next to the {backgroundPiece} you want.");
-                        index = Options.GetOptionIndex(backgroundProperty);
+                        index = CLIHelper.PrintChoices(backgroundProperty);
                         gettingPiece = false;
                     }
                 }                

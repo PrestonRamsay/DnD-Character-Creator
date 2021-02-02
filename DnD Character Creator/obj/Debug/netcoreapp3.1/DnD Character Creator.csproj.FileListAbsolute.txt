@@ -11,3 +11,16 @@ C:\Users\Student\Desktop\DnD Character Creator\DnD Character Creator\bin\Debug\n
 C:\Users\Student\Desktop\DnD Character Creator\DnD Character Creator\obj\Debug\netcoreapp3.1\DnD Character Creator.dll
 C:\Users\Student\Desktop\DnD Character Creator\DnD Character Creator\obj\Debug\netcoreapp3.1\DnD Character Creator.pdb
 C:\Users\Student\Desktop\DnD Character Creator\DnD Character Creator\obj\Debug\netcoreapp3.1\DnD Character Creator.genruntimeconfig.cache
+C:\Users\15136\Documents\Projects\DnD-Character-Creator\DnD Character Creator\bin\Debug\netcoreapp3.1\DnD Character Creator.exe
+C:\Users\15136\Documents\Projects\DnD-Character-Creator\DnD Character Creator\bin\Debug\netcoreapp3.1\DnD Character Creator.deps.json
+C:\Users\15136\Documents\Projects\DnD-Character-Creator\DnD Character Creator\bin\Debug\netcoreapp3.1\DnD Character Creator.runtimeconfig.json
+C:\Users\15136\Documents\Projects\DnD-Character-Creator\DnD Character Creator\bin\Debug\netcoreapp3.1\DnD Character Creator.runtimeconfig.dev.json
+C:\Users\15136\Documents\Projects\DnD-Character-Creator\DnD Character Creator\bin\Debug\netcoreapp3.1\DnD Character Creator.dll
+C:\Users\15136\Documents\Projects\DnD-Character-Creator\DnD Character Creator\bin\Debug\netcoreapp3.1\DnD Character Creator.pdb
+C:\Users\15136\Documents\Projects\DnD-Character-Creator\DnD Character Creator\obj\Debug\netcoreapp3.1\DnD Character Creator.csprojAssemblyReference.cache
+C:\Users\15136\Documents\Projects\DnD-Character-Creator\DnD Character Creator\obj\Debug\netcoreapp3.1\DnD Character Creator.AssemblyInfoInputs.cache
+C:\Users\15136\Documents\Projects\DnD-Character-Creator\DnD Character Creator\obj\Debug\netcoreapp3.1\DnD Character Creator.AssemblyInfo.cs
+C:\Users\15136\Documents\Projects\DnD-Character-Creator\DnD Character Creator\obj\Debug\netcoreapp3.1\DnD Character Creator.csproj.CoreCompileInputs.cache
+C:\Users\15136\Documents\Projects\DnD-Character-Creator\DnD Character Creator\obj\Debug\netcoreapp3.1\DnD Character Creator.dll
+C:\Users\15136\Documents\Projects\DnD-Character-Creator\DnD Character Creator\obj\Debug\netcoreapp3.1\DnD Character Creator.pdb
+C:\Users\15136\Documents\Projects\DnD-Character-Creator\DnD Character Creator\obj\Debug\netcoreapp3.1\DnD Character Creator.genruntimeconfig.cache

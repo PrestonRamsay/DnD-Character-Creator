@@ -1,4 +1,8 @@
 ﻿
-create class specifics
-spells
-write spells to sheet
+something wring with spells? - you need to be prompted for spells in the class, addspells just adds to the character
+rogue spells
+monk archetypes
+create class specifics (bard, cleric, druid, ranger, rogue, sorcerer, warlock, wizard)
+update spells to include every book not just ph
+update races
+add non-ph archetypes (redemption done)
