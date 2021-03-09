@@ -1,4 +1,5 @@
 ﻿using DnD_Character_Creator.Helper_Classes;
+using DnD_Character_Creator.Races;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,44 +11,30 @@ namespace DnD_Character_Creator
         public static List<int> FindStats(Character character)
         {
             List<int> stats = new List<int>();
-            bool isValidEntry = false;
             int statMax = character.StatMax;
+            string pickMsg = "Would you like to roll your stats, do the point buy system, or use another way?";
+            var answerList = new List<string> { "Roll", "Buy", "Custom" };
+            int index = CLIHelper.PrintChoices(pickMsg, answerList);
+            string answer = answerList[index];
+            Console.Clear();
 
-            while (!isValidEntry)
+            switch (answer)
             {
-                Console.WriteLine("Would you like to roll your stats, do the point buy system, or use another way? Enter 'roll' or 'buy' or 'custom'.");
-                var answerList = new List<string> { "roll", "buy", "custom" };
-                string answer = CLIHelper.GetStringInList(answerList);
-                Console.Clear();
-
-                if (answer == "Roll")
-                {
+                case "Roll":
                     Roll(stats);
-                    Console.WriteLine();
-                    Console.WriteLine(PrintStats(stats));
-                    isValidEntry = true;
-                }
-                else if (answer == "Buy")
-                {
+                    break;
+                case "Buy":
                     Buy(stats);
                     IncreaseBy2D6(stats, statMax);
-                    Console.WriteLine();
-                    Console.WriteLine(PrintStats(stats));
-                    isValidEntry = true;
-                }
-                else if (answer == "Custom")
-                {
+                    break;
+                case "Custom":
                     Custom(stats, statMax);
-                    Console.WriteLine();
-                    Console.WriteLine(PrintStats(stats));
-                    isValidEntry = true;
-                }
-                else
-                {
-                    Console.WriteLine("Invalid entry. Try again.");
-                }
+                    break;
             }
-
+                
+            Console.WriteLine();
+            Console.WriteLine(PrintStats(stats));
+            
             return stats;
         }
         public static string PrintStats(IList<int> stats)
@@ -81,6 +68,7 @@ namespace DnD_Character_Creator
         public static void Buy(List<int> allStats)
         {
             int points = 27;
+            bool successfulAdd = false;
 
             while (points != 0)
             {
@@ -88,33 +76,25 @@ namespace DnD_Character_Creator
                 {
                     Console.WriteLine($"\nEnter a value between 8 and 15. If you'd like to see cost for each value enter '1'." +
                         $"\nPoints remaining: {points}\n");
-                    int input = CLIHelper.GetNumberInRange(1, 15);
+                    int stat = CLIHelper.GetNumberInRange(1, 15);
                     Dictionary<int, int> costOf = SetCosts();
-
-                    if (input == 1)
+                    if (stat == 1)
                     {
-                        Console.WriteLine(DisplayStatPointCosts(costOf));
-                        Console.WriteLine("Enter a value between 8 and 15.");
-                        input = CLIHelper.GetNumberInRange(8, 15);
+                        stat = DisplayStatPointCosts(costOf);
                     }
-
-                    int pickedStat = GetValidStat(input);
-                    bool successfulAdd = false;
-
                     while (!successfulAdd)
                     {
-                        int cost = costOf[pickedStat];
-
+                        int cost = costOf[stat];
                         if (cost <= points)
                         {
-                            allStats.Add(pickedStat);
+                            allStats.Add(stat);
                             points -= cost;
                             successfulAdd = true;
                         }
                         else
                         {
                             Console.WriteLine("That stat costs too much, try again.");
-                            pickedStat = CLIHelper.GetNumberInRange(8, 15);
+                            stat = CLIHelper.GetNumberInRange(8, 15);
                         }
                     }
 
@@ -123,8 +103,8 @@ namespace DnD_Character_Creator
                 {
                     Console.WriteLine(PrintStats(allStats));
                     Console.WriteLine("If you'd like to start over: enter '1'. If you'd like to keep your stats hit enter.");
-                    string input2 = Console.ReadLine();
-                    if (input2 == "1")
+                    string input = Console.ReadLine();
+                    if (input == "1")
                     {
                         points = 27;
                         allStats.Clear();
@@ -137,15 +117,20 @@ namespace DnD_Character_Creator
                 }
             }
         }
-        public static string DisplayStatPointCosts(Dictionary<int, int> costOf)
+        public static int DisplayStatPointCosts(Dictionary<int, int> costOf)
         {
-            string returnString = "";
+            Console.Clear();
+            string str = "";
 
             foreach (int stat in costOf.Keys)
             {
-                returnString += $"Score of {stat} costs {costOf[stat]} points\n";
+                str += $"Score of {stat} costs {costOf[stat]} points\n";
             }
-            return returnString;
+
+            Console.WriteLine(str);
+            Console.WriteLine("Enter a value between 8 and 15.");
+
+            return CLIHelper.GetNumberInRange(8, 15);
         }
         public static Dictionary<int, int> SetCosts()
         {
@@ -169,26 +154,6 @@ namespace DnD_Character_Creator
                 costOf.Add(8 + i, costs[i]);
             }
             return costOf;
-        }
-        public static int GetValidStat(int pickedStat)
-        {
-            bool gettingStat = true;
-
-            while (gettingStat)
-            {
-
-                if (8 <= pickedStat && pickedStat <= 15)
-                {
-                    gettingStat = false;
-                }
-                else
-                {
-                    Console.WriteLine("The number you entered is not between 8 and 15. Try again.");
-                    pickedStat = CLIHelper.GetNumberInRange(8, 15);
-                }
-            }
-
-            return pickedStat;
         }
         private static void IncreaseBy2D6(List<int> stats, int statMax)
         {
@@ -229,7 +194,7 @@ namespace DnD_Character_Creator
                 allStats.Add(stat);
             }
         }
-        public void PrintStatsMenu(int highlight, List<string> stats)
+        public static void PrintStatsMenu(int highlight, List<string> stats)
         {
             for (int i = 0; i < stats.Count; i++)
             {
@@ -237,7 +202,7 @@ namespace DnD_Character_Creator
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                 }
-                Console.Write($"({i + 1})  {stats[i]}    ");
+                Console.Write($"({i + 1})  {stats[i]}   ");
                 Console.ForegroundColor = ConsoleColor.White;
             }
             Console.WriteLine("\n");
@@ -252,7 +217,8 @@ namespace DnD_Character_Creator
         }
         public void AssignStats(Character character, List<int> statNums)
         {
-            List<string> statWords = new List<string> { "Str", "Dex", "Con", "Int", "Wis", "Cha" };
+            List<string> statWords = new List<string>();
+            statWords.AddRange(Options.Stats);
 
             while (statNums.Count > 0)
             {
@@ -262,80 +228,125 @@ namespace DnD_Character_Creator
                 int currentlySelected = CLIHelper.GetNumberInRange(1, statWords.Count) - 1;
                 string statWord = statWords[currentlySelected];
                 Console.Clear();
+
+                Console.WriteLine("You've selected:");
                 PrintStatsMenu(currentlySelected, statWords);
+                Console.WriteLine("Your stats are:");
                 PrintStatsToAssign(statNums);
                 Console.WriteLine($"Pick a stat to assign to {statWord} by entering the number next to it.");
                 int statIndex = CLIHelper.GetNumberInRange(1, statNums.Count) - 1;
+                Console.Clear();
 
-                if (statWord == "Str")
-                {
-                    character.Str = statNums[statIndex];
-                }
-                else if (statWord == "Dex")
-                {
-                    character.Dex = statNums[statIndex];
-                }
-                else if (statWord == "Con")
-                {
-                    character.Con = statNums[statIndex];
-                }
-                else if (statWord == "Int")
-                {
-                    character.Int = statNums[statIndex];
-                }
-                else if (statWord == "Wis")
-                {
-                    character.Wis = statNums[statIndex];
-                }
-                else if (statWord == "Cha")
-                {
-                    character.Cha = statNums[statIndex];
-                }
+                character.Stats[statWord] = statNums[statIndex];
                 statNums.RemoveAt(statIndex);
                 statWords.Remove(statWord);
-                Console.WriteLine($"You assigned your stats as Str: {character.Str}, Dex: {character.Dex}, Con: {character.Con}, " +
-                $"Int: {character.Int}, Wis: {character.Wis}, Cha: {character.Cha}\n");
             }
         }
-        public static void IncreaseStatsByLvl(Character character)
+        public static void RacialStats(Character character, Race race)
         {
-            int statMax = character.StatMax;
-            Console.WriteLine("\nYou have an ability score increase, pick a number from the options.");
+            if (race.Name == "Human")
+            {
+                foreach (var stat in character.Stats.Keys)
+                {
+                    character.Stats[stat] += 1;
+                }
+            }
+            else
+            {
+                string stat1 = race.Stat1.Item1;
+                int incAmt = race.Stat1.Item2;
+                IncreaseStat(character, stat1, incAmt);
+
+                string stat2 = race.Stat2.Item1;
+                incAmt = race.Stat2.Item2;
+                IncreaseStat(character, stat2, incAmt);
+
+                if (race.Stat3.Item1 != "Null")
+                {
+                    string stat3 = race.Stat3.Item1;
+                    incAmt = race.Stat3.Item2;
+                    IncreaseStat(character, stat3, incAmt);
+                }
+            }
+        }
+        public static void TemplateStats(Character character, Template template)
+        {
+            string stat1 = template.Stat1.Item1;
+            int incAmt = template.Stat1.Item2;
+            IncreaseStat(character, stat1, incAmt);
+
+            string stat2 = template.Stat2.Item1;
+            incAmt = template.Stat2.Item2;
+            IncreaseStat(character, stat2, incAmt);
+        }
+        public static void IncreaseStatByLvl(Character character)
+        {
+            for (int i = 1; i <= character.Lvl; i++)
+            {
+                if (i != 20)
+                {
+                    if (i % 4 == 0 || i == 19)
+                    {
+                        AbilityScoreInc(character);
+                    }
+                }
+                if (character.ChosenClass == "Fighter")
+                {
+                    if (i == 6 || i == 14)
+                    {
+                        AbilityScoreInc(character);
+                    }
+                }
+                if (character.ChosenClass == "Rogue")
+                {
+                    if (i == 10)
+                    {
+                        AbilityScoreInc(character);
+                    }
+                }
+            }
+        }
+        public static void AbilityScoreInc(Character character)
+        {
+            Console.WriteLine("\nYou have an ability score increase, pick from the options.");
             CLIHelper.Print3Choices("Increase 1 stat by 2", "Increase 2 stats by 1", "Pick a feat");
             int input = CLIHelper.GetNumberInRange(1, 3);
-            bool pickValidStat = true;
 
             if (input == 1)
             {
-                Console.WriteLine($"\nYour stats are Str: {character.Str}, Dex: {character.Dex}, Con: {character.Con}, " +
-                $"Int: {character.Int}, Wis: {character.Wis}, Cha: {character.Cha}");
-                while (pickValidStat)
+                Console.Write($"\nYour stats are ");
+                foreach (var stat in Options.Stats)
                 {
-                    Console.WriteLine("Type the stat you'd like to increase.");
-                    string stat = CLIHelper.GetStringInList(Options.Stats);
-                    pickValidStat = IncreaseStat(character, statMax, stat, 2);
-                    Console.WriteLine($"\nYour stats are now Str: {character.Str}, Dex: {character.Dex}, Con: {character.Con}, " +
-                $"Int: {character.Int}, Wis: {character.Wis}, Cha: {character.Cha}");
+                    Console.Write($"{stat}: {character.Stats[stat]}  ");
                 }
+                Console.WriteLine("\n\nPick the stat you'd like to increase.");
+                IncreaseStat(character, 2);
+                Console.Clear();
+                Console.Write($"\nYour stats are now ");
+                foreach (var stat in Options.Stats)
+                {
+                    Console.Write($"{stat}: {character.Stats[stat]}  ");
+                }
+                Console.WriteLine("");
             }
             else if (input == 2)
             {
-                Console.WriteLine($"\nYour stats are Str: {character.Str}, Dex: {character.Dex}, Con: {character.Con}, " +
-                $"Int: {character.Int}, Wis: {character.Wis}, Cha: {character.Cha}");
-                while (pickValidStat)
+                Console.Write($"\nYour stats are ");
+                foreach (var stat in Options.Stats)
                 {
-                    Console.WriteLine("Type the first stat you'd like to increase.");
-                    string firstStat = CLIHelper.GetStringInList(Options.Stats);
-                    bool first = IncreaseStat(character, statMax, firstStat, 1);
-                    if (!first)
-                    {
-                        Console.WriteLine("Type the second stat you'd like to increase.");
-                        string secondStat = CLIHelper.GetStringInList(Options.Stats);
-                        pickValidStat = IncreaseStat(character, statMax, secondStat, 1);
-                    }
+                    Console.Write($"{stat}: {character.Stats[stat]}  ");
                 }
-                Console.WriteLine($"\nYour stats are now Str: {character.Str}, Dex: {character.Dex}, Con: {character.Con}, " +
-                $"Int: {character.Int}, Wis: {character.Wis}, Cha: {character.Cha}");
+                Console.WriteLine("\n\nPick the first stat you'd like to increase.");
+                IncreaseStat(character, 1);
+                Console.WriteLine("Pick the second stat you'd like to increase.");
+                IncreaseStat(character, 1);
+                Console.Clear();
+                Console.Write($"\nYour stats are now ");
+                foreach (var stat in Options.Stats)
+                {
+                    Console.Write($"{stat}: {character.Stats[stat]}  ");
+                }
+                Console.WriteLine("");
             }
             else
             {
@@ -344,82 +355,40 @@ namespace DnD_Character_Creator
                 character.Feats.Add(Options.Feats[index]);
             }
         }
-        private static bool IncreaseStat(Character character, int statMax, string stat, int incAmt)
+        private static void IncreaseStat(Character character, int incAmt)
         {
-            if (stat == "Str")
+            bool gettingStat = true;
+            int statMax = character.StatMax;
+
+            while (gettingStat)
             {
-                if (character.Str + incAmt <= statMax)
+                PrintStatsMenu(-1, Options.Stats);
+                int index = CLIHelper.GetIndex(Options.Stats);
+                string stat = Options.Stats[index];
+
+                if (character.Stats[stat] + incAmt <= statMax)
                 {
-                    character.Str += incAmt;
-                    return false;
+                    character.Stats[stat] += incAmt;
+                    gettingStat = false;
                 }
                 else
                 {
                     Console.WriteLine("You cannot exceed the max. Try again");
                 }
             }
-            else if (stat == "Dex")
+        }
+        private static void IncreaseStat(Character character, string stat, int incAmt)
+        {
+            int statMax = character.StatMax;
+
+            if (character.Stats[stat] + incAmt <= statMax)
             {
-                if (character.Dex + incAmt <= statMax)
-                {
-                    character.Dex += incAmt;
-                    return false;
-                }
-                else
-                {
-                    Console.WriteLine("You cannot exceed the max. Try again");
-                }
-            }
-            else if (stat == "Con")
-            {
-                if (character.Con + incAmt <= statMax)
-                {
-                    character.Con += incAmt;
-                    return false;
-                }
-                else
-                {
-                    Console.WriteLine("You cannot exceed the max. Try again");
-                }
-            }
-            else if (stat == "Int")
-            {
-                if (character.Int + incAmt <= statMax)
-                {
-                    character.Int += incAmt;
-                    return false;
-                }
-                else
-                {
-                    Console.WriteLine("You cannot exceed the max. Try again");
-                }
-            }
-            else if (stat == "Wis")
-            {
-                if (character.Wis + incAmt <= statMax)
-                {
-                    character.Wis += incAmt;
-                    return false;
-                }
-                else
-                {
-                    Console.WriteLine("You cannot exceed the max. Try again");
-                }
+                character.Stats[stat] += incAmt;
             }
             else
             {
-                if (character.Cha + incAmt <= statMax)
-                {
-                    character.Cha += incAmt;
-                    return false;
-                }
-                else
-                {
-                    Console.WriteLine("You cannot exceed the max. Try again");
-                }
+                character.Stats[stat] = statMax;
             }
-
-            return true;
         }
     }
 }

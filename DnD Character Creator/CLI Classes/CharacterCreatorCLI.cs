@@ -6,13 +6,12 @@ using DnD_Character_Creator.Races;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 
 namespace DnD_Character_Creator
 {
     public class CharacterCreatorCLI
     {
+        public Race TempRace { get; set; } = new Race();
         public void PrintHeader()
         {
             Console.WriteLine(@"                              ____    ___    ____  ");
@@ -35,8 +34,25 @@ namespace DnD_Character_Creator
             character.Lvl = level;
             var xp = new XPDecider(level);
             xp.SetXP(character);
-            string classString = Prompts.PickOption("class", Options.Classes);
-            character.ChosenClass = classString;
+            Console.Clear();
+            character.ChosenRace = Prompts.PickOption("race", Options.Races);
+            Console.Clear();
+            Console.WriteLine($"You've picked {character.ChosenRace}.\n");
+            character.ChosenClass = Prompts.PickOption("class", Options.Classes);
+            Console.Clear();
+            Console.WriteLine($"You've picked {character.ChosenClass}.\n");
+
+            Console.WriteLine("Do you want to add a Template to your character? Y/N");
+            string answer = Console.ReadLine().ToLower();
+            if (answer == "y")
+            {
+                character.Template = true;
+                string pickMsg = "Pick from the list of templates.";
+                int index = CLIHelper.PrintChoices(pickMsg, Options.Templates);
+                character.ChosenTemplate = Options.Templates[index];
+                Console.Clear();
+                Console.WriteLine($"You've picked {character.ChosenTemplate}.");
+            }
         }
         public void RunAddStats(Character character)
         {
@@ -53,106 +69,53 @@ namespace DnD_Character_Creator
             List<int> stats = Stats.FindStats(character);
             var statsDisplay = new Stats();
             statsDisplay.AssignStats(character, stats);
+            Console.Clear();
 
-            Console.WriteLine("Do ability score improvements? Y/N");
-            string answer = Console.ReadLine().ToLower();
-
-            if (answer == "y")
+            Race race = Race.GetStats(character.ChosenRace);
+            Stats.RacialStats(character, race);
+            if (character.Template == true)
             {
-                for (int i = 1; i <= character.Lvl; i++)
+                Template template = Template.GetStats(character.ChosenTemplate);
+                Stats.TemplateStats(character, template);
+                character.TemplateProgression.AddRange(Options.UniversalMilestones);
+            }
+            Console.Write($"\nAfter adding the rest of your stat boosts, your stats are now ");
+            foreach (var stat in Options.Stats)
+            {
+                Console.Write($"{stat}: {character.Stats[stat]}  ");
+            }
+            Console.WriteLine("");
+
+            Console.WriteLine("\nDo ability score improvements? Y/N");
+            string answer = Console.ReadLine().ToLower();
+            Console.Clear();
+
+            if (answer != "n")
+            {
+                Stats.IncreaseStatByLvl(character);
+                Console.Clear();
+                Console.Write($"\nYour stats are now ");
+                foreach (var stat in Options.Stats)
                 {
-                    if (i != 20)
-                    {
-                        if (i % 4 == 0 || i == 19)
-                        {
-                            Stats.IncreaseStatsByLvl(character);
-                        }
-                    }
-                    if (character.ChosenClass == "Fighter")
-                    {
-                        if (i == 6 || i == 14)
-                        {
-                            Stats.IncreaseStatsByLvl(character);
-                        }
-                    }
-                    if (character.ChosenClass == "Rogue")
-                    {
-                        if (i == 10)
-                        {
-                            Stats.IncreaseStatsByLvl(character);
-                        }
-                    }
+                    Console.Write($"{stat}: {character.Stats[stat]}  ");
                 }
+                Console.WriteLine("");
             }
 
             Console.WriteLine("\nYou've finished your character's stats!\n");
         }
         public void RunAddRace(Character character)
         {
-            string raceString = Prompts.PickOption("race", Options.Races);
-            character.ChosenRace = raceString;
-            var raceObject = new Race();
+            Console.WriteLine($"You will now add {character.ChosenRace} traits.\n");
+            Race raceObject = Race.NewRace(character.ChosenRace);
+            TempRace = raceObject;
 
-            if (raceString == "Dragonborn")
-            {
-                raceObject = Race.Dragonborn();
-            }
-            else if (raceString == "Hill dwarf")
-            {
-                raceObject = Race.HillDwarf();
-            }
-            else if (raceString == "Mountain dwarf")
-            {
-                raceObject = Race.MountainDwarf();
-            }
-            else if (raceString == "Drow")
-            {
-                raceObject = Race.Drow();
-            }
-            else if (raceString == "High elf")
-            {
-                raceObject = Race.HighElf();
-            }
-            else if (raceString == "Wood elf")
-            {
-                raceObject = Race.WoodElf();
-            }
-            else if (raceString == "Forest gnome")
-            {
-                raceObject = Race.ForestGnome();
-            }
-            else if (raceString == "Rock gnome")
-            {
-                raceObject = Race.RockGnome();
-            }
-            else if (raceString == "Half-elf")
-            {
-                raceObject = Race.HalfElf();
-            }
-            else if (raceString == "Half-orc")
-            {
-                raceObject = Race.HalfOrc();
-            }
-            else if (raceString == "Lightfoot halfling")
-            {
-                raceObject = Race.LightfootHalfling();
-            }
-            else if (raceString == "Stout halfling")
-            {
-                raceObject = Race.StoutHalfling();
-            }
-            else if (raceString == "Variant human")
-            {
-                raceObject = Race.VariantHuman();
-            }
-            else if (raceString == "Human")
-            {
-                raceObject = Race.Human();
-            }
-            else if (raceString == "Tiefling")
-            {
-                 raceObject = Race.Tiefling();
-            }
+            AddRace.RacialSpecifics(character, raceObject);
+            Console.WriteLine($"Pick a height between {CLIHelper.ConvertHeight(raceObject.MinHeight)} and " +
+                $"{CLIHelper.ConvertHeight(raceObject.MaxHeight)}. Format should be: (Feet)'(Inches)\".");
+            AddRace.AddHeight(character, raceObject);
+            Console.WriteLine($"Pick a weight between {raceObject.MinWeight}lbs and {raceObject.MaxWeight}lbs.");
+            character.Weight = CLIHelper.GetNumberInRange(raceObject.MinWeight, raceObject.MaxWeight);
 
             Console.Write("\nPick an alignment from: ");
             foreach (string alignment in raceObject.Alignment)
@@ -173,143 +136,60 @@ namespace DnD_Character_Creator
                 Console.WriteLine($"Enter your age. This race usually lives for {raceObject.MaxAgeStart} years" +
                     $" and is considered an adult at the age of {raceObject.AdultAge}.");
             }
-            AddRace.RacialSpecifics(character, raceObject);
-            Console.WriteLine($"Pick a height between {CLIHelper.ConvertHeight(raceObject.MinHeight)} and " +
-                $"{CLIHelper.ConvertHeight(raceObject.MaxHeight)}. Format should be: (Feet)'(Inches)\".");
-            AddRace.AddHeight(character, raceObject);
-            Console.WriteLine($"Pick a weight between {raceObject.MinWeight}lbs and {raceObject.MaxWeight}lbs.");
-            AddRace.AddWeight(character, raceObject);
+            character.Age = CLIHelper.GetNumberInRange(raceObject.AdultAge, raceObject.MaxAgeStart + 50);
+
             AddRace.AddLanguages(character, raceObject);
             AddRace.AddSpells(character);
+            AddRace.AddHigherLvlFeature(character);
 
             Console.Clear();
             Console.WriteLine("\nYou've finished adding your race!\n");
         }
-        public void RunAddBackground(Character character)
-        {            
-            string backgroundString = Prompts.PickOption("background", Options.Backgrounds);
-            character.ChosenBackground = backgroundString;
+        public void RunAddTemplate(Character character)
+        {
+            if (character.Template == true)
+            {
+                string templateName = character.ChosenTemplate;
+                Console.WriteLine($"Because you are a/an {templateName} you can pick a new age.");
+                character.Age = CLIHelper.GetNumberInRange(TempRace.AdultAge, 15000);
+                Template template = Template.NewTemplate(templateName);
+                AddTemplate.TemplateBenefits(character, template);
+            }
+        }
+            public void RunAddBackground(Character character)
+        {
             var backgroundObject = new Background();
+            var backgroundFiller = new GHBackground();
 
-            if (backgroundString == "Acolyte")
-            {
-                backgroundObject = Background.Acolyte();
-            }
-            else if (backgroundString == "Charltan")
-            {
-                backgroundObject = Background.Charltan();
-                Console.WriteLine("Every charltan has an angle he/she uses in preference to other schemes.");
-                int scamIndex = Prompts.BackgroundPrompts("favorite scam", backgroundObject.FavoriteScam);
-                character.FavoriteScam = backgroundObject.FavoriteScam[scamIndex];
+            Console.WriteLine("Do you want Grim Hollow Advanced Backgrounds? Y/N");
+            string answer = Console.ReadLine().ToLower();
 
-                if (scamIndex == 0)
-                {
-                    character.Equipment.Add("Set of weighted dice");
-                }
-                else if (scamIndex == 2)
-                {
-                    character.Equipment.Add("Signet ring of imaginary duke");
-                }
-                else if (scamIndex == 4)
-                {
-                    character.Equipment.Add("Deck of marked cards");
-                }
-                else if (scamIndex == 5)
-                {
-                    character.Equipment.Add("10 stoppered bottles of colored liquid");
-                }
-            }
-            else if (backgroundString == "Criminal")
+            if (answer == "y")
             {
-                backgroundObject = Background.Criminal();
+                character.ChosenBackground = Prompts.PickOption("background", Options.GHBackgrounds);
+                Console.Clear();
+                Console.WriteLine($"You've picked {character.ChosenBackground}.\n");
+                backgroundFiller = GHBackground.NewBackground(character);
+                backgroundObject = AddBackground.AddGHBackground(backgroundFiller);
             }
-            else if (backgroundString == "Entertainer")
+            else if (answer == "n")
             {
-                backgroundObject = Background.Entertainer();
-                Console.WriteLine("A good entertainer is versatile, spicing things up every performance with a variety of different routines." +
-                    "\nYou can have up to 3 routines that define your expertise. Enter a number(1-3) to decide how many routines you have.");
-                int routines = CLIHelper.GetNumberInRange(1, 3);
-                for (int i = 0; i < routines; i++)
-                {
-                    int routineIndex = Prompts.BackgroundPrompts("routine", backgroundObject.Routine);
-                    character.Routines.Add(backgroundObject.Routine[routineIndex]);
-                }
-            }
-            else if (backgroundString == "Folk hero")
-            {
-                backgroundObject = Background.FolkHero();
-                Console.WriteLine("You previously lived a simple life, but something happened that set you on a different path and marked you for greatness.");
-                int eventIndex = Prompts.BackgroundPrompts("defining event", backgroundObject.DefiningEvent);
-                character.DefiningEvent = backgroundObject.DefiningEvent[eventIndex];
-            }
-            else if (backgroundString == "Guild artisan")
-            {
-                backgroundObject = Background.GuildArtisan();
-                Console.WriteLine("Guilds are groups of several artisans who practice the same trade.");
-                int businessIndex = Prompts.BackgroundPrompts("nature of your guild business", backgroundObject.GuildBusiness);
-                character.GuildBusiness = backgroundObject.GuildBusiness[businessIndex];
-            }
-            else if (backgroundString == "Hermit")
-            {
-                backgroundObject = Background.Hermit();
-                Console.WriteLine("What was the reason for your isolation? What changed allowing you to end your solitude?");
-                int seclusionIndex = Prompts.BackgroundPrompts("nature of your seclusion", backgroundObject.LifeOfSeclusion);
-                character.LifeOfSeclusion = backgroundObject.LifeOfSeclusion[seclusionIndex];
-            }
-            else if (backgroundString == "Noble")
-            {
-                backgroundObject = Background.Noble();
-            }
-            else if (backgroundString == "Outlander")
-            {
-                backgroundObject = Background.Outlander();
-                Console.WriteLine("What was your occupation during your wild in the wild?");
-                int originIndex = Prompts.BackgroundPrompts("origin", backgroundObject.Origin);
-                character.Origin = backgroundObject.Origin[originIndex];
-            }
-            else if (backgroundString == "Sage")
-            {
-                backgroundObject = Background.Sage();
-            }
-            else if (backgroundString == "Sailor")
-            {
-                backgroundObject = Background.Sailor();
-            }
-            else if (backgroundString == "Soldier")
-            {
-                backgroundObject = Background.Soldier();
-            }
-            else if (backgroundString == "Urchin")
-            {
-                backgroundObject = Background.Urchin();
-            }
-
-            if (backgroundString == "Criminal" || backgroundString == "Sage" || backgroundString == "Soldier")
-            {
-                if (backgroundString == "Criminal")
-                {
-                    Console.WriteLine("There are many kinds of criminals, but every criminal has a preference for certain kinds of crime.");
-                }
-                else if (backgroundString == "Sage")
-                {
-                    Console.WriteLine("What was the nature of your scholarly training?");
-                }
-                else
-                {
-                    Console.WriteLine("During your time as a soldier you had a specific role to play in your unit or army.");
-                }
-
-                int specialtyIndex = Prompts.BackgroundPrompts("specialty", backgroundObject.Specialty);
-                character.Specialty = backgroundObject.Specialty[specialtyIndex];
+                character.ChosenBackground = Prompts.PickOption("background", Options.Backgrounds);
+                backgroundObject = Background.NewBackground(character.ChosenBackground);
             }
 
             AddBackground.AddProficiencies(character, backgroundObject);
             AddBackground.AddLanguages(character, backgroundObject);
             AddBackground.AddEquipment(character, backgroundObject);
-
-            Console.WriteLine("Every background has a personality trait, an ideal, a bond and a flaw." +
-                "\nFor each you can either pick one from a list or you can roll it randomly.");
-            AddBackground.BackgroundSpecifics(character, backgroundObject);
+            AddBackground.PersonalCharacteristics(character, backgroundObject);
+            if (answer == "y")
+            {
+                AddBackground.BackgroundSpecifics(character, backgroundFiller);
+            }
+            else if (answer == "n")
+            {
+                AddBackground.BackgroundSpecifics(character, backgroundObject);
+            }
 
             Console.Clear();
             Console.WriteLine("\nYou've finished adding your background!\n");
@@ -318,57 +198,10 @@ namespace DnD_Character_Creator
         {
             var classObject = new CharacterClass(character.Lvl);
 
-            AddClass.AddSpellsKnown(character);
-            AddClass.AddSpellSlots(character);
+            AddClass.AddSpellsKnown(character, classObject);
+            AddClass.AddSpellSlots(character, classObject);
 
-            if (classString == "Barbarian")
-            {
-                classObject = CharacterClass.Barbarian(character);
-            }
-            else if (classString == "Bard")
-            {
-                classObject = CharacterClass.Bard(character);
-            }
-            else if (classString == "Cleric")
-            {
-                classObject = CharacterClass.Cleric(character);
-            }
-            else if (classString == "Druid")
-            {
-                classObject = CharacterClass.Druid(character);
-            }
-            else if (classString == "Fighter")
-            {
-                classObject = CharacterClass.Fighter(character);
-            }
-            else if (classString == "Monk")
-            {
-                classObject = CharacterClass.Monk(character);
-            }
-            else if (classString == "Paladin")
-            {
-                classObject = CharacterClass.Paladin(character);
-            }
-            else if (classString == "Ranger")
-            {
-                classObject = CharacterClass.Ranger(character);
-            }
-            else if (classString == "Rogue")
-            {
-                classObject = CharacterClass.Rogue(character);
-            }
-            else if (classString == "Sorcerer")
-            {
-                classObject = CharacterClass.Sorcerer(character);
-            }
-            else if (classString == "Warlock")
-            {
-                classObject = CharacterClass.Warlock(character);
-            }
-            else if (classString == "Wizard")
-            {
-                classObject = CharacterClass.Wizard(character);
-            }
+            classObject = CharacterClass.NewClass(character, classObject);
 
             AddClass.DetermineHP(character, classObject);
             AddClass.AddProficiencies(character, classObject);
@@ -386,29 +219,39 @@ namespace DnD_Character_Creator
             character.Name = CLIHelper.GetString("Enter your character's name here:");
             character.Deity = CLIHelper.GetString("Enter the name of your deity here:");
             string height = CLIHelper.ConvertHeight(character.Height);
+            string size = "";
+            if (character.Size == "Small")
+            {
+                size = $" ({character.Size})";
+            }
+            if (character.Template == true)
+            {
+                character.ChosenTemplate = $"({character.ChosenTemplate})";
+            }
             string saves = String.Join(", ", character.Saves);
             string lang = String.Join(", ", character.Languages);
             string profs = String.Join(", ", character.Proficiencies);
             string toolProfs = String.Join(", ", character.ToolProficiencies);
             string additionalBackgroundInfo = WriteAdditionalBackgroundProperty(character);
+            int AC = character.AC + 10 + character.DexMod;
 
             Console.Clear();
-            Console.WriteLine($"Name: {character.Name}           Height: {height}                    Class: {character.ChosenClass}({character.Archetype})");
-            Console.WriteLine($"Age: {character.Age}              Weight: {character.Weight} lbs.              Level: {character.Lvl}");
+            Console.WriteLine($"Name: {character.Name}           Height: {height}{size}                    Class: {character.ChosenClass}({character.Archetype})");
+            Console.WriteLine($"Age: {character.Age}{character.ChosenTemplate}              Weight: {character.Weight} lbs.              Level: {character.Lvl}");
             Console.WriteLine($"Race: {character.ChosenRace}          Deity: {character.Deity}                GP: {character.GP}");
-            Console.WriteLine($"Alignment: {character.Alignment}        Speed: {character.Speed}               XP: {character.XP}");
+            Console.WriteLine($"Alignment: {character.Alignment}        Speed: {character.Speed}ft{character.Speedstring}               XP: {character.XP}");
             if (character.ChosenRace == "Dragonborn")
             {
                 Console.Write($"Dragon color: {character.DragonColor}       ");
             }
             Console.WriteLine($"Background: {character.ChosenBackground}     Vision: {character.Vision}");
             Console.WriteLine("----------------------------------------------------------------------------------------------------------------");
-            Console.WriteLine($"Str: {character.Str} + {character.StrMod}| Init: {character.Init}");
-            Console.WriteLine($"Dex: {character.Dex} + {character.DexMod}| Proficiency Bonus: +{character.ProficiencyBonus}");
-            Console.WriteLine($"Con: {character.Con} + {character.ConMod}| AC: {character.AC} + Armor Bonuses");
-            Console.WriteLine($"Int: {character.Int} + {character.IntMod}| HP: {character.HP}");
-            Console.WriteLine($"Wis: {character.Wis} + {character.WisMod}| Saves: {saves}");
-            Console.WriteLine($"Cha: {character.Cha} + {character.ChaMod}");
+            Console.WriteLine($"Str: {character.Stats["Str"]} + {character.StrMod}| Init: {character.Init}");
+            Console.WriteLine($"Dex: {character.Stats["Dex"]} + {character.DexMod}| Proficiency Bonus: +{character.ProficiencyBonus}");
+            Console.WriteLine($"Con: {character.Stats["Con"]} + {character.ConMod}| AC: {AC} + Armor Bonuses");
+            Console.WriteLine($"Int: {character.Stats["Int"]} + {character.IntMod}| HP: {character.HP}");
+            Console.WriteLine($"Wis: {character.Stats["Wis"]} + {character.WisMod}| Saves: {saves}");
+            Console.WriteLine($"Cha: {character.Stats["Cha"]} + {character.ChaMod}");
             Console.WriteLine($"Languages: {lang}");
             Console.WriteLine("\nSkills:");
             Console.WriteLine("------------------------------------");
@@ -424,6 +267,16 @@ namespace DnD_Character_Creator
             if (additionalBackgroundInfo != String.Empty)
             {
                 Console.WriteLine($"{additionalBackgroundInfo}");
+            }
+            if (character.Talents.Count != 0)
+            {
+                Console.WriteLine($"Background Progression: {character.Progression}");
+                Console.WriteLine($"\nTalents (+1D{character.ProfessionDie}):");
+                Console.WriteLine("------------------------------------");
+                foreach (string talent in character.Talents.Keys)
+                {
+                    Console.WriteLine($"{talent}: {character.Talents[talent]}");
+                }
             }
             Console.WriteLine($"\nRacial Traits:");
             Console.WriteLine("------------------------------------");
@@ -449,6 +302,25 @@ namespace DnD_Character_Creator
             {
                 Console.WriteLine($"{item}");
             }
+            if (character.Template == true)
+            {
+                Console.WriteLine($"\nTemplate Progression:");
+                Console.WriteLine("------------------------------------");
+                foreach (var item in character.TemplateProgression)
+                {
+                    Console.WriteLine(item);
+                }
+                Console.WriteLine($"\nTemplate Boons/Flaws:");
+                Console.WriteLine("------------------------------------");
+                foreach (var item in character.Boons)
+                {
+                    Console.WriteLine(item);
+                }
+                foreach (var item in character.Flaws)
+                {
+                    Console.WriteLine($"(Flaw){item}");
+                }
+            }
             Console.WriteLine("\nClass Features:");
             Console.WriteLine("------------------------------------");
             foreach (string feature in character.ClassFeatures.Keys)
@@ -458,7 +330,7 @@ namespace DnD_Character_Creator
             if (character.Spells.Count > 0)
             {
                 PrintSpellSlots(character);
-                Console.Write("\nSpells:");
+                Console.Write("\n\nSpells:");
                 if (character.CantripsKnown > 0)
                 {
                     Console.Write($" Cantrips Known: {character.CantripsKnown} ");
@@ -474,7 +346,8 @@ namespace DnD_Character_Creator
         }
         public void WriteCharacterToDocument(Character character)
         {
-            string directory = @"C:\Users\15136\Documents\Projects\DnD-Character-Creator";
+            string directory = Directory.GetCurrentDirectory();
+            directory += "..\\..\\..\\..\\..";
             string characterSheet = "YourCharacter.txt";
             string fullPath = Path.Combine(directory, characterSheet);
 
@@ -483,28 +356,38 @@ namespace DnD_Character_Creator
                 //Console.SetOut(sw);
                 //PrintCharacter(character);
                 string height = CLIHelper.ConvertHeight(character.Height);
+                string size = "";
+                if (character.Size == "Small")
+                {
+                    size = $" ({character.Size})";
+                }
+                if (character.Template == true)
+                {
+                    character.ChosenTemplate = $"({character.ChosenTemplate})";
+                }
                 string saves = String.Join(", ", character.Saves);
                 string lang = String.Join(", ", character.Languages);
                 string profs = String.Join(", ", character.Proficiencies);
                 string toolProfs = String.Join(", ", character.ToolProficiencies);
                 string additionalBackgroundInfo = WriteAdditionalBackgroundProperty(character);
+                int AC = character.AC + 10 + character.DexMod;
 
-                sw.WriteLine($"Name: {character.Name}           Height: {height}             Class: {character.ChosenClass}({character.Archetype})");
-                sw.WriteLine($"Age: {character.Age}                Weight: {character.Weight} lbs.              Level: {character.Lvl}");
+                sw.WriteLine($"Name: {character.Name}           Height: {height}{size}             Class: {character.ChosenClass}({character.Archetype})");
+                sw.WriteLine($"Age: {character.Age}{character.ChosenTemplate}                Weight: {character.Weight} lbs.              Level: {character.Lvl}");
                 sw.WriteLine($"Race: {character.ChosenRace}                Deity: {character.Deity}                GP: {character.GP}");
-                sw.WriteLine($"Alignment: {character.Alignment}                Speed: {character.Speed}                XP: {character.XP}");
+                sw.WriteLine($"Alignment: {character.Alignment}                Speed: {character.Speed}ft{character.Speedstring}                 XP: {character.XP}");
                 if (character.ChosenRace == "Dragonborn")
                 {
                     sw.Write($"Dragon color: {character.DragonColor}       ");
                 }
                 sw.WriteLine($"Background: {character.ChosenBackground}        Vision: {character.Vision}");
                 sw.WriteLine("----------------------------------------------------------------------------------------------------------------");
-                sw.WriteLine($"Str: {character.Str} + {character.StrMod}| Init: {character.Init}");
-                sw.WriteLine($"Dex: {character.Dex} + {character.DexMod}| Proficiency Bonus: +{character.ProficiencyBonus}");
-                sw.WriteLine($"Con: {character.Con} + {character.ConMod}| AC: {character.AC} + Armor Bonuses");
-                sw.WriteLine($"Int: {character.Int} + {character.IntMod}| HP: {character.HP}");
-                sw.WriteLine($"Wis: {character.Wis} + {character.WisMod}| Saves: {saves}");
-                sw.WriteLine($"Cha: {character.Cha} + {character.ChaMod}");
+                sw.WriteLine($"Str: {character.Stats["Str"]} + {character.StrMod}| Init: {character.Init}");
+                sw.WriteLine($"Dex: {character.Stats["Dex"]} + {character.DexMod}| Proficiency Bonus: +{character.ProficiencyBonus}");
+                sw.WriteLine($"Con: {character.Stats["Con"]} + {character.ConMod}| AC: {AC} + Armor Bonuses");
+                sw.WriteLine($"Int: {character.Stats["Int"]} + {character.IntMod}| HP: {character.HP}");
+                sw.WriteLine($"Wis: {character.Stats["Wis"]} + {character.WisMod}| Saves: {saves}");
+                sw.WriteLine($"Cha: {character.Stats["Cha"]} + {character.ChaMod}");
                 sw.WriteLine($"Languages: {lang}");
                 sw.WriteLine("\nSkills:");
                 sw.WriteLine("------------------------------------");
@@ -520,6 +403,16 @@ namespace DnD_Character_Creator
                 if (additionalBackgroundInfo != String.Empty)
                 {
                     sw.WriteLine($"{additionalBackgroundInfo}");
+                }
+                if (character.Talents.Count != 0)
+                {
+                    sw.WriteLine($"Background Progression: {character.Progression}");
+                    sw.WriteLine($"\nTalents:");
+                    sw.WriteLine("------------------------------------");
+                    foreach (string talent in character.Talents.Keys)
+                    {
+                        sw.WriteLine($"{talent}: {character.Talents[talent]}");
+                    }
                 }
                 sw.WriteLine($"\nRacial Traits:");
                 sw.WriteLine("------------------------------------");
@@ -544,6 +437,25 @@ namespace DnD_Character_Creator
                 foreach (string item in character.Equipment)
                 {
                     sw.WriteLine($"{item}");
+                }
+                if (character.Template == true)
+                {
+                    sw.WriteLine($"\nTemplate Progression:");
+                    sw.WriteLine("------------------------------------");
+                    foreach (var item in character.TemplateProgression)
+                    {
+                        sw.WriteLine(item);
+                    }
+                    sw.WriteLine($"\nTemplate Boons/Flaws:");
+                    sw.WriteLine("------------------------------------");
+                    foreach (var item in character.Boons)
+                    {
+                        sw.WriteLine(item);
+                    }
+                    foreach (var item in character.Flaws)
+                    {
+                        sw.WriteLine($"(Flaw){item}");
+                    }
                 }
                 sw.WriteLine("\nClass Features:");
                 sw.WriteLine("------------------------------------");
@@ -575,10 +487,14 @@ namespace DnD_Character_Creator
                             {
                                 sw.Write($"     {character.SpellSlots[1]}");
                             }
-                            sw.Write($" | {character.SpellSlots[i]}");
+
+                            if (i != 1)
+                            {
+                                sw.Write($" | {character.SpellSlots[i]}");
+                            }
                         }
                     }
-                    sw.Write("\nSpells:");
+                    sw.Write("\n\nSpells:");
                     if (character.CantripsKnown > 0)
                     {
                         sw.Write($" Cantrips Known: {character.CantripsKnown} ");
@@ -636,7 +552,10 @@ namespace DnD_Character_Creator
                     {
                         Console.Write($"     {character.SpellSlots[1]}");
                     }
-                    Console.Write($" | {character.SpellSlots[i]}");
+                    if (i != 1)
+                    {
+                        Console.Write($" | {character.SpellSlots[i]}");
+                    }
                 }
             }
         }
@@ -655,43 +574,49 @@ namespace DnD_Character_Creator
             string backgroundString = character.ChosenBackground;
             string returnString = String.Empty;
             
-            if (backgroundString == "charltan")
+            if (backgroundString == "Charltan")
             {
                 returnString = $"Favorite Scam: {character.FavoriteScam}";
             }
-            else if (backgroundString == "criminal")
+            else if (backgroundString == "Criminal")
             {
                 returnString = $"Specialty: {character.Specialty}";
             }
-            else if (backgroundString == "entertainer")
+            else if (backgroundString == "Entertainer")
             {
                 string routines = String.Join(", ", character.Routines);
                returnString = $"Routines: {routines}";
             }
-            else if (backgroundString == "folk hero")
+            else if (backgroundString == "Folk Hero")
             {
                 returnString = $"Defining Event: {character.DefiningEvent}";
             }
-            else if (backgroundString == "guild artisan")
+            else if (backgroundString == "Guild Artisan")
             {
                 returnString = $"Guild Business: {character.GuildBusiness}";
             }
-            else if (backgroundString == "hermit")
+            else if (backgroundString == "Hermit")
             {
                 returnString = $"Life of Seclusion: {character.LifeOfSeclusion}";
             }
-            else if (backgroundString == "outlander")
+            else if (backgroundString == "Outlander")
             {
                 returnString = $"Origin: {character.Origin}";
             }
-            else if (backgroundString == "sage")
+            else if (backgroundString == "Sage")
             {
                 returnString = $"Specialty: {character.Specialty}";
             }
-            else if (backgroundString == "soldier")
+            else if (backgroundString == "Soldier")
             {
                 returnString = $"Specialty: {character.Specialty}";
             }
+
+            return returnString;
+        }
+        public static string WriteGHBackgroundInfo(Character character)
+        {
+            string returnString = "";
 
             return returnString;
         }

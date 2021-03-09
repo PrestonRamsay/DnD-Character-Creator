@@ -16,7 +16,6 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             int rageDamage = 2;
             int brutalCritDice = 1;
 
-            result.ClassFeatures.Add("Unarmored Defense", "AC + Con, while wearing no armor");
             for (int i = 1; i <= lvl; i++)
             {
                 if (i == 3 || i == 6 || i == 12 || i == 17)
@@ -42,7 +41,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 result.ClassFeatures.Add($"Rage(Unlimited)", $"bonus, 1min, adv on Str checks/saves, Str melee dmg+{rageDamage}," +
                 $"\ngain Resistance to Bludgeoning, Piercing, Slashing (end as bonus or if you don't atk or take dmg)");
             }
-            
+            result.ClassFeatures.Add("Unarmored Defense", "AC + Dex or Con, while wearing no armor");
 
             if (lvl >= 2)
             {

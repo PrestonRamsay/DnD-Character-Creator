@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DnD_Character_Creator.Classes;
+using DnD_Character_Creator.Races;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -38,45 +40,7 @@ namespace DnD_Character_Creator
 
             return CapitalizeFirstLetter(userInput);
         }
-        //public static string GetSkill(List<string> list1, List<string> list2)
-        //{
-        //    string userInput = String.Empty;
-        //    bool gettingStringInList = true;
-        //    var classSkills = new List<string>();
-        //    var knownSkills = new List<string>();
-
-        //    for (int i = 0; i < list1.Count; i++)
-        //    {
-        //        classSkills.Add(list1[i].ToLower());
-        //    }
-        //    for (int i = 0; i < list2.Count; i++)
-        //    {
-        //        knownSkills.Add(list2[i].ToLower());
-        //    }
-        //    do
-        //    {
-        //        userInput = Console.ReadLine().ToLower();
-        //        if (classSkills.Contains(userInput))
-        //        {
-        //            if (!knownSkills.Contains(userInput))
-        //            {
-        //                gettingStringInList = false;
-        //            }
-        //            else
-        //            {
-        //                Console.WriteLine("You are already trained in that skill, pick a different skill.");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("That is not one of your class skills. Try again");
-        //        }
-        //    }
-        //    while (gettingStringInList);
-
-        //    return CapitalizeFirstLetter(userInput);
-        //}
-        public static string GetNew(List<string> mainList, List<string> knownList, string pickMsg, string alreadyHaveMsg)
+        public static string GetNew(List<string> mainList, IEnumerable<string> knownList, string pickMsg, string alreadyHaveMsg)
         {
             int userInput = 0;
             string newItem = String.Empty;
@@ -89,7 +53,7 @@ namespace DnD_Character_Creator
             do
             {
                 userInput = PrintChoices(pickMsg, list1);
-                newItem = list1[userInput].ToLower();
+                newItem = list1[userInput];
                 if (list1.Contains(newItem))
                 {
                     if (!list2.Contains(newItem))
@@ -139,6 +103,10 @@ namespace DnD_Character_Creator
 
             return intValue;
         }
+        public static int GetIndex(List<string> list)
+        {
+            return GetNumberInRange(1, list.Count) - 1;
+        }
         public static string ConvertHeight(int heightInInches)
         {
             int feetHeight = heightInInches / 12;
@@ -180,6 +148,7 @@ namespace DnD_Character_Creator
         }
         public static int PrintChoices(string msg, List<string> list)
         {
+            //Console.Clear();
             Console.WriteLine(msg);
 
             for (int i = 0; i < list.Count; i++)
@@ -204,9 +173,18 @@ namespace DnD_Character_Creator
             {
                 Console.WriteLine($"({i + 1}) {list[i]}");
             }
-            int entry = CLIHelper.GetNumberInRange(1, list.Length);
 
-            return entry - 1;
+            return GetNumberInRange(1, list.Length) - 1;
+        }
+        public static void GetSkills(Race race, List<string> classSkills, int numOfSkills)
+        {
+            string pickMsg = $"Pick {numOfSkills} skills from the list (enter them one at a time):";
+            string errorMsg = "You are already trained in that skill, pick a different skill.";
+            for (int i = 0; i < numOfSkills; i++)
+            {
+                string skill = GetNew(classSkills, race.SkillProficiencies, pickMsg, errorMsg);
+                race.SkillProficiencies.Add(skill);
+            }
         }
     }
 }

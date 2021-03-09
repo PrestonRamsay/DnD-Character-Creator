@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DnD_Character_Creator.Helper_Classes;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,16 +17,18 @@ namespace DnD_Character_Creator
 
             while (creatingCharacter)
             {
+                cli = new CharacterCreatorCLI();
                 Character newCharacter = new Character();
 
                 cli.RunGetLvl(newCharacter);
                 cli.RunAddStats(newCharacter);
                 cli.RunAddRace(newCharacter);
+                cli.RunAddTemplate(newCharacter);
                 cli.RunAddBackground(newCharacter);
                 cli.RunAddClass(newCharacter, newCharacter.ChosenClass);
                 cli.PrintCharacter(newCharacter);
                 cli.WriteCharacterToDocument(newCharacter);
-                 
+
                 creatingCharacter = cli.FinalPrompt();
             }
         }    

@@ -12,21 +12,21 @@ namespace DnD_Character_Creator.CLI_Classes
         public static void RacialSpecifics(Character character, Race race)
         {
             character.RacialTraits.AddRange(race.RacialTraits);
-
-            character.Str += race.RacialStr;
-            character.Dex += race.RacialDex;
-            character.Con += race.RacialCon;
-            character.Int += race.RacialInt;
-            character.Wis += race.RacialWis;
-            character.Cha += race.RacialCha;
-            
-            character.Age = CLIHelper.GetNumberInRange(race.AdultAge, race.MaxAgeStart + 50);
-            character.SkillProficiencies.AddRange(race.SkillProficiencies);
-            character.ToolProficiencies.AddRange(race.ToolProficiencies);
-            character.Proficiencies.AddRange(race.Proficiencies);
+            if (race.Size == "Small")
+            {
+                character.Size = race.Size;
+            }
+            character.Speed = race.Speed;
+            character.Speedstring = race.Speedstring;
+            character.Vision = race.Vision;
+            //in cli the other traits are assigned
+            character.SkillProficiencies.UnionWith(race.SkillProficiencies);
+            character.ToolProficiencies.UnionWith(race.ToolProficiencies);
+            character.Proficiencies.UnionWith(race.Proficiencies);
             character.Cantrips.AddRange(race.Cantrips);
             character.Feats.AddRange(race.Feats);
             character.DragonColor = race.DragonColor;
+            character.TieflingMagic = race.TieflingMagic;
         }
         public static void AddHeight(Character character, Race race)
         {
@@ -45,7 +45,7 @@ namespace DnD_Character_Creator.CLI_Classes
                     gettingheight = false;
                 }
             }
-            
+
             character.Height = ConvertHeightToInches(height);
         }
         public static int ConvertHeightToInches(string heightString)
@@ -61,12 +61,6 @@ namespace DnD_Character_Creator.CLI_Classes
 
             return heightInInches;
         }
-        public static void AddWeight(Character character, Race race)
-        {                        
-            character.Weight = CLIHelper.GetNumberInRange(race.MinWeight, race.MaxWeight);
-            character.Speed = race.Speed;
-            character.Vision = race.Vision;
-        }
         public static void AddLanguages(Character character, Race race)
         {
             if (race.Languages.Contains("Choice"))
@@ -77,34 +71,105 @@ namespace DnD_Character_Creator.CLI_Classes
                 string input = CLIHelper.GetNew(Options.Languages, race.Languages, msg, errorMsg);
                 race.Languages.Add(input);
             }
-            character.Languages.AddRange(race.Languages);
+            character.Languages.UnionWith(race.Languages);
         }
         public static void AddSpells(Character character)
         {
+            int lvl = character.Lvl;
+            
             if (character.ChosenRace == "Drow")
             {
-                if (character.Lvl >= 3)
+                if (lvl >= 3)
                 {
-                    string faerieFire = "Faerie Fire(1/day, use Cha to cast)";
-                    character.Cantrips.Add(faerieFire);
+                    string faerieFire = "Faerie Fire(1/LR, Cha to cast)";
+                    character.Spells[1].Add(faerieFire);
                 }
-                if (character.Lvl >= 5)
+                if (lvl >= 5)
                 {
-                    string darkness = "Darkness(1/day, use Cha to cast)";
-                    character.Spells[1].Add(darkness);
+                    string darkness = "Darkness(1/LR, Cha to cast)";
+                    character.Spells[2].Add(darkness);
+                }
+            }
+            else if (character.ChosenRace == "High Elf")
+            {
+                if (lvl >= 3)
+                {
+                    string detectMagic = "Detect Magic(1/LR, Int to cast)";
+                    character.Spells[1].Add(detectMagic);
+                }
+            }
+            else if (character.ChosenRace == "Wild Elf")
+            {
+                if (lvl >= 3)
+                {
+                    string animalFriendship = "Animal Friendship(1/LR, Wis to cast)";
+                    character.Spells[1].Add(animalFriendship);
+                }
+            }
+            else if (character.ChosenRace == "Forest Gnome")
+            {
+                if (lvl >= 3)
+                {
+                    string silentImage = "Silent Image(1/LR, Int to cast)";
+                    character.Spells[1].Add(silentImage);
                 }
             }
             else if (character.ChosenRace == "Tiefling")
             {
-                if (character.Lvl >= 3)
+                if (character.TieflingMagic == "Infernal Legacy")
                 {
-                    string charmPerson = "Charm Person(1/long rest, use Cha to cast)";
-                    character.Cantrips.Add(charmPerson);
+                    if (lvl >= 3)
+                    {
+                        string hellishRebuke = "Hellish Rebuke(1/LR, Cha to cast)";
+                        character.Spells[1].Add(hellishRebuke);
+                    }
+                    if (lvl >= 5)
+                    {
+                        string burningHands = "Burning Hands(1/LR, Cha to cast)";
+                        character.Spells[2].Add(burningHands);
+                    }
                 }
-                if (character.Lvl >= 5)
+                else if (character.TieflingMagic == "Devil's Tongue")
                 {
-                    string enthrall = "Entrall(1/long rest, use Cha to cast)";
-                    character.Spells[1].Add(enthrall);
+                    if (lvl >= 3)
+                    {
+                        string charmPerson = "Charm Person(1/LR, Cha to cast)";
+                        character.Spells[1].Add(charmPerson);
+                    }
+                    if (lvl >= 5)
+                    {
+                        string enthrall = "Entrall(1/LR, Cha to cast)";
+                        character.Spells[2].Add(enthrall);
+                    }
+                }
+            }
+        }
+        public static void AddHigherLvlFeature(Character character)
+        {
+            int lvl = character.Lvl;
+            string race = character.ChosenRace;
+
+            if (lvl >= 3)
+            {
+                if (race == "Protector Aasimar")
+                {
+                    character.RacialTraits.Add("Radiant Soul: action, 1/LR, 1 min - fly 30ft, 1/turn gain" +
+                        "\n extra Radiant dmg = lvl");
+                }
+                else if (race == "Scourge Aasimar")
+                {
+                    character.RacialTraits.Add("Radiant Consumption: action, 1/LR, 1 min - 10ft, 1/2 lvl radiant dmg" +
+                        "\n& 1/turn - extra Radiant dmg = lvl");
+                }
+                else if (race == "Fallen Aasimar")
+                {
+                    character.RacialTraits.Add("Necrotic Shroud: 1/LR, 1 min - grow ghostly, skeletal (flightless) wings" +
+                        "\n10ft - Cha save, fear & 1/turn - extra Necrotic dmg = lvl");
+                }
+                else if (race == "Shadar-Kai")
+                {
+                    character.RacialTraits.Remove("Blessing of the Raven Queen: bonus, LR, teleport 30ft");
+                    character.RacialTraits.Add("Blessing of the Raven Queen: bonus, LR, teleport 30ft & 1 round - resist all dmg");
                 }
             }
         }

@@ -10,33 +10,52 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
         {
             "Acid Splash",
             "Blade Ward",
+            "Booming Blade",
             "Chill Touch",
+            "Control Flames",
+            "Create Bonfire",
             "Dancing Lights",
             "Fire Bolt",
             "Friends",
+            "Frostbite",
+            "Green-Flame blade",
+            "Gust",
+            "Infestation",
             "Light",
+            "Lightning Lure",
             "Mage Hand",
             "Mending",
             "Message",
+            "Mind Sliver",
             "Minor Illusion",
+            "Mold Earth",
             "Poison Spray",
             "Prestidigitation",
             "Ray of Frost",
+            "Shape Water",
             "Shocking Grasp",
+            "Sword Burst",
+            "Thunderclap",
             "True Strike"
         };
         public static List<string> FirstLvls { get; set; } = new List<string> {
+            "Absorb Elements",
             "Burning Hands",
+            "Catapult",
+            "Chaos Bolt",
             "Charm Person",
             "Chromatic Orb",
             "Color Spray",
             "Comprehend Languages",
             "Detect Magic",
             "Disguise Self",
+            "Distort Value",
+            "Earth Tremor",
             "Expeditious Retreat",
             "False Life",
             "Feather Fall",
             "Fog Cloud",
+            "Ice Knife",
             "Jump",
             "Mage Armor",
             "Magic Missile",
@@ -44,10 +63,12 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Shield",
             "Silent Image",
             "Sleep",
+            "Tasha's Caustic Brew",
             "Thunderwave",
             "Witch Bolt"
         };
         public static List<string> SecondLvls { get; set; } = new List<string> {
+            "Aganazzar's Scorcher",
             "Alter Self",
             "Blindness/Deafness",
             "Blur",
@@ -56,6 +77,9 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Darkness",
             "Darkvision",
             "Detect Thoughts",
+            "Dragon's Breath",
+            "Dust Devil",
+            "Earthbind",
             "Enhance Ability",
             "Enlarge/Reduce",
             "Gust of Wind",
@@ -63,66 +87,91 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Invisibility",
             "Knock",
             "Levitate",
+            "Maximilian's Earthen Grasp",
+            "Mind Spike",
             "Mirror Image",
             "Misty Step",
             "Phantasmal Force",
+            "Pyrotechnics",
             "Scorching Ray",
             "See Invisibility",
+            "Shadow Blade",
             "Shatter",
+            "Snilloc's Snowball Swarm",
             "Spider Climb",
             "Suggestion",
-            "Web",
-            "1"
+            "Tasha's Mind Whip",
+            "Warding Wind",
+            "Web"
         };
         public static List<string> ThirdLvls { get; set; } = new List<string> {
             "Blink",
+            "Catnap",
             "Clairvoyance",
             "Counterspell",
             "Daylight",
             "Dispel Magic",
+            "Enemies Abound",
+            "Erupting Earth",
             "Fear",
             "Fireball",
+            "Flame Arrows",
             "Fly",
             "Gaseous Form",
             "Haste",
             "Hypnotic Pattern",
+            "Incite Greed",
+            "Intellect Fortress",
             "Lightning Bolt",
             "Major Image",
+            "Melf's Minute Meteors",
             "Protection from Energy",
             "Sleet Storm",
             "Slow",
             "Stinking Cloud",
+            "Thunder step",
+            "Tidal Wave",
             "Tongues",
+            "Wall of Water",
             "Water Breathing",
-            "Water Walk",
-            "1"
+            "Water Walk"
         };
         public static List<string> FourthLvls { get; set; } = new List<string> {
             "Banishment",
             "Blight",
+            "Charm Monster",
             "Confusion",
             "Dimension Door",
             "Dominate Beast",
             "Greater Invisibility",
             "Ice Storm",
             "Polymorph",
+            "Sickening Radiance",
             "Stoneskin",
+            "Storm Sphere",
+            "Vitriolic Sphere",
             "Wall of Fire",
-            "1"
+            "Watery Sphere"
         };
         public static List<string> FifthLvls { get; set; } = new List<string> {
             "Animate Objects",
             "Cloudkill",
             "Cone of Cold",
+            "Control Winds",
             "Creation",
             "Dominate Person",
+            "Enervation",
+            "Far Step",
             "Hold Monster",
+            "Immolation",
             "Insect Plague",
             "Seeming",
+            "Skill Empowerment",
+            "Synaptic Static",
             "Telekinesis",
             "Teleportation Circle",
-            "Wall of Stone",
-            "1"
+            "Wall of Light",
+            "Wall of Stone"
         };
         public static List<string> SixthLvls { get; set; } = new List<string> {
             "Arcane Gate",
@@ -131,39 +180,50 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Disintegrate",
             "Eyebite",
             "Globe of Invulnerability",
+            "Invetiture of Flame",
+            "Invetiture of Ice",
+            "Invetiture of Stone",
+            "Invetiture of Wind",
             "Mass Suggestion",
+            "Mental Prison",
             "Move Earth",
+            "Scatter",
             "Sunbeam",
-            "True Seeing",
-            "1"
+            "Tasha's Otherworldly Guise",
+            "True Seeing"
         };
         public static List<string> SeventhLvls { get; set; } = new List<string> {
+            "Crown of Stars",
             "Delayed Blast Fireball",
+            "Dream of the Blue Veil",
             "Etherealness",
             "Finger of Death",
             "Fire Storm",
             "Plane Shift",
+            "Power Word Pain",
             "Prismatic Spray",
             "Reverse Gravity",
             "Teleport",
-            "1"
+            "Whirlwind"
 
         };
         public static List<string> EigthLvls { get; set; } = new List<string> {
+            "Abi-Dalzim's Horrid Wilting",
             "Dominate Monster",
             "Earthquake",
             "Incendiary Cloud",
             "Power Word Stun",
-            "Sunburst",
-            "1"
+            "Sunburst"
         };
         public static List<string> NinthLvls { get; set; } = new List<string> {
+            "Blade of Diaster",
             "Gate",
+            "Mass Polymorph",
             "Meteor Swarm",
             "Power Word Kill",
+            "Psychic Scream",
             "Time Stop",
-            "Wish",
-            "1"
+            "Wish"
         };
     }
 }

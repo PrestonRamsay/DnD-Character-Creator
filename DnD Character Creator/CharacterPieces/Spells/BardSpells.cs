@@ -18,9 +18,9 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Message",
             "Minor Illusion",
             "Prestidigitation",
+            "Thunderclap",
             "True Strike",
-            "Vicious Mockery",
-            "1"
+            "Vicious Mockery"
         };
         public static List<string> FirstLvls { get; set; } = new List<string> {
             "Animal Friendship",
@@ -31,6 +31,8 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Detect Magic",
             "Disguise Self",
             "Dissonant Whispers",
+            "Distort Value",
+            "Earth Tremor",
             "Faerie Fire",
             "Featherfall",
             "Healing Word",
@@ -43,8 +45,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Speak with Animals",
             "Tasha's Hideous Laughter",
             "Thunderwave",
-            "Unseen Servant",
-            "1"
+            "Unseen Servant"
         };
         public static List<string> SecondLvls { get; set; } = new List<string> {
             "Animal Messenger",
@@ -55,6 +56,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Detect Thoughts",
             "Enhance Ability",
             "Enthrall",
+            "Gift of Gab",
             "Heat Metal",
             "Hold Person",
             "Invisibility",
@@ -64,33 +66,40 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Locate Object",
             "Magic Mouth",
             "Phantasmal Force",
+            "Pyrotechnics",
             "See Invisibility",
             "Shatter",
             "Silence",
+            "Skywrite",
             "Suggestion",
-            "Zone of Truth",
-            "1"
+            "Warding Wind",
+            "Zone of Truth"
         };
         public static List<string> ThirdLvls { get; set; } = new List<string> {
             "Bestow Curse",
+            "Catnap",
             "Clairvoyance",
             "Dispel Magic",
+            "Enemies Abound",
+            "Fast Friends",
             "Fear",
             "Feign Death",
             "Glyph of Warding",
             "Hypnotic Pattern",
+            "Intellect Fortress",
             "Leomund’s Tiny Hut",
             "Major Image",
+            "Motivational Speech",
             "Nondetection",
             "Plant Growth",
             "Sending",
             "Speak with Dead",
             "Speak with Plants",
             "Stinking Cloud",
-            "Tongues",
-            "1"
+            "Tongues"
         };
         public static List<string> FourthLvls { get; set; } = new List<string> {
+            "Charm Monster",
             "Compulsion",
             "Confusion",
             "Dimension Door",
@@ -98,8 +107,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Greater Invisibility",
             "Hallucinatory Terrain",
             "Locate Creature",
-            "Polymorph",
-            "1"
+            "Polymorph"
         };
         public static List<string> FifthLvls { get; set; } = new List<string> {
             "Animate Objects",
@@ -117,8 +125,9 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Raise Dead",
             "Scrying",
             "Seeming",
-            "Teleportation Circle",
-            "1"
+            "Skill Empowerment",
+            "Synaptic Static",
+            "Teleportation Circle"
         };
         public static List<string> SixthLvls { get; set; } = new List<string> {
             "Eyebite",
@@ -127,10 +136,10 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Mass Suggestion",
             "Otto’s Irresistible Dance",
             "Programmed Illusion",
-            "True Seeing",
-            "1"
+            "True Seeing"
         };
         public static List<string> SeventhLvls { get; set; } = new List<string> {
+            "Dream of the Blue Veil",
             "Etherealness",
             "Forcecage",
             "Mirage Arcane",
@@ -140,8 +149,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Regenerate",
             "Resurrection",
             "Symbol",
-            "Teleport",
-            "1"
+            "Teleport"
 
         };
         public static List<string> EigthLvls { get; set; } = new List<string> {
@@ -149,15 +157,14 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Feeblemind",
             "Glibness",
             "Mind Blank",
-            "Power Word Stun",
-            "1"
+            "Power Word Stun"
         };
         public static List<string> NinthLvls { get; set; } = new List<string> {
             "Foresight",
             "Power Word Heal",
             "Power Word Kill",
-            "True Polymorph",
-            "1"
+            "Psychic Scream",
+            "True Polymorph"
         };
     }
 }

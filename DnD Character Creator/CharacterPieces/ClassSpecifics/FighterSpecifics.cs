@@ -26,11 +26,11 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             {
                 styleList.Add(style);
             }
-            int input = CLIHelper.PrintChoices(fightStyleMsg, styleList);
+            int index = CLIHelper.PrintChoices(fightStyleMsg, styleList);
             string fightStyleKey = "Fighting Style";
-            fightStyleKey += $"({styleList[input]})";
-            result.ClassFeatures.Add(fightStyleKey, Options.FightingStyles[styleList[input - 1]]);
-            styleList.Remove(styleList[input]);
+            fightStyleKey += $"({styleList[index]})";
+            result.ClassFeatures.Add(fightStyleKey, Options.FightingStyles[styleList[index]]);
+            styleList.Remove(styleList[index]);
 
             if (lvl >= 2)
             {
@@ -54,11 +54,11 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     }
                     if (lvl >= 10)
                     {
-                        input = CLIHelper.PrintChoices(fightStyleMsg, styleList);
+                        index = CLIHelper.PrintChoices(fightStyleMsg, styleList);
                         fightStyleKey = "Fighting Style";
-                        fightStyleKey += $"({styleList[input]})";
-                        result.ClassFeatures.Add(fightStyleKey, Options.FightingStyles[styleList[input - 1]]);
-                        styleList.Remove(styleList[input]);
+                        fightStyleKey += $"({styleList[index]})";
+                        result.ClassFeatures.Add(fightStyleKey, Options.FightingStyles[styleList[index]]);
+                        styleList.Remove(styleList[index]);
                     }
                     if (lvl >= 15)
                     {
@@ -183,7 +183,6 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     AllSpells spells = new AllSpells();
                     result.Cantrips.AddRange(character.Cantrips);
                     result.CantripsKnown = 2;
-                    character.CantripsKnown += 2;
                     result.SpellsKnown = 3;
                     int slotLvl = 1;
                     result.SpellSlots[1] += 2;

@@ -11,7 +11,10 @@ namespace DnD_Character_Creator.Helper_Classes
         {
             character.ProficiencyBonus = class1.ProfBonus;
             character.Saves.AddRange(class1.Saves);
-            character.ClassFeatures = class1.ClassFeatures;
+            foreach (var item in class1.ClassFeatures.Keys)
+            {
+                character.ClassFeatures.Add(item, class1.ClassFeatures[item]);
+            }
             character.GP += class1.GP;
         }
         public static void AddEquipment(Character character, CharacterClass class1)
@@ -121,47 +124,58 @@ namespace DnD_Character_Creator.Helper_Classes
         }
         public static void ModifySkills(Character character)
         {
-            Dictionary<string, int> skills = new Dictionary<string, int>();
+            string trainedSkills = string.Join(", ", character.SkillProficiencies);
+            var skillList = new List<string>();
+            var skills = new Dictionary<string, int>();
 
-            foreach (var skill in character.Skills.Keys)
+            foreach (string skill in character.Skills.Keys)
             {
                 skills.Add(skill, 0);
-            }
 
-            foreach (string skill in skills.Keys)
-            {
                 if (skill.Contains("Str"))
                 {
-                    character.Skills[skill] += character.StrMod;
+                    skills[skill] += character.StrMod;
                 }
                 else if (skill.Contains("Dex"))
                 {
-                    character.Skills[skill] += character.DexMod;
+                    skills[skill] += character.DexMod;
                 }
                 else if (skill.Contains("Con"))
                 {
-                    character.Skills[skill] += character.ConMod;
+                    skills[skill] += character.ConMod;
                 }
                 else if (skill.Contains("Int"))
                 {
-                    character.Skills[skill] += character.IntMod;
+                    skills[skill] += character.IntMod;
                 }
                 else if (skill.Contains("Wis"))
                 {
-                    character.Skills[skill] += character.WisMod;
+                    skills[skill] += character.WisMod;
                 }
                 else if (skill.Contains("Cha"))
                 {
-                    character.Skills[skill] += character.ChaMod;
+                    skills[skill] += character.ChaMod;
                 }
-                foreach (var trainedSkill in character.SkillProficiencies)
+                string withoutStat = skill.Substring(0, skill.Length - 5);
+                if (trainedSkills.Contains(withoutStat))
                 {
-                    if (skill.Contains(trainedSkill))
-                    {
-                        character.Skills[skill] += character.ProficiencyBonus;
-                    }
+                    skills[skill] += character.ProficiencyBonus;
+                    string fullSkill = $"(t) {skill}";
+                    skillList.Add(fullSkill);
+                    skills.Add(fullSkill, skills[skill]);
+                    skills.Remove(skill);
                 }
-            }            
+                else
+                {
+                    skillList.Add(skill);
+                }
+            }
+            character.Skills.Clear();
+
+            foreach (var skill in skillList)
+            {
+                character.Skills.Add(skill, skills[skill]);
+            }
         }
         public static void AddSpellsKnown(Character character, CharacterClass class1)
         {
@@ -293,7 +307,7 @@ namespace DnD_Character_Creator.Helper_Classes
                 {
                     if (i % 2 != 0)
                     {
-                        if (spellSlotLvl <= 1 || i == 7 || i == 11 || i == 15 || i == 17)
+                        if ((i != 9 || i != 13) && i <= 17)
                         {
                             class1.SpellSlots[spellSlotLvl]++;
                         }
@@ -313,20 +327,16 @@ namespace DnD_Character_Creator.Helper_Classes
         }
         public static void AddSpells(Character character, CharacterClass class1)
         {
-            string classString = character.ChosenClass;
-            if (classString != "Monk" && classString != "Rogue")
+            character.CantripsKnown = class1.CantripsKnown;
+            character.Cantrips.AddRange(class1.Cantrips);
+            character.SpellsKnown = class1.SpellsKnown;
+            for (int i = 1; i < class1.SpellSlots.Count; i++)
             {
-                character.CantripsKnown = class1.CantripsKnown;
-                character.Cantrips.AddRange(class1.Cantrips);
-                character.SpellsKnown = class1.SpellsKnown;
-                for (int i = 1; i < class1.SpellSlots.Count; i++)
-                {
-                    character.SpellSlots[i] = class1.SpellSlots[i];
-                }
-                for (int i = 1; i < class1.Spells.Count; i++)
-                {
-                    character.Spells[i].AddRange(class1.Spells[i]);
-                }
+                character.SpellSlots[i] = class1.SpellSlots[i];
+            }
+            for (int i = 1; i < class1.Spells.Count; i++)
+            {
+                character.Spells[i].AddRange(class1.Spells[i]);
             }
         }
     }

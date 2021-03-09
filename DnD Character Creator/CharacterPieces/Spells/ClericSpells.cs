@@ -13,11 +13,14 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Resistance",
             "Sacred Flame",
             "Spare the Dying",
-            "Thaumaturgy"
+            "Thaumaturgy",
+            "Toll the Dead",
+            "Word of Radiance"
         };
         public static List<string> FirstLvls { get; set; } = new List<string> {
             "Bane",
             "Bless",
+            "Ceremony",
             "Command",
             "Create or Destroy Water",
             "Cure Wounds",
@@ -59,16 +62,22 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Create Food and Water",
             "Daylight",
             "Dispel Magic",
+            "Fast Friends",
             "Feign Death",
             "Glyph of Warding",
+            "Incite Greed",
+            "Life Transference",
             "Magic Circle",
             "Mass Healing Word",
             "Meld into Stone",
+            "Motivational Speech",
             "Protection from Energy",
             "Remove Curse",
             "Revivify",
             "Sending",
             "Speak with Dead",
+            "Spirit Guardians",
+            "Spirit Shroud",
             "Spirit Guardians",
             "Tongues",
             "Water Walk"
@@ -86,6 +95,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
         public static List<string> FifthLvls { get; set; } = new List<string> {
             "Commune",
             "Contagion",
+            "Dawn",
             "Dispel Evil and Good",
             "Flame Strike",
             "Geas",
@@ -96,7 +106,8 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Mass Cure Wounds",
             "Planar Binding",
             "Raise Dead",
-            "Scrying"
+            "Scrying",
+            "Summon Celestial"
         };
         public static List<string> SixthLvls { get; set; } = new List<string> {
             "Blade Barrier",
@@ -118,7 +129,8 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Plane Shift",
             "Regenerate",
             "Resurrection",
-            "Symbol"
+            "Symbol",
+            "Temple of the Gods"
         };
         public static List<string> EigthLvls { get; set; } = new List<string> {
             "Antimagic Field",

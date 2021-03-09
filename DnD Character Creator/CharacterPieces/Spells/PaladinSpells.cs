@@ -8,6 +8,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
     {
         public static List<string> FirstLvls { get; set; } = new List<string> {
             "Bless",
+            "Ceremony",
             "Command",
             "Compelled Duel",
             "Cure Wounds",
@@ -43,23 +44,27 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Elemental Weapon",
             "Magic Circle",
             "Remove Curse",
-            "Revivify"
+            "Revivify",
+            "Spirit Shroud"
         };
         public static List<string> FourthLvls { get; set; } = new List<string> {
             "Aura of Life",
             "Aura of Purity",
             "Banishment",
             "Death Ward",
+            "Find Greater Steed",
             "Locate Creature",
             "Staggering Smite"
         };
         public static List<string> FifthLvls { get; set; } = new List<string> {
             "Banishing Smite",
             "Circle of Power",
-            "Destructive Smite",
+            "Destructive Wave",
             "Dispel Evil and Good",
             "Geas",
-            "Raise Dead"
+            "Holy Weapon",
+            "Raise Dead",
+            "Summon Celestial"
         };
     }
 }

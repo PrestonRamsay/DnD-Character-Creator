@@ -1,8 +1,4 @@
 ﻿
-something wring with spells? - you need to be prompted for spells in the class, addspells just adds to the character
-rogue spells
-monk archetypes
-create class specifics (bard, cleric, druid, ranger, rogue, sorcerer, warlock, wizard)
-update spells to include every book not just ph
-update races
-add non-ph archetypes (redemption done)
+templates
+add non-ph archetypes (barbarian, bard, cleric, druid, fighter, monk, paladin, ranger, rogue, sorcerer, warlock, wizard)(redemption done)
+add races (if necessary) - demigod? dhampir? changeling? cambion?

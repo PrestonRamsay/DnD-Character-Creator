@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DnD_Character_Creator.Helper_Classes;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,15 +9,23 @@ namespace DnD_Character_Creator
     {     
         public Character()
         {
-            GP = 0;
-            StatMax = 20;
-            SpellsKnown = 0;
+            Template = false;
+            ChosenTemplate = "";
             Archetype = "";
+            StatMax = 20;
+            ProfessionDie = 2;
+            GP = 0;
+            SpellsKnown = 0;
         }
         public string Name { get; set; }
         public int Age { get; set; }
         public string ChosenRace { get; set; }
         public List<string> RacialTraits { get; set; } = new List<string>();
+        public bool Template { get; set; }
+        public string ChosenTemplate { get; set; }
+        public List<string> TemplateProgression { get; set; } = new List<string>();
+        public List<string> Boons { get; set; } = new List<string>();
+        public List<string> Flaws { get; set; } = new List<string>();
         public string Alignment { get; set; }
         public string Deity { get; set; }
         public string ChosenBackground { get; set; }        
@@ -26,19 +35,23 @@ namespace DnD_Character_Creator
         public string EC { get; set; }
         public string HC { get; set; }
         public string SC { get; set; }
-        public string Speed { get; set; }
+        public int Speed { get; set; }
+        public string Speedstring { get; set; }
         public string Vision { get; set; }
         public string ChosenClass { get; set; }
         public string Archetype { get; set; }
         public int Lvl { get; set; }
         public double XP { get; set; }
         public int StatMax { get; set; }
-        public int Str { get; set; }
-        public int Dex { get; set; }
-        public int Con { get; set; }
-        public int Int { get; set; }
-        public int Wis { get; set; }
-        public int Cha { get; set; }
+        public Dictionary<string, int> Stats = new Dictionary<string, int>
+        {
+            { "Str", 0 },
+            { "Dex", 0 },
+            { "Con", 0 },
+            { "Int", 0 },
+            { "Wis", 0 },
+            { "Cha", 0 }
+        };
         private int GetMod(int stat)
         {
             return (stat - 10) / 2;
@@ -47,42 +60,42 @@ namespace DnD_Character_Creator
         {
             get
             {
-                return GetMod(Str);
+                return GetMod(Stats["Str"]);
             }
         }
         public int DexMod
         {
             get
             {
-                return GetMod(Dex);
+                return GetMod(Stats["Dex"]);
             }
         }
         public int ConMod
         {
             get
             {
-                return GetMod(Con);
+                return GetMod(Stats["Con"]);
             }
         }
         public int IntMod
         {
             get
             {
-                return GetMod(Int);
+                return GetMod(Stats["Int"]);
             }
         }
         public int WisMod
         {
             get
             {
-                return GetMod(Wis);
+                return GetMod(Stats["Wis"]);
             }
         }
         public int ChaMod
         {
             get
             {
-                return GetMod(Cha);
+                return GetMod(Stats["Cha"]);
             }
         }
         public int Init
@@ -93,16 +106,11 @@ namespace DnD_Character_Creator
             }
         }
         public int ProficiencyBonus { get; set; }
-        public int AC
-        {
-            get
-            {
-                return 10 + DexMod;
-            }
-        }
+        public int AC { get; set; }
         public int HP { get; set; }
         public List<string> Saves { get; set; } = new List<string>();
-        public List<string> Languages { get; set; } = new List<string> { "Common" };
+
+        public HashSet<string> Languages { get; set; } = new HashSet<string> { "Common" };
         public Dictionary<string, int> Skills { get; set; } = new Dictionary<string, int>
         {
             { "Acrobatics(Dex)", 0 },
@@ -124,9 +132,9 @@ namespace DnD_Character_Creator
             { "Stealth(Dex)", 0 },
             { "Survival(Wis)", 0 }
         };
-        public List<string> SkillProficiencies { get; set; } = new List<string>();
-        public List<string> ToolProficiencies { get; set; } = new List<string>();
-        public List<string> Proficiencies { get; set; } = new List<string>();
+        public HashSet<string> SkillProficiencies { get; set; } = new HashSet<string>();
+        public HashSet<string> ToolProficiencies { get; set; } = new HashSet<string>();
+        public HashSet<string> Proficiencies { get; set; } = new HashSet<string>();
         public string BackgroundFeature { get; set; }
         public string PersonalityTrait { get; set; }
         public string Ideal { get; set; }
@@ -139,6 +147,9 @@ namespace DnD_Character_Creator
         public string GuildBusiness { get; set; }
         public string LifeOfSeclusion { get; set; }
         public string Origin { get; set; }
+        public string Progression { get; set; }
+        public Dictionary<string, string> Talents { get; set; } = new Dictionary<string, string>();
+        public int ProfessionDie { get; set; }
         public List<string> Equipment { get; set; } = new List<string>();
         public int GP { get; set; }
         public Dictionary<string, string> ClassFeatures { get; set; } = new Dictionary<string, string>();
@@ -171,5 +182,6 @@ namespace DnD_Character_Creator
         };
         public List<string> Feats { get; set; } = new List<string>();
         public string DragonColor { get; set; }
+        public string TieflingMagic { get; set; }
     }
 }

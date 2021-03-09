@@ -2,8 +2,6 @@
 using DnD_Character_Creator.Helper_Classes;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace DnD_Character_Creator.Classes
 {
@@ -67,9 +65,53 @@ namespace DnD_Character_Creator.Classes
             { 8, 0 },
             { 9, 0 }
         };
+        public static CharacterClass NewClass(Character character, CharacterClass result)
+        {
+            switch (character.ChosenClass)
+            {
+                case "Barbarian":
+                    result = Barbarian(character, result);
+                    break;
+                case "Bard":
+                    result = Bard(character, result);
+                    break;
+                case "Cleric":
+                    result = Cleric(character, result);
+                    break;
+                case "Druid":
+                    result = Druid(character, result);
+                    break;
+                case "Fighter":
+                    result = Fighter(character, result);
+                    break;
+                case "Monk":
+                    result = Monk(character, result);
+                    break;
+                case "Paladin":
+                    result = Paladin(character, result);
+                    break;
+                case "Ranger":
+                    result = Ranger(character, result);
+                    break;
+                case "Rogue":
+                    result = Rogue(character, result);
+                    break;
+                case "Sorcerer":
+                    result = Sorcerer(character, result);
+                    break;
+                case "Warlock":
+                    result = Warlock(character, result);
+                    break;
+                case "Wizard":
+                    result = Wizard(character, result);
+                    break;
+            }
+
+            return result;
+        }
         public static void GetSkills(Character character, string className, List<string> classSkills, int numOfSkills)
         {
-            string pickMsg = $"Pick 2 skills from the {className}'s class skill list (enter them one at a time):";
+            string pickMsg = $"Pick {numOfSkills} skills from the {className}'s class skill list (enter them one at a time):";
             string errorMsg = "You are already trained in that skill, pick a different skill.";
             for (int i = 0; i < numOfSkills; i++)
             {
@@ -77,52 +119,8 @@ namespace DnD_Character_Creator.Classes
                 character.SkillProficiencies.Add(skill);
             }
         }
-        //public static void Get2Skills(Character character, string className, List<string> classSkills)
-        //{
-        //    Console.WriteLine($"Pick 2 skills from the {className}'s class skill list (enter them one at a time):");
-        //    for (int i = 0; i < classSkills.Count; i++)
-        //    {
-        //        Console.WriteLine(classSkills[i]);
-        //    }
-        //    string firstSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
-        //    character.SkillProficiencies.Add(firstSkill);
-        //    string secondSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
-        //    character.SkillProficiencies.Add(secondSkill);
-        //}
-        //public static void Get3Skills(Character character, string className, List<string> classSkills)
-        //{
-        //    Console.WriteLine($"Pick 3 skills from the {className}'s class skill list (enter them one at a time):");
-        //    for (int i = 0; i < classSkills.Count; i++)
-        //    {
-        //        Console.WriteLine(classSkills[i]);
-        //    }
-        //    string firstSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
-        //    character.SkillProficiencies.Add(firstSkill);
-        //    string secondSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
-        //    character.SkillProficiencies.Add(secondSkill);
-        //    string thirdSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
-        //    character.SkillProficiencies.Add(thirdSkill);
-        //}
-        //public static void Get4Skills(Character character, string className, List<string> classSkills)
-        //{
-        //    Console.WriteLine($"Pick 4 skills from the {className}'s class skill list (enter them one at a time):");
-        //    for (int i = 0; i < classSkills.Count; i++)
-        //    {
-        //        Console.WriteLine(classSkills[i]);
-        //    }
-        //    string firstSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
-        //    character.SkillProficiencies.Add(firstSkill);
-        //    string secondSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
-        //    character.SkillProficiencies.Add(secondSkill);
-        //    string thirdSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
-        //    character.SkillProficiencies.Add(thirdSkill);
-        //    string fourthSkill = CLIHelper.GetSkill(classSkills, character.SkillProficiencies);
-        //    character.SkillProficiencies.Add(fourthSkill);
-        //}
-        public static CharacterClass Barbarian(Character character)
+        public static CharacterClass Barbarian(Character character, CharacterClass result)
         {
-            var result = new CharacterClass(character.Lvl);
-
             var classSkills = new List<string>() { "Animal Handling", "Athletics", "Intimidation", "Nature", "Perception", "Survival" };
 
             result.GP = 50;
@@ -168,10 +166,8 @@ namespace DnD_Character_Creator.Classes
 
             return result;
         }
-        public static CharacterClass Bard(Character character)
+        public static CharacterClass Bard(Character character, CharacterClass result)
         {
-            var result = new CharacterClass(character.Lvl);
-
             List<string> classSkills = Options.Skills;
 
             result.GP = 125;
@@ -184,8 +180,8 @@ namespace DnD_Character_Creator.Classes
             result.Proficiencies.Add("Shortswords");
             var instruments = new List<string>();
             instruments.AddRange(Options.MusicalInstruments);
-            Console.WriteLine("You have proficiency with 3 musical instruments");
-            string msg = "Pick your 1st instrument";
+            string msg = "You have proficiency with 3 musical instruments" +
+                "\nPick your 1st instrument";
             int index = CLIHelper.PrintChoices(msg, instruments);
             string instrument1 = instruments[index];
             result.ToolProficiencies.Add(instrument1);
@@ -208,7 +204,7 @@ namespace DnD_Character_Creator.Classes
             Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
             CLIHelper.Print3Choices("Rapier", "Longsword", "Any simple weapon");
             int input1 = CLIHelper.GetNumberInRange(1, 3);
-            CLIHelper.Print2Choices("Diplomat's pack", "Entertainer's pack");
+            CLIHelper.Print2Choices("Diplomat's Pack", "Entertainer's Pack");
             int input2 = CLIHelper.GetNumberInRange(1, 2);
             CLIHelper.Print2Choices("Lute", "Musical Instrument");
             int input3 = CLIHelper.GetNumberInRange(1, 2);
@@ -244,15 +240,13 @@ namespace DnD_Character_Creator.Classes
 
             result.Equipment.Add(Options.LightArmor[1]);
             result.Equipment.Add(Options.SimpleMeleeWeapons[1]);
-            result = BardSpecifics.Features(result);
+            result = BardSpecifics.Features(result, character);
             character.Archetype = BardSpecifics.BardicCollege;
 
             return result;
         }
-        public static CharacterClass Cleric(Character character)
+        public static CharacterClass Cleric(Character character, CharacterClass result)
         {
-            var result = new CharacterClass(character.Lvl);
-
             List<string> classSkills = new List<string>() { "History", "Insight", "Medicine", "Persuasion", "Religion" };
 
             result.GP = 125;
@@ -273,7 +267,7 @@ namespace DnD_Character_Creator.Classes
             int input2 = CLIHelper.GetNumberInRange(1, 3);
             CLIHelper.Print2Choices("Light crossbow and 20 bolts", "Any simple weapon");
             int input3 = CLIHelper.GetNumberInRange(1, 2);
-            CLIHelper.Print2Choices("Priest's pack", "Explorer's pack");
+            CLIHelper.Print2Choices("Priest's Pack", "Explorer's Pack");
             int input4 = CLIHelper.GetNumberInRange(1, 2);
 
             if (input1 == 1)
@@ -316,15 +310,13 @@ namespace DnD_Character_Creator.Classes
 
             result.Equipment.Add("Shield(+2 AC)(10gp, 6lb.)");
             result.Equipment.Add("Holy symbol");
-            result = ClericSpecifics.Features(result);
+            result = ClericSpecifics.Features(result, character);
             character.Archetype = ClericSpecifics.DivineDomain;
 
             return result;
         }
-        public static CharacterClass Druid(Character character)
+        public static CharacterClass Druid(Character character, CharacterClass result)
         {
-            var result = new CharacterClass(character.Lvl);
-
             List<string> classSkills = new List<string> { "Arcana", "Animal Handling", "Insight", "Medicine", "Nature", "Perception", "Religion", "Survival" };
 
             result.GP = 50;
@@ -343,7 +335,7 @@ namespace DnD_Character_Creator.Classes
             result.Proficiencies.Add("Sickles");
             result.Proficiencies.Add("Slings");
             result.Proficiencies.Add("Spears");
-            result.ToolProficiencies.Add("Herbalism kit");
+            result.ToolProficiencies.Add("Herbalism Kit");
             result.Saves.Add("Int");
             result.Saves.Add("Wis");
 
@@ -397,15 +389,13 @@ namespace DnD_Character_Creator.Classes
             {
                 result.Equipment.Add(Options.DruidicFocuses[3]);
             }
-            result = DruidSpecifics.Features(result);
+            result = DruidSpecifics.Features(result, character);
             character.Archetype = DruidSpecifics.DruidCircle;
 
             return result;
         }
-        public static CharacterClass Fighter(Character character)
+        public static CharacterClass Fighter(Character character, CharacterClass result)
         {
-            var result = new CharacterClass(character.Lvl);
-
             List<string> classSkills = new List<string> { "Acrobatics", "Animal Handling", "Athletics", "History", "Insight", "Intimidation", "Perception", "Survival" };
 
             result.GP = 125;
@@ -428,7 +418,7 @@ namespace DnD_Character_Creator.Classes
             int input2 = CLIHelper.GetNumberInRange(1, 2);
             CLIHelper.Print2Choices("Light crossbow and 20 bolts", "Two handaxes");
             int input3 = CLIHelper.GetNumberInRange(1, 2);
-            CLIHelper.Print2Choices("Dungeoneer's pack", "Explorer's pack");
+            CLIHelper.Print2Choices("Dungeoneer's Pack", "Explorer's Pack");
             int input4 = CLIHelper.GetNumberInRange(1, 2);
 
             if (input1 == 1)
@@ -473,10 +463,8 @@ namespace DnD_Character_Creator.Classes
 
             return result;
         }
-        public static CharacterClass Monk(Character character)
+        public static CharacterClass Monk(Character character, CharacterClass result)
         {
-            var result = new CharacterClass(character.Lvl);
-
             List<string> classSkills = new List<string> { "Acrobatics", "Athletics", "History", "Insight", "Religion", "Stealth" };
 
             result.GP = 13;
@@ -484,12 +472,12 @@ namespace DnD_Character_Creator.Classes
             result.Proficiencies.Add("Simple weapons");
             result.Proficiencies.Add("Shortswords");
             Console.WriteLine("Which proficiency would you like?");
-            CLIHelper.Print2Choices("One type of artisan's tools", "One musical instrument");
+            CLIHelper.Print2Choices("One type of Artisan's Tools", "One musical instrument");
             int choice = CLIHelper.GetNumberInRange(1, 2);
 
             if (choice == 1)
             {
-                int index = CLIHelper.PrintChoices("Pick a set of artisan tools by entering a number.", Options.ArtisanTools);
+                int index = CLIHelper.PrintChoices("Pick a set of Artisan's Tools by entering a number.", Options.ArtisanTools);
                 result.ToolProficiencies.Add(Options.ArtisanTools[index]);
             }
             else
@@ -506,7 +494,7 @@ namespace DnD_Character_Creator.Classes
             Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
             CLIHelper.Print2Choices("Shortsword", "Any simple weapon");
             int input1 = CLIHelper.GetNumberInRange(1, 2);
-            CLIHelper.Print2Choices("Dungeoneer's pack", "Explorer's pack");
+            CLIHelper.Print2Choices("Dungeoneer's Pack", "Explorer's Pack");
             int input2 = CLIHelper.GetNumberInRange(1, 2);
 
             if (input1 == 1)
@@ -533,10 +521,8 @@ namespace DnD_Character_Creator.Classes
 
             return result;
         }
-        public static CharacterClass Paladin(Character character)
+        public static CharacterClass Paladin(Character character, CharacterClass result)
         {
-            var result = new CharacterClass(character.Lvl);
-
             List<string> classSkills = new List<string> { "Athletics", "Insight", "Intimidation", "Medicine", "Persuasion", "Religion" };
 
             result.GP = 125;
@@ -557,7 +543,7 @@ namespace DnD_Character_Creator.Classes
             int input1 = CLIHelper.GetNumberInRange(1, 2);
             CLIHelper.Print2Choices("5 Javelins", "Any simple weapon");
             int input2 = CLIHelper.GetNumberInRange(1, 2);
-            CLIHelper.Print2Choices("Priest's pack", "Explorer's pack");
+            CLIHelper.Print2Choices("Priest's Pack", "Explorer's Pack");
             int input3 = CLIHelper.GetNumberInRange(1, 2);
 
             if (input1 == 1)
@@ -594,10 +580,8 @@ namespace DnD_Character_Creator.Classes
 
             return result;
         }
-        public static CharacterClass Ranger(Character character)
+        public static CharacterClass Ranger(Character character, CharacterClass result)
         {
-            var result = new CharacterClass(character.Lvl);
-
             List<string> classSkills = new List<string> { "Animal Handling", "Athletics", "Insight", "Investigation", "Nature", "Perception", "Stealth", "Survival" };
 
             result.GP = 125;
@@ -653,10 +637,8 @@ namespace DnD_Character_Creator.Classes
 
             return result;
         }
-        public static CharacterClass Rogue(Character character)
+        public static CharacterClass Rogue(Character character, CharacterClass result)
         {
-            var result = new CharacterClass(character.Lvl);
-
             List<string> classSkills = new List<string> { "Acrobatics", "Animal Handling", "Athletics", "Deception", "Insight", "Intimidation", "Investigation", "Perception", "Performance", "Persuasion", "Sleight of Hand", "Stealth" };
 
             result.GP = 100;
@@ -667,7 +649,7 @@ namespace DnD_Character_Creator.Classes
             result.Proficiencies.Add("Longswords");
             result.Proficiencies.Add("Rapiers");
             result.Proficiencies.Add("Shortswords");
-            result.ToolProficiencies.Add("Thieves' tools");
+            result.ToolProficiencies.Add("Thieves' Tools");
             result.Saves.Add("Dex");
             result.Saves.Add("Int");
 
@@ -678,7 +660,7 @@ namespace DnD_Character_Creator.Classes
             int input1 = CLIHelper.GetNumberInRange(1, 2);
             CLIHelper.Print2Choices("Shortbow and a quiver of 20 arrows", "Shortsword");
             int input2 = CLIHelper.GetNumberInRange(1, 2);
-            CLIHelper.Print3Choices("Burglar's pack", "Dungeoneer's", "Explorer's pack");
+            CLIHelper.Print3Choices("Burglar's Pack", "Dungeoneer's Pack", "Explorer's Pack");
             int input3 = CLIHelper.GetNumberInRange(1, 3);
 
             if (input1 == 1)
@@ -713,16 +695,14 @@ namespace DnD_Character_Creator.Classes
 
             result.Equipment.Add(Options.LightArmor[1]);
             result.Equipment.Add($"2 {Options.SimpleMeleeWeapons[1]}");
-            result.Equipment.Add("Thieves' tools");
-            result = RogueSpecifics.Features(result);
+            result.Equipment.Add("Thieves' Tools");
+            result = RogueSpecifics.Features(result, character);
             character.Archetype = RogueSpecifics.RoguishArchetype;
 
             return result;
         }
-        public static CharacterClass Sorcerer(Character character)
+        public static CharacterClass Sorcerer(Character character, CharacterClass result)
         {
-            var result = new CharacterClass(character.Lvl);
-
             List<string> classSkills = new List<string> { "Arcana", "Deception", "Insight", "Intimidation", "Persuasion", "Religion" };
 
             result.GP = 75;
@@ -773,15 +753,13 @@ namespace DnD_Character_Creator.Classes
             }
 
             result.Equipment.Add($"2 {Options.SimpleMeleeWeapons[1]}");
-            result = SorcererSpecifics.Features(result);
+            result = SorcererSpecifics.Features(result, character);
             character.Archetype = SorcererSpecifics.SorcerousOrigin;
 
             return result;
         }
-        public static CharacterClass Warlock(Character character)
+        public static CharacterClass Warlock(Character character, CharacterClass result)
         {
-            var result = new CharacterClass(character.Lvl);
-
             List<string> classSkills = new List<string> { "Arcana", "Deception", "History", "Intimidation", "Investigation", "Nature", "Religion" };
 
             result.GP = 100;
@@ -844,10 +822,8 @@ namespace DnD_Character_Creator.Classes
 
             return result;
         }
-        public static CharacterClass Wizard(Character character)
+        public static CharacterClass Wizard(Character character, CharacterClass result)
         {
-            var result = new CharacterClass(character.Lvl);
-
             List<string> classSkills = new List<string> { "Arcana", "History", "Insight", "Investigation", "Medicine", "Religion" };
 
             result.GP = 100;
