@@ -1,4 +1,4 @@
 ﻿
-templates
+add races - dhampir? changeling? cambion?
 add non-ph archetypes (barbarian, bard, cleric, druid, fighter, monk, paladin, ranger, rogue, sorcerer, warlock, wizard)(redemption done)
-add races (if necessary) - demigod? dhampir? changeling? cambion?
+add spell descriptions

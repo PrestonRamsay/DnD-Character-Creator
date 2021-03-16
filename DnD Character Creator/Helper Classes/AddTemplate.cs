@@ -10,8 +10,14 @@ namespace DnD_Character_Creator.Helper_Classes
         public static void TemplateBenefits(Character character, Template template)
         {
             character.TemplateProgression.AddRange(template.Milestones);
-            character.Boons.AddRange(template.Boons);
-            character.Flaws.AddRange(template.Flaws);
+            foreach (var item in template.Boons.Keys)
+            {
+                character.Boons.Add(item, template.Boons[item]);
+            }
+            foreach (var item in template.Flaws.Keys)
+            {
+                character.Flaws.Add(item, template.Flaws[item]);
+            }
         }
     }
 }

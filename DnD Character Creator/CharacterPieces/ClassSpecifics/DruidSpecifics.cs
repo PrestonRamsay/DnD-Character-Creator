@@ -22,6 +22,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
 
             result.ClassFeatures.Add("Druidic","DC 15 to spot a message");
             character.Languages.Add("Druidic");
+            result.ClassFeatures.Add("Spellcasting", "use Wis for spell DCs, you use a Druidic Focus as a spell focus");
 
             if (lvl >= 2)
             {
@@ -227,11 +228,12 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             string pickMsg = "Pick a cantrip.";
             string str2 = "You already have that cantrip.";
             int spellLvl = 1;
-            AllSpells spells = new AllSpells();
+            AllSpells spells = new AllSpells(character.ChosenClass);
             for (int i = 0; i < result.CantripsKnown; i++)
             {
-                string spell = CLIHelper.GetNew(DruidSpells.Cantrips, result.Cantrips, pickMsg, str2);
+                string spell = CLIHelper.GetNew(spells.Druid[0], result.Cantrips, pickMsg, str2);
                 result.Cantrips.Add(spell);
+                spells.Druid[0].Remove(spell);
             }
             str2 = "You already have that spell";
             pickMsg = "Pick a 1st level spell.";
@@ -270,6 +272,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 {
                     string spell = CLIHelper.GetNew(spells.Druid[spellLvl], result.Spells[spellLvl], pickMsg, str2);
                     result.Spells[spellLvl].Add(spell);
+                    spells.Druid[spellLvl].Remove(spell);
                 }
             }
             //end spells code

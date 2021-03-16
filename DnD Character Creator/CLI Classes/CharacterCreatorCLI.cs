@@ -30,12 +30,35 @@ namespace DnD_Character_Creator
         public void RunGetLvl(Character character)
         {
             Console.WriteLine("Pick the level your want your character to be. Must be between 1 and 20.");
-            int level = CLIHelper.GetNumberInRange(1, 20);
-            character.Lvl = level;
-            var xp = new XPDecider(level);
+            int lvl = CLIHelper.GetNumberInRange(1, 20);
+            character.Lvl = lvl;
+
+            character.ProficiencyBonus = 2;
+            if (lvl >= 5)
+            {
+                character.ProficiencyBonus++;
+            }
+            if (lvl >= 9)
+            {
+                character.ProficiencyBonus++;
+            }
+            if (lvl >= 13)
+            {
+                character.ProficiencyBonus++;
+            }
+            if (lvl >= 17)
+            {
+                character.ProficiencyBonus++;
+            }
+
+            var xp = new XPDecider(lvl);
             xp.SetXP(character);
             Console.Clear();
             character.ChosenRace = Prompts.PickOption("race", Options.Races);
+            if (character.ChosenRace == "Demigod")
+            {
+                character.DemigodDomain = Prompts.GetDemigodDomain();
+            }
             Console.Clear();
             Console.WriteLine($"You've picked {character.ChosenRace}.\n");
             character.ChosenClass = Prompts.PickOption("class", Options.Classes);
@@ -71,7 +94,16 @@ namespace DnD_Character_Creator
             statsDisplay.AssignStats(character, stats);
             Console.Clear();
 
-            Race race = Race.GetStats(character.ChosenRace);
+            var race = new Race();
+            if (character.ChosenRace == "Demigod")
+            {
+                race = Race.DemigodStats(character.DemigodDomain);
+
+            }
+            else
+            {
+                race = Race.GetStats(character.ChosenRace);
+            }
             Stats.RacialStats(character, race);
             if (character.Template == true)
             {
@@ -107,7 +139,16 @@ namespace DnD_Character_Creator
         public void RunAddRace(Character character)
         {
             Console.WriteLine($"You will now add {character.ChosenRace} traits.\n");
-            Race raceObject = Race.NewRace(character.ChosenRace);
+            var raceObject = new Race();
+            if (character.ChosenRace == "Demigod")
+            {
+                raceObject = Race.NewRace(character);
+
+            }
+            else
+            {
+                raceObject = Race.NewRace(character.ChosenRace);
+            }
             TempRace = raceObject;
 
             AddRace.RacialSpecifics(character, raceObject);
@@ -141,6 +182,10 @@ namespace DnD_Character_Creator
             AddRace.AddLanguages(character, raceObject);
             AddRace.AddSpells(character);
             AddRace.AddHigherLvlFeature(character);
+            if (character.ChosenRace == "Demigod")
+            {
+                character.ChosenRace += $"({character.DemigodDomain})";
+            }
 
             Console.Clear();
             Console.WriteLine("\nYou've finished adding your race!\n");
@@ -152,11 +197,11 @@ namespace DnD_Character_Creator
                 string templateName = character.ChosenTemplate;
                 Console.WriteLine($"Because you are a/an {templateName} you can pick a new age.");
                 character.Age = CLIHelper.GetNumberInRange(TempRace.AdultAge, 15000);
-                Template template = Template.NewTemplate(templateName);
+                Template template = Template.NewTemplate(templateName, character);
                 AddTemplate.TemplateBenefits(character, template);
             }
         }
-            public void RunAddBackground(Character character)
+        public void RunAddBackground(Character character)
         {
             var backgroundObject = new Background();
             var backgroundFiller = new GHBackground();
@@ -194,7 +239,7 @@ namespace DnD_Character_Creator
             Console.Clear();
             Console.WriteLine("\nYou've finished adding your background!\n");
         }
-        public void RunAddClass(Character character, string classString)
+        public void RunAddClass(Character character)
         {
             var classObject = new CharacterClass(character.Lvl);
 
@@ -312,13 +357,13 @@ namespace DnD_Character_Creator
                 }
                 Console.WriteLine($"\nTemplate Boons/Flaws:");
                 Console.WriteLine("------------------------------------");
-                foreach (var item in character.Boons)
+                foreach (var item in character.Boons.Keys)
                 {
-                    Console.WriteLine(item);
+                    Console.WriteLine($"{item}: {character.Boons[item]}");
                 }
-                foreach (var item in character.Flaws)
+                foreach (var item in character.Flaws.Keys)
                 {
-                    Console.WriteLine($"(Flaw){item}");
+                    Console.WriteLine($"(Flaw){item}: {character.Flaws[item]}");
                 }
             }
             Console.WriteLine("\nClass Features:");
@@ -448,13 +493,13 @@ namespace DnD_Character_Creator
                     }
                     sw.WriteLine($"\nTemplate Boons/Flaws:");
                     sw.WriteLine("------------------------------------");
-                    foreach (var item in character.Boons)
+                    foreach (var item in character.Boons.Keys)
                     {
-                        sw.WriteLine(item);
+                        sw.WriteLine($"{item}: {character.Boons[item]}");
                     }
-                    foreach (var item in character.Flaws)
+                    foreach (var item in character.Flaws.Keys)
                     {
-                        sw.WriteLine($"(Flaw){item}");
+                        sw.WriteLine($"(Flaw){item}: {character.Flaws[item]}");
                     }
                 }
                 sw.WriteLine("\nClass Features:");

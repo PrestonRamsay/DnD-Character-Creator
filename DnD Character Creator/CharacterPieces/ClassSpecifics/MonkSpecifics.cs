@@ -86,7 +86,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     int maxKi = 2;
                     result.ClassFeatures.Add("Disciple of the Elements", "use ki to cast spells");
                     result.ClassFeatures.Add("Elemental Attunement", "Prestidigation");
-                    result.ClassFeatures.Add("Fangs of Fire Snake", "1 ki pt, reach 10ft, spend ki pt to add 1D10 fire dmg");
+                    result.ClassFeatures.Add("Fangs of Fire Snake", "1 ki pt, reach 10ft, spend ki pt to add 1D10 Fire dmg");
                     result.ClassFeatures.Add("Fist of Four Thunders", "2 ki pt, cast Thunderwave");
                     result.ClassFeatures.Add("Fist of Unbroken Air", "2 ki pt, 30ft, Str save - 3D10 + 1D10 per ki pt, push 20ft, knock prone");
                     result.ClassFeatures.Add("Rush of Gale Spirits", "2 ki pt, cast Gust of Wind");
@@ -104,7 +104,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     }
                     if (lvl >= 6)
                     {
-                        result.ClassFeatures["Fangs of Fire Snake"] = "1 ki pt, reach 10ft +1D10 fire, spend ki pt to add 1D10 fire dmg";
+                        result.ClassFeatures["Fangs of Fire Snake"] = "1 ki pt, reach 10ft +1D10 Fire, spend ki pt to add 1D10 Fire dmg";
                         result.ClassFeatures["Fist of Four Thunders"] = "1 ki pt, cast Thunderwave";
                         result.ClassFeatures["Fist of Unbroken Air"] = "1 ki pt, 30ft, Str save - 3D10 + 1D10 per ki pt, push 20ft, knock prone";
                         result.ClassFeatures["Rush of Gale Spirits"] = "1 ki pt, cast Gust of Wind";
@@ -170,7 +170,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             }
             if (lvl >= 18)
             {
-                result.ClassFeatures.Add("Empty Body", "action, 4 ki pt, 1min, become invisible, gain Resistance to all dmg except force," +
+                result.ClassFeatures.Add("Empty Body", "action, 4 ki pt, 1min, become invisible, gain Resistance to all dmg except Force," +
                     "\nor spend 8 ki pt to cast Astral Projection spell");
             }
             if (lvl >= 20)

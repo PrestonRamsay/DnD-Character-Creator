@@ -9,7 +9,6 @@ namespace DnD_Character_Creator.Helper_Classes
     {
         public static void ClassSpecifics(Character character, CharacterClass class1)
         {
-            character.ProficiencyBonus = class1.ProfBonus;
             character.Saves.AddRange(class1.Saves);
             foreach (var item in class1.ClassFeatures.Keys)
             {
@@ -130,7 +129,7 @@ namespace DnD_Character_Creator.Helper_Classes
 
             foreach (string skill in character.Skills.Keys)
             {
-                skills.Add(skill, 0);
+                skills.Add(skill, character.Skills[skill]);
 
                 if (skill.Contains("Str"))
                 {
@@ -181,16 +180,12 @@ namespace DnD_Character_Creator.Helper_Classes
         {
             string classString = character.ChosenClass;
             int lvl = character.Lvl;
-            var cantrips = new List<string> { "Bard", "Cleric", "Druid", "Sorcerer", "Warlock", "Wizard" };
+            var cantrips = new List<string> { "Bard", "Cleric", "Druid", "Sorcerer", "Swordmage", "Warlock", "Wizard" };
 
             if (cantrips.Contains(classString))
             {
                 class1.CantripsKnown = 2;
 
-                if (classString == "Cleric" || classString == "Wizard")
-                {
-                    class1.CantripsKnown++;
-                }
                 if (lvl >= 4)
                 {
                     class1.CantripsKnown++;
@@ -199,17 +194,13 @@ namespace DnD_Character_Creator.Helper_Classes
                 {
                     class1.CantripsKnown++;
                 }
-            }
-            if (classString == "Sorcerer")
-            {
-                class1.CantripsKnown += 2;
-                class1.SpellsKnown = 2;
-                for (int i = 2; i <= lvl; i++)
+                if (classString == "Cleric" || classString == "Wizard")
                 {
-                    if (i <= 11 || i == 13 || i == 15 || i == 17)
-                    {
-                        class1.SpellsKnown++;
-                    }
+                    class1.CantripsKnown++;
+                }
+                if (classString == "Sorcerer")
+                {
+                    class1.CantripsKnown += 2;
                 }
             }
             if (classString == "Bard")
@@ -224,6 +215,17 @@ namespace DnD_Character_Creator.Helper_Classes
                     if (i == 10 || i == 14 || i == 18)
                     {
                         class1.SpellsKnown += 2;
+                    }
+                }
+            }
+            if (classString == "Sorcerer" || classString == "Swordmage")
+            {
+                class1.SpellsKnown = 2;
+                for (int i = 2; i <= lvl; i++)
+                {
+                    if (i <= 11 || i == 13 || i == 15 || i == 17)
+                    {
+                        class1.SpellsKnown++;
                     }
                 }
             }
@@ -296,10 +298,17 @@ namespace DnD_Character_Creator.Helper_Classes
                     }
                 }
             }
-            if (classString == "Paladin" || classString == "Ranger")
+            if (classString == "Paladin" || classString == "Ranger" || classString == "Swordmage")
             {
                 int spellSlotLvl = 1;
-                if (lvl >= 2)
+                if (classString != "Swordmage")
+                {
+                    if (lvl >= 2)
+                    {
+                        class1.SpellSlots[1] += 2;
+                    }
+                }
+                else
                 {
                     class1.SpellSlots[1] += 2;
                 }

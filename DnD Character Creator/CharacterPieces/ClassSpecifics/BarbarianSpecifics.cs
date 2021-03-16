@@ -34,12 +34,12 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             if (lvl != 20)
             {
                 result.ClassFeatures.Add($"Rage({numberOfRages}/day)", $"bonus, 1min, adv on Str checks/saves, Str melee dmg+{rageDamage}," +
-                $"\ngain Resistance to Bludgeoning, Piercing, Slashing (end as bonus or if you don't atk or take dmg)");
+                $"\ngain Resistance to B/P/S (end as bonus or if you don't atk or take dmg)");
             }
             else
             {
                 result.ClassFeatures.Add($"Rage(Unlimited)", $"bonus, 1min, adv on Str checks/saves, Str melee dmg+{rageDamage}," +
-                $"\ngain Resistance to Bludgeoning, Piercing, Slashing (end as bonus or if you don't atk or take dmg)");
+                $"\ngain Resistance to B/P/S (end as bonus or if you don't atk or take dmg)");
             }
             result.ClassFeatures.Add("Unarmored Defense", "AC + Dex or Con, while wearing no armor");
 

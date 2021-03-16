@@ -12,9 +12,8 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
         public static CharacterClass Features(CharacterClass result, Character character)
         {
             int lvl = result.Lvl;
-            int sorceryPts = lvl;
-            var metamagic = new List<string> { "Careful Spell", "Distant Spell", "Empowered Spell", "Extended Spell", "Heightened Spell", "Quicken Spell", "Sudden Spell", "Twinned Spell" };
-
+            result.ClassFeatures.Add("Spellcasting", "use Cha for spell DCs, you use an Arcane Focus as a spell focus");
+            
             string msg = "Pick a Sorcerous Origin that will give you features at levels 1, 6, 14, and 18.";
             var archetype = new List<string> { "Draconic Bloodline", "Wild Magic" };
             int answer = CLIHelper.PrintChoices(msg, archetype);
@@ -110,10 +109,12 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             //        result.ClassFeatures.Add("", "");
             //    }
             //}
+            int sorceryPts = lvl;
+            var metamagic = new List<string> { "Careful Spell", "Distant Spell", "Empowered Spell", "Extended Spell", "Heightened Spell", "Quicken Spell", "Sudden Spell", "Twinned Spell" };
 
             if (lvl >= 2)
             {
-                result.ClassFeatures.Add("Font of Magic", $"you have {sorceryPts} sorcery pts, Flexible Casting" +
+                result.ClassFeatures.Add("Font of Magic", $"you have {sorceryPts} sorcery pts and Flexible Casting" +
                     "\n1st = 2pts" +
                     "\n2nd = 3pts" +
                     "\n3rd = 5pts" +
@@ -162,7 +163,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             str2 = "You already have that spell";
             pickMsg = "Pick a 1st level spell.";
             int spellLvl = 1;
-            AllSpells spells = new AllSpells();
+            AllSpells spells = new AllSpells(character.ChosenClass);
             for (int i = 1; i <= result.SpellsKnown; i++)
             {
                 if (4 >= i && i >= 14 && i % 2 == 0)
@@ -187,6 +188,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 }
                 string spell = CLIHelper.GetNew(spells.Sorcerer[spellLvl], result.Spells[spellLvl], pickMsg, str2);
                 result.Spells[spellLvl].Add(spell);
+                spells.Sorcerer[spellLvl].Remove(spell);
             }
             //end spells code
 

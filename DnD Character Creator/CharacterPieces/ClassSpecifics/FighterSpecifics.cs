@@ -20,12 +20,12 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
 
             result.ClassFeatures.Add("Second Wind", "bonus, SR, heal 1D10+lvl HP");
 
-            string fightStyleMsg = "Pick a fighting style.";
             List<string> styleList = new List<string>();
             foreach (var style in Options.FightingStyles.Keys)
             {
                 styleList.Add(style);
             }
+            string fightStyleMsg = "Pick a fighting style.";
             int index = CLIHelper.PrintChoices(fightStyleMsg, styleList);
             string fightStyleKey = "Fighting Style";
             fightStyleKey += $"({styleList[index]})";
@@ -159,6 +159,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     
                     result.ClassFeatures.Add("Weapon Bond", "1hr ritual to bond, can't be disarmed, bonus to teleport to hand, " +
                         "\ncan bond with 2 weapons(can only summon 1 at a time)");
+                    result.ClassFeatures.Add("Spellcasting", "use Int for spell DCs, you use a component pouch to cast spells");
 
                     if (lvl >= 7)
                     {
@@ -180,7 +181,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     }
 
                     //spells
-                    AllSpells spells = new AllSpells();
+                    AllSpells spells = new AllSpells(character.ChosenClass);
                     result.Cantrips.AddRange(character.Cantrips);
                     result.CantripsKnown = 2;
                     result.SpellsKnown = 3;
@@ -191,14 +192,19 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
 
                     string cantrip = CLIHelper.GetNew(spells.Wizard[0], result.Cantrips, msg1, msg2);
                     result.Cantrips.Add(cantrip);
+                    spells.Wizard[0].Remove(cantrip);
                     cantrip = CLIHelper.GetNew(spells.Wizard[0], result.Cantrips, msg1, msg2);
                     result.Cantrips.Add(cantrip);
+                    spells.Wizard[0].Remove(cantrip);
                     string spell = CLIHelper.GetNew(spells.Fighter[1], result.Spells[1], msg1, msg2);
                     result.Spells[1].Add(spell);
+                    spells.Fighter[1].Remove(spell);
                     spell = CLIHelper.GetNew(spells.Fighter[1], result.Spells[1], msg1, msg2);
                     result.Spells[1].Add(spell);
+                    spells.Fighter[1].Remove(spell);
                     spell = CLIHelper.GetNew(spells.Wizard[1], result.Spells[1], msg1, msg2);
                     result.Spells[1].Add(spell);
+                    spells.Fighter[1].Remove(spell);
 
                     for (int i = 3; i <= lvl; i++)
                     {
@@ -223,29 +229,25 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                             character.CantripsKnown++;
                             cantrip = CLIHelper.GetNew(spells.Wizard[0], character.Cantrips, msg1, msg2);
                             result.Cantrips.Add(cantrip);
+                            spells.Wizard[0].Remove(cantrip);
+                            result.SpellsKnown++;
+                            spell = CLIHelper.GetNew(spells.Fighter[slotLvl], result.Spells[slotLvl], msg1, msg2);
+                            result.Spells[slotLvl].Add(spell);
+                            spells.Fighter[slotLvl].Remove(spell);
                         }
-                        if (i % 2 == 0 && i % 6 != 0)
+                        if (i == 8 || i == 14 || i == 20)
                         {
-                            if (i != 10)
-                            {
-                                result.SpellsKnown++;
-                                if (i != 8 || i != 14 || i != 20)
-                                {
-                                    spell = CLIHelper.GetNew(spells.Fighter[slotLvl], result.Spells[slotLvl], msg1, msg2);
-                                    result.Spells[slotLvl].Add(spell);
-                                }
-                                else
-                                {
-                                    spell = CLIHelper.GetNew(spells.Wizard[slotLvl], result.Spells[slotLvl], msg1, msg2);
-                                    result.Spells[slotLvl].Add(spell);
-                                }
-                            }
+                            result.SpellsKnown++;
+                            spell = CLIHelper.GetNew(spells.Wizard[slotLvl], result.Spells[slotLvl], msg1, msg2);
+                            result.Spells[slotLvl].Add(spell);
+                            spells.Wizard[slotLvl].Remove(spell);
                         }
-                        if (i == 7 || i == 11 || i == 13 || i == 19)
+                        if (i == 4 || i == 7 || i == 11 || i == 13 || i == 16 || i == 19)
                         {
                             result.SpellsKnown++;
                             spell = CLIHelper.GetNew(spells.Fighter[slotLvl], result.Spells[slotLvl], msg1, msg2);
-                            result.Spells[1].Add(spell);
+                            result.Spells[slotLvl].Add(spell);
+                            spells.Fighter[slotLvl].Remove(spell);
                         }
                     }
                 }

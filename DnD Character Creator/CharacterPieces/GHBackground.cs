@@ -1493,8 +1493,8 @@ namespace DnD_Character_Creator.Backgrounds
 
             if (choice == 1)
             {
-                int num = CLIHelper.PrintChoices(luckyCharmExamples);
-                result.Equipment.Add(luckyCharmExamples[num]);
+                string luckyCharm = CLIHelper.PrintChoices(luckyCharmExamples);
+                result.Equipment.Add(luckyCharm);
             }
             else
             {

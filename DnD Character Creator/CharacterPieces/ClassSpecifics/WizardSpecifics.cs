@@ -13,6 +13,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
         {
             int lvl = result.Lvl;
 
+            result.ClassFeatures.Add("Spellcasting", "use Int for spell DCs, you use an Arcane Focus as a spell focus");
             result.ClassFeatures.Add("Arcane Recovery", "1/day after SR, gain spell slots <= 1/2 lvl, no lvl 6 slots or higher");
 
             if (lvl >= 2)
@@ -150,7 +151,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     }
                     if (lvl >= 10)
                     {
-                        result.ClassFeatures.Add("Inured to Undeath", "gain Resistance to necrotic, max HP can't be reduced");
+                        result.ClassFeatures.Add("Inured to Undeath", "gain Resistance to Necrotic, max HP can't be reduced");
                     }
                     if (lvl >= 14)
                     {
@@ -165,7 +166,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
 
                     if (lvl >= 6)
                     {
-                        result.ClassFeatures.Add("Transmuter's Stone", "gain Darkvision, speed + 10ft, prof in Con saves, or Resistance to cold, fire, lightning, or thunder" +
+                        result.ClassFeatures.Add("Transmuter's Stone", "gain Darkvision, speed + 10ft, prof in Con saves, or Resistance to Cold, Fire, Lighting, or Thunder" +
                             "\nwhen you cast a Transmutation spell, you can change the effect");
                     }
                     if (lvl >= 10)
@@ -189,38 +190,47 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             }
             //spells code
             string pickMsg = "Pick a cantrip.";
-            string str2 = "You already have that cantrip.";
-            int spellLvl = 1;
-            AllSpells spells = new AllSpells();
+            string errorMsg = "You already have that cantrip.";
+            AllSpells spells = new AllSpells("Wizard");
             for (int i = 0; i < result.CantripsKnown; i++)
             {
-                string spell = CLIHelper.GetNew(WizardSpells.Cantrips, result.Cantrips, pickMsg, str2);
+                string spell = CLIHelper.GetNew(WizardSpells.Cantrips, result.Cantrips, pickMsg, errorMsg);
                 result.Cantrips.Add(spell);
             }
-            str2 = "You already have that spell";
+            errorMsg = "You already have that spell";
             pickMsg = "Pick a 1st level spell.";
-            for (int i = 1; i <= lvl; i++)
+            for (int i = 0; i < 6; i++)
+            {
+                string spell = CLIHelper.GetNew(spells.Wizard[1], result.Spells[1], pickMsg, errorMsg);
+                result.Spells[1].Add(spell);
+                spells.Wizard[1].Remove(spell);
+            }
+            int spellLvl = 1;
+            for (int i = 2; i <= lvl; i++)
             {
                 if (3 <= i && i <= 17 && i % 2 != 0)
                 {
                     spellLvl++;
+
+                    if (i == 3)
+                    {
+                        pickMsg = "Pick a 2nd level spell.";
+                    }
+                    if (i == 5)
+                    {
+                        pickMsg = "Pick a 3rd level spell.";
+                    }
+                    if (i >= 7)
+                    {
+                        pickMsg = $"Pick a {spellLvl}th level spell.";
+                    }
                 }
-                if (i == 3)
-                {
-                    pickMsg = "Pick a 2nd level spell.";
-                }
-                if (i == 5)
-                {
-                    pickMsg = "Pick a 3rd level spell.";
-                }
-                if (i >= 7)
-                {
-                    pickMsg = $"Pick a {spellLvl}th level spell.";
-                }
-                string spell = CLIHelper.GetNew(spells.Wizard[spellLvl], result.Spells[spellLvl], pickMsg, str2);
+                string spell = CLIHelper.GetNew(spells.Wizard[spellLvl], result.Spells[spellLvl], pickMsg, errorMsg);
                 result.Spells[spellLvl].Add(spell);
-                string spell2 = CLIHelper.GetNew(spells.Wizard[spellLvl], result.Spells[spellLvl], pickMsg, str2);
-                result.Spells[spellLvl].Add(spell2);
+                spells.Wizard[spellLvl].Remove(spell);
+                spell = CLIHelper.GetNew(spells.Wizard[spellLvl], result.Spells[spellLvl], pickMsg, errorMsg);
+                result.Spells[spellLvl].Add(spell);
+                spells.Wizard[spellLvl].Remove(spell);
             }
             //end spells code
 

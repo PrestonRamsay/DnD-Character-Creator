@@ -63,6 +63,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
 
             if (lvl >= 2)
             {
+                result.ClassFeatures.Add("Spellcasting", "use Cha for spell DCs, you use a component pouch to cast spells");
                 string fightStyleMsg = "Pick a fighting style.";
                 List<string> styleList = new List<string>();
                 foreach (var style in Options.FightingStyles.Keys)
@@ -231,7 +232,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             //spells code
             string str2 = "You already have that spell";
             string pickMsg = "Pick a 1st level spell.";
-            AllSpells spells = new AllSpells();
+            AllSpells spells = new AllSpells("Ranger");
             foreach (var slotLvl in result.SpellSlots.Keys)
             {
                 if (slotLvl == 2)
@@ -251,6 +252,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 {
                     string spell = CLIHelper.GetNew(spells.Ranger[slotLvl], result.Spells[slotLvl], pickMsg, str2);
                     result.Spells[slotLvl].Add(spell);
+                    spells.Ranger[slotLvl].Remove(spell);
                 }
             }
             //end spells code

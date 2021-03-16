@@ -9,29 +9,11 @@ namespace DnD_Character_Creator.Classes
     {
         public CharacterClass(int lvl)
         {
-            ProfBonus = 2;
             Lvl = lvl;
-            if (lvl > 4)
-            {
-                ProfBonus++;
-            }
-            if (lvl > 8)
-            {
-                ProfBonus++;
-            }
-            if (lvl > 12)
-            {
-                ProfBonus++;
-            }
-            if (lvl > 16)
-            {
-                ProfBonus++;
-            }
         }
         public int Lvl { get; set; }
         public int GP { get; set; }
         public int HitDie { get; set; }
-        public int ProfBonus { get; set; }
         public List<string> Proficiencies { get; protected set; } = new List<string>();
         public List<string> Saves { get; set; } = new List<string>();
         public List<string> SkillProficiencies { get; set; } = new List<string>();
@@ -98,6 +80,9 @@ namespace DnD_Character_Creator.Classes
                     break;
                 case "Sorcerer":
                     result = Sorcerer(character, result);
+                    break;
+                case "Swordmage":
+                    result = Swordmage(character, result);
                     break;
                 case "Warlock":
                     result = Warlock(character, result);
@@ -412,7 +397,7 @@ namespace DnD_Character_Creator.Classes
             GetSkills(character, "Fighter", classSkills, 2);
 
             Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
-            CLIHelper.Print2Choices("Chain mail", "Leather, longbow, and 20 arrows");
+            CLIHelper.Print2Choices("Fullplate", "Leather, longbow, and 20 arrows");
             int input1 = CLIHelper.GetNumberInRange(1, 2);
             CLIHelper.Print2Choices("Any martial weapon, and a shield", "Two martial weapons");
             int input2 = CLIHelper.GetNumberInRange(1, 2);
@@ -423,7 +408,7 @@ namespace DnD_Character_Creator.Classes
 
             if (input1 == 1)
             {
-                result.Equipment.Add(Options.HeavyArmor[1]);
+                result.Equipment.Add(Options.HeavyArmor[3]);
             }
             else
             {
@@ -573,7 +558,7 @@ namespace DnD_Character_Creator.Classes
                 result.Equipment.Add(Options.Packs[4]);
             }
 
-            result.Equipment.Add(Options.HeavyArmor[1]);
+            result.Equipment.Add(Options.HeavyArmor[3]);
             result.Equipment.Add("Holy symbol");
             result = PaladinSpecifics.Features(result);
             character.Archetype = PaladinSpecifics.SacredOath;
@@ -755,6 +740,62 @@ namespace DnD_Character_Creator.Classes
             result.Equipment.Add($"2 {Options.SimpleMeleeWeapons[1]}");
             result = SorcererSpecifics.Features(result, character);
             character.Archetype = SorcererSpecifics.SorcerousOrigin;
+
+            return result;
+        }
+        public static CharacterClass Swordmage(Character character, CharacterClass result)
+        {
+            var classSkills = new List<string>() { "Acrobatics", "Arcana", "Athletics", "History", "Insight", "Intimidation", "Perception", "Persuasion" };
+            var swords = new List<string>() { "Claymore", "Greatsword", "Longsword", "Rapier", "Sabre", "Scimitar", "Shortsword" };
+
+            result.GP = 125;
+            result.HitDie = 10;
+            result.Proficiencies.Add("Light armor");
+            result.Proficiencies.Add("Medium armor");
+            result.Proficiencies.Add("Simple weapons");
+            foreach (var item in swords)
+            {
+                result.Proficiencies.Add(item);
+            }
+            result.Saves.Add("Dex");
+            result.Saves.Add("Cha");
+
+            GetSkills(character, "Swordmage", classSkills, 2);
+
+            Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
+            CLIHelper.Print2Choices("Scalemail", "Leather");
+            int input1 = CLIHelper.GetNumberInRange(1, 2);
+            string sword = CLIHelper.PrintChoices(swords);
+            foreach (var item in Options.MartialMeleeWeapons)
+            {
+                if (item.Contains(sword))
+                {
+                    result.Equipment.Add(item);
+                }
+            }
+            result.Equipment.Add("Simple weapon");
+            CLIHelper.Print2Choices("Dungeoneer's Pack", "Explorer's Pack");
+            int input2 = CLIHelper.GetNumberInRange(1, 2);
+
+            if (input1 == 1)
+            {
+                result.Equipment.Add(Options.MediumArmor[2]);
+            }
+            else
+            {
+                result.Equipment.Add(Options.LightArmor[1]);
+            }
+            if (input2 == 1)
+            {
+                result.Equipment.Add(Options.Packs[2]);
+            }
+            else
+            {
+                result.Equipment.Add(Options.Packs[4]);
+            }
+
+            result = SwordmageSpecifics.Features(result);
+            character.Archetype = SwordmageSpecifics.ArcaneSwordStyle;
 
             return result;
         }

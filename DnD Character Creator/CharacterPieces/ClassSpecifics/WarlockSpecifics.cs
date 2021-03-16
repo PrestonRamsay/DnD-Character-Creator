@@ -22,6 +22,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
         {
             int lvl = result.Lvl;
 
+            result.ClassFeatures.Add("Spellcasting", "use Cha for spell DCs, you use an Arcane Focus as a spell focus");
             string msg = "Pick an Otherworldly Patron that will give you features at levels 1, 6, 10, and 14.";
             var archetype = new List<string> { "Archfey", "Fiend", "The Great Old One" };
             int answer = CLIHelper.PrintChoices(msg, archetype);
@@ -79,7 +80,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 }
                 if (lvl >= 14)
                 {
-                    result.ClassFeatures.Add("Hurl Through Hell", "on hit, disappears til next turn - if not a fiend, take 10D10 psychic dmg");
+                    result.ClassFeatures.Add("Hurl Through Hell", "on hit, disappears til next turn - if not a fiend, take 10D10 Psychic dmg");
                 }
             }
             else if (answer == 2)
@@ -103,7 +104,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 }
                 if (lvl >= 10)
                 {
-                    result.ClassFeatures.Add("Thought Shield", "Resistance on psychic, thoughts can't be telepathically read unless you allow it");
+                    result.ClassFeatures.Add("Thought Shield", "Resistance to Psychic, thoughts can't be telepathically read unless you allow it");
                 }
                 if (lvl >= 14)
                 {
@@ -174,7 +175,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             string pickMsg = "Pick a cantrip.";
             string str2 = "You already have that cantrip.";
             int spellLvl = 1;
-            AllSpells spells = new AllSpells();
+            AllSpells spells = new AllSpells("Warlock");
             spells.Warlock[1].AddRange(ExpandedSpells[1]);
             spells.Warlock[2].AddRange(ExpandedSpells[2]);
             spells.Warlock[3].AddRange(ExpandedSpells[3]);
@@ -208,6 +209,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 }
                 string spell = CLIHelper.GetNew(spells.Warlock[spellLvl], result.Spells[spellLvl], pickMsg, str2);
                 result.Spells[spellLvl].Add(spell);
+                spells.Warlock[spellLvl].Remove(spell);
             }
             //end spells code
 

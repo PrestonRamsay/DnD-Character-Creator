@@ -71,6 +71,14 @@ namespace DnD_Character_Creator
 
             return race;
         }
+        public static string GetDemigodDomain()
+        {
+            string pickMsg = "As a demigod, you get to pick a domain that grants you additional benefits";
+            int index = CLIHelper.PrintChoices(pickMsg, Options.DemigodDomains);
+            string demigodSubrace = Options.DemigodDomains[index];
+
+            return demigodSubrace;
+        }
         public static int BackgroundPrompts(string backgroundPiece, string[] backgroundProperty)
         {
             Console.Clear();

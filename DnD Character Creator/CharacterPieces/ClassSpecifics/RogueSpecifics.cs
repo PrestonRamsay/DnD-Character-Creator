@@ -101,31 +101,34 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     }
                     if (lvl >= 17)
                     {
-                        result.ClassFeatures.Add("Spell Thief", "1/LR, reaction, when enemy casts a spell, spell save - they lost the spell, you gain it");
+                        result.ClassFeatures.Add("Spell Thief", "LR, reaction, when enemy casts a spell, spell save - they lost the spell, you gain it");
                     }
 
                     //spells
-                    AllSpells spells = new AllSpells();
+                    AllSpells spells = new AllSpells(character.ChosenClass);
                     result.Cantrips.AddRange(character.Cantrips);
-                    result.CantripsKnown = 3;
+                    result.CantripsKnown = 2;
                     result.SpellsKnown = 3;
                     int slotLvl = 1;
                     result.SpellSlots[1] += 2;
                     string msg1 = "Pick a spell.";
                     string msg2 = "You already have that spell";
 
-                    string cantrip = "Mage Hand";
+                    string cantrip = CLIHelper.GetNew(spells.Wizard[0], result.Cantrips, msg1, msg2);
                     result.Cantrips.Add(cantrip);
+                    spells.Wizard[0].Remove(cantrip);
                     cantrip = CLIHelper.GetNew(spells.Wizard[0], result.Cantrips, msg1, msg2);
                     result.Cantrips.Add(cantrip);
-                    cantrip = CLIHelper.GetNew(spells.Wizard[0], result.Cantrips, msg1, msg2);
-                    result.Cantrips.Add(cantrip);
-                    string spell = CLIHelper.GetNew(spells.Fighter[1], result.Spells[1], msg1, msg2);
+                    spells.Wizard[0].Remove(cantrip);
+                    string spell = CLIHelper.GetNew(spells.Rogue[1], result.Spells[1], msg1, msg2);
                     result.Spells[1].Add(spell);
-                    spell = CLIHelper.GetNew(spells.Fighter[1], result.Spells[1], msg1, msg2);
+                    spells.Rogue[1].Remove(spell);
+                    spell = CLIHelper.GetNew(spells.Rogue[1], result.Spells[1], msg1, msg2);
                     result.Spells[1].Add(spell);
+                    spells.Rogue[1].Remove(spell);
                     spell = CLIHelper.GetNew(spells.Wizard[1], result.Spells[1], msg1, msg2);
                     result.Spells[1].Add(spell);
+                    spells.Rogue[1].Remove(spell);
 
                     for (int i = 3; i <= lvl; i++)
                     {
@@ -150,29 +153,25 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                             character.CantripsKnown++;
                             cantrip = CLIHelper.GetNew(spells.Wizard[0], character.Cantrips, msg1, msg2);
                             result.Cantrips.Add(cantrip);
+                            spells.Wizard[0].Remove(cantrip);
+                            result.SpellsKnown++;
+                            spell = CLIHelper.GetNew(spells.Rogue[slotLvl], result.Spells[slotLvl], msg1, msg2);
+                            result.Spells[slotLvl].Add(spell);
+                            spells.Rogue[slotLvl].Remove(spell);
                         }
-                        if (i % 2 == 0 && i % 6 != 0)
-                        {
-                            if (i != 10)
-                            {
-                                result.SpellsKnown++;
-                                if (i != 8 || i != 14 || i != 20)
-                                {
-                                    spell = CLIHelper.GetNew(spells.Fighter[slotLvl], result.Spells[slotLvl], msg1, msg2);
-                                    result.Spells[slotLvl].Add(spell);
-                                }
-                                else
-                                {
-                                    spell = CLIHelper.GetNew(spells.Wizard[slotLvl], result.Spells[slotLvl], msg1, msg2);
-                                    result.Spells[slotLvl].Add(spell);
-                                }
-                            }
-                        }
-                        if (i == 7 || i == 11 || i == 13 || i == 19)
+                        if (i == 8 || i == 14 || i == 20)
                         {
                             result.SpellsKnown++;
-                            spell = CLIHelper.GetNew(spells.Fighter[slotLvl], result.Spells[slotLvl], msg1, msg2);
-                            result.Spells[1].Add(spell);
+                            spell = CLIHelper.GetNew(spells.Wizard[slotLvl], result.Spells[slotLvl], msg1, msg2);
+                            result.Spells[slotLvl].Add(spell);
+                            spells.Wizard[slotLvl].Remove(spell);
+                        }
+                        if (i == 4 || i == 7 || i == 11 || i == 13 || i == 16 || i == 19)
+                        {
+                            result.SpellsKnown++;
+                            spell = CLIHelper.GetNew(spells.Rogue[slotLvl], result.Spells[slotLvl], msg1, msg2);
+                            result.Spells[slotLvl].Add(spell);
+                            spells.Rogue[slotLvl].Remove(spell);
                         }
                     }
                 }

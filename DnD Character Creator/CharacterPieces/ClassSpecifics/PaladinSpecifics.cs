@@ -27,7 +27,8 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
 
             if (lvl >= 2)
             {
-                result.ClassFeatures.Add("Divine Smite", "2D8 + 1D8/lvl(above 1), +1D8 if undead/fiend");
+                result.ClassFeatures.Add("Divine Smite", "2D8 Radiant + 1D8/lvl(above 1), +1D8 if undead/fiend");
+                result.ClassFeatures.Add("Spellcasting", "use Cha for spell DCs, you use a Holy Symbol as a spell focus");
                 string fightStyleMsg = "Pick a fighting style.";
                 List<string> styleList = new List<string>();
                 foreach (var style in Options.FightingStyles.Keys)
@@ -74,7 +75,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     }
                     if (lvl >= 20)
                     {
-                        result.ClassFeatures.Add("Holy Nimbus", "action, 1min, LR, bright 30ft/dim 30ft - start in bright 10 radiant dmg," +
+                        result.ClassFeatures.Add("Holy Nimbus", "action, 1min, LR, bright 30ft/dim 30ft - start in bright 10 Radiant dmg," +
                             "\nadv on saves vs fiend/undead spells");
                     }
                 }
@@ -99,7 +100,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     }
                     if (lvl >= 15)
                     {
-                        result.ClassFeatures.Add("Undying Sentinel", "LR, when 0HP - 1HP instead");
+                        result.ClassFeatures.Add("Undying Sentinel", "LR, when you drop to 0 HP - drop to 1 HP instead");
                     }
                     if (lvl >= 20)
                     {
@@ -149,7 +150,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     OathSpells[5].Add("Hold Monster*");
                     OathSpells[5].Add("Wall of Force*");
                     result.ClassFeatures.Add("Channel Divinity(Emissary of Peace)", "bonus, 10min, +5 Persuasion");
-                    result.ClassFeatures.Add("Channel Divinity(Rebuke the Violent)", "30ft, ally takes dmg, Wis save - 1/2 radiant dmg on fail");
+                    result.ClassFeatures.Add("Channel Divinity(Rebuke the Violent)", "30ft, ally takes dmg, Wis save - 1/2 Radiant dmg on fail");
                     if (lvl >= 7)
                     {
                         result.ClassFeatures.Add("Aura of Guardian", "10ft, reaction, take ally dmg instead");
@@ -160,7 +161,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     }
                     if (lvl >= 20)
                     {
-                        result.ClassFeatures.Add("Emissary of Redemption", "Resist all dmg, when hit deal 1/2 radiant dmg");
+                        result.ClassFeatures.Add("Emissary of Redemption", "Resist all dmg, when hit deal 1/2 Radiant dmg");
                     }
                 }
                 result.Spells[1].AddRange(OathSpells[1]);
@@ -184,7 +185,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             }
             if (lvl >= 11)
             {
-                result.ClassFeatures.Add("Improved Divine Smite", "all melee +1D8 radiant");
+                result.ClassFeatures.Add("Improved Divine Smite", "all melee +1D8 Radiant");
             }
             if (lvl >= 13)
             {
@@ -218,7 +219,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             //spells code
             string str2 = "You already have that spell";
             string pickMsg = "Pick a 1st level spell.";
-            AllSpells spells = new AllSpells();
+            AllSpells spells = new AllSpells("Paladin");
             foreach (var slotLvl in result.SpellSlots.Keys)
             {
                 if (slotLvl == 2)
@@ -238,6 +239,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 {
                     string spell = CLIHelper.GetNew(spells.Paladin[slotLvl], result.Spells[slotLvl], pickMsg, str2);
                     result.Spells[slotLvl].Add(spell);
+                    spells.Paladin[slotLvl].Remove(spell);
                 }
             }
             //end spells code

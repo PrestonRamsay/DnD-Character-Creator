@@ -24,8 +24,8 @@ namespace DnD_Character_Creator
         public bool Template { get; set; }
         public string ChosenTemplate { get; set; }
         public List<string> TemplateProgression { get; set; } = new List<string>();
-        public List<string> Boons { get; set; } = new List<string>();
-        public List<string> Flaws { get; set; } = new List<string>();
+        public Dictionary<string, string> Boons = new Dictionary<string, string>();
+        public Dictionary<string, string> Flaws = new Dictionary<string, string>();
         public string Alignment { get; set; }
         public string Deity { get; set; }
         public string ChosenBackground { get; set; }        
@@ -183,5 +183,6 @@ namespace DnD_Character_Creator
         public List<string> Feats { get; set; } = new List<string>();
         public string DragonColor { get; set; }
         public string TieflingMagic { get; set; }
+        public string DemigodDomain { get; set; }
     }
 }

@@ -133,6 +133,10 @@ namespace DnD_Character_Creator.Races
 
             return result;
         }
+        public static Race NewRace(Character character)
+        {
+            return Demigod(character);
+        }
         public static Race GetStats(string raceString)
         {
             var result = new Race();
@@ -284,12 +288,80 @@ namespace DnD_Character_Creator.Races
 
             return result;
         }
+        public static Race DemigodStats(string demigodDomain)
+        {
+            var result = new Race();
+            result.Stat2 = new Tuple<string, int>("Con", 1);
+
+            switch (demigodDomain)
+            {
+                case "Beauty":
+                    result.Stat1 = new Tuple<string, int>("Cha", 2);
+                    break;
+                case "Knowledge":
+                    result.Stat1 = new Tuple<string, int>("Int", 2);
+                    break;
+                case "Life":
+                    result.Stat1 = new Tuple<string, int>("Wis", 2);
+                    break;
+                case "Luck":
+                    result.Stat1 = new Tuple<string, int>("Cha", 2);
+                    break;
+                case "Madness":
+                    result.Stat1 = new Tuple<string, int>("Wis", 1);
+                    result.Stat3 = new Tuple<string, int>("Cha", 1);
+                    break;
+                case "Music":
+                    result.Stat1 = new Tuple<string, int>("Cha", 2);
+                    break;
+                case "Protection":
+                    result.Stat1 = new Tuple<string, int>("Con", 2);
+                    result.Stat2 = new Tuple<string, int>("Str", 1);
+                    break;
+                case "Smithing":
+                    result.Stat1 = new Tuple<string, int>("Str", 1);
+                    result.Stat3 = new Tuple<string, int>("Int", 1);
+                    break;
+                case "The Earth":
+                    result.Stat1 = new Tuple<string, int>("Wis", 2);
+                    break;
+                case "The Hunt":
+                    result.Stat1 = new Tuple<string, int>("Dex", 2);
+                    break;
+                case "The Sea":
+                    result.Stat1 = new Tuple<string, int>("Dex", 1);
+                    break;
+                case "The Sky":
+                    result.Stat1 = new Tuple<string, int>("Str", 1);
+                    result.Stat3 = new Tuple<string, int>("Cha", 1);
+                    break;
+                case "The Sun":
+                    result.Stat1 = new Tuple<string, int>("Dex", 1);
+                    result.Stat3 = new Tuple<string, int>("Cha", 1);
+                    break;
+                case "Travel":
+                    result.Stat1 = new Tuple<string, int>("Dex", 2);
+                    break;
+                case "Trickery":
+                    result.Stat1 = new Tuple<string, int>("Dex", 2);
+                    break;
+                case "Undead":
+                    result.Stat1 = new Tuple<string, int>("Con", 2);
+                    result.Stat2 = new Tuple<string, int>("Wis", 1);
+                    break;
+                case "War":
+                    result.Stat1 = new Tuple<string, int>("Str", 2);
+                    break;
+            }
+
+            return result;
+        }
         public static Race ProtectorAasimar()
         {
             Race result = new Race();
 
             result.RacialTraits.Add("Celestial Radiance: Resistance to Necrotic & Radiant dmg");
-            result.RacialTraits.Add("Healing Hands: action, 1/LR, heal HP = lvl");
+            result.RacialTraits.Add("Healing Hands: LR, action, heal HP = lvl");
             result.MinHeight = 60;
             result.MaxHeight = 78;
             result.MinWeight = 100;
@@ -308,7 +380,7 @@ namespace DnD_Character_Creator.Races
             Race result = new Race();
 
             result.RacialTraits.Add("Celestial Radiance: Resistance to Necrotic & Radiant dmg");
-            result.RacialTraits.Add("Healing Hands: action, 1/LR, heal HP = lvl");
+            result.RacialTraits.Add("Healing Hands: LR, action, heal HP = lvl");
             result.MinHeight = 60;
             result.MaxHeight = 78;
             result.MinWeight = 100;
@@ -327,7 +399,7 @@ namespace DnD_Character_Creator.Races
             Race result = new Race();
 
             result.RacialTraits.Add("Celestial Radiance: Resistance to Necrotic & Radiant dmg");
-            result.RacialTraits.Add("Healing Hands: action, 1/LR, heal HP = lvl");
+            result.RacialTraits.Add("Healing Hands: LR, action, heal HP = lvl");
             result.MinHeight = 60;
             result.MaxHeight = 78;
             result.MinWeight = 100;
@@ -339,6 +411,151 @@ namespace DnD_Character_Creator.Races
             result.MaxAgeStart = 160;
             result.Languages.Add("Celestial");
             result.Cantrips.Add("Light - Cha to cast");
+
+            return result;
+        }
+        public static Race Demigod(Character character)
+        {
+            Race result = new Race();
+
+            result.RacialTraits.Add("Powerful Build: count as Large for carry capacity, etc");
+            result.RacialTraits.Add("Godly Strength: adv on Str checks");
+            result.RacialTraits.Add("Godly Protection: +2 AC");
+            result.RacialTraits.Add("Divine Intervention: LR, gain adv on atk, save, or ability check");
+            result.MinHeight = 60;
+            result.MaxHeight = 78;
+            result.MinWeight = 100;
+            result.MaxWeight = 300;
+            result.Speed = 40;
+            result.Vision = "Darkvision 60ft";
+            result.Alignment.Add("N-G");
+            result.Alignment.Add("C-G");
+            result.Alignment.Add("C-N");
+            result.AdultAge = 30;
+            result.MaxAgeStart = 800;
+            result.MaxAgeEnd = 1200;
+            result.Languages.Add("Celestial");
+            result.Languages.Add("Choice");
+
+            int index = -1;
+            switch (character.DemigodDomain)
+            {
+                case "Beauty":
+                    result.RacialTraits.Add("Child of Love: impose disadv vs Enchantment spells");
+                    result.RacialTraits.Add("Compelling Beauty: bonus, Cha save, disadv on atks, if attempt to move away from you Cha save");
+                    result.Cantrips.Add("Friends - Cha to cast");
+                    result.SkillProficiencies.Add("Deception");
+                    result.SkillProficiencies.Add("Persuasion");
+                    break;
+                case "Knowledge":
+                    result.RacialTraits.Add("Child of Wisdom: gain 1 skill, 1 tool, and Expertise in 1 skill");
+                    result.RacialTraits.Add("Wit Without Measure: adv on all Int-based DCs");
+                    result.Cantrips.Add("Guidance - Int to cast");
+                    index = CLIHelper.PrintChoices("Pick a skill", Options.Skills);
+                    result.SkillProficiencies.Add(Options.Skills[index]);
+                    index = CLIHelper.PrintChoices("Pick a tool proficiency", Options.Tools);
+                    result.ToolProficiencies.Add(Options.Tools[index]);
+                    break;
+                case "Life":
+                    result.RacialTraits.Add("Child of Life: healing spells heal extra HP = Wis");
+                    result.RacialTraits.Add("Refute Death: LR, 30ft, you or ally auto-succeeds on 1 death save");
+                    result.Cantrips.Add("Spare the Dying - Wis to cast");
+                    break;
+                case "Luck":
+                    result.RacialTraits.Add("Child of Luck: Cha/LR, add 1D6 to any atk, save, or ability check");
+                    result.RacialTraits.Add("Auspicious Dodge: LR, reaction, when hit - cause atk to miss");
+                    result.RacialTraits.Add("Favored Attack: LR, on hit, cause atk to crit");
+                    result.RacialTraits.Add("Prosperous Life: whenever you find treasure or try to sell goods, increase its value by 30%");
+                    break;
+                case "Madness":
+                    result.RacialTraits.Add("Child of Madness: auto-succeed on all Con checks for drinking, immune to charm, fear, and poison");
+                    result.RacialTraits.Add("Party Starter: Cha check in social area, gain adv on all Cha-based DCs for 2hr");
+                    result.SkillProficiencies.Add("Acrobatics");
+                    result.SkillProficiencies.Add("Persuasion");
+                    result.Cantrips.Add("Create Bonfire - Cha to cast");
+                    result.Cantrips.Add("Dancing Lights - Cha to cast");
+                    break;
+                case "Music":
+                    result.RacialTraits.Add("Child of Music: creatures with Int 8 or less are charmed by music");
+                    result.RacialTraits.Add("Devastating Notes: SR, Cha save, 30ft, all hostiles, 1 min, disadv on atks and saves");
+                    result.SkillProficiencies.Add("Performance");
+                    result.ToolProficiencies.Add("All instruments");
+                    result.Cantrips.Add("Vicious Mockery - Cha to cast");
+                    break;
+                case "Protection":
+                    result.RacialTraits.Add("Child of Protection: Dodge as a bonus, +2 HP/lvl");
+                    result.RacialTraits.Add("Experienced Knight: gain the Protection fighting style");
+                    result.SkillProficiencies.Add("Athletics");
+                    result.Proficiencies.Add("All armor and shields");
+                    result.Cantrips.Add("Blade Ward - Cha to cast");
+                    break;
+                case "Smithing":
+                    result.RacialTraits.Add("Child of Creation: 1/LR, create an object of any combination of wood, stone, iron, crystal, rope, or cloth" +
+                        "The object must smaller than a 5ft cube, and the object must be in a form that you have seen before");
+                    result.RacialTraits.Add("Child of the Forge: Fire immunity, adv on all tool checks you're prof in");
+                    result.ToolProficiencies.Add("Carpenter's Tools");
+                    result.ToolProficiencies.Add("Cobbler's Tools");
+                    result.ToolProficiencies.Add("Mason's Tools");
+                    result.ToolProficiencies.Add("Smith's Tools");
+                    result.ToolProficiencies.Add("Tinker's Tools");
+                    result.Cantrips.Add("Sword Burst - Wis to cast");
+                    break;
+                case "The Earth":
+                    result.RacialTraits.Add("Child of Nature: 30ft, create difficult terrain made of foliage, Str save or be restrained");
+                    result.RacialTraits.Add("Earth Control: LR, cast Stoneshape or Wall of Stone");
+                    result.SkillProficiencies.Add("Nature");
+                    result.Cantrips.Add("Druidcraft - Wis to cast");
+                    break;
+                case "The Hunt":
+                    result.RacialTraits.Add("Child of the Hunt: adv on Survival, identify creatures from tracks");
+                    result.RacialTraits.Add("Hunter's Eyes: gain Superior Darkvision 120ft, 1/SR - cast Detect Poison and Disease");
+                    result.RacialTraits.Add("Godly Precision: +2 to atk/dmg with ranged wep");
+                    result.SkillProficiencies.Add("Survival");
+                    result.Proficiencies.Add("All ranged weapons");
+                    result.Cantrips.Add("Thorn Whip - Wis to cast");
+                    break;
+                case "The Sea":
+                    result.RacialTraits.Add("Child of the Sea: waterbreathing, swim 40ft");
+                    result.RacialTraits.Add("Caress of the Ocean: gain regen = 1/4 lvl while in water");
+                    result.Cantrips.Add("Shape Water - Int to cast");
+                    break;
+                case "The Sky":
+                    result.RacialTraits.Add("Child of the Sky: gain Resistance Thunder and Lightning");
+                    result.RacialTraits.Add("Lightning Wielder: +2 to atk/dmg while unarmed, 1/LR - Cha spell atk, range 30/120, 4D8 + Cha Lightning dmg");
+                    result.Cantrips.Add("Gust - Cha to cast");
+                    break;
+                case "The Sun":
+                    result.RacialTraits.Add("Child of the Sun: during the day, gain +2 Str, Dex, Con/at night, gain -2 Str, Dex, Con");
+                    result.RacialTraits.Add("Solar Burst: LR, Con save - 30ft, 5D8 Radiant dmg, Con save - blindness");
+                    result.Cantrips.Add("Light - Cha to cast");
+                    break;
+                case "Travel":
+                    result.RacialTraits.Add("Child of Travel: move speed +10ft");
+                    result.Speed = 50;
+                    result.RacialTraits.Add("Fast Travel: LR, cast Teleport");
+                    result.Cantrips.Add("Message - Wis to cast");
+                    break;
+                case "Trickery":
+                    result.RacialTraits.Add("Child of Shadows: adv with Stealth and Thieves' Tools");
+                    result.SkillProficiencies.Add("Deception");
+                    result.SkillProficiencies.Add("Sleight of Hand");
+                    result.SkillProficiencies.Add("Stealth");
+                    result.ToolProficiencies.Add("Thieves' Tools");
+                    result.Cantrips.Add("Minor Illusion - Int to cast");
+                    break;
+                case "Undead":
+                    result.RacialTraits.Add("Child of Death: gain Resistance to Necrotic, Superior Darkvision 120ft");
+                    result.Vision = "Superior Darkvision 120ft";
+                    result.RacialTraits.Add("Undead Affinity: SR, action, conjure 3 skeletons or zombies");
+                    result.Cantrips.Add("Toll the Dead - Int or Wis to cast");
+                    break;
+                case "War":
+                    result.RacialTraits.Add("Child of War: can't be surprised, +5 on Init, use Str for Intimiation");
+                    result.RacialTraits.Add("Aura of War: LR, 30ft, Con save, fear and prone, you and allies gain Str temp HP");
+                    result.RacialTraits.Add("Godly Precision: +2 atk/dmg with melee");
+                    result.Proficiencies.Add("All weapons and armor");
+                    break;
+            }
 
             return result;
         }
@@ -562,7 +779,7 @@ namespace DnD_Character_Creator.Races
             result.RacialTraits.Add("Fey Step: bonus, SR, teleport 30ft & seasonal effect(Cha-based DC)" +
                 "\nAutumn - 2 creatures within 10ft charm Wis save" +
                 "\nSpring - teleport 1 willing creature within 30ft instead of yourself" +
-                "\nSummer - creatures you can see within 5ft take Cha fire dmg" +
+                "\nSummer - creatures you can see within 5ft take Cha Fire dmg" +
                 "\nWinter - 1 creature within 5ft fear Wis save");
             result.MinHeight = 60;
             result.MaxHeight = 76;
@@ -906,7 +1123,6 @@ namespace DnD_Character_Creator.Races
             result.AdultAge = 20;
             result.MaxAgeStart = 200;
             result.Languages.Add("Halfling");
-
 
             return result;
         }

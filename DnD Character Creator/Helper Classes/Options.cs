@@ -19,12 +19,14 @@ namespace DnD_Character_Creator.Helper_Classes
             "Ranger",
             "Rogue",
             "Sorcerer",
+            "Swordmage",
             "Warlock",
             "Wizard"
         };
         public static List<string> Races { get; set; } = new List<string>
         {
             "Aasimar",
+            "Demigod",
             "Dragonborn",
             "Dwarf",
             "Elf",
@@ -62,6 +64,26 @@ namespace DnD_Character_Creator.Helper_Classes
             "Variant Human",
             "Tiefling",
             "Feral Tiefling"
+        };
+        public static List<string> DemigodDomains { get; set; } = new List<string>
+        {
+            "Beauty",
+            "Knowledge",
+            "Life",
+            "Luck",
+            "Madness",
+            "Music",
+            "Protection",
+            "Smithing",
+            "The Earth",
+            "The Hunt",
+            "The Sea",
+            "The Sky",
+            "The Sun",
+            "Travel",
+            "Trickery",
+            "Undead",
+            "War"
         };
         public static List<string> Templates { get; set; } = new List<string>
         {
@@ -253,7 +275,7 @@ namespace DnD_Character_Creator.Helper_Classes
             "Ring mail(+4 AC, Stealth disadv)(30gp, 40lb.)",
             "Chain mail(+6 AC, Stealth disadv)(75gp, 55lb.)",
             "Splint(+7 AC, Stealth disadv)(200gp, 60lb.)",
-            "Plate(+8 AC, Stealth disadv)(1,500gp, 65lb.)"
+            "Fullplate(+8 AC, Stealth disadv)(1,500gp, 65lb.)"
         };
         public static List<string> SimpleMeleeWeapons { get; set; } = new List<string>
         {
@@ -371,6 +393,20 @@ namespace DnD_Character_Creator.Helper_Classes
             "Weaver's Tools",
             "Woodcarver's Tools"
         };
+        public static List<string> Tools { get; set; } = new List<string>
+        {
+            "Artisan's Tools",
+            "Disguise Kit",
+            "Forgery Kit",
+            "Gaming Set",
+            "Herbalism Kit",
+            "Musical Instrument",
+            "Navigator's Tools",
+            "Poisoner's Kit",
+            "Thieves' Tools",
+            "Vechiles(land)",
+            "Vechiles(water)"
+        };
         public static List<string> GamingSets { get; set; } = new List<string>
         {
             "Dice set",
@@ -423,7 +459,7 @@ namespace DnD_Character_Creator.Helper_Classes
             { "Eyes of the Rune Keeper", "read all writing" },
             { "Fiendish Vigor", "cast False Life at-will" },
             { "Gaze of Two Minds", "action, become blind/deaf to use the senses of another humanoid you touch" },
-            { "Lifedrinker", "dmg + Cha necrotic" },
+            { "Lifedrinker", "dmg + Cha Necrotic" },
             { "Mask of Many Faces", "cast Disguise Self at-will" },
             { "Master of Myriad Forms", "cast Alter Self at-will" },
             { "Minions of Chaos", "1/LR cast Conjure Elemental using a spell slot" },

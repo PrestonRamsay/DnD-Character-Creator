@@ -22,6 +22,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
         {
             int lvl = result.Lvl;
 
+            result.ClassFeatures.Add("Spellcasting", "use Wis for spell DCs, you use a Holy Symbol as a spell focus");
             string msg = "Pick a Divine Domain that will give you features at levels 2, 6, 8, and 17.";
             var archetype = new List<string> { "Ice", "Knowledge", "Life", "Light", "Nature", "Tempest", "Trickery", "War" };
             int input = CLIHelper.PrintChoices(msg, archetype);
@@ -51,11 +52,11 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 }
                 if (lvl >= 8)
                 {
-                    result.ClassFeatures.Add("Divine Strike", "1/turn, +1D8 cold dmg");
+                    result.ClassFeatures.Add("Divine Strike", "1/turn, +1D8 Cold dmg");
                 }
                 if (lvl >= 14)
                 {
-                    result.ClassFeatures["Divine Strike"] = "1/turn, +2D8 cold dmg";
+                    result.ClassFeatures["Divine Strike"] = "1/turn, +2D8 Cold dmg";
                 }
                 if (lvl >= 17)
                 {
@@ -101,7 +102,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 }
                 if (lvl >= 6)
                 {
-                    result.ClassFeatures.Add("Channel Divinity(Read Thoughts)", "action, 1/LR, 60ft, Wis save, 1 min - read surface thoughts, auto-fail for Suggestion spell");
+                    result.ClassFeatures.Add("Channel Divinity(Read Thoughts)", "LR, action, 60ft, Wis save, 1 min - read surface thoughts, auto-fail for Suggestion spell");
                 }
                 if (lvl >= 8)
                 {
@@ -139,11 +140,11 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 }
                 if (lvl >= 8)
                 {
-                    result.ClassFeatures.Add("Divine Strike", "1/turn, +1D8 radiant dmg");
+                    result.ClassFeatures.Add("Divine Strike", "1/turn, +1D8 Radiant dmg");
                 }
                 if (lvl >= 14)
                 {
-                    result.ClassFeatures["Divine Strike"] = "1/turn, +2D8 radiant dmg";
+                    result.ClassFeatures["Divine Strike"] = "1/turn, +2D8 Radiant dmg";
                 }
                 if (lvl >= 17)
                 {
@@ -168,7 +169,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
 
                 if (lvl >= 2)
                 {
-                    result.ClassFeatures.Add("Channel Divinity(Radiance of Dawn)", "action, 30ft, Con save, 2D10 + lvl radiant dmg, dispel magical darkness");
+                    result.ClassFeatures.Add("Channel Divinity(Radiance of Dawn)", "action, 30ft, Con save, 2D10 + lvl Radiant dmg, dispel magical darkness");
                 }
                 if (lvl >= 6)
                 {
@@ -180,7 +181,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 }
                 if (lvl >= 17)
                 {
-                    result.ClassFeatures.Add("Corona of Light", "action, 1 min, bright light 60ft, disadv on saves vs fire or radiant dmg");
+                    result.ClassFeatures.Add("Corona of Light", "action, 1 min, bright light 60ft, disadv on saves vs Fire or Radiant dmg");
                 }
             }
             else if (input == 4)
@@ -213,15 +214,15 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 }
                 if (lvl >= 6)
                 {
-                    result.ClassFeatures.Add("Dampen Elements", "reaction, when you or ally within 30ft takes cold, fire, or lighting dmg - gain Resistance");
+                    result.ClassFeatures.Add("Dampen Elements", "reaction, when you or ally within 30ft takes Cold, Fire, or Lighting dmg - gain Resistance");
                 }
                 if (lvl >= 8)
                 {
-                    result.ClassFeatures.Add("Divine Strike", "1/turn, +1D8 cold, fire, or lightning dmg");
+                    result.ClassFeatures.Add("Divine Strike", "1/turn, +1D8 Cold, Fire, or Lighting dmg");
                 }
                 if (lvl >= 14)
                 {
-                    result.ClassFeatures["Divine Strike"] = "1/turn, +2D8 cold, fire, or lightning dmg";
+                    result.ClassFeatures["Divine Strike"] = "1/turn, +2D8 Cold, Fire, or Lighting dmg";
                 }
                 if (lvl >= 17)
                 {
@@ -241,23 +242,23 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 DomainSpells[4].Add("Storm Sphere*");
                 DomainSpells[5].Add("Control Winds*");
                 DomainSpells[5].Add("Destructive Wave*");
-                result.ClassFeatures.Add("Wrath of the Storm", "Wis/LR, reaction, Dex save, deal 2D8 lightning or thunder dmg");
+                result.ClassFeatures.Add("Wrath of the Storm", "Wis/LR, reaction, Dex save, deal 2D8 Lightning or Thunder dmg");
 
                 if (lvl >= 2)
                 {
-                    result.ClassFeatures.Add("Channel Divinity(Destructive Wrath)", "max lightning or thunder dmg");
+                    result.ClassFeatures.Add("Channel Divinity(Destructive Wrath)", "max Lightning or Thunder dmg");
                 }
                 if (lvl >= 6)
                 {
-                    result.ClassFeatures.Add("Thunderbolt Strike", "when you deal lightning dmg, push 10ft");
+                    result.ClassFeatures.Add("Thunderbolt Strike", "when you deal Lightning dmg, push 10ft");
                 }
                 if (lvl >= 8)
                 {
-                    result.ClassFeatures.Add("Divine Strike", "1/turn, +1D8 thunder dmg");
+                    result.ClassFeatures.Add("Divine Strike", "1/turn, +1D8 Thunder dmg");
                 }
                 if (lvl >= 14)
                 {
-                    result.ClassFeatures["Divine Strike"] = "1/turn, +2D8 thunder dmg";
+                    result.ClassFeatures["Divine Strike"] = "1/turn, +2D8 Thunder dmg";
                 }
                 if (lvl >= 17)
                 {
@@ -290,11 +291,11 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 }
                 if (lvl >= 8)
                 {
-                    result.ClassFeatures.Add("Divine Strike", "1/turn, +1D8 poison dmg");
+                    result.ClassFeatures.Add("Divine Strike", "1/turn, +1D8 Poison dmg");
                 }
                 if (lvl >= 14)
                 {
-                    result.ClassFeatures["Divine Strike"] = "1/turn, +2D8 poison dmg";
+                    result.ClassFeatures["Divine Strike"] = "1/turn, +2D8 Poison dmg";
                 }
                 if (lvl >= 17)
                 {
@@ -336,7 +337,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 }
                 if (lvl >= 17)
                 {
-                    result.ClassFeatures.Add("Avatar of Battle", "gain Resistance to Bludgeoning, Piercing, Slashing from nonmagical weapons");
+                    result.ClassFeatures.Add("Avatar of Battle", "gain Resistance to nonmagical B/P/S");
                 }
             }
             result.Spells[1].AddRange(DomainSpells[1]);
@@ -388,11 +389,12 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             string pickMsg = "Pick a cantrip.";
             string str2 = "You already have that cantrip.";
             int spellLvl = 1;
-            AllSpells spells = new AllSpells();
+            AllSpells spells = new AllSpells(character.ChosenClass);
             for (int i = 0; i < result.CantripsKnown; i++)
             {
-                string spell = CLIHelper.GetNew(ClericSpells.Cantrips, result.Cantrips, pickMsg, str2);
+                string spell = CLIHelper.GetNew(spells.Cleric[0], result.Cantrips, pickMsg, str2);
                 result.Cantrips.Add(spell);
+                spells.Cleric[0].Remove(spell);
             }
             str2 = "You already have that spell";
             pickMsg = "Pick a 1st level spell.";
@@ -431,6 +433,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 {
                     string spell = CLIHelper.GetNew(spells.Cleric[spellLvl], result.Spells[spellLvl], pickMsg, str2);
                     result.Spells[spellLvl].Add(spell);
+                    spells.Cleric[spellLvl].Remove(spell);
                 }
             }
             //end spells code

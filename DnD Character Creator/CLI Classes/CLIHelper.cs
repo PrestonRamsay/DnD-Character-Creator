@@ -158,14 +158,15 @@ namespace DnD_Character_Creator
 
             return GetNumberInRange(1, list.Count) - 1;
         }
-        public static int PrintChoices(List<string> list)
+        public static string PrintChoices(List<string> list)
         {
             for (int i = 0; i < list.Count; i++)
             {
                 Console.WriteLine($"({i + 1}) {list[i]}");
             }
+            int index = GetNumberInRange(1, list.Count) - 1;
 
-            return GetNumberInRange(1, list.Count) - 1;
+            return list[index];
         }
         public static int PrintChoices(string[] list)
         {

@@ -25,7 +25,7 @@ namespace DnD_Character_Creator
                 cli.RunAddRace(newCharacter);
                 cli.RunAddTemplate(newCharacter);
                 cli.RunAddBackground(newCharacter);
-                cli.RunAddClass(newCharacter, newCharacter.ChosenClass);
+                cli.RunAddClass(newCharacter);
                 cli.PrintCharacter(newCharacter);
                 cli.WriteCharacterToDocument(newCharacter);
 
