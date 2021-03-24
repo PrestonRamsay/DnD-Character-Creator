@@ -28,10 +28,13 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Aid",
             "Branding Smite",
             "Find Steed",
+            "Gentle Repose",
             "Lesser Restoration",
             "Locate Object",
             "Magic Weapon",
+            "Prayer of Healing",
             "Protection from Poison",
+            "Warding Bond",
             "Zone of Truth"
         };
         public static List<string> ThirdLvls { get; set; } = new List<string> {

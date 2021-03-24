@@ -14,10 +14,10 @@ namespace DnD_Character_Creator.Classes
         public int Lvl { get; set; }
         public int GP { get; set; }
         public int HitDie { get; set; }
-        public List<string> Proficiencies { get; protected set; } = new List<string>();
+        public HashSet<string> SkillProficiencies { get; set; } = new HashSet<string>();
+        public HashSet<string> ToolProficiencies { get; set; } = new HashSet<string>();
+        public HashSet<string> Proficiencies { get; set; } = new HashSet<string>();
         public List<string> Saves { get; set; } = new List<string>();
-        public List<string> SkillProficiencies { get; set; } = new List<string>();
-        public List<string> ToolProficiencies { get; set; } = new List<string>();
         public List<string> Equipment { get; set; } = new List<string>();
         public Dictionary<string, string> ClassFeatures { get; set; } = new Dictionary<string, string>();
         public int CantripsKnown { get; set; }
@@ -145,7 +145,7 @@ namespace DnD_Character_Creator.Classes
 
             result.Equipment.Add(Options.Packs[5]);
             result.Equipment.Add($"4 {Options.SimpleMeleeWeapons[4]}");
-            result = BarbarianSpecifics.Features(result);
+            result = BarbarianSpecifics.Features(character, result);
             character.Archetype = BarbarianSpecifics.PathName;
             character.Speed += BarbarianSpecifics.FastMovement;
 
@@ -302,7 +302,8 @@ namespace DnD_Character_Creator.Classes
         }
         public static CharacterClass Druid(Character character, CharacterClass result)
         {
-            List<string> classSkills = new List<string> { "Arcana", "Animal Handling", "Insight", "Medicine", "Nature", "Perception", "Religion", "Survival" };
+            List<string> classSkills = new List<string> { "Arcana", "Animal Handling", "Insight", "Medicine", "Nature",
+                "Perception", "Religion", "Survival" };
 
             result.GP = 50;
             result.HitDie = 8;
@@ -381,7 +382,8 @@ namespace DnD_Character_Creator.Classes
         }
         public static CharacterClass Fighter(Character character, CharacterClass result)
         {
-            List<string> classSkills = new List<string> { "Acrobatics", "Animal Handling", "Athletics", "History", "Insight", "Intimidation", "Perception", "Survival" };
+            List<string> classSkills = new List<string> { "Acrobatics", "Animal Handling", "Athletics", "History", "Insight",
+                "Intimidation", "Perception", "Survival" };
 
             result.GP = 125;
             result.HitDie = 10;
@@ -500,7 +502,7 @@ namespace DnD_Character_Creator.Classes
             }
 
             result.Equipment.Add($"10 {Options.SimpleRangedWeapons[1]}");
-            result = MonkSpecifics.Features(result);
+            result = MonkSpecifics.Features(character, result);
             character.Archetype = MonkSpecifics.MonasticTradition;
             character.Speed += MonkSpecifics.FastMovement;
 
@@ -560,14 +562,17 @@ namespace DnD_Character_Creator.Classes
 
             result.Equipment.Add(Options.HeavyArmor[3]);
             result.Equipment.Add("Holy symbol");
-            result = PaladinSpecifics.Features(result);
+            character.Tenets = new List<string> { "Bravery", "Content", "Honesty", "Honor", "Humility", "Kindness", "Leadership",
+                "Piety", "Respect", "Tolerance", "Unselfishness", "Utilitarian" };
+            result = PaladinSpecifics.Features(character, result);
             character.Archetype = PaladinSpecifics.SacredOath;
 
             return result;
         }
         public static CharacterClass Ranger(Character character, CharacterClass result)
         {
-            List<string> classSkills = new List<string> { "Animal Handling", "Athletics", "Insight", "Investigation", "Nature", "Perception", "Stealth", "Survival" };
+            List<string> classSkills = new List<string> { "Animal Handling", "Athletics", "Insight", "Investigation", "Nature",
+                "Perception", "Stealth", "Survival" };
 
             result.GP = 125;
             result.HitDie = 10;
@@ -617,14 +622,15 @@ namespace DnD_Character_Creator.Classes
 
             result.Equipment.Add(Options.MartialRangedWeapons[3]);
             result.Equipment.Add("Quiver(20 arrows)");
-            result = RangerSpecifics.Features(result);
+            result = RangerSpecifics.Features(character, result);
             character.Archetype = RangerSpecifics.RangerArchetype;
 
             return result;
         }
         public static CharacterClass Rogue(Character character, CharacterClass result)
         {
-            List<string> classSkills = new List<string> { "Acrobatics", "Animal Handling", "Athletics", "Deception", "Insight", "Intimidation", "Investigation", "Perception", "Performance", "Persuasion", "Sleight of Hand", "Stealth" };
+            List<string> classSkills = new List<string> { "Acrobatics", "Animal Handling", "Athletics", "Deception", "Insight",
+                "Intimidation", "Investigation", "Perception", "Performance", "Persuasion", "Sleight of Hand", "Stealth" };
 
             result.GP = 100;
             result.HitDie = 8;
@@ -745,7 +751,8 @@ namespace DnD_Character_Creator.Classes
         }
         public static CharacterClass Swordmage(Character character, CharacterClass result)
         {
-            var classSkills = new List<string>() { "Acrobatics", "Arcana", "Athletics", "History", "Insight", "Intimidation", "Perception", "Persuasion" };
+            var classSkills = new List<string>() { "Acrobatics", "Arcana", "Athletics", "History", "Insight", "Intimidation",
+                "Perception", "Persuasion" };
             var swords = new List<string>() { "Claymore", "Greatsword", "Longsword", "Rapier", "Sabre", "Scimitar", "Shortsword" };
 
             result.GP = 125;
@@ -801,7 +808,8 @@ namespace DnD_Character_Creator.Classes
         }
         public static CharacterClass Warlock(Character character, CharacterClass result)
         {
-            List<string> classSkills = new List<string> { "Arcana", "Deception", "History", "Intimidation", "Investigation", "Nature", "Religion" };
+            List<string> classSkills = new List<string> { "Arcana", "Deception", "History", "Intimidation", "Investigation",
+                "Nature", "Religion" };
 
             result.GP = 100;
             result.HitDie = 8;
@@ -914,7 +922,7 @@ namespace DnD_Character_Creator.Classes
             }
 
             result.Equipment.Add("Spellbook");
-            result = WizardSpecifics.Features(result);
+            result = WizardSpecifics.Features(character, result);
             character.Archetype = WizardSpecifics.ArcaneTradition;
 
             return result;

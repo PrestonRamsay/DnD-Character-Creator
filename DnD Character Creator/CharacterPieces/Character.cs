@@ -183,6 +183,7 @@ namespace DnD_Character_Creator
         public List<string> Feats { get; set; } = new List<string>();
         public string DragonColor { get; set; }
         public string TieflingMagic { get; set; }
+        public List<string> Tenets { get; set; } = new List<string>();
         public string DemigodDomain { get; set; }
     }
 }

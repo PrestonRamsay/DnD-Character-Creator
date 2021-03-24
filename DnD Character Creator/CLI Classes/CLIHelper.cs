@@ -74,6 +74,48 @@ namespace DnD_Character_Creator
 
             return CapitalizeFirstLetter(newItem);
         }
+        public static List<string> GetDictionaryOptions(Dictionary<string, string> dict, int optionsNum, string msg)
+        {
+            var dictOptions = new Dictionary<string, string>();
+            foreach (var item in dict.Keys)
+            {
+                dictOptions.Add(item, dict[item]);
+            }
+            var returnList = new List<string>();
+            for (int i = 0; i < optionsNum; i++)
+            {
+                Console.Clear();
+                Console.WriteLine(msg + "\n");
+                string option = CLIHelper.PrintChoices(dictOptions);
+                returnList.Add(option);
+                dictOptions.Remove(option);
+            }
+
+            return returnList;
+        }
+        public static List<string> GetDictionaryOptions(Dictionary<string, string> dict, List<string> list, int optionsNum, string msg)
+        {
+            string availableOptions = String.Join("", list);
+            var dictOptions = new Dictionary<string, string>();
+            foreach (var item in dict.Keys)
+            {
+                if (availableOptions.Contains(item))
+                {
+                    dictOptions.Add(item, dict[item]);
+                }
+            }
+            var returnList = new List<string>();
+            for (int i = 0; i < optionsNum; i++)
+            {
+                Console.Clear();
+                Console.WriteLine(msg + "\n");
+                string option = CLIHelper.PrintChoices(dictOptions);
+                returnList.Add(option);
+                dictOptions.Remove(option);
+            }
+
+            return returnList;
+        }
         public static int GetNumberInRange(int min, int max)
         {
             string userInput = String.Empty;
@@ -167,6 +209,37 @@ namespace DnD_Character_Creator
             int index = GetNumberInRange(1, list.Count) - 1;
 
             return list[index];
+        }
+        public static string PrintChoices(Dictionary<string, string> dict)
+        {
+            var numDict = new Dictionary<int, string>();
+            int num = 1;
+            foreach (var item in dict.Keys)
+            {
+                Console.WriteLine($"({num}) {item}: {dict[item]}");
+                numDict.Add(num, item);
+                num++;
+            }
+
+            int index = GetNumberInRange(1, dict.Count);
+
+            return numDict[index];
+        }
+        public static string PrintChoices(Dictionary<string, string> dict, List<string> list, string msg)
+        {
+            Console.WriteLine(msg);
+            var numDict = new Dictionary<int, string>();
+            int num = 1;
+            foreach (var item in list)
+            {
+                Console.WriteLine($"({num}) {item}: {dict[item]}");
+                numDict.Add(num, item);
+                num++;
+            }
+
+            int index = GetNumberInRange(1, dict.Count);
+
+            return numDict[index];
         }
         public static int PrintChoices(string[] list)
         {

@@ -26,6 +26,8 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Animal Friendship",
             "Bane",
             "Charm Person",
+            "Color Spray",
+            "Command",
             "Comprehend Languages",
             "Cure Wounds",
             "Detect Magic",
@@ -48,6 +50,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Unseen Servant"
         };
         public static List<string> SecondLvls { get; set; } = new List<string> {
+            "Aid",
             "Animal Messenger",
             "Blindness/Deafness",
             "Calm Emotions",
@@ -55,6 +58,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Crown of Madness",
             "Detect Thoughts",
             "Enhance Ability",
+            "Enlarge/Reduce",
             "Enthrall",
             "Gift of Gab",
             "Heat Metal",
@@ -65,6 +69,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Locate Animals or Plants",
             "Locate Object",
             "Magic Mouth",
+            "Mirror Image",
             "Phantasmal Force",
             "Pyrotechnics",
             "See Invisibility",
@@ -89,10 +94,12 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Intellect Fortress",
             "Leomund’s Tiny Hut",
             "Major Image",
+            "Mass Healing Word",
             "Motivational Speech",
             "Nondetection",
             "Plant Growth",
             "Sending",
+            "Slow",
             "Speak with Dead",
             "Speak with Plants",
             "Stinking Cloud",
@@ -107,6 +114,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Greater Invisibility",
             "Hallucinatory Terrain",
             "Locate Creature",
+            "Phantasmal Killer",
             "Polymorph"
         };
         public static List<string> FifthLvls { get; set; } = new List<string> {
@@ -123,6 +131,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Modify Memory",
             "Planar Binding",
             "Raise Dead",
+            "Rary's Telepathic Bond",
             "Scrying",
             "Seeming",
             "Skill Empowerment",
@@ -133,6 +142,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Eyebite",
             "Find the Path",
             "Guards and Wards",
+            "Heroes' Feast",
             "Mass Suggestion",
             "Otto’s Irresistible Dance",
             "Programmed Illusion",
@@ -142,9 +152,10 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Dream of the Blue Veil",
             "Etherealness",
             "Forcecage",
-            "Mirage Arcane",
+            "Mirage Arcana",
             "Mordenkainen's Magnificent Mansion",
             "Mordenkainen’s Sword",
+            "Prismatic Spray",
             "Project Image",
             "Regenerate",
             "Resurrection",
@@ -153,6 +164,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
 
         };
         public static List<string> EigthLvls { get; set; } = new List<string> {
+            "Antipathy/Sympathic",
             "Dominate Monster",
             "Feeblemind",
             "Glibness",
@@ -163,6 +175,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Foresight",
             "Power Word Heal",
             "Power Word Kill",
+            "Prismatic Wall",
             "Psychic Scream",
             "True Polymorph"
         };

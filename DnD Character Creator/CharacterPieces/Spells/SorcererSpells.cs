@@ -55,6 +55,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "False Life",
             "Feather Fall",
             "Fog Cloud",
+            "Grease",
             "Ice Knife",
             "Jump",
             "Mage Armor",
@@ -82,11 +83,14 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Earthbind",
             "Enhance Ability",
             "Enlarge/Reduce",
+            "Flame Blade",
+            "Flaming Sphere",
             "Gust of Wind",
             "Hold Person",
             "Invisibility",
             "Knock",
             "Levitate",
+            "Magic Weapon",
             "Maximilian's Earthen Grasp",
             "Mind Spike",
             "Mirror Image",
@@ -98,7 +102,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Shadow Blade",
             "Shatter",
             "Snilloc's Snowball Swarm",
-            "Spider Climb",
+            "Spiderclimb",
             "Suggestion",
             "Tasha's Mind Whip",
             "Warding Wind",
@@ -132,8 +136,9 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Thunder step",
             "Tidal Wave",
             "Tongues",
+            "Vampiric Touch",
             "Wall of Water",
-            "Water Breathing",
+            "Waterbreathing",
             "Water Walk"
         };
         public static List<string> FourthLvls { get; set; } = new List<string> {
@@ -143,6 +148,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Confusion",
             "Dimension Door",
             "Dominate Beast",
+            "Fire Shield",
             "Greater Invisibility",
             "Ice Storm",
             "Polymorph",
@@ -155,6 +161,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
         };
         public static List<string> FifthLvls { get; set; } = new List<string> {
             "Animate Objects",
+            "Bigby's Hand",
             "Cloudkill",
             "Cone of Cold",
             "Control Winds",
@@ -179,6 +186,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Circle of Death",
             "Disintegrate",
             "Eyebite",
+            "Flesh to Stone",
             "Globe of Invulnerability",
             "Invetiture of Flame",
             "Invetiture of Ice",
@@ -187,6 +195,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Mass Suggestion",
             "Mental Prison",
             "Move Earth",
+            "Otiluke's Freezing Sphere",
             "Scatter",
             "Sunbeam",
             "Tasha's Otherworldly Guise",
@@ -209,6 +218,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
         };
         public static List<string> EigthLvls { get; set; } = new List<string> {
             "Abi-Dalzim's Horrid Wilting",
+            "Demiplane",
             "Dominate Monster",
             "Earthquake",
             "Incendiary Cloud",

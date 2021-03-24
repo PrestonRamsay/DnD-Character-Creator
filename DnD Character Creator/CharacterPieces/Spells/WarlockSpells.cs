@@ -59,7 +59,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Ray of Enfeeblement",
             "Shadow Blade",
             "Shatter",
-            "Spider Climb",
+            "Spiderclimb",
             "Suggestion"
         };
         public static List<string> ThirdLvls { get; set; } = new List<string> {
@@ -106,9 +106,12 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Far Step",
             "Hold Monster",
             "Infernal Calling",
+            "Mislead",
             "Negative Energy Flood",
+            "Planar Binding",
             "Scrying",
             "Synaptic Static",
+            "Teleportation Circle",
             "Wall of Light"
         };
         public static List<string> SixthLvls { get; set; } = new List<string> {
@@ -152,10 +155,12 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Astral Projection",
             "Blade of Diaster",
             "Foresight",
+            "Gate",
             "Imprisonment",
             "Power Word Kill",
             "Psychic Scream",
-            "True Polymorph"
+            "True Polymorph",
+            "Weird"
         };
     }
 }

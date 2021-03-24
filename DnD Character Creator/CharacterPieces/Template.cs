@@ -357,7 +357,7 @@ namespace DnD_Character_Creator.Races
                         result.Boons.Add($"{boons[1]}", "gain access to the Wizard's spell list, gain Int spells known");
                         break;
                     case 2:
-                        result.Boons.Add($"{boons[2]}", "gain immunity to Poison, nonmagical B/P/S, charm, fear, paralysis");
+                        result.Boons.Add($"{boons[2]}", "gain Immunity to Poison, nonmagical B/P/S, charm, fear, paralysis");
                         break;
                 }
                 result.Flaws.Add("Weight of Ages", "everyday must absorb 8 CR of charges or you can't use atk actions" +
@@ -426,7 +426,7 @@ namespace DnD_Character_Creator.Races
                             $"\nknock prone and then you can grapple check");
                         break;
                     case 2:
-                        result.Boons.Add($"{boons[2]}", "claw and bite are magical and +1 base die, +1 AC, immune to charm and fear");
+                        result.Boons.Add($"{boons[2]}", "claw and bite are magical and +1 base die, +1 AC, gain Immunity to charm and fear");
                         break;
                 }
                 result.Flaws.Add("Fraying Memories", "two personalities, disadv on skills and Int checks to recall info or knowledge");
@@ -593,7 +593,7 @@ namespace DnD_Character_Creator.Races
                             "\n(3 FP)Sanguine Spellbinding - impose disadv on Int, Wis, Cha saves vs your spells";
                         break;
                     case 2:
-                        result.Boons.Add($"{boons[2]}", "action, turn into bat(fly 30ft) or mist(fly 20ft, adv on physical saves, immune to nonmagical dmg)");
+                        result.Boons.Add($"{boons[2]}", "action, turn into bat(fly 30ft) or mist(fly 20ft, adv on physical saves, gain Immunity to nonmagical dmg)");
                         break;
                 }
                 result.Flaws.Add("Hideous Appearance", "true form revealed if (use conc spell, unconscious, hallowed ground, or DM Con save)" +
@@ -615,7 +615,7 @@ namespace DnD_Character_Creator.Races
                         result.Boons.Add($"{boons[1]}", "LR, 1 hr, call 2D4 swarms of bats/rats or wolves, arrive within 30ft end of next turn");
                         break;
                     case 2:
-                        result.Boons.Add($"{boons[0]}", "gain prof in Deception and Persuasion or +2 if already prof, immune to mind-reading");
+                        result.Boons.Add($"{boons[0]}", "gain prof in Deception and Persuasion or +2 if already prof, gain Immunity to mind-reading");
                         captivatingGlance = true;
                         if (character.SkillProficiencies.Contains("Deception"))
                         {

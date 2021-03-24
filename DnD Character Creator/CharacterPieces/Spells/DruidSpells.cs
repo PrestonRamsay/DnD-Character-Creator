@@ -43,6 +43,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Ice Knife",
             "Jump",
             "Longstrider",
+            "Protection from Evil and Good",
             "Purify Food and Drink",
             "Snare",
             "Speak with Animals",
@@ -50,12 +51,15 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
         };
         public static List<string> SecondLvls { get; set; } = new List<string> {
             "Animal Messenger",
+            "Augury",
             "Barkskin",
             "Beast Sense",
+            "Continual Flame",
             "Darkvision",
             "Dust Devil",
             "Earthbind",
             "Enhance Ability",
+            "Enlarge/Reduce",
             "Find Traps",
             "Flame Blade",
             "Flaming Sphere",
@@ -75,22 +79,25 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Warding Wind"
         };
         public static List<string> ThirdLvls { get; set; } = new List<string> {
+            "Aura of Vitality",
             "Call Lightning",
             "Conjure Animals",
             "Daylight",
             "Dispel Magic",
+            "Elemental Weapon",
             "Erupting Earth",
             "Feign Death",
             "Flame Arrows",
-            "Meld into Stone",
+            "Meld Into Stone",
             "Plant Growth",
             "Protection from Energy",
+            "Revivify",
             "Sleet Storm",
             "Speak with Plants",
             "Summon Fey",
             "Tidal Wave",
             "Wall of Water",
-            "Water Breathing",
+            "Waterbreathing",
             "Water Walk",
             "Wind Wall"
         };
@@ -101,8 +108,10 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Conjure Minor Elementals",
             "Conjure Woodland Beings",
             "Control Water",
+            "Divination",
             "Dominate Beast",
             "Elemental Bane",
+            "Fire Shield",
             "Freedom of Movement",
             "Giant Insect",
             "Grasping Vine",
@@ -111,7 +120,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Ice Storm",
             "Locate Creature",
             "Polymorph",
-            "Stone Shape",
+            "Stoneshape",
             "Stoneskin",
             "Summon Elemental",
             "Wall of Fire",
@@ -121,6 +130,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Antilife Shell",
             "Awaken",
             "Commune with Nature",
+            "Cone of Cold",
             "Conjure Elemental",
             "Contagion",
             "Control Winds",
@@ -142,6 +152,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Conjure Fey",
             "Druid Grove",
             "Find the Path",
+            "Flesh to Stone",
             "Heal",
             "Heroes’ Feast",
             "Invetiture of Flame",
@@ -157,10 +168,11 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
         };
         public static List<string> SeventhLvls { get; set; } = new List<string> {
             "Fire Storm",
-            "Mirage Arcane",
+            "Mirage Arcana",
             "Plane Shift",
             "Regenerate",
             "Reverse Gravity",
+            "Symbol",
             "Whirlwind"
         };
         public static List<string> EigthLvls { get; set; } = new List<string> {
@@ -174,6 +186,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
         };
         public static List<string> NinthLvls { get; set; } = new List<string> {
             "Foresight",
+            "Incediary Cloud",
             "Shapechange",
             "Storm of Vengeance",
             "True Resurrection"

@@ -71,15 +71,11 @@ namespace DnD_Character_Creator.Backgrounds
         }
         public static void GetTalents(List<string> talents, Character character, int rank)
         {
-            for (int i = 0; i < rank; i++)
+            character.ProfessionDie += rank * 2;
+            List<string> pickedTalents = CLIHelper.GetDictionaryOptions(Options.Talents, talents, rank, "Pick your talent now");
+            foreach (var item in pickedTalents)
             {
-                Console.Clear();
-                character.ProfessionDie += 2;
-                string pickMsg = "Pick your talent now\n";
-                int talentIndex = CLIHelper.PrintChoices(pickMsg, talents);
-                string talent = talents[talentIndex];
-                talents.Remove(talent);
-                character.Talents.Add(talent, Options.Talents[talent]);
+                character.Talents.Add(item, Options.Talents[item]);
             }
             Console.Clear();
         }

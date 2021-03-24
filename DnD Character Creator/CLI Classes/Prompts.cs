@@ -6,11 +6,31 @@ namespace DnD_Character_Creator
 {
     public static class Prompts
     {
+        public static List<string> Elves = new List<string> { "Half-Elf" };
         public static string PickOption(string characterPiece, List<string> pieceList)
         {
-            string pickMsg = $"Pick a {characterPiece} you'd like your character to have.";
-            int newPiece = CLIHelper.PrintChoices(pickMsg, pieceList);
-            string choice = pieceList[newPiece];
+            Console.WriteLine($"Pick a {characterPiece} you'd like your character to have.");
+
+            for (int i = 0; i < pieceList.Count; i++)
+            {
+                Console.WriteLine($"({i + 1}) {pieceList[i]}");
+            }
+            int num = 1;
+            string choice = "";
+            if (characterPiece == "race")
+            {
+                //num = 0;
+                //Console.WriteLine("\nEnter 0 to pick from a list of racial categories\n");
+            }
+            int newPiece = CLIHelper.GetNumberInRange(num, pieceList.Count) - 1;
+            //if (newPiece == 0)
+            //{
+            //    choice = ExtendedRaces();
+            //}
+            //else
+            //{
+                choice = pieceList[newPiece];
+            //}
             if (characterPiece == "race")
             {
                 choice = FindRace(choice);
@@ -48,6 +68,7 @@ namespace DnD_Character_Creator
                     race = subraces[index];
                     break;
                 case "Elf":
+                    Elves.AddRange(subraces);
                     index = CLIHelper.PrintChoices(pickMsg, subraces);
                     race = subraces[index];
                     break;
@@ -69,6 +90,7 @@ namespace DnD_Character_Creator
                     break;
             }
 
+
             return race;
         }
         public static string GetDemigodDomain()
@@ -86,7 +108,7 @@ namespace DnD_Character_Creator
                             $"\nIf you want to roll it randomly enter '2'.");
             int answer = CLIHelper.GetNumberInRange(1, 2);
             int index = 0;
-            
+
             if (answer == 1)
             {
                 Console.WriteLine($"Enter the number next to the {backgroundPiece} you want.");
@@ -122,10 +144,28 @@ namespace DnD_Character_Creator
                         index = CLIHelper.PrintChoices(backgroundProperty);
                         gettingPiece = false;
                     }
-                }                
+                }
             }
 
             return index;
+        }
+        public static string ExtendedRaces()
+        {
+            string returnString = "";
+            Console.WriteLine("Would you like a Official Race or an Extended Race?\n");
+            CLIHelper.Print2Choices("Official Race(SRD)", "Extended Race(Homebrew)");
+            int choice = CLIHelper.GetNumberInRange(1, 2);
+            Console.Clear();
+            if (choice == 1)
+            {
+                returnString = CLIHelper.PrintChoices(Options.OfficialRaces);
+            }
+            else if (choice == 2)
+            {
+                returnString = CLIHelper.PrintChoices(Options.ExtendedRaces);
+            }
+
+            return returnString;
         }
     }
 }

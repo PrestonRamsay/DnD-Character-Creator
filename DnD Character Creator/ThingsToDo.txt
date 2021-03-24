@@ -1,4 +1,23 @@
 ﻿
-add races - dhampir? changeling? cambion?
-add non-ph archetypes (barbarian, bard, cleric, druid, fighter, monk, paladin, ranger, rogue, sorcerer, warlock, wizard)(redemption done)
+add non-ph archetypes
+
+cleric - ambition, solidarity, strength, zeal
+druid - spores, stars, wildfire
+fighter - echo knight (psi warrior, rune knight)		brawler?
+monk - mercy, astral self
+paladin - glory, watchers
+ranger - fey wanderer, swarmkeeper
+rogue - phantom, soulknife
+sorcerer - abberant mind, clockwork soul		phoenix, sea, stone (UA)
+warlock - fathomless, genie
+wizard - chron, grav (scribes)
+
+-add special extra background (XGE)
+-picking spells, remove from list?
+-artificer + archetypes
+-bloodhunter/gunslinger?
+-look at altering warlock - new invoc, invoc lvl req, new archetype? soul manipulation
+add feat definitions
 add spell descriptions
+add extended races
+add archetype methods to the class specifics for more readability

@@ -26,7 +26,10 @@ namespace DnD_Character_Creator.Helper_Classes
         public static List<string> Races { get; set; } = new List<string>
         {
             "Aasimar",
+            "Cambion",
+            "Changeling",
             "Demigod",
+            "Dhampir",
             "Dragonborn",
             "Dwarf",
             "Elf",
@@ -40,13 +43,53 @@ namespace DnD_Character_Creator.Helper_Classes
             "Shade",
             "Tiefling"
         };
+        public static List<string> OfficialRaces { get; set; } = new List<string>
+        {
+            "Aarakocra",
+            "Bugbear",
+            "Centaur",
+            "Firbolg",
+            "Gith",
+            "Goblin",
+            "Hobgoblin",
+            "Kenku",
+            "Kobold",
+            "Lizardfolk",
+            "Loxodon",
+            "Orc",
+            "Shifter",
+            "Simic Hybird",
+            "Tabaxi",
+            "Tortle",
+            "Triton",
+            "Vedalken",
+            "Verdan",
+            "Warforged",
+            "Yuan-ti Pureblood"
+        };
+        public static List<string> ExtendedRaces { get; set; } = new List<string>
+        {
+            "Deva",
+            "Doppelganger",
+            "Dryad",
+            "Gargoyle",
+            "Genasi",
+            "Kalashtar",
+            "Myconid",
+            "Pixie",
+            "Satyr",
+            "Shardmind",
+            "Skeleton",
+            "Wilden",
+            "Zombie"
+        };
         public static List<string> SubRaces { get; set; } = new List<string>
         {
             "Aasimar(Protector)",
             "Aasimar(Scourge)",
             "Aasimar(Fallen)",
-            "Hill Dwarf",
-            "Mountain Dwarf",
+            "Dwarf(Hill)",
+            "Dwarf(Mountain)",
             "Avariel",
             "Drow",
             "Eladrin",
@@ -56,14 +99,41 @@ namespace DnD_Character_Creator.Helper_Classes
             "High Elf",
             "Wild Elf",
             "Wood Elf",
-            "Forest Gnome",
-            "Rock Gnome",
-            "Lightfoot Halfling",
-            "Stout Halfling",
+            "Air Genasi",
+            "Cinder Genasi",
+            "Earth Genasi",
+            "Fire Genasi",
+            "Plague Genasi",
+            "Storm Genasi",
+            "Venom Genasi",
+            "Void Genasi",
+            "Water Genasi",
+            "Githyanki",
+            "Githzerai",
+            "Gnome(Forest)",
+            "Gnome(Rock)",
+            "Halfling(Lightfoot)",
+            "Halfling(Stout)",
             "Human",
-            "Variant Human",
+            "Human(Variant)",
+            "Myconid(Compost)",
+            "Myconid(Growth)",
+            "Myconid(Sporemaster)",
+            "Shardmind(God Shard)",
+            "Shardmind(Shard Slayer)",
+            "Shardmind(Thought Builder)",
+            "Beasthide Shifter",
+            "Longtooth Shifter",
+            "Swiftstride Shifter",
+            "Wildhunt Shifter",
             "Tiefling",
-            "Feral Tiefling"
+            "Feral Tiefling",
+            "Warforged(Envoy)",
+            "Warforged(Juggernaut)",
+            "Warforged(Skirmisher)",
+            "Wilden(Ancients)",
+            "Wilden(Destroyer)",
+            "Wilden(Hunter)"
         };
         public static List<string> DemigodDomains { get; set; } = new List<string>
         {
@@ -254,7 +324,7 @@ namespace DnD_Character_Creator.Helper_Classes
             "War Caster",
             "Weapon Focus",
             "Weapon Master",
-            "Whirlwind Attack"        
+            "Whirlwind Attack"
         };
         public static List<string> LightArmor { get; set; } = new List<string>
         {
@@ -417,11 +487,18 @@ namespace DnD_Character_Creator.Helper_Classes
         public static Dictionary<string, string> FightingStyles { get; set; } = new Dictionary<string, string>
         {
             { "Archery", "+2 atk with ranged wep" },
+            { "Blessed Warrior", "learn 2 cantrips from the Cleric list, when you gain a lvl - you can replace a cantrip" },
+            { "Blind Fighting", "gain Blindsight 10ft - blindness, darkness, and invisibilty" },
             { "Defense", "+1 AC in armor" },
+            { "Druidic Warrior", "learn 2 cantrips from the Druid list, when you gain a lvl - you can replace a cantrip" },
             { "Dueling", "+2 dmg when only wielding one-handed wep" },
             { "Great Weapon Fighting", "reroll 1s and 2s on dmg with two-handed/versatile wep" },
+            { "Interception", "reaction, when ally is hit, reduce dmg by 1D10 + prof bons, must wield shield" },
             { "Protection", "when adj ally is attacked, use reaction to impose disadv, must wield shield" },
-            { "Two-Weapon Fighting", "off-hand dmg adds stat mod" }
+            { "Superior Technique", "SR, D6, Str or Dex-based DC, " },
+            { "Thrown Weapon Fighting", "when you use an Attack action to throw a weapon, dmg + 2, draw a weapon" },
+            { "Two-Weapon Fighting", "off-hand dmg adds stat mod" },
+            { "Unarmed Fighting", "dmg = 1D6 or 1D8 if wielding no weapons or shield, deal 1D4 to a grappled target" }
         };
         public static Dictionary<string, string> Maneuvers { get; set; } = new Dictionary<string, string>
         {
@@ -442,40 +519,153 @@ namespace DnD_Character_Creator.Helper_Classes
             { "Sweeping Attack", "on hit, use atk roll against adj enemy - deal SD dmg" },
             { "Trip Attack", "on hit, dmg + SD, Str save to knock prone" }
         };
-        public static Dictionary<string, string> Invocations { get; set; } = new Dictionary<string, string>
+        public static Dictionary<string, string> ArcaneShotOptions { get; set; } = new Dictionary<string, string>
+        {
+            { "Banishing Arrow", "Cha save, 1 turn, speed = 0, suffer incap" },
+            { "Beguiling Arrow", "2D6 Psychic dmg, 30ft, choose ally, Wis save, charm 1 turn" },
+            { "Bursting Arrow", "10ft, 2D6 Force dmg" },
+            { "Enfeebling Arrow", "2D6 Necrotic dmg, Con save, dmg is halved for 1 turn" },
+            { "Grasping Arrow", "2D6 Poison dmg, 1 min, speed -10ft, 1st move each turn - 2D6 slashing, Athletics vs DC to free" },
+            { "Piercing Arrow", "no atk roll, Dex save, 30ft line, ignores cover, +1D6 piercing dmg" },
+            { "Seeking Arrow", "no atk roll, Dex save, turns corners, ignores 3/4 cover, +1D6 Force dmg" },
+            { "Shadow Arrow", "2D6 Psychic dmg, Wis save, can only see 5ft" }
+        };
+        public static Dictionary<string, string> ArcaneShotOptionsImp { get; set; } = new Dictionary<string, string>
+        {
+            { "Banishing Arrow", "Cha save, 2D6 force dmg, 1 turn, speed = 0, suffer incap" },
+            { "Beguiling Arrow", "4D6 Psychic dmg, 30ft, choose ally, Wis save, charm 1 turn" },
+            { "Bursting Arrow", "10ft, 4D6 Force dmg" },
+            { "Enfeebling Arrow", "4D6 Necrotic dmg, Con save, dmg is halved for 1 turn" },
+            { "Grasping Arrow", "4D6 Poison dmg, 1 min, speed -10ft, 1st move each turn - 2D6 slashing, Athletics action vs DC to free" },
+            { "Piercing Arrow", "no atk roll, Dex save, 30ft line, ignores cover, +2D6 piercing dmg" },
+            { "Seeking Arrow", "no atk roll, Dex save, turns corners, ignores 3/4 cover, +2D6 Force dmg" },
+            { "Shadow Arrow", "4D6 Psychic dmg, Wis save, can only see 5ft" }
+        };
+        public static Dictionary<string, string> Metamagic { get; set; } = new Dictionary<string, string>
+        {
+            { "Careful Spell", "1 sorcery pt, choose Cha creatures to auto-succeed on spell save" },
+            { "Distant Spell", "1 sorcery pt, double a spell's range or if its touch - range becomes 30ft" },
+            { "Empowered Spell", "1 sorcery pt, reroll Cha dice on dmg, must use new rolls" },
+            { "Extended Spell", "1 sorcery pt, for a spell 1 min or longer, double its' duration" },
+            { "Heightened Spell", "3 sorcery pts, impose disadv on save vs your spell" },
+            { "Quicken Spell", "2 sorcery pts, cast a spell that require an action as a bonus" },
+            { "Seeking Spell", "2 sorcery pt, when you miss an atk, reroll atk, must use new roll" },
+            { "Subtle Spell", "1 sorcery pt, cast a spell without verbal or somatic components" },
+            { "Transmuted Spell", "1 sorcery pt, change a spell's dmg type to Acid, Cold, Fire, Lightning, Poison, or Thunder" },
+            { "Twinned Spell", "spell lvl(1 for cantrip) sorcery pt, make a spell that targets 1 creature target 2 instead" }
+        };
+        public static Dictionary<string, string> AllInvocations { get; set; } = new Dictionary<string, string>
         {
             { "Agonizing Blast", "when you cast Eldritch Blast, dmg + Cha" },
             { "Armor of Shadows", "cast Mage Armor at-will" },
             { "Ascendant Step", "cast Levitate at-will" },
+            { "Aspect of the Moon", "don't need to sleep, can't be forced to sleep" },
             { "Beast Speech", "cast Speak with Animals at-will" },
             { "Beguiling Influence", "gain prof in Deception and Persuasion" },
-            { "Bewitching Whispers", "1/LR cast Compulsion using a spell slot" },
+            { "Bewitching Whispers", "LR, cast Compulsion using a spell slot" },
+            { "Bond of the Talisman", "prof bonus/LR, wearer of your talisman can teleport to each other" },
             { "Book of Ancient Secrets", "gain 2 ritual spells, can copy rituals into the spellbook for 50gp/2hr" },
-            { "Chains of Carceri", "1/LR cast Hold Monster on a celestial, fiend, or elemental" },
+            { "Chains of Carceri", "LR, cast Hold Monster on a celestial, fiend, or elemental" },
+            { "Cloak of Flies", "SR, bonus, 5ft aura, Cha Poison dmg, grants adv on Intimidation but disadv on other Cha-based checks" },
             { "Devil's Sight", "gain Superior Darkvision 120ft" },
-            { "Dreadful Word", "1/LR cast Confusion using a spell slot" },
+            { "Dreadful Word", "LR, cast Confusion using a spell slot" },
+            { "Eldritch Mind", "adv on Con saves for conc on spells" },
             { "Eldritch Sight", "cast Detect Magic at-will" },
+            { "Eldritch Smite", "1/turn, on hit, expend a spell slot, extra dmg = 1D8 Force dmg + 1D8/spell lvl, knock prone if Huge or smaller" },
             { "Eldritch Spear", "range on Eldritch Blast becomes 300ft" },
             { "Eyes of the Rune Keeper", "read all writing" },
+            { "Far Scribe", "gain a page that can contain names = prof bonus, cast Sending to any name without using spell slot" },
             { "Fiendish Vigor", "cast False Life at-will" },
             { "Gaze of Two Minds", "action, become blind/deaf to use the senses of another humanoid you touch" },
+            { "Ghostly Gaze", "SR, action, 30ft, 1 min conc, see through objects, gain Darkvision" },
+            { "Gift of the Depths", "gain waterbreathing, Swim speed / LR, cast Waterbreathing" },
+            { "Gift of the Ever-Living Ones", "When you regain HP, familiar within 100ft, max the dice rolled for you" },
+            { "Gift of the Protectors", "gain a page that can contain names = prof bonus, LR, when a name drop to 0 HP, drop to 1 instead" },
+            { "Grasp of Hadar", "1/turn, on hit with Eldritch Blast, pull 10ft" },
+            { "Improved Pact Weapon", "your Pact Weapon can be a spell focus, atk/dmg + 1, you can summon any bow except hand crossbow" },
+            { "Investment of the Chain Master", "cast Find Familiar to infuse with benefits" +
+                "\n(gain Fly or Swim 40ft, command as bonus, atks are magical, uses your spell DC, use reaciton to grant it Resistance)" },
+            { "Lance of Lethargy", "1/turn, on hit with Eldritch Blast, reduce enemy's speed by 10ft" },
             { "Lifedrinker", "dmg + Cha Necrotic" },
+            { "Maddening Hex", "bonus, 30ft, cursed target, deal Cha Psychic dmg to target and adj" },
             { "Mask of Many Faces", "cast Disguise Self at-will" },
             { "Master of Myriad Forms", "cast Alter Self at-will" },
-            { "Minions of Chaos", "1/LR cast Conjure Elemental using a spell slot" },
-            { "Mire the Mind", "1/LR cast Slow using a spell slot" },
+            { "Minions of Chaos", "LR, cast Conjure Elemental using a spell slot" },
+            { "Mire the Mind", "LR, cast Slow using a spell slot" },
             { "Misty Visions", "cast Silent Image at-will" },
             { "One with Shadows", "action, in dim light/darkness, become invisible" },
             { "Otherworldly Leap", "cast Jump at-will" },
+            { "Protector of the Talisman", "prof bonus/LR, wearer of your talisman fails a save, save + 1D4" },
+            { "Rebuke of the Talisman", "reaction, 30ft, wearer of your talisman is hit, Psychic dmg = prof bonus, push 10ft" },
+            { "Relentless Hex", "bonus, 30ft, teleport adj to a cursed target" },
             { "Repelling Blast", "Eldritch Blast can push 10ft" },
-            { "Sculptor of Flesh", "1/LR cast Polymorph using a spell slot" },
-            { "Sign of Ill Omen", "1/LR cast Bestow Curse using a spell slot" },
-            { "Thief of Five Fates", "1/LR cast Bane using a spell slot" },
-            { "Thirsting Blade", "When using an atk action, atk twice" },
+            { "Sculptor of Flesh", "LR, cast Polymorph using a spell slot" },
+            { "Shroud of Shadow", "cast Invisibility at-will" },
+            { "Sign of Ill Omen", "LR, cast Bestow Curse using a spell slot" },
+            { "Thief of Five Fates", "LR, cast Bane using a spell slot" },
+            { "Thirsting Blade", "When using an Attack action, atk twice" },
+            { "Tomb of Levistus", "SR, reaction, when you take dmg, gain 10 temp HP/lvl - ends next turn / after dmg resolution," +
+                "\nsuffer Vulnerability to fire, speed = 0ft, gain incap" },
+            { "Trickster's Escape", "LR, cast Freedom of Movement" },
+            { "Undying Servitude", "LR, cast Animate Dead" },
             { "Visions of Distant Realms", "cast Arcane Eye at-will" },
             { "Voice of the Chain Master", "can communicate telepathically with familiar, perceive their senses, and speak through them" },
             { "Whispers of the Grave", "cast Speak with Dead at-will" },
             { "Witch Sight", "30ft, can see through shapechangers or creature using illusion/transmutation magic" }
+        };
+        public static List<string> BaseInvocations { get; set; } = new List<string>
+        {
+            { "Agonizing Blast" },
+            { "Armor of Shadows" },
+            { "Beast Speech" },
+            { "Beguiling Influence" },
+            { "Devil's Sight" },
+            { "Eldritch Mind" },
+            { "Eldritch Sight" },
+            { "Eldritch Spear" },
+            { "Eyes of the Rune Keeper" },
+            { "Fiendish Vigor" },
+            { "Gaze of Two Minds" },
+            { "Grasp of Hadar" },
+            { "Lance of Lethargy" },
+            { "Mask of Many Faces" },
+            { "Misty Visions" },
+            { "Repelling Blast" },
+            { "Thief of Five Fates" }
+        };
+        public static List<string> LvlFiveInvoc { get; set; } = new List<string>
+        {
+            { "Cloak of Flies" },
+            { "Gift of the Depths" },
+            { "Maddening Hex" },
+            { "Mire the Mind" },
+            { "One with Shadows" },
+            { "Sign of Ill Omen" },
+            { "Tomb of Levistus" },
+            { "Undying Servitude" }
+        };
+        public static List<string> LvlSevenInvoc { get; set; } = new List<string>
+        {
+            { "Bewitching Whispers" },
+            { "Dreadful Word" },
+            { "Ghostly Gaze" },
+            { "Relentless Hex" },
+            { "Sculptor of Flesh" },
+            { "Trickster's Escape" },
+        };
+        public static List<string> LvlNineInvoc { get; set; } = new List<string>
+        {
+            { "Ascendant Step" },
+            { "Minions of Chaos" },
+            { "Otherworldly Leap" },
+            { "Whispers of the Grave" },
+        };
+        public static List<string> LvlFifteenInvoc { get; set; } = new List<string>
+        {
+            { "Master of Myriad Forms" },
+            { "Shroud of Shadow" },
+            { "Visions of Distant Realms" },
+            { "Witch Sight" },
         };
         public static Dictionary<string, string> Talents { get; set; } = new Dictionary<string, string>
         {
@@ -526,6 +716,18 @@ namespace DnD_Character_Creator.Helper_Classes
             { "Translator", "Int checks to communicate with a creature who doesn’t share a language with you" },
             { "Urban Sprinter", "Athletics or Acrobatics checks while fleeing from a pursuer, or pursuing someone else" },
             { "Wayfarer", "Survival checks to find a path or avoid getting lost" }
+        };
+        public static Dictionary<string, string> Spells { get; set; } = new Dictionary<string, string>
+        {
+            { "", "" },
+            { "", "" },
+            { "", "" },
+            { "", "" },
+            { "", "" },
+            { "", "" },
+            { "", "" },
+            { "", "" },
+            { "", "" }
         };
     }
 }

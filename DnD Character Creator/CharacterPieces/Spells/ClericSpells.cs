@@ -56,6 +56,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
         };
         public static List<string> ThirdLvls { get; set; } = new List<string> {
             "Animate Dead",
+            "Aura of Vitality",
             "Beacon of Hope",
             "Bestow Curse",
             "Clairvoyance",
@@ -69,7 +70,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Life Transference",
             "Magic Circle",
             "Mass Healing Word",
-            "Meld into Stone",
+            "Meld Into Stone",
             "Motivational Speech",
             "Protection from Energy",
             "Remove Curse",
@@ -83,6 +84,8 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Water Walk"
         };
         public static List<string> FourthLvls { get; set; } = new List<string> {
+            "Aura of Life",
+            "Aura of Purity",
             "Banishment",
             "Control Water",
             "Death Ward",
@@ -90,7 +93,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Freedom of Movement",
             "Guardian of Faith",
             "Locate Creature",
-            "Stone Shape"
+            "Stoneshape"
         };
         public static List<string> FifthLvls { get; set; } = new List<string> {
             "Commune",
@@ -118,6 +121,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Heal",
             "Heroes’ Feast",
             "Planar Ally",
+            "Sunbeam",
             "True Seeing",
             "Word of Recall"
         };
@@ -136,12 +140,14 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Antimagic Field",
             "Control Weather",
             "Earthquake",
-            "Holy Aura"
+            "Holy Aura",
+            "Sunburst"
         };
         public static List<string> NinthLvls { get; set; } = new List<string> {
             "Astral Projection",
             "Gate",
             "Mass Heal",
+            "Power Word Heal",
             "True Resurrection"
         };
     }

@@ -21,9 +21,9 @@ namespace DnD_Character_Creator.CLI_Classes
             character.Vision = race.Vision;
             //in cli the other traits are assigned
             character.SkillProficiencies.UnionWith(race.SkillProficiencies);
-            if (race.ToolProficiencies.Contains("Musical instrument"))
+            if (race.ToolProficiencies.Contains("Musical Instrument"))
             {
-                race.ToolProficiencies.Remove("Musical instrument");
+                race.ToolProficiencies.Remove("Musical Instrument");
                 string msg = "Pick a musical instrument you'd like to be proficient with.";
                 int index = CLIHelper.PrintChoices(msg, Options.MusicalInstruments);
                 race.ToolProficiencies.Add(Options.MusicalInstruments[index]);
@@ -35,9 +35,9 @@ namespace DnD_Character_Creator.CLI_Classes
                 int index = CLIHelper.PrintChoices(msg, Options.ArtisanTools);
                 race.ToolProficiencies.Add(Options.ArtisanTools[index]);
             }
-            if (race.ToolProficiencies.Contains("Gaming set"))
+            if (race.ToolProficiencies.Contains("Gaming Set"))
             {
-                race.ToolProficiencies.Remove("Gaming set");
+                race.ToolProficiencies.Remove("Gaming Set");
                 string msg = "Pick a gaming set you'd like to be proficient with.";
                 int index = CLIHelper.PrintChoices(msg, Options.GamingSets);
                 race.ToolProficiencies.Add(Options.GamingSets[index]);
@@ -84,11 +84,22 @@ namespace DnD_Character_Creator.CLI_Classes
         }
         public static void AddLanguages(Character character, Race race)
         {
+            string msg = "";
+            string errorMsg = "You already know that language, try again.";
+            if (!race.Languages.Contains("Choice2"))
+            {
+                msg = "This race gets to know one language of your choice, pick it now.";
+            }
+            if (race.Languages.Contains("Choice2"))
+            {
+                race.Languages.Remove("Choice2");
+                msg = "This race gets to know two languages of your choice, pick them now.";
+                string input = CLIHelper.GetNew(Options.Languages, race.Languages, msg, errorMsg);
+                race.Languages.Add(input);
+            }
             if (race.Languages.Contains("Choice"))
             {
                 race.Languages.Remove("Choice");
-                string msg = "This race gets to know one language of your choice, pick it now.";
-                string errorMsg = "You already know that language, try again.";
                 string input = CLIHelper.GetNew(Options.Languages, race.Languages, msg, errorMsg);
                 race.Languages.Add(input);
             }
@@ -98,6 +109,11 @@ namespace DnD_Character_Creator.CLI_Classes
         {
             switch (character.ChosenRace)
             {
+                case "Cambion":
+                    string command = "Command(1/LR, Cha to cast)";
+                    string alterSelf = "Alter Self(1/LR, Cha to cast)";
+                    HelpAddSpells(character, command, alterSelf);
+                    break;
                 case "Demigod":
                     DemigodSpells(character);
                     break;
@@ -273,8 +289,21 @@ namespace DnD_Character_Creator.CLI_Classes
                         character.RacialTraits.Add("Necrotic Shroud: LR, 1 min - grow ghostly, skeletal (flightless) wings" +
                         "\n10ft - Cha save, fear & 1/turn - extra Necrotic dmg = lvl");
                         break;
+                    case "Cambion":
+                        if (character.Alignment == "L-E")
+                        {
+                            character.RacialTraits.Add("Fiendish Gaze: 1/SR, Charm Person, Cha to cast");
+                        }
+                        else if (character.Alignment == "C-E")
+                        {
+                            character.RacialTraits.Add("Fiendish Savagery: 1/SR, no action, gain adv on atks this turn");
+                        }
+                        break;
                     case "Demigod":
                         DemigodHigherLvls(character);
+                        break;
+                    case "Dhampir":
+                        character.RacialTraits.Add("Vampiric Gaze: 1/SR, Charm Person, Cha to cast");
                         break;
                     case "Shadar-Kai":
                         character.RacialTraits.Remove("Blessing of the Raven Queen: bonus, LR, teleport 30ft");

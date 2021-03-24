@@ -123,7 +123,6 @@ namespace DnD_Character_Creator.Helper_Classes
         }
         public static void ModifySkills(Character character)
         {
-            string trainedSkills = string.Join(", ", character.SkillProficiencies);
             var skillList = new List<string>();
             var skills = new Dictionary<string, int>();
 
@@ -156,7 +155,7 @@ namespace DnD_Character_Creator.Helper_Classes
                     skills[skill] += character.ChaMod;
                 }
                 string withoutStat = skill.Substring(0, skill.Length - 5);
-                if (trainedSkills.Contains(withoutStat))
+                if (character.SkillProficiencies.Contains(withoutStat))
                 {
                     skills[skill] += character.ProficiencyBonus;
                     string fullSkill = $"(t) {skill}";

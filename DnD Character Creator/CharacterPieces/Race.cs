@@ -54,6 +54,15 @@ namespace DnD_Character_Creator.Races
                 case "Aasimar(Fallen)":
                     result = FallenAasimar();
                     break;
+                case "Cambion":
+                    result = Cambion();
+                    break;
+                case "Changeling":
+                    result = Changeling();
+                    break;
+                case "Dhampir":
+                    result = Dhampir();
+                    break;
                 case "Dragonborn":
                     result = Dragonborn();
                     break;
@@ -140,6 +149,7 @@ namespace DnD_Character_Creator.Races
         public static Race GetStats(string raceString)
         {
             var result = new Race();
+            int choice = -1;
 
             switch (raceString)
             {
@@ -154,6 +164,39 @@ namespace DnD_Character_Creator.Races
                 case "Aasimar(Fallen)":
                     result.Stat1 = new Tuple<string, int>("Cha", 2);
                     result.Stat2 = new Tuple<string, int>("Str", 1);
+                    break;
+                case "Cambion":
+                    result.Stat1 = new Tuple<string, int>("Str", 1);
+                    result.Stat2 = new Tuple<string, int>("Dex", 1);
+                    result.Stat3 = new Tuple<string, int>("Cha", 1);
+                    break;
+                case "Changeling":
+                    result.Stat1 = new Tuple<string, int>("Cha", 2);
+                    Console.WriteLine("Pick a stat to increase by 1");
+                    CLIHelper.Print2Choices("Dex", "Int");
+                    choice = CLIHelper.GetNumberInRange(1, 2);
+                    if (choice == 1)
+                    {
+                        result.Stat2 = new Tuple<string, int>("Dex", 1);
+                    }
+                    else if (choice == 2)
+                    {
+                        result.Stat2 = new Tuple<string, int>("Int", 1);
+                    }
+                    break;
+                case "Dhampir":
+                    result.Stat1 = new Tuple<string, int>("Str", 2);
+                    Console.WriteLine("Pick a stat to increase by 1");
+                    CLIHelper.Print2Choices("Dex", "Cha");
+                    choice = CLIHelper.GetNumberInRange(1, 2);
+                    if (choice == 1)
+                    {
+                        result.Stat2 = new Tuple<string, int>("Dex", 1);
+                    }
+                    else if (choice == 2)
+                    {
+                        result.Stat2 = new Tuple<string, int>("Cha", 1);
+                    }
                     break;
                 case "Dragonborn":
                     result.Stat1 = new Tuple<string, int>("Str", 2);
@@ -266,7 +309,7 @@ namespace DnD_Character_Creator.Races
                     result.Stat1 = new Tuple<string, int>("Dex", 2);
                     Console.WriteLine("Pick a stat to increase by 1");
                     CLIHelper.Print2Choices("Int", "Cha");
-                    int choice = CLIHelper.GetNumberInRange(1, 2);
+                    choice = CLIHelper.GetNumberInRange(1, 2);
                     if (choice == 1)
                     {
                         result.Stat2 = new Tuple<string, int>("Int", 1);
@@ -388,6 +431,7 @@ namespace DnD_Character_Creator.Races
             result.Speed = 30;
             result.Vision = "Darkvision 60ft";
             result.Alignment.Add("N-G");
+            result.AdultAge = 18;
             result.MaxAgeStart = 160;
             result.Languages.Add("Celestial");
             result.Cantrips.Add("Light - Cha to cast");
@@ -408,9 +452,65 @@ namespace DnD_Character_Creator.Races
             result.Vision = "Darkvision 60ft";
             result.Alignment.Add("TN");
             result.Alignment.Add("N-E");
+            result.AdultAge = 18;
             result.MaxAgeStart = 160;
             result.Languages.Add("Celestial");
             result.Cantrips.Add("Light - Cha to cast");
+
+            return result;
+        }
+        public static Race Cambion()
+        {
+            Race result = new Race();
+
+            result.RacialTraits.Add("Fiendish Form: your type becomes Fiend");
+            result.MinHeight = 65;
+            result.MaxHeight = 77;
+            result.MinWeight = 100;
+            result.MaxWeight = 200;
+            result.Speed = 30;
+            result.Speedstring = ", Fly 30ft";
+            result.Vision = "Darkvision 60ft";
+            result.Alignment.Add("L-E");
+            result.Alignment.Add("C-E");
+            result.AdultAge = 18;
+            result.MaxAgeStart = 160;
+            result.SkillProficiencies.Add("Deception");
+            result.SkillProficiencies.Add("Persuasion");
+            result.Cantrips.Add("Firebolt - Cha to cast");
+
+            return result;
+        }
+        public static Race Changeling()
+        {
+            Race result = new Race();
+
+            result.RacialTraits.Add("Change Appearance: action, doesn't change clothes - adv on Deception for disguise");
+            result.RacialTraits.Add("Unsettling Visage: when attacked, SR, reaction, 30ft, impose disadv on atk");
+            result.RacialTraits.Add("Divergent Persona: prof with 1 tool, while in your persona - prof Bonus x2 with that tool");
+            result.MinHeight = 60;
+            result.MaxHeight = 72;
+            result.MinWeight = 100;
+            result.MaxWeight = 160;
+            result.Speed = 30;
+            result.Vision = "Lowlight 60ft";
+            result.Alignment.Add("N-G");
+            result.Alignment.Add("TN");
+            result.Alignment.Add("C-N");
+            result.AdultAge = 15;
+            result.MaxAgeStart = 100;
+            result.Languages.Add("Choice");
+            result.Languages.Add("Choice2");
+            var skills = new List<string> { "Deception", "Insight", "Intimidation", "Persuasion" };
+            Console.WriteLine("Changelings get 2 skill proficiencies of their choice, pick them now");
+            string skill = CLIHelper.PrintChoices(skills);
+            result.SkillProficiencies.Add(skill);
+            skills.Remove(skill);
+            skill = CLIHelper.PrintChoices(skills);
+            result.SkillProficiencies.Add(skill);
+            string pickMsg = "Pick a tool proficiency";
+            int index = CLIHelper.PrintChoices(pickMsg, Options.Tools);
+            result.ToolProficiencies.Add(Options.Tools[index]);
 
             return result;
         }
@@ -468,7 +568,7 @@ namespace DnD_Character_Creator.Races
                     result.RacialTraits.Add("Prosperous Life: whenever you find treasure or try to sell goods, increase its value by 30%");
                     break;
                 case "Madness":
-                    result.RacialTraits.Add("Child of Madness: auto-succeed on all Con checks for drinking, immune to charm, fear, and poison");
+                    result.RacialTraits.Add("Child of Madness: auto-succeed on all Con checks for drinking, gain Immunity to charm, fear, and poison");
                     result.RacialTraits.Add("Party Starter: Cha check in social area, gain adv on all Cha-based DCs for 2hr");
                     result.SkillProficiencies.Add("Acrobatics");
                     result.SkillProficiencies.Add("Persuasion");
@@ -490,9 +590,9 @@ namespace DnD_Character_Creator.Races
                     result.Cantrips.Add("Blade Ward - Cha to cast");
                     break;
                 case "Smithing":
-                    result.RacialTraits.Add("Child of Creation: 1/LR, create an object of any combination of wood, stone, iron, crystal, rope, or cloth" +
+                    result.RacialTraits.Add("Child of Creation: LR, create an object of any combination of wood, stone, iron, crystal, rope, or cloth" +
                         "The object must smaller than a 5ft cube, and the object must be in a form that you have seen before");
-                    result.RacialTraits.Add("Child of the Forge: Fire immunity, adv on all tool checks you're prof in");
+                    result.RacialTraits.Add("Child of the Forge: gain Immunity to Fire, adv on all tool checks you're prof in");
                     result.ToolProficiencies.Add("Carpenter's Tools");
                     result.ToolProficiencies.Add("Cobbler's Tools");
                     result.ToolProficiencies.Add("Mason's Tools");
@@ -509,6 +609,7 @@ namespace DnD_Character_Creator.Races
                 case "The Hunt":
                     result.RacialTraits.Add("Child of the Hunt: adv on Survival, identify creatures from tracks");
                     result.RacialTraits.Add("Hunter's Eyes: gain Superior Darkvision 120ft, 1/SR - cast Detect Poison and Disease");
+                    character.Vision = "Superior Darkvision 120ft";
                     result.RacialTraits.Add("Godly Precision: +2 to atk/dmg with ranged wep");
                     result.SkillProficiencies.Add("Survival");
                     result.Proficiencies.Add("All ranged weapons");
@@ -556,6 +657,27 @@ namespace DnD_Character_Creator.Races
                     result.Proficiencies.Add("All weapons and armor");
                     break;
             }
+
+            return result;
+        }
+        public static Race Dhampir()
+        {
+            Race result = new Race();
+
+            result.RacialTraits.Add("Bite - 1D6 piercing");
+            result.RacialTraits.Add("Blood Drain: after bite, bonus, grapple check - 1/D12 + Cha Necrotic dmg, heal HP = dmg");
+            result.RacialTraits.Add("Regeneration: 1/turn, heal HP = 1/4 lvl, negated by sunlight, radiant or holy water dmg");
+            result.MinHeight = 60;
+            result.MaxHeight = 78;
+            result.MinWeight = 100;
+            result.MaxWeight = 250;
+            result.Speed = 30;
+            result.Vision = "Darkvision 60ft";
+            result.Alignment.Add("N-E");
+            result.Alignment.Add("C-G");
+            result.AdultAge = 18;
+            result.MaxAgeStart = 750;
+            result.Languages.Add("Choice");
 
             return result;
         }

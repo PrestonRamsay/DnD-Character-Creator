@@ -10,200 +10,369 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
     public static class RangerSpecifics
     {
         public static string RangerArchetype { get; set; }
-        public static CharacterClass Features(CharacterClass result)
+        public static CharacterClass Features(Character character, CharacterClass result)
         {
             int lvl = result.Lvl;
-            List<string> enemyTypes = new List<string> { "Aberrations", "Beasts", "Celestials", "Constructs", "Dragons", "Elementals", "Fey",
-                "Fiends", "Giants","Humanoids", "Monstrosities", "Oozes", "Plants", "Undead" };
-            string msg = "Pick an enemy type for your Favored Enemy";
-            int index = CLIHelper.PrintChoices(msg, enemyTypes);
-            string enemy = enemyTypes[index];
-            msg = "Pick a Favored Terrain";
-            List<string> terrains = new List<string> { "Arctic", "Coast", "Desert", "Forest", "Grassland", "Mountain", "Swamp", "Underdark" };
-            index = CLIHelper.PrintChoices(msg, terrains);
-            string land = terrains[index];
-            result.ClassFeatures.Add($"Favored Enemy({enemy})", "adv on Survival checks, gain 1 lang, +2 dmg");
-            result.ClassFeatures.Add($"Natural Explorer({land})", "no difficult terrain, move stealthily at normal pace, forage x 2, learn exact number/size of creatures");
-
-            string enemy2 = "";
-            string land2 = "";
-            string enemy3 = "";
-            string land3 = "";
-
+            string msg = "";
+            int favoredNum = 1;
             if (lvl >= 6)
             {
-                result.ClassFeatures.Remove($"Favored Enemy({enemy})");
-                result.ClassFeatures.Remove($"Natural Explorer({land})");
-                enemyTypes.Remove(enemy);
-                terrains.Remove(land);
-                msg = "Pick an additional enemy type for your Favored Enemies";
-                index = CLIHelper.PrintChoices(msg, enemyTypes);
-                enemy2 = enemyTypes[index];
-                msg = "Pick an additional Favored Terrain";
-                index = CLIHelper.PrintChoices(msg, terrains);
-                land2 = terrains[index];
-                result.ClassFeatures.Add($"Favored Enemy({enemy}, {enemy2})", "adv on Survival checks, gain 1 lang, +2 dmg");
-                result.ClassFeatures.Add($"Natural Explorer({land}, {land2})", "no difficult terrain, move stealthily at normal pace, forage x 2, learn exact number/size of creatures");
+                favoredNum++;
             }
             if (lvl >= 10)
             {
-                result.ClassFeatures.Remove($"Favored Enemy({enemy}, {enemy2})");
-                result.ClassFeatures.Remove($"Natural Explorer({land}, {land2})");
-                enemyTypes.Remove(enemy2);
-                terrains.Remove(land2);
-                msg = "Pick an additional enemy type for your Favored Enemies";
-                index = CLIHelper.PrintChoices(msg, enemyTypes);
-                enemy3 = enemyTypes[index];
-                msg = "Pick an additional Favored Terrain";
-                index = CLIHelper.PrintChoices(msg, terrains);
-                land3 = terrains[index];
-                result.ClassFeatures.Add($"Favored Enemy({enemy}, {enemy2}, {enemy3})", "adv on Survival checks, gain 1 lang, +2 dmg");
-                result.ClassFeatures.Add($"Natural Explorer({land}, {land2}, {land3})", "no difficult terrain, move stealthily at normal pace, forage x 2, learn exact number/size of creatures");
+                favoredNum++;
+            }
+
+            Console.WriteLine("Pick a Ranger class feature");
+            CLIHelper.Print2Choices("Natural Explorer", "Deft Explorer");
+            int num = CLIHelper.GetNumberInRange(1, 2);
+            if (num == 1)
+            {
+                List<string> terrainTypes = new List<string> { "Arctic", "Coast", "Desert", "Forest", "Grassland", "Mountain", "Swamp","Underdark" };
+                List<string> favoredTerrains = new List<string>();
+                for (int i = 0; i < favoredNum; i++)
+                {
+                    msg = "Pick a Favored Terrain";
+                    int index = CLIHelper.PrintChoices(msg, terrainTypes);
+                    string land = terrainTypes[index];
+                    favoredTerrains.Add(land);
+                    terrainTypes.Remove(land);
+                }
+                string terrains = String.Join(", ", favoredTerrains);
+                result.ClassFeatures.Add($"Natural Explorer({terrains})", "no difficult terrain, move stealthily at normal pace, forage x 2, " +
+                    "learn exact number/size of creatures");
+            }
+            else
+            {
+                result.ClassFeatures.Add("Canny", "gain Expertise in 1 skill, gain 2 languages");
+                Console.WriteLine("Pick a skill to gain Expertise in");
+                var prof = new List<string>();
+                prof.AddRange(character.SkillProficiencies);
+                string expertise = CLIHelper.PrintChoices(prof);
+                character.Skills[expertise] += character.ProficiencyBonus;
+                string lang = CLIHelper.GetNew(Options.Languages, character.Languages, "Pick a language", "You already know that language");
+                character.Languages.Add(lang);
+                lang = CLIHelper.GetNew(Options.Languages, character.Languages, "Pick a language", "You already know that language");
+                character.Languages.Add(lang);
+                if (lvl >= 6)
+                {
+                    result.ClassFeatures.Add("Roving", "speed +5ft, gain a Climb or Swim speed");
+                    character.Speed += 5;
+                    Console.WriteLine("Gain a Climb or Swim speed");
+                    CLIHelper.Print2Choices("Climb speed", "Swim speed");
+                    num = CLIHelper.GetNumberInRange(1, 2);
+                    if (num == 1)
+                    {
+                        character.Speedstring += $", Climb {character.Speed}ft";
+                    }
+                    else
+                    {
+                        character.Speedstring += $", Swim {character.Speed}ft";
+                    }
+                }
+                if (lvl >= 10)
+                {
+                    result.ClassFeatures.Add("Tireless", "on SR, decrease Exhaustion lvl by 1 / prof bonus/LR, action, gain temp HP = 1D8 + Wis");
+                }
+            }
+            Console.WriteLine("Pick a Ranger class feature");
+            CLIHelper.Print2Choices("Favored Enemy", "Favored Foe");
+            num = CLIHelper.GetNumberInRange(1, 2);
+            if (num == 1)
+            {
+                List<string> enemyTypes = new List<string> { "Aberrations", "Beasts", "Celestials", "Constructs", "Dragons", "Elementals", "Fey",
+                "Fiends", "Giants","Humanoids", "Monstrosities", "Oozes", "Plants", "Undead" };
+                List<string> favoredEnemies = new List<string>();
+                for (int i = 0; i < favoredNum; i++)
+                {
+                    msg = "Pick an enemy type for your Favored Enemy";
+                    int index = CLIHelper.PrintChoices(msg, enemyTypes);
+                    string enemy = enemyTypes[index];
+                    favoredEnemies.Add(enemy);
+                    enemyTypes.Remove(enemy);
+                }
+                string enemies = String.Join(", ", favoredEnemies);
+                result.ClassFeatures.Add($"Favored Enemy({enemies})", "adv on Survival checks, gain 1 lang");
+            }
+            else
+            {
+                int dmg = 4;
+                for (int i = 6; i <= lvl; i += 8)
+                {
+                    dmg += 2;
+                }
+                result.ClassFeatures.Add("Favored Foe", $"prof bonus/LR, on hit, mark 1 min conc, dmg + 1D{dmg}");
             }
 
             if (lvl >= 2)
             {
                 result.ClassFeatures.Add("Spellcasting", "use Cha for spell DCs, you use a component pouch to cast spells");
                 string fightStyleMsg = "Pick a fighting style.";
-                List<string> styleList = new List<string>();
-                foreach (var style in Options.FightingStyles.Keys)
+                List<string> styleList = new List<string> { "Archery", "Blind Fighting", "Defense", "Druidic Warrior", "Dueling",
+                    "Thrown Weapon Fighting", "Two-Weapon Fighting" };
+                string fightStyle = CLIHelper.PrintChoices(Options.FightingStyles, styleList, fightStyleMsg);
+                string fightStyleKey = $"Fighting Style({fightStyle})";
+                string fightStyleValue = Options.FightingStyles[fightStyle];
+                result.ClassFeatures.Add(fightStyleKey, fightStyleValue);
+                if (fightStyle == "Druidic Warrior")
                 {
-                    if (style != "Great Weapon Fighting" && style != "Protection")
-                    {
-                        styleList.Add(style);
-                    }
+                    Console.WriteLine("Pick two cantrips from the Druid's list");
+                    string cantrip = CLIHelper.PrintChoices(DruidSpells.Cantrips);
+                    result.Cantrips.Add(cantrip);
+                    cantrip = CLIHelper.PrintChoices(DruidSpells.Cantrips);
+                    result.Cantrips.Add(cantrip);
                 }
-                int input = CLIHelper.PrintChoices(fightStyleMsg, styleList);
-                string fightStyleKey = "Fighting Style";
-                fightStyleKey += $"({styleList[input]})";
-                result.ClassFeatures.Add(fightStyleKey, Options.FightingStyles[styleList[input]]);
             }
             if (lvl >= 3)
             {
-                msg = "Pick a Ranger Archetype that will give you features at levels 3, 7, 11, and 15.";
-                var archetype = new List<string> { "Hunter", "Beast Master" };
-                int input = CLIHelper.PrintChoices(msg, archetype);
-                result.ClassFeatures.Add("Primeval Awareness", "expend spell slot, 1 min per spell lvl sense presence of aberrations, celestials," +
-                    "\ndragons, elementals, fey, fiends, and undead within 1 mile or 6 mile if favored terrain");
-
-                if (input == 0)
+                Console.WriteLine("Pick a Ranger class feature");
+                CLIHelper.Print2Choices("Primeval Awareness", "Primal Awareness");
+                num = CLIHelper.GetNumberInRange(1, 2);
+                if (num == 1)
                 {
-                    RangerArchetype = archetype[0];
-                    msg = "Pick one of the following features";
-
+                    result.ClassFeatures.Add("Primeval Awareness", "expend spell slot, 1 min per spell lvl sense presence of aberrations, celestials," +
+                        "\ndragons, elementals, fey, fiends, and undead within 1 mile or 6 mile if favored terrain");
+                }
+                else
+                {
                     if (lvl >= 3)
                     {
-                        Console.WriteLine(msg);
-                        CLIHelper.Print3Choices("Colossus Slayer", "Giant Killer", "Horde Breaker");
-                        int choice = CLIHelper.GetNumberInRange(1, 3);
-
-                        if (choice == 1)
-                        {
-                            result.ClassFeatures.Add("Colossus Slayer", "1/turn, if enemy is not max HP, +1D8 dmg");
-                        }
-                        else if (choice == 2)
-                        {
-                            result.ClassFeatures.Add("Giant Killer", "reaction, if Large or larger creature atks, free atk if within 5ft");
-                        }
-                        else if (choice == 3)
-                        {
-                            result.ClassFeatures.Add("Horde Breaker", "1/turn, make extra wep atk against 2nd creature");
-                        }
+                        result.Spells[1].Add("Speak with Animals");
                     }
-                    if (lvl >= 7)
+                    if (lvl >= 5)
                     {
-                        Console.WriteLine(msg);
-                        CLIHelper.Print3Choices("Escape the Horde", "Multiattack Defense", "Steel Will");
-                        int choice = CLIHelper.GetNumberInRange(1, 3);
-
-                        if (choice == 1)
-                        {
-                            result.ClassFeatures.Add("Escape the Horde", "enemy op atks are made at disadv");
-                        }
-                        else if (choice == 2)
-                        {
-                            result.ClassFeatures.Add("Multiattack Defense", "after being hit, gain +4 AC");
-                        }
-                        else if (choice == 3)
-                        {
-                            result.ClassFeatures.Add("Steel Will", "adv on saves vs fear");
-                        }
+                        result.Spells[2].Add("Beast Sense");
                     }
-                    if (lvl >= 11)
+                    if (lvl >= 9)
                     {
-                        Console.WriteLine(msg);
-                        CLIHelper.Print2Choices("Volley", "Whirlwind Attack");
-                        int choice = CLIHelper.GetNumberInRange(1, 2);
-
-                        if (choice == 1)
-                        {
-                            result.ClassFeatures.Add("Volley", "action, atk all creatures you can see within 10ft");
-                        }
-                        else if (choice == 2)
-                        {
-                            result.ClassFeatures.Add("Whirlwind Attack", "action, melee atk all creatures within 5ft");
-                        }
+                        result.Spells[3].Add("Speak with Plants");
+                    }
+                    if (lvl >= 13)
+                    {
+                        result.Spells[4].Add("Locate Creature");
                     }
                     if (lvl >= 15)
                     {
-                        Console.WriteLine(msg);
-                        CLIHelper.Print3Choices("Evasion", "Stand Against the Tide", "Uncanny Dodge");
-                        int choice = CLIHelper.GetNumberInRange(1, 3);
-
-                        if (choice == 1)
-                        {
-                            result.ClassFeatures.Add("Evasion", "Dex saves = 1/2 or no dmg");
-                        }
-                        else if (choice == 2)
-                        {
-                            result.ClassFeatures.Add("Stand Against the Tide", "reaction, when enemy misses melee atk, force enemy to atk another creature");
-                        }
-                        else if (choice == 3)
-                        {
-                            result.ClassFeatures.Add("Uncanny Dodge", "reaction, 1/2 dmg");
-                        }
+                        result.Spells[5].Add("Commune with Nature");
                     }
                 }
-                else if (input == 1)
+                msg = "Pick a Ranger Archetype that will give you features at levels 3, 7, 11, and 15.";
+                var archetype = new List<string> { "Beast Master", "Fey Wanderer*", "Gloom Stalker", "Horizon Walker", "Hunter",
+                    "Monster Slayer", "Swarmkeeper*" };
+                int input = CLIHelper.PrintChoices(msg, archetype);
+                RangerArchetype = archetype[input];
+
+                switch (RangerArchetype)
                 {
-                    RangerArchetype = archetype[1];
-                    result.ClassFeatures.Add("Ranger's Companion", "medium beast, CR 1/4 or lower, + prof bonus to AC, atks, dmg, saves, skills, HP = normal or lvl x 4" +
-                        "\naction to command it to atk, Dash, Disengage, Dodge, or Help - if you have extra atk, you can atk and command beast");
+                    case "Beast Master":
+                        result.ClassFeatures.Add("Ranger's Companion", "medium beast, CR 1/4 or lower, + prof bonus to AC, atks, dmg, saves, skills, HP = normal or lvl x 4" +
+                            "\naction to command it to atk, Dash, Disengage, Dodge, or Help - if you have extra atk, you can atk and command beast");
 
-                    if (lvl >= 7)
-                    {
-                        result.ClassFeatures.Add("Exceptional Training", "bonus, if beast doesn't atk - command beast to Dash, Disengage, Dodge, or Help");
-                    }
-                    if (lvl >= 11)
-                    {
-                        result.ClassFeatures.Add("Bestial Fury", "when beast atks, it can make 2 atks or use Multiattack action if it has it");
-                    }
-                    if (lvl >= 15)
-                    {
-                        result.ClassFeatures.Add("Share Spells", "when you cast a spell on yourself, if beast is within 30ft - it gains benefits too");
-                    }
+                        if (lvl >= 7)
+                        {
+                            result.ClassFeatures.Add("Exceptional Training", "bonus, if beast doesn't atk - command beast to Dash, Disengage, Dodge, or Help");
+                        }
+                        if (lvl >= 11)
+                        {
+                            result.ClassFeatures.Add("Bestial Fury", "when beast atks, it can make 2 atks or use Multiattack action if it has it");
+                        }
+                        if (lvl >= 15)
+                        {
+                            result.ClassFeatures.Add("Share Spells", "when you cast a spell on yourself, if beast is within 30ft - it gains benefits too");
+                        }
+                        break;
+                    case "Fey Wanderer":
+                        //result.ClassFeatures.Add("", "");
+                        //if (lvl >= 7)
+                        //{
+                        //    result.ClassFeatures.Add("", "");
+                        //}
+                        //if (lvl >= 11)
+                        //{
+                        //    result.ClassFeatures.Add("", "");
+                        //}
+                        //if (lvl >= 15)
+                        //{
+                        //    result.ClassFeatures.Add("", "");
+                        //}
+                        break;
+                    case "Gloom Stalker":
+                        result.Spells[1].Add("Disguise Self");
+                        result.Spells[2].Add("Rope Trick");
+                        result.Spells[3].Add("Fear");
+                        result.Spells[4].Add("Greater Invisibility");
+                        result.Spells[5].Add("Seeming");
+                        if (!character.Vision.Contains("Darkvision"))
+                        {
+                            character.Vision = "Darkvision 60ft";
+                        }
+                        else
+                        {
+                            string vision = character.Vision;
+                            if (vision.Contains("Superior"))
+                            {
+                                character.Vision = vision.Substring(0, vision.Length - 5) + "150ft";
+                            }
+                            else
+                            {
+                                character.Vision = vision.Substring(0, vision.Length - 4) + "90ft";
+                            }
+                        }
+                        result.ClassFeatures.Add("Umbral Sight", "While in darkness, you are invisible to creatures who rely on Darkvision");
+                        result.ClassFeatures.Add("Dread Ambusher", "Init + Wis, 1st turn, speed +10ft, gain extra atk, dmg + 1D8 on that atk");
+                        if (lvl >= 7)
+                        {
+                            result.ClassFeatures.Add("Iron Mind", "gain prof in Wis saves(if already have gain Int or Cha instead)");
+                            character.Saves.Add("Wis");
+                        }
+                        if (lvl >= 11)
+                        {
+                            result.ClassFeatures.Add("Stalker's Flurry", "1/turn, when you miss an atk, make an extra atk");
+                        }
+                        if (lvl >= 15)
+                        {
+                            result.ClassFeatures.Add("Shadowy Dodge", "reaction, when an enemy atk doesn't have adv, impose disadv");
+                        }
+                        break;
+                    case "Horizon Walker":
+                        result.Spells[1].Add("Protection from Evil and Good");
+                        result.Spells[2].Add("Misty Step");
+                        result.Spells[3].Add("Haste");
+                        result.Spells[4].Add("Banishment");
+                        result.Spells[5].Add("Teleportation Circle");
+                        result.ClassFeatures.Add("Detect Portal", "SR, action, 1 mile, detect distance and direction of nearest planar portal");
+                        int planarDice = 1;
+                        if (lvl >= 11)
+                        {
+                            planarDice++;
+                        }
+                        result.ClassFeatures.Add("Planar Warrior", $"bonus, 30ft, next atk's dmg becomes force, +{planarDice}D8 force dmg");
+                        if (lvl >= 7)
+                        {
+                            result.ClassFeatures.Add("Ethereal Step", "SR, bonus, cast Etherealness");
+                        }
+                        if (lvl >= 11)
+                        {
+                            result.ClassFeatures.Add("Distant Strike", "When you use Attack action, teleport 10ft, if you atk 2 creatures - gain extra atk vs a 3rd creature");
+                        }
+                        if (lvl >= 15)
+                        {
+                            result.ClassFeatures.Add("Spectral Defense", "reaction, when hit, gain Resistance to dmg");
+                        }
+                        break;
+                    case "Hunter":
+                        msg = "Pick one of the following features";
+                        if (lvl >= 3)
+                        {
+                            Console.WriteLine(msg);
+                            CLIHelper.Print3Choices("Colossus Slayer", "Giant Killer", "Horde Breaker");
+                            int choice = CLIHelper.GetNumberInRange(1, 3);
+                            if (choice == 1)
+                            {
+                                result.ClassFeatures.Add("Colossus Slayer", "1/turn, if enemy is not max HP, +1D8 dmg");
+                            }
+                            else if (choice == 2)
+                            {
+                                result.ClassFeatures.Add("Giant Killer", "reaction, if Large or larger creature atks, free atk if within 5ft");
+                            }
+                            else if (choice == 3)
+                            {
+                                result.ClassFeatures.Add("Horde Breaker", "1/turn, make extra wep atk against 2nd creature");
+                            }
+                        }
+                        if (lvl >= 7)
+                        {
+                            Console.WriteLine(msg);
+                            CLIHelper.Print3Choices("Escape the Horde", "Multiattack Defense", "Steel Will");
+                            int choice = CLIHelper.GetNumberInRange(1, 3);
+                            if (choice == 1)
+                            {
+                                result.ClassFeatures.Add("Escape the Horde", "enemy op atks are made at disadv");
+                            }
+                            else if (choice == 2)
+                            {
+                                result.ClassFeatures.Add("Multiattack Defense", "after being hit, gain +4 AC");
+                            }
+                            else if (choice == 3)
+                            {
+                                result.ClassFeatures.Add("Steel Will", "adv on saves vs fear");
+                            }
+                        }
+                        if (lvl >= 11)
+                        {
+                            Console.WriteLine(msg);
+                            CLIHelper.Print2Choices("Volley", "Whirlwind Attack");
+                            int choice = CLIHelper.GetNumberInRange(1, 2);
+                            if (choice == 1)
+                            {
+                                result.ClassFeatures.Add("Volley", "action, atk all creatures you can see within 10ft");
+                            }
+                            else if (choice == 2)
+                            {
+                                result.ClassFeatures.Add("Whirlwind Attack", "action, melee atk all creatures within 5ft");
+                            }
+                        }
+                        if (lvl >= 15)
+                        {
+                            Console.WriteLine(msg);
+                            CLIHelper.Print3Choices("Evasion", "Stand Against the Tide", "Uncanny Dodge");
+                            int choice = CLIHelper.GetNumberInRange(1, 3);
+                            if (choice == 1)
+                            {
+                                result.ClassFeatures.Add("Evasion", "Dex saves = 1/2 or no dmg");
+                            }
+                            else if (choice == 2)
+                            {
+                                result.ClassFeatures.Add("Stand Against the Tide", "reaction, when enemy misses melee atk, force enemy to atk another creature");
+                            }
+                            else if (choice == 3)
+                            {
+                                result.ClassFeatures.Add("Uncanny Dodge", "reaction, 1/2 dmg");
+                            }
+                        }
+                        break;
+                    case "Monster Slayer":
+                        result.Spells[1].Add("Protection from Evil and Good");
+                        result.Spells[2].Add("Zone of Truth");
+                        result.Spells[3].Add("Magic Circle");
+                        result.Spells[4].Add("Banishment");
+                        result.Spells[5].Add("Hold Monster");
+                        result.ClassFeatures.Add("Hunter's Sense", "Wis/LR, action, 60ft, learn Immunities, Resistances, Vulnerabilities of an enemy");
+                        result.ClassFeatures.Add("Slayer's Prey", "SR, bonus, 60ft, 1/turn, dmg + 1D6");
+                        if (lvl >= 7)
+                        {
+                            result.ClassFeatures.Add("Supernatural Defense", "when your Slayer's Prey target makes you roll a save/opposed grapple gain +1D6");
+                        }
+                        if (lvl >= 11)
+                        {
+                            result.ClassFeatures.Add("Magic-User's Nemesis", "reaction, 60ft, Wis save, when a spell is cast or a creature teleports, their spell or teleport fails");
+                        }
+                        if (lvl >= 15)
+                        {
+                            result.ClassFeatures.Add("Slayer's Counter", "reaction, before your Slayer's Prey makes you roll a save, make an atk - if it hits, auto-success on your save");
+                        }
+                        break;
+                    case "Swarmkeeper":
+                        //result.ClassFeatures.Add("", "");
+                        //if (lvl >= 7)
+                        //{
+                        //    result.ClassFeatures.Add("", "");
+                        //}
+                        //if (lvl >= 11)
+                        //{
+                        //    result.ClassFeatures.Add("", "");
+                        //}
+                        //if (lvl >= 15)
+                        //{
+                        //    result.ClassFeatures.Add("", "");
+                        //}
+                        break;
                 }
-                //else if (input == 2)
-                //{
-                //    RangerArchetype = archetype[2];
-
-                //if (lvl >= 3)
-                //{
-                //    result.ClassFeatures.Add("", "");
-                //}
-                //if (lvl >= 7)
-                //{
-                //    result.ClassFeatures.Add("", "");
-                //}
-                //if (lvl >= 11)
-                //{
-                //    result.ClassFeatures.Add("", "");
-                //}
-                //if (lvl >= 15)
-                //{
-                //    result.ClassFeatures.Add("", "");
-                //}
-                //}
+            }
+            if (lvl >= 4)
+            {
+                result.ClassFeatures.Add("Martial Versatility", "When you gain an Ability Score Improvement, you can replace a Fighting Style");
             }
             if (lvl >= 5)
             {
@@ -215,7 +384,17 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             }
             if (lvl >= 10)
             {
-                result.ClassFeatures.Add("Hide in Plain Sight", "spend 1 min to camouflage self, gain +10 to Stealth without moving");
+                Console.WriteLine("Pick a Ranger class feature");
+                CLIHelper.Print2Choices("Hide in Plain Sight", "Nature's Veil");
+                num = CLIHelper.GetNumberInRange(1, 2);
+                if (num == 1)
+                {
+                    result.ClassFeatures.Add("Hide in Plain Sight", "spend 1 min to camouflage self, gain +10 to Stealth without moving");
+                }
+                else
+                {
+                    result.ClassFeatures.Add("Nature's Veil", "prof bonus/LR, bonus, become invisible");
+                }
             }
             if (lvl >= 14)
             {

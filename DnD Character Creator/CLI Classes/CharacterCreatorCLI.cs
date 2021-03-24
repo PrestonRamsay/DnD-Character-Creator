@@ -164,6 +164,17 @@ namespace DnD_Character_Creator
                 Console.Write(alignment + "  ");
             }
             character.Alignment = CLIHelper.GetStringInList(raceObject.Alignment).ToUpper();
+            if (character.ChosenRace == "Cambion")
+            {
+                if (character.Alignment == "L-E")
+                {
+                    character.Languages.Add("Infernal");
+                }
+                else if (character.Alignment == "C-E")
+                {
+                    character.Languages.Add("Abyssal");
+                }
+            }
             Console.WriteLine();
 
             if (raceObject.MaxAgeEnd > 150)
@@ -247,6 +258,14 @@ namespace DnD_Character_Creator
             AddClass.AddSpellSlots(character, classObject);
 
             classObject = CharacterClass.NewClass(character, classObject);
+            if (character.DemigodDomain == "Knowledge")
+            {
+                Console.WriteLine("Pick a skill to gain Expertise in");
+                var prof = new List<string>();
+                prof.AddRange(character.SkillProficiencies);
+                string expertise = CLIHelper.PrintChoices(prof);
+                character.Skills[expertise] += character.ProficiencyBonus;
+            }
 
             AddClass.DetermineHP(character, classObject);
             AddClass.AddProficiencies(character, classObject);
@@ -293,7 +312,7 @@ namespace DnD_Character_Creator
             Console.WriteLine("----------------------------------------------------------------------------------------------------------------");
             Console.WriteLine($"Str: {character.Stats["Str"]} + {character.StrMod}| Init: {character.Init}");
             Console.WriteLine($"Dex: {character.Stats["Dex"]} + {character.DexMod}| Proficiency Bonus: +{character.ProficiencyBonus}");
-            Console.WriteLine($"Con: {character.Stats["Con"]} + {character.ConMod}| AC: {AC} + Armor Bonuses");
+            Console.WriteLine($"Con: {character.Stats["Con"]} + {character.ConMod}| AC: {AC}");
             Console.WriteLine($"Int: {character.Stats["Int"]} + {character.IntMod}| HP: {character.HP}");
             Console.WriteLine($"Wis: {character.Stats["Wis"]} + {character.WisMod}| Saves: {saves}");
             Console.WriteLine($"Cha: {character.Stats["Cha"]} + {character.ChaMod}");
@@ -329,11 +348,14 @@ namespace DnD_Character_Creator
             {
                 Console.WriteLine($"{trait}");
             }
-            Console.WriteLine($"\nFeats:");
-            Console.WriteLine("------------------------------------");
-            foreach (string feat in character.Feats)
+            if (character.Feats.Count != 0)
             {
-                Console.WriteLine($"{feat}");
+                Console.WriteLine($"\nFeats:");
+                Console.WriteLine("------------------------------------");
+                foreach (string feat in character.Feats)
+                {
+                    Console.WriteLine($"{feat}");
+                }
             }
             Console.WriteLine("\nProficiencies:");
             Console.WriteLine("------------------------------------");
@@ -370,7 +392,14 @@ namespace DnD_Character_Creator
             Console.WriteLine("------------------------------------");
             foreach (string feature in character.ClassFeatures.Keys)
             {
-                Console.WriteLine($"{feature}: {character.ClassFeatures[feature]}");
+                if (!feature.StartsWith("-"))
+                {
+                    Console.WriteLine($"{feature}: {character.ClassFeatures[feature]}");
+                }
+                else
+                {
+                    Console.WriteLine(feature);
+                }
             }
             if (character.Spells.Count > 0)
             {
@@ -429,7 +458,7 @@ namespace DnD_Character_Creator
                 sw.WriteLine("----------------------------------------------------------------------------------------------------------------");
                 sw.WriteLine($"Str: {character.Stats["Str"]} + {character.StrMod}| Init: {character.Init}");
                 sw.WriteLine($"Dex: {character.Stats["Dex"]} + {character.DexMod}| Proficiency Bonus: +{character.ProficiencyBonus}");
-                sw.WriteLine($"Con: {character.Stats["Con"]} + {character.ConMod}| AC: {AC} + Armor Bonuses");
+                sw.WriteLine($"Con: {character.Stats["Con"]} + {character.ConMod}| AC: {AC}");
                 sw.WriteLine($"Int: {character.Stats["Int"]} + {character.IntMod}| HP: {character.HP}");
                 sw.WriteLine($"Wis: {character.Stats["Wis"]} + {character.WisMod}| Saves: {saves}");
                 sw.WriteLine($"Cha: {character.Stats["Cha"]} + {character.ChaMod}");
@@ -465,11 +494,14 @@ namespace DnD_Character_Creator
                 {
                     sw.WriteLine($"{trait}");
                 }
-                sw.WriteLine($"\nFeats:");
-                sw.WriteLine("------------------------------------");
-                foreach (string feat in character.Feats)
+                if (character.Feats.Count != 0)
                 {
-                    sw.WriteLine($"{feat}");
+                    sw.WriteLine($"\nFeats:");
+                    sw.WriteLine("------------------------------------");
+                    foreach (string feat in character.Feats)
+                    {
+                        sw.WriteLine($"{feat}");
+                    }
                 }
                 sw.WriteLine("\nProficiencies:");
                 sw.WriteLine("------------------------------------");
@@ -506,7 +538,14 @@ namespace DnD_Character_Creator
                 sw.WriteLine("------------------------------------");
                 foreach (string feature in character.ClassFeatures.Keys)
                 {
-                    sw.WriteLine($"{feature}: {character.ClassFeatures[feature]}");
+                    if (!feature.StartsWith("-"))
+                    {
+                        sw.WriteLine($"{feature}: {character.ClassFeatures[feature]}");
+                    }
+                    else
+                    {
+                        sw.WriteLine(feature);
+                    }
                 }
                 if (character.Spells.Count > 0)
                 {
@@ -656,12 +695,15 @@ namespace DnD_Character_Creator
             {
                 returnString = $"Specialty: {character.Specialty}";
             }
-
-            return returnString;
-        }
-        public static string WriteGHBackgroundInfo(Character character)
-        {
-            string returnString = "";
+            if (character.ChosenClass == "Paladin")
+            {
+                string tenets = String.Join(", ", character.Tenets);
+                returnString += $"\nPaladin Tenets: {tenets}\n";
+                if (returnString.Length > 130)
+                {
+                    returnString = returnString.Substring(0, 130) + "\n" + returnString.Substring(130);
+                }
+            }
 
             return returnString;
         }
@@ -686,6 +728,36 @@ namespace DnD_Character_Creator
                 {
                     character.Equipment.Add(Options.HolySymbols[2]);
                 }
+            }
+        }
+        public static void DetermineAC(Character character)
+        {
+            if (character.ChosenClass == "Barbarian")
+            {
+                character.AC += character.Stats["Con"];
+            }
+            if (character.ChosenClass == "Monk")
+            {
+                character.AC += character.Stats["Wis"];
+            }
+            if (character.ChosenClass != "Barbarian" || character.ChosenClass != "Monk")
+            {
+                string armor = "";
+                int armorAC = 0;
+                int intValue = -1;
+                foreach (var item in character.Equipment)
+                {
+                    if (item.Contains("AC"))
+                    {
+                        int index = item.IndexOf("AC");
+                        armor = item.Substring(index - 2, 1);
+                    }
+                }
+                if (int.TryParse(armor, out intValue))
+                {
+                    armorAC = intValue;
+                }
+                character.AC += armorAC;
             }
         }
     }
