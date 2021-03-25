@@ -28,18 +28,18 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 }
             }
 
-            result.ClassFeatures.Add($"Bardic Inspiration(D{bardicInspiration})","Cha/LR, bonus, 60ft, use on ally, add to atk, save, or ability check");
+            result.ClassFeatures.Add($"Bardic Inspiration(D{bardicInspiration})", "Cha/LR, bonus, 60ft, use on ally, add to atk, save, or ability check");
             result.ClassFeatures.Add("Spellcasting", "use Cha for spell DCs, you use a musical instrument as a spell focus");
 
             if (lvl >= 2)
             {
-                result.ClassFeatures.Add("Jack of All Trades", "add 1/2 prof bonus to untrained skills");
+                result.ClassFeatures.Add("Jack of All Trades", "add 1/2 PB to untrained skills");
                 result.ClassFeatures.Add($"Song of Rest(D{songOfRest})", "regain HP of yourself or allies during SR");
                 result.ClassFeatures.Add("Magical Inspiration", "use Bardic Inspiration to increase an ally's healing or dmg");
             }
             if (lvl >= 3)
             {
-                result.ClassFeatures.Add("Expertise", "pick 2 skills, or 1 skill and 1 tool prof, double prof bonus");
+                result.ClassFeatures.Add("Expertise", "pick 2 skills, or 1 skill and 1 tool prof, double PB");
                 Console.WriteLine("Would you like to gain Expertise in 2 skills or 1 skill and 1 tool prof?");
                 CLIHelper.Print2Choices("2 skills", "1 skill and 1 tool prof");
                 int num = CLIHelper.GetNumberInRange(1, 2);
@@ -83,7 +83,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                             size = "Huge";
                         }
                         result.ClassFeatures.Add("Mote of Potential", "additional benefits from Bardic Inspiration - check(roll twice), atk(Con save, adj, Thunder dmg), save(gain Temp HP = roll + Cha)");
-                        result.ClassFeatures.Add("Performance of Creation", $"LR or 2nd lvl spell slot, action, hr/prof bonus, 10ft, create a {size} nonmagical item - value = lvl * 20gp, glimmers and soft music");
+                        result.ClassFeatures.Add("Performance of Creation", $"LR or 2nd lvl spell slot, action, hr/PB, 10ft, create a {size} nonmagical item - value = lvl x 20gp, glimmers and soft music");
                         if (lvl >= 6)
                         {
                             result.ClassFeatures.Add("Animating Performance", "LR or 3rd lvl spell slot, action, 1 hr, 30ft, animate a nonmagical item, default to Dodge, shares Init" +
@@ -229,7 +229,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             if (lvl >= 10)
             {
                 result.ClassFeatures.Add("Magical Secrets", "gain 2 new spells from any class (pick them separately)");
-                result.ClassFeatures.Add("Expertise II", "pick 2 skills, or 1 skill and 1 tool prof, double prof bonus");
+                result.ClassFeatures.Add("Expertise II", "pick 2 skills, or 1 skill and 1 tool prof, double PB");
                 Console.WriteLine("Would you like to gain Expertise in 2 skills or 1 skill and 1 tool prof?");
                 CLIHelper.Print2Choices("2 skills", "1 skill and 1 tool prof");
                 int num = CLIHelper.GetNumberInRange(1, 2);

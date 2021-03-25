@@ -218,11 +218,11 @@ namespace DnD_Character_Creator.Races
                 switch (index)
                 {
                     case 0:
-                        result.Boons.Add($"{boons[0]}", "gain prof in Deception and Persuasion or double your prof bonus if already prof" +
+                        result.Boons.Add($"{boons[0]}", "gain prof in Deception and Persuasion or double your PB if already prof" +
                             $"\nMagic always identifies you as telling the truth and you can't be compelled to tell the truth");
                         if (character.SkillProficiencies.Contains("Deception"))
                         {
-                            Console.WriteLine("You already have proficiency in Deception, so double your prof bonus is added");
+                            Console.WriteLine("You already have proficiency in Deception, so double your PB is added");
                             character.Skills["Deception"] += character.ProficiencyBonus;
                         }
                         else
@@ -231,7 +231,7 @@ namespace DnD_Character_Creator.Races
                         }
                         if (character.SkillProficiencies.Contains("Persuasion"))
                         {
-                            Console.WriteLine("You already have proficiency in Persuasion, so double your prof bonus is added");
+                            Console.WriteLine("You already have proficiency in Persuasion, so double your PB is added");
                             character.Skills["Deception"] += character.ProficiencyBonus;
                         }
                         else

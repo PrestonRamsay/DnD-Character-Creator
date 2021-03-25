@@ -41,7 +41,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         }
                         if (lvl >= 10)
                         {
-                            result.ClassFeatures.Add("Improved Abjuration", "add prof bonus to Abjuartion spell checks");
+                            result.ClassFeatures.Add("Improved Abjuration", "add PB to Abjuartion spell checks");
                         }
                         if (lvl >= 14)
                         {
@@ -200,7 +200,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         result.ClassFeatures.Add("Grim Harvest", "1/turn, when kill, regain HP = spell lvl x 2 or x 3 if its Necromancy spell");
                         if (lvl >= 6)
                         {
-                            result.ClassFeatures.Add("Undead Thralls", "when cast Animate Dead, undead get - HP + lvl, dmg + prof bonus");
+                            result.ClassFeatures.Add("Undead Thralls", "when cast Animate Dead, undead get - HP + lvl, dmg + PB");
                         }
                         if (lvl >= 10)
                         {

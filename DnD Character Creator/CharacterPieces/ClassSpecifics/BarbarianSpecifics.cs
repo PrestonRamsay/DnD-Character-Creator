@@ -41,7 +41,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 result.ClassFeatures.Add($"Rage(Unlimited)", $"bonus, 1 min, adv on Str checks/saves, Str melee dmg+{rageDamage}," +
                 $"\ngain Resistance to B/P/S (end as bonus or if you don't atk or take dmg)");
             }
-            result.ClassFeatures.Add("Unarmored Defense", "AC + Dex or Con, while wearing no armor");
+            result.ClassFeatures.Add("Unarmored Defense", "AC = 10 + Dex + Con, while wearing no armor");
 
             if (lvl >= 2)
             {
@@ -115,7 +115,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         break;
                     case "Beast":
                         result.ClassFeatures.Add("Form of the Beast", "When you rage, gain a Bite, Claw, or Tail atk with special effects" +
-                            "\nBite(1D8, if bloodied - when you hit, heal HP = prof bonus)" +
+                            "\nBite(1D8, if bloodied - when you hit, heal HP = PB)" +
                             "\nClaw(1D6, when you use an Attack action, gain an extra atk)" +
                             "\nTail(1D8, reach, when you're hit - reaction, 10ft, AC + 1D8)");
                         if (lvl >= 6)
@@ -124,11 +124,11 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         }
                         if (lvl >= 10)
                         {
-                            result.ClassFeatures.Add("Infectious Fury", "prof bonus/LR, on hit, Con-based Wis save, 2D12 Psychic dmg or must use reaction to melee atk target of your choice");
+                            result.ClassFeatures.Add("Infectious Fury", "PB/LR, on hit, Con-based Wis save, 2D12 Psychic dmg or must use reaction to melee atk target of your choice");
                         }
                         if (lvl >= 14)
                         {
-                            result.ClassFeatures.Add("Call the Hunt", "prof bonus/LR, when you rage, 30ft, Con allies, gain 5 temp HP/ally, allies dmg + 1D6");
+                            result.ClassFeatures.Add("Call the Hunt", "PB/LR, when you rage, 30ft, Con allies, gain 5 temp HP/ally, allies dmg + 1D6");
                         }
                         break;
                     case "Berserker":
@@ -268,7 +268,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         }
                         break;
                     case "Wild Magic":
-                        result.ClassFeatures.Add("Magic Awareness", "prof bonus/LR, action, 60ft, sense spells and magic items - when you sense a spell learn its school");
+                        result.ClassFeatures.Add("Magic Awareness", "PB/LR, action, 60ft, sense spells and magic items - when you sense a spell learn its school");
                         result.ClassFeatures.Add("Wild Surge", "When you rage, roll 1D8 to determine an effect, Con-based DCs" +
                                 "\n1 - Shadowy tendrils(30ft, Con save, 1D12 Necrotic dmg, gain dmg as temp HP)" +
                                 "\n2 - Teleportation(30ft, repeat as bonus)" +
@@ -280,7 +280,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                                 "\n8 - Bolt of Light(30ft, Con save, 1D6 Radiant dmg, blind - repeat as bonus)");
                         if (lvl >= 6)
                         {
-                            result.ClassFeatures.Add("Bosltering Magic", "prof bonus/LR, action - 10 min, atks and checks + 1D3 or LR, ally regains spell slot lvl = 1D3");
+                            result.ClassFeatures.Add("Bosltering Magic", "PB/LR, action - 10 min, atks and checks + 1D3 or LR, ally regains spell slot lvl = 1D3");
                         }
                         if (lvl >= 10)
                         {

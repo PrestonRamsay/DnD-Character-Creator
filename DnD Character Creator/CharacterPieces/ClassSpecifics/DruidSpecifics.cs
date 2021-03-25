@@ -11,6 +11,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
         public static string DruidCircle { get; set; }
         public static Dictionary<int, List<string>> CircleSpells { get; set; } = new Dictionary<int, List<string>>()
         {
+            { 0, new List<string>() },
             { 2, new List<string>() },
             { 3, new List<string>() },
             { 4, new List<string>() },
@@ -30,7 +31,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 result.ClassFeatures.Add("Wild Companion", "action, hr = 1/2 lvl, expend a Wild Shape use, cast Find Familiar, familiar is a Fey");
                 string msg = "Pick a Druid Circle that will give you features at levels 2, 6, 10, and 14.";
                 var archetypes = new List<string> { "Circle of Dreams", "Circle of the Land", "Circle of the Moon", "Circle of the Shepherd",
-                    "Circle of Spores*", "Circle of Stars*", "Circle of Wildfire*" };
+                    "Circle of Spores", "Circle of Stars", "Circle of Wildfire" };
                 int input = CLIHelper.PrintChoices(msg, archetypes);
 
                 if (input == 1 || input == 2 || input == 3)
@@ -234,50 +235,101 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         }
                         break;
                     case "Spores":
-                        //result.ClassFeatures.Add("", "");
-                        //if (lvl >= 6)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 10)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 14)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
+                        result.Cantrips.Add("Chill Touch");
+                        CircleSpells[2].Add("Blindness/Deafness*");
+                        CircleSpells[2].Add("Gentle Repose*");
+                        CircleSpells[3].Add("Animate Dead*");
+                        CircleSpells[3].Add("Gaseous Form*");
+                        CircleSpells[4].Add("Blight*");
+                        CircleSpells[4].Add("Confusion*");
+                        CircleSpells[5].Add("Cloudkill*");
+                        CircleSpells[5].Add("Contagion*");
+
+                        int dmg = 4;
+                        for (int i = 6; i <= lvl; i += 4)
+                        {
+                            if (i <= 14)
+                            {
+                                dmg += 2;
+                            }
+                        }
+                        result.ClassFeatures.Add("Halo of Spores", $"reaction, 10ft, Con save, 1D{dmg} Necrotic dmg");
+                        result.ClassFeatures.Add("Symbiotic Entity", "action, 10 min or temp HP = 0, expend Wild Shape use, gain temp HP = lvl x 4, Halo of Spores dmg = 2 dice, melee dmg + 1D6 Necrotic");
+                        if (lvl >= 6)
+                        {
+                            result.ClassFeatures.Add("Fungal Infestation", "Wis/LR, reaction, 1 hr, 10ft, Small or Medium beast or humanoid dies, raise as Zombie with 1 HP, can only make 1 melee atk");
+                        }
+                        if (lvl >= 10)
+                        {
+                            result.ClassFeatures.Add("Spreading Spores", "bonus, 1 min, 30ft - 10ft cube, while Symbiotic Entity is active, Halo of Spores actives there instead");
+                        }
+                        if (lvl >= 14)
+                        {
+                            result.ClassFeatures.Add("Fungal Body", "Immunity to blindness, deafness, fear, poison(condition), and crits");
+                        }
                         break;
                     case "Stars":
-                        //result.ClassFeatures.Add("", "");
-                        //if (lvl >= 6)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 10)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 14)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
+                        result.Cantrips.Add("Guidance");
+                        result.Spells[1].Add("Guiding Bolt*");
+                        result.ClassFeatures.Add("Star Map", "can use as a spell focus / PB/LR, cast Guiding Bolt without using a slot");
+                        result.ClassFeatures.Add("Starry Form", "bonus, 10 min, expend Wild Shape use, bright light 10ft/dim light 10ft - pick a form to gain benefits" +
+                            "\nArcher(when activated or bonus, ranged spell atk, 60ft, 1D8 + Wis Radiant dmg)" +
+                            "\nChalice(30ft, 1 creature, when you cast a heal spell, restore HP = 1D8 + Wis)" +
+                            "\nDragon(when you make an Int or Wis check or a Con save, treats rolls 9 or lower as a 10)");
+                        if (lvl >= 6)
+                        {
+                            result.ClassFeatures.Add("Cosmic Omen", "PB/LR, gain a reaction, on LR, roll any die, whether its even or odd determines the effect" +
+                                "\neven = Weal(reaction, 30ft - atk, check or save + 1D6)" +
+                                "\nodd = Woe(reaction, 30ft - atk, check, or save - 1D6)");
+                        }
+                        if (lvl >= 10)
+                        {
+                            result.ClassFeatures.Add("Twinkling Constellations", "you can change your Starry Form at the start of each turn");
+                            result.ClassFeatures["Starry Form"] = "bonus, 10 min, expend Wild Shape use, bright light 10ft/dim light 10ft - pick a form to gain benefits" +
+                            "\nArcher(when activated or bonus, ranged spell atk, 60ft, 2D8 + Wis Radiant dmg)" +
+                            "\nChalice(30ft, 1 creature, when you cast a heal spell, restore HP = 2D8 + Wis)" +
+                            "\nDragon(gain Fly 20ft and Hvoer, when you make an Int or Wis check or a Con save, treats rolls 9 or lower as a 10)");
+                        }
+                        if (lvl >= 14)
+                        {
+                            result.ClassFeatures.Add("Full of Stars", "while in Starry Form, gain Resistance to B/P/S");
+                        }
                         break;
                     case "Wildfire":
-                        //result.ClassFeatures.Add("", "");
-                        //if (lvl >= 6)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 10)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 14)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
+                        result.Spells[1].Add("Burning Hands*");
+                        result.Spells[1].Add("Cure Wounds*");
+                        CircleSpells[2].Add("Blindness/Deafness*");
+                        CircleSpells[2].Add("Gentle Repose*");
+                        CircleSpells[3].Add("Animate Dead*");
+                        CircleSpells[3].Add("Gaseous Form*");
+                        CircleSpells[4].Add("Blight*");
+                        CircleSpells[4].Add("Confusion*");
+                        CircleSpells[5].Add("Cloudkill*");
+                        CircleSpells[5].Add("Contagion*");
+
+                        result.ClassFeatures.Add("Summon Wildfire Spirit", "action, 1 hr, 30ft, expend Wild Shape use, summon wildfire spirit, 10ft, Dex save, 2D6 Fire dmg, bonus to command");
+                        if (lvl >= 6)
+                        {
+                            result.ClassFeatures.Add("Enhanced Bond", "Healing and Fire dmg spells + 1D8, spells with range not self can originate from your wildfire spirit");
+                        }
+                        if (lvl >= 10)
+                        {
+                            result.ClassFeatures.Add("Cauterizing Flames", "PB/LR, reaction, 1 min, 30ft(or spirit), when creature dies, create spectral flame - if touched, 2D10 + Wis Fire dmg or healing");
+                        }
+                        if (lvl >= 14)
+                        {
+                            result.ClassFeatures.Add("Blazing Revival", "LR, if spirit is within 120ft when you drop to 0 HP, cause spirit to drop to 0 HP, regain 1/2 max HP and stand up");
+                        }
                         break;
+                }
+            }
+            int num = 2;
+            for (int i = 3; i <= lvl; i += 2)
+            {
+                if (i <= 9)
+                {
+                    result.Spells[num].AddRange(CircleSpells[num]);
+                    num++;
                 }
             }
             if (lvl >= 4 && DruidCircle != "Moon")

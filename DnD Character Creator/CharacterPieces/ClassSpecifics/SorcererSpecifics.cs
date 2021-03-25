@@ -10,6 +10,15 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
     public static class SorcererSpecifics
     {
         public static string SorcerousOrigin { get; set; }
+        public static Dictionary<int, List<string>> ExpandedSpells { get; set; } = new Dictionary<int, List<string>>()
+        {
+            { 0, new List<string>() },
+            { 1, new List<string>() },
+            { 2, new List<string>() },
+            { 3, new List<string>() },
+            { 4, new List<string>() },
+            { 5, new List<string>() },
+        };
         public static CharacterClass Features(CharacterClass result, Character character)
         {
             int lvl = result.Lvl;
@@ -19,15 +28,29 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             var spells = new Dictionary<int, List<string>>();
 
             string msg = "Pick a Sorcerous Origin that will give you features at levels 1, 6, 14, and 18.";
-            var archetypes = new List<string> { "Abberant Mind*", "Clockwork Soul*", "Divine Soul", "Draconic Bloodline", "Phoenix*", "Pyromancer*",
-                "Sea Sorcery*", "Shadow Magic", "Stone Sorcery*", "Storm Sorcery", "Wild Magic" };
+            var archetypes = new List<string> { "Aberrant Mind*", "Clockwork Soul*", "Divine Soul", "Draconic Bloodline", "Pyromancer",
+                "Shadow Magic", "Storm Sorcery", "Wild Magic" };
+            //"Phoenix*", "Sea Sorcery*", "Stone Sorcery*", 
             int archetype = CLIHelper.PrintChoices(msg, archetypes);
             SorcerousOrigin = archetypes[archetype];
 
             switch (SorcerousOrigin)
             {
-                case "Abberant Mind":
-                    //result.ClassFeatures.Add("", "");
+                case "Aberrant Mind":
+                    ExpandedSpells[0].Add("Mind Sliver");
+                    ExpandedSpells[1].Add("Arms of Hadar");
+                    ExpandedSpells[1].Add("Dissonant Whispers");
+                    ExpandedSpells[2].Add("Calm Emotions");
+                    ExpandedSpells[2].Add("Detect Thoughts");
+                    ExpandedSpells[3].Add("Hunger of Hadar");
+                    ExpandedSpells[3].Add("Sending");
+                    ExpandedSpells[4].Add("Evard's Black Tentacles");
+                    ExpandedSpells[4].Add("Summon Aberration");
+                    ExpandedSpells[5].Add("Rary's Telepathic Bond");
+                    ExpandedSpells[5].Add("Telekinesis");
+
+                    result.ClassFeatures.Add("Psionic Spells", "your spell list gains additional spells based on your lvl");
+                    result.ClassFeatures.Add("Telepathic Speech", "bonus, lvl min, 30ft, 1 creature, speak telepathically from Cha miles");
                     //if (lvl >= 6)
                     //{
                     //    result.ClassFeatures.Add("", "");
@@ -42,7 +65,19 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     //}
                     break;
                 case "Clockwork Soul":
-                    //result.ClassFeatures.Add("", "");
+                    ExpandedSpells[1].Add("Alarm");
+                    ExpandedSpells[1].Add("Protection from Evil and Good");
+                    ExpandedSpells[2].Add("Aid");
+                    ExpandedSpells[2].Add("Lesser Restoration");
+                    ExpandedSpells[3].Add("Dispel Magic");
+                    ExpandedSpells[3].Add("Protection from Energy");
+                    ExpandedSpells[4].Add("Freedom of Movement");
+                    ExpandedSpells[4].Add("Summon Construct");
+                    ExpandedSpells[5].Add("Greater Restoration");
+                    ExpandedSpells[5].Add("Wall of Force");
+
+                    result.ClassFeatures.Add("Clockwork Magic", "your spell list gains additional spells based on your lvl");
+                    result.ClassFeatures.Add("Restore Balance", "PB/LR, reaction, 60ft, when a creature rolls with adv or disadv - negate the adv or disadv");
                     //if (lvl >= 6)
                     //{
                     //    result.ClassFeatures.Add("", "");
@@ -142,7 +177,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     {
                         dmgType = "Cold";
                     }
-                    result.ClassFeatures.Add("Dragon Ancestor", $"double prof bonus on Cha checks when interacting with {color} Dragons");
+                    result.ClassFeatures.Add("Dragon Ancestor", $"double PB on Cha checks when interacting with {color} Dragons");
                     result.ClassFeatures.Add("Draconic Resilience", "increase HP by 1 per lvl, AC = 13 + Dex");
                     character.HP += lvl;
                     character.AC += 3;
@@ -291,6 +326,10 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             string pickMsg = "Pick a cantrip.";
             string str2 = "You already have that cantrip.";
             cantrips.AddRange(SorcererSpells.Cantrips); //modification
+            if (SorcerousOrigin == "Aberrant Mind")
+            {
+                cantrips.AddRange(ExpandedSpells[0]);
+            }
             for (int i = 0; i < result.CantripsKnown; i++)
             {
                 string spell = CLIHelper.GetNew(cantrips, result.Cantrips, pickMsg, str2);
@@ -303,6 +342,14 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             foreach (var item in sorcSpells.Sorcerer.Keys)
             {
                 spells.Add(item, sorcSpells.Sorcerer[item]);
+            }
+            if (SorcerousOrigin == "Aberrant Mind" || SorcerousOrigin == "Clockwork Soul")
+            {
+                for (int i = 1; i < 6; i++)
+                {
+                    spells[i].AddRange(ExpandedSpells[i]);
+                    spells[i].Sort();
+                }
             }
             for (int i = 1; i <= result.SpellsKnown; i++)
             {

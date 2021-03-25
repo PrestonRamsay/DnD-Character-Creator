@@ -54,7 +54,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 {
                     uses++;
                 }
-                result.ClassFeatures.Add("Harness Divine Power", $"{uses}/LR, bonus, expend a Channel Divinity use to regain a spell slot = 1/2 prof bonus");
+                result.ClassFeatures.Add("Harness Divine Power", $"{uses}/LR, bonus, expend a Channel Divinity use to regain a spell slot = 1/2 PB");
                 result.ClassFeatures.Add("Channel Divinity uses", "1/SR");
                 string msg = "Pick a Sacred Oath that will give you features at levels 3, 7, 15, and 20.";
                 var archetype = new List<string> { "Oath of the Ancients", "Oath of Conquest", "Oath of the Crown", "Oath of Devotion",

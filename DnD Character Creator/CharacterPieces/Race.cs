@@ -487,7 +487,7 @@ namespace DnD_Character_Creator.Races
 
             result.RacialTraits.Add("Change Appearance: action, doesn't change clothes - adv on Deception for disguise");
             result.RacialTraits.Add("Unsettling Visage: when attacked, SR, reaction, 30ft, impose disadv on atk");
-            result.RacialTraits.Add("Divergent Persona: prof with 1 tool, while in your persona - prof Bonus x2 with that tool");
+            result.RacialTraits.Add("Divergent Persona: prof with 1 tool, while in your persona - PB x2 with that tool");
             result.MinHeight = 60;
             result.MaxHeight = 72;
             result.MinWeight = 100;

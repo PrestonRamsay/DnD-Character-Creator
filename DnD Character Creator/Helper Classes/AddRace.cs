@@ -12,6 +12,12 @@ namespace DnD_Character_Creator.CLI_Classes
         public static void RacialSpecifics(Character character, Race race)
         {
             character.RacialTraits.AddRange(race.RacialTraits);
+            if (character.ChosenRace == "Half-Elf")
+            {
+                Console.WriteLine("Pick a 1st lvl class feature for Dilettante, you will have to add this feature manually");
+                string feature = CLIHelper.PrintChoices(Options.Lvl1Features);
+                character.ClassFeatures.Add(feature, Options.Lvl1Features[feature]);
+            }
             if (race.Size == "Small")
             {
                 character.Size = race.Size;

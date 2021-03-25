@@ -23,7 +23,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             }
 
             result.ClassFeatures.Add($"Sneak Attack({sneakAtkDice}D6)", "1/turn, if you have adv or tar is flanked, must use finesse or ranged wep");
-            result.ClassFeatures.Add("Expertise","pick 2 skills, or 1 skill and 1 tool prof, double prof bonus");
+            result.ClassFeatures.Add("Expertise","pick 2 skills, or 1 skill and 1 tool prof, double PB");
             Console.WriteLine("Would you like to gain Expertise in 2 skills or 1 skill and 1 tool prof?");
             CLIHelper.Print2Choices("2 skills", "1 skill and 1 tool prof");
             int num = CLIHelper.GetNumberInRange(1, 2);
@@ -235,7 +235,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         break;
                     case "Scout":
                         result.ClassFeatures.Add("Skirmisher", "reaction, if enemy ends turn adj, move half your speed with no atk op");
-                        result.ClassFeatures.Add("Survivalist", "gain prof in Nature and Survival, double your prof bonus for those skills");
+                        result.ClassFeatures.Add("Survivalist", "gain prof in Nature and Survival, double your PB for those skills");
                         result.SkillProficiencies.Add("Nature");
                         result.SkillProficiencies.Add("Survival");
                         character.Skills["Nature"] += character.ProficiencyBonus;
@@ -317,7 +317,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             }
             if (lvl >= 6)
             {
-                result.ClassFeatures.Add("Expertise II", "pick 2 skills, or 1 skill and 1 tool prof, double prof bonus");
+                result.ClassFeatures.Add("Expertise II", "pick 2 skills, or 1 skill and 1 tool prof, double PB");
                 Console.WriteLine("Would you like to gain Expertise in 2 skills or 1 skill and 1 tool prof?");
                 CLIHelper.Print2Choices("2 skills", "1 skill and 1 tool prof");
                 num = CLIHelper.GetNumberInRange(1, 2);

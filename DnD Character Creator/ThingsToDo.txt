@@ -1,8 +1,6 @@
 ﻿
 add non-ph archetypes
 
-cleric - ambition, solidarity, strength, zeal
-druid - spores, stars, wildfire
 fighter - echo knight (psi warrior, rune knight)		brawler?
 monk - mercy, astral self
 paladin - glory, watchers

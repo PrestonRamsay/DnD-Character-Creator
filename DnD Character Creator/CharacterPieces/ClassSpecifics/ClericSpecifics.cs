@@ -25,46 +25,43 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
 
             result.ClassFeatures.Add("Spellcasting", "use Wis for spell DCs, you use a Holy Symbol as a spell focus");
             string msg = "Pick a Divine Domain that will give you features at levels 2, 6, 8, and 17.";
-            var archetype = new List<string> { "Ambition*", "Arcana", "Death", "Forge", "Grave", "Ice", "Knowledge", "Life", "Light",
-                "Nature", "Order", "Peace", "Solidarity*", "Strength*", "Tempest", "Trickery", "Twilight", "War", "Zeal*" };
+            var archetype = new List<string> { "Ambition", "Arcana", "Death", "Forge", "Grave", "Ice", "Knowledge", "Life", "Light",
+                "Nature", "Order", "Peace", "Solidarity", "Strength", "Tempest", "Trickery", "Twilight", "War", "Zeal" };
             int input = CLIHelper.PrintChoices(msg, archetype);
             DivineDomain = archetype[input];
 
             switch (DivineDomain)
             {
                 case "Ambition":
-                    //DomainSpells[1].Add("*");
-                    //DomainSpells[1].Add("*");
-                    //DomainSpells[2].Add("*");
-                    //DomainSpells[2].Add("*");
-                    //DomainSpells[3].Add("*");
-                    //DomainSpells[3].Add("*");
-                    //DomainSpells[4].Add("*");
-                    //DomainSpells[4].Add("*");
-                    //DomainSpells[5].Add("*");
-                    //DomainSpells[5].Add("*");
+                    DomainSpells[1].Add("Bane*");
+                    DomainSpells[1].Add("Disguise Self*");
+                    DomainSpells[2].Add("Mirror Image*");
+                    DomainSpells[2].Add("Ray of Enfeeblement*");
+                    DomainSpells[3].Add("Bestow Curse*");
+                    DomainSpells[3].Add("Vampiric Touch*");
+                    DomainSpells[4].Add("Death Ward*");
+                    DomainSpells[4].Add("Dimension Door*");
+                    DomainSpells[5].Add("Dominate Person*");
+                    DomainSpells[5].Add("Modify Memory*");
 
-                    //result.ClassFeatures.Add("", "");
-                    //if (lvl >= 2)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
-                    //if (lvl >= 6)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
-                    //if (lvl >= 8)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
-                    //if (lvl >= 14)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
-                    //if (lvl >= 17)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
+                    result.ClassFeatures.Add("Warding Flare", "Wis/LR, reaction, 30ft, impose disadv, attacker can't be immune to blinding");
+                    if (lvl >= 2)
+                    {
+                        result.ClassFeatures.Add("Channel Divinity(Invoke Duplicity)", "action, conc 1 min, 30ft, create illusory double, bonus to move it 30ft" +
+                            "\nit must remain within 120ft, if you and double are within 5ft of target you gain adv on atks");
+                    }
+                    if (lvl >= 6)
+                    {
+                        result.ClassFeatures.Add("Channel Divinity(Cloak of Shadows)", "action, 1 turn, become invisible");
+                    }
+                    if (lvl >= 8)
+                    {
+                        result.ClassFeatures.Add("Potent Spellcasting", "cantrips + Wis dmg");
+                    }
+                    if (lvl >= 17)
+                    {
+                        result.ClassFeatures.Add("Improved Duplicity", "create 4 copies instead of 1, bonus to move any number of them");
+                    }
                     break;
                 case "Arcana":
                     DomainSpells[1].Add("Detect Magic*");
@@ -78,7 +75,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     DomainSpells[5].Add("Planar Binding*");
                     DomainSpells[5].Add("Teleportation Circle*");
 
-                    result.ClassFeatures.Add("Arcane Initiate", "gain prof in Arcana and 2 Wizard cantrips");
+                    result.ClassFeatures.Add("Arcane Initiate", "gain prof in Arcana and learn 2 Wizard cantrips");
                     character.SkillProficiencies.Add("Arcana");
                     Console.WriteLine("Arcane Initiate: gain prof in Arcana and 2 Wizard cantrips");
                     var wizCantrips = new List<string>();
@@ -150,7 +147,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     result.ClassFeatures.Add("Reaper", "Necromancy cantrips that target 1 creature can target 2 if adj");
                     if (lvl >= 2)
                     {
-                        result.ClassFeatures.Add("Channel Divinity(Touch of Death)", "when you hit with melee, extra Necrotic dmg = 5 + (lvl * 2)");
+                        result.ClassFeatures.Add("Channel Divinity(Touch of Death)", "when you hit with melee, extra Necrotic dmg = 5 + (lvl x 2)");
                     }
                     if (lvl >= 6)
                     {
@@ -330,8 +327,8 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     DomainSpells[4].Add("Guardian of Faith*");
                     DomainSpells[5].Add("Mass Cure Wounds*");
                     DomainSpells[5].Add("Raise Dead*");
-                    character.Proficiencies.Add("Heavy Armor");
 
+                    character.Proficiencies.Add("Heavy Armor");
                     result.ClassFeatures.Add("Disciple of Life", "healing spells heal extra 2 + spell lvl HP");
                     if (lvl >= 2)
                     {
@@ -397,6 +394,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     DomainSpells[5].Add("Insect Plague*");
                     DomainSpells[5].Add("Tree Stride*");
 
+                    result.ClassFeatures.Add("Acolyte of Nature", "learn a Druid cantrip and a skill");
                     msg = "Pick a Druid cantrip";
                     int index = CLIHelper.PrintChoices(msg, DruidSpells.Cantrips);
                     string druidCantrip = DruidSpells.Cantrips[index];
@@ -505,7 +503,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     {
                         result.SkillProficiencies.Add("Persuasion");
                     }
-                    result.ClassFeatures.Add("Emboldening Bond", "prof bonus/LR, action, 10 min, 30ft, prof bonus creatures, 1/turn, when 30ft from ally - atk, check, save + 1D4");
+                    result.ClassFeatures.Add("Emboldening Bond", "PB/LR, action, 10 min, 30ft, PB creatures, 1/turn, when 30ft from ally - atk, check, save + 1D4");
                     if (lvl >= 2)
                     {
                         result.ClassFeatures.Add("Channel Divinity(Balm of Peace)", "action, move your speed no atk op, when adj to ally - heal ally 2D6 + Wis");
@@ -524,72 +522,90 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     }
                     break;
                 case "Solidarity":
-                    //DomainSpells[1].Add("*");
-                    //DomainSpells[1].Add("*");
-                    //DomainSpells[2].Add("*");
-                    //DomainSpells[2].Add("*");
-                    //DomainSpells[3].Add("*");
-                    //DomainSpells[3].Add("*");
-                    //DomainSpells[4].Add("*");
-                    //DomainSpells[4].Add("*");
-                    //DomainSpells[5].Add("*");
-                    //DomainSpells[5].Add("*");
+                    DomainSpells[1].Add("Bless*");
+                    DomainSpells[1].Add("Guiding Bolt*");
+                    DomainSpells[2].Add("Aid*");
+                    DomainSpells[2].Add("Warding Bond*");
+                    DomainSpells[3].Add("Beacon of Hope*");
+                    DomainSpells[3].Add("Crusader's Mantle*");
+                    DomainSpells[4].Add("Aura of Life*");
+                    DomainSpells[4].Add("Guardian of Faith*");
+                    DomainSpells[5].Add("Circle of Power*");
+                    DomainSpells[5].Add("Mass Cure Wounds*");
 
-                    //result.ClassFeatures.Add("", "");
-                    //if (lvl >= 2)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
-                    //if (lvl >= 6)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
-                    //if (lvl >= 8)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
-                    //if (lvl >= 14)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
-                    //if (lvl >= 17)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
+                    result.Proficiencies.Add("Heavy Armor");
+                    result.ClassFeatures.Add("Solidarity's Action", "Wis/LR, bonus, when you take Help action, make a weapon atk");
+                    if (lvl >= 2)
+                    {
+                        result.ClassFeatures.Add("Channel Divinty(Preserve Life)", "action, 30ft, distribute HP to regain = lvl x 5");
+                    }
+                    if (lvl >= 6)
+                    {
+                        result.ClassFeatures.Add("Channel Divinity(Oketra's Blessing)", "reaction, 30ft, 1 creature, when an atk is made gain +10 atk");
+                    }
+                    if (lvl >= 8)
+                    {
+                        result.ClassFeatures.Add("Divine Strike", "1/turn, +1D8 weapon dmg");
+                    }
+                    if (lvl >= 14)
+                    {
+                        result.ClassFeatures["Divine Strike"] = "1/turn, +2D8 weapon dmg";
+                    }
+                    if (lvl >= 17)
+                    {
+                        result.ClassFeatures.Add("Supreme Healing", "when you roll to restore HP, treat the dice as their max value");
+                    }
                     break;
                 case "Strength":
-                    //DomainSpells[1].Add("*");
-                    //DomainSpells[1].Add("*");
-                    //DomainSpells[2].Add("*");
-                    //DomainSpells[2].Add("*");
-                    //DomainSpells[3].Add("*");
-                    //DomainSpells[3].Add("*");
-                    //DomainSpells[4].Add("*");
-                    //DomainSpells[4].Add("*");
-                    //DomainSpells[5].Add("*");
-                    //DomainSpells[5].Add("*");
+                    DomainSpells[1].Add("Divine Favor*");
+                    DomainSpells[1].Add("Shield of Faith*");
+                    DomainSpells[2].Add("Enhance Ability*");
+                    DomainSpells[2].Add("Protection from Poison*");
+                    DomainSpells[3].Add("Haste*");
+                    DomainSpells[3].Add("Protection from Energy*");
+                    DomainSpells[4].Add("Dominate Beast*");
+                    DomainSpells[4].Add("Stoneskin*");
+                    DomainSpells[5].Add("Destructive Wave*");
+                    DomainSpells[5].Add("Insect Plague*");
 
-                    //result.ClassFeatures.Add("", "");
-                    //if (lvl >= 2)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
-                    //if (lvl >= 6)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
-                    //if (lvl >= 8)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
-                    //if (lvl >= 14)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
-                    //if (lvl >= 17)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
+                    result.ClassFeatures.Add("Acolyte of Strength", "gain a Druid cantrip and a skill");
+                    var cantripsToPick = new List<string>();
+                    foreach (var item in DruidSpells.Cantrips)
+                    {
+                        if (!ClericSpells.Cantrips.Contains(item))
+                        {
+                            cantripsToPick.Add(item);
+                        }
+                    }
+                    Console.WriteLine("Pick a Druid cantrip");
+                    string newCantrip = CLIHelper.PrintChoices(cantripsToPick);
+                    result.Cantrips.Add(newCantrip);
+                    var str = new List<string> { "Animal Handling", "Athletics", "Nature", "Survival" };
+                    string allSkills = String.Join(", ", character.SkillProficiencies);
+                    Console.WriteLine($"Pick a skill your proficiencies are: {allSkills}");
+                    string strSkill = CLIHelper.PrintChoices(str);
+                    character.SkillProficiencies.Add(strSkill);
+                    result.Proficiencies.Add("Heavy Armor");
+                    if (lvl >= 2)
+                    {
+                        result.ClassFeatures.Add("Channel Divinity(Feat of Strength)", "when you make a Str check, atk or save, after roll, atk + 10");
+                    }
+                    if (lvl >= 6)
+                    {
+                        result.ClassFeatures.Add("Channel Divinity(Rhona's Blessing)", "reaction, 30ft, 1 creature, when a Str check, atk or save is made, after roll, atk + 10");
+                    }
+                    if (lvl >= 8)
+                    {
+                        result.ClassFeatures.Add("Divine Strike", "1/turn, +1D8 weapon dmg");
+                    }
+                    if (lvl >= 14)
+                    {
+                        result.ClassFeatures["Divine Strike"] = "1/turn, +2D8 weapon dmg";
+                    }
+                    if (lvl >= 17)
+                    {
+                        result.ClassFeatures.Add("Avatar of Battle", "gain Resistance to nonmagical B/P/S");
+                    }
                     break;
                 case "Tempest":
                     DomainSpells[1].Add("Fog Cloud*");
@@ -645,7 +661,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     }
                     if (lvl >= 6)
                     {
-                        result.ClassFeatures.Add("Channel Divinity(Cloak of Shadows)", "action, become invisible");
+                        result.ClassFeatures.Add("Channel Divinity(Cloak of Shadows)", "action, 1 turn, become invisible");
                     }
                     if (lvl >= 8)
                     {
@@ -684,7 +700,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     }
                     if (lvl >= 6)
                     {
-                        result.ClassFeatures.Add("Steps of Night", "prof bonus/LR, bonus, 1 min, while in dim light or darkness, gain Fly speed");
+                        result.ClassFeatures.Add("Steps of Night", "PB/LR, bonus, 1 min, while in dim light or darkness, gain Fly speed");
                     }
                     if (lvl >= 8)
                     {
@@ -710,9 +726,9 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     DomainSpells[4].Add("Stoneskin*");
                     DomainSpells[5].Add("Flame Strike*");
                     DomainSpells[5].Add("Hold Monster*");
+
                     character.Proficiencies.Add("Heavy Armor");
                     character.Proficiencies.Add("Martial Weapons");
-
                     result.ClassFeatures.Add("War Priest", "Wis/LR, atk as bonus");
                     if (lvl >= 2)
                     {
@@ -736,38 +752,40 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     }
                     break;
                 case "Zeal":
-                    //DomainSpells[1].Add("*");
-                    //DomainSpells[1].Add("*");
-                    //DomainSpells[2].Add("*");
-                    //DomainSpells[2].Add("*");
-                    //DomainSpells[3].Add("*");
-                    //DomainSpells[3].Add("*");
-                    //DomainSpells[4].Add("*");
-                    //DomainSpells[4].Add("*");
-                    //DomainSpells[5].Add("*");
-                    //DomainSpells[5].Add("*");
+                    DomainSpells[1].Add("Searing Smite*");
+                    DomainSpells[1].Add("Thunderous Smite*");
+                    DomainSpells[2].Add("Magic Weapon*");
+                    DomainSpells[2].Add("Shatter*");
+                    DomainSpells[3].Add("Haste*");
+                    DomainSpells[3].Add("Fireball*");
+                    DomainSpells[4].Add("Fire Shield(warm only)*");
+                    DomainSpells[4].Add("Freedom of Movement*");
+                    DomainSpells[5].Add("Destructive Wave*");
+                    DomainSpells[5].Add("Flame Strike*");
 
-                    //result.ClassFeatures.Add("", "");
-                    //if (lvl >= 2)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
-                    //if (lvl >= 6)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
-                    //if (lvl >= 8)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
-                    //if (lvl >= 14)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
-                    //if (lvl >= 17)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
+                    result.Proficiencies.Add("Heavy Armor");
+                    result.Proficiencies.Add("Martial Weapons");
+                    result.ClassFeatures.Add("Priest of Zeal", "Wis/LR, atk as bonus");
+                    if (lvl >= 2)
+                    {
+                        result.ClassFeatures.Add("Channel Divinity(Consuming Fervor)", "max Fire or Thunder dmg");
+                    }
+                    if (lvl >= 6)
+                    {
+                        result.ClassFeatures.Add("Resounding Strike", "when you deal Thunder dmg, push 10ft");
+                    }
+                    if (lvl >= 8)
+                    {
+                        result.ClassFeatures.Add("Divine Strike", "1/turn, +1D8 weapon dmg");
+                    }
+                    if (lvl >= 14)
+                    {
+                        result.ClassFeatures["Divine Strike"] = "1/turn, +2D8 weapon dmg";
+                    }
+                    if (lvl >= 17)
+                    {
+                        result.ClassFeatures.Add("Blaze of Glory", "LR, reaction, when you drop to 0 HP - move speed to attacker, mak an atk with adv, dmg + 5D10 weapon + 5D10 Fire");
+                    }
                     break;
             }
 
@@ -776,7 +794,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             {
                 result.ClassFeatures.Add("Channel Divinity(Turn Undead)", "action, 30ft, Wis save - turn 1 min");
                 result.ClassFeatures.Add("Channel Divinity uses", "1/SR");
-                result.ClassFeatures.Add("Harness Divine Power", "bonus, expend a Channel Divinity use to regain a spell slot = 1/2 prof bonus");
+                result.ClassFeatures.Add("Harness Divine Power", "bonus, expend a Channel Divinity use to regain a spell slot = 1/2 PB");
             }
             if (lvl >= 3)
             {

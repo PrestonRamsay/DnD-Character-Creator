@@ -183,7 +183,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
 
                         if (lvl >= 7)
                         {
-                            result.ClassFeatures.Add("Remarkable Athlete", "add 1/2 prof bonus to Str/Dex/Con checks that you don't have prof in." +
+                            result.ClassFeatures.Add("Remarkable Athlete", "add 1/2 PB to Str/Dex/Con checks that you don't have prof in." +
                                 "\nIncrease your running long jump distance by Str mod ft");
                         }
                         if (lvl >= 10)
@@ -352,7 +352,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         }
                         if (lvl >= 10)
                         {
-                            result.ClassFeatures.Add("Royal Envoy", "gain a skill and double your prof bonus for Persuasion");
+                            result.ClassFeatures.Add("Royal Envoy", "gain a skill and double your PB for Persuasion");
                             if (character.SkillProficiencies.Contains("Persuasion"))
                             {
                                 skills = new List<string> { "Animal Handling", "Insight", "Intimidation", "Performance"};

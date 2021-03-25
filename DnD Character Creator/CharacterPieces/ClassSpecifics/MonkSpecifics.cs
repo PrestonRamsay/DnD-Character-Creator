@@ -26,7 +26,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     fastMovement += 5;
                 }
             }
-            result.ClassFeatures.Add("Unarmored Defense", "AC + Dex or Wis, while wearing no armor");
+            result.ClassFeatures.Add("Unarmored Defense", "AC = 10 + Dex + Wis, while wearing no armor");
             result.ClassFeatures.Add("Martial Arts", $"Dex for atk/dmg, dmg = 1D{martialArtsDie}, bonus - melee atk");
 
             if (lvl >= 2)
@@ -240,7 +240,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             if (lvl >= 4)
             {
                 result.ClassFeatures.Add("Slow Fall", "reaction, reduce fall dmg by lvl x 5");
-                result.ClassFeatures.Add("Quickened Healing", $"action, spend 2 ki pt, heal HP = 1D{martialArtsDie}(MA die) + prof bonus");
+                result.ClassFeatures.Add("Quickened Healing", $"action, spend 2 ki pt, heal HP = 1D{martialArtsDie}(MA die) + PB");
             }
             if (lvl >= 5)
             {

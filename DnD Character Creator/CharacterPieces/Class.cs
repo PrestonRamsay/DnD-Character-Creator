@@ -352,31 +352,39 @@ namespace DnD_Character_Creator.Classes
 
             result.Equipment.Add(Options.LightArmor[1]);
             result.Equipment.Add(Options.Packs[4]);
-            Console.WriteLine("Pick a druidic focus. Enter a number.");
-            Console.WriteLine("(1) Sprig of mistletoe");
-            Console.WriteLine("(2) Totem");
-            Console.WriteLine("(3) Wooden Staff");
-            Console.WriteLine("(4) Yew wand");
-            int focus = CLIHelper.GetNumberInRange(1, 4);
+            string msg = "Pick a druidic focus. Enter a number.";
+            var focuses = new List<string> { "Sprig of mistletoe", "Totem", "Wooden Staff", "Yew wand" };
+            int focus = CLIHelper.PrintChoices(msg, focuses);
 
-            if (focus == 1)
+            switch (focus)
             {
-                result.Equipment.Add(Options.DruidicFocuses[0]);
-            }
-            else if (focus == 2)
-            {
-                result.Equipment.Add(Options.DruidicFocuses[1]);
-            }
-            else if (focus == 2)
-            {
-                result.Equipment.Add(Options.DruidicFocuses[2]);
-            }
-            else
-            {
-                result.Equipment.Add(Options.DruidicFocuses[3]);
+                case 1:
+                    result.Equipment.Add(Options.DruidicFocuses[0]);
+                    break;
+                case 2:
+                    result.Equipment.Add(Options.DruidicFocuses[1]);
+                    break;
+                case 3:
+                    result.Equipment.Add(Options.DruidicFocuses[2]);
+                    break;
+                case 4:
+                    result.Equipment.Add(Options.DruidicFocuses[3]);
+                    break;
             }
             result = DruidSpecifics.Features(result, character);
             character.Archetype = DruidSpecifics.DruidCircle;
+            if (character.Archetype == "Stars")
+            {
+                result.Equipment.Remove(Options.DruidicFocuses[focus - 1]);
+                msg = "Pick a star map to be your new spell focus";
+                var starMaps = new List<string>();
+                foreach (var item in Options.StarMaps)
+                {
+                    starMaps.Add(item.Substring(8, item.Length - 1));
+                }
+                int index = CLIHelper.PrintChoices(msg, starMaps);
+                result.Equipment.Add(Options.StarMaps[index]);
+            }
 
             return result;
         }
@@ -866,7 +874,7 @@ namespace DnD_Character_Creator.Classes
             {
                 result.Equipment.Add("Simple weapon");
             }
-            result = WarlockSpecifics.Features(result);
+            result = WarlockSpecifics.Features(character, result);
             character.Archetype = WarlockSpecifics.OtherworldlyPatron;
 
             return result;

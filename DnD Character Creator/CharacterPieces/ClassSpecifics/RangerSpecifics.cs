@@ -23,7 +23,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             {
                 favoredNum++;
             }
-
+            //begin lvl 1
             Console.WriteLine("Pick a Ranger class feature");
             CLIHelper.Print2Choices("Natural Explorer", "Deft Explorer");
             int num = CLIHelper.GetNumberInRange(1, 2);
@@ -73,7 +73,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 }
                 if (lvl >= 10)
                 {
-                    result.ClassFeatures.Add("Tireless", "on SR, decrease Exhaustion lvl by 1 / prof bonus/LR, action, gain temp HP = 1D8 + Wis");
+                    result.ClassFeatures.Add("Tireless", "on SR, decrease Exhaustion lvl by 1 / PB/LR, action, gain temp HP = 1D8 + Wis");
                 }
             }
             Console.WriteLine("Pick a Ranger class feature");
@@ -102,8 +102,9 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 {
                     dmg += 2;
                 }
-                result.ClassFeatures.Add("Favored Foe", $"prof bonus/LR, on hit, mark 1 min conc, dmg + 1D{dmg}");
+                result.ClassFeatures.Add("Favored Foe", $"PB/LR, on hit, mark 1 min conc, dmg + 1D{dmg}");
             }
+            //end lvl 1
 
             if (lvl >= 2)
             {
@@ -166,7 +167,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 switch (RangerArchetype)
                 {
                     case "Beast Master":
-                        result.ClassFeatures.Add("Ranger's Companion", "medium beast, CR 1/4 or lower, + prof bonus to AC, atks, dmg, saves, skills, HP = normal or lvl x 4" +
+                        result.ClassFeatures.Add("Ranger's Companion", "medium beast, CR 1/4 or lower, + PB to AC, atks, dmg, saves, skills, HP = normal or lvl x 4" +
                             "\naction to command it to atk, Dash, Disengage, Dodge, or Help - if you have extra atk, you can atk and command beast");
 
                         if (lvl >= 7)
@@ -393,7 +394,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 }
                 else
                 {
-                    result.ClassFeatures.Add("Nature's Veil", "prof bonus/LR, bonus, become invisible");
+                    result.ClassFeatures.Add("Nature's Veil", "PB/LR, bonus, become invisible");
                 }
             }
             if (lvl >= 14)

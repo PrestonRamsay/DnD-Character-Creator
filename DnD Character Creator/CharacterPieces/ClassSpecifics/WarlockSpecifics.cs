@@ -19,7 +19,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             { 4, new List<string>() },
             { 5, new List<string>() },
         };
-        public static CharacterClass Features(CharacterClass result)
+        public static CharacterClass Features(Character character, CharacterClass result)
         {
             int lvl = result.Lvl;
 
@@ -88,18 +88,27 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     }
                     break;
                 case "The Fathomless":
-                    //ExpandedSpells[1].Add("*");
-                    //ExpandedSpells[1].Add("*");
-                    //ExpandedSpells[2].Add("*");
-                    //ExpandedSpells[2].Add("*");
-                    //ExpandedSpells[3].Add("*");
-                    //ExpandedSpells[3].Add("*");
-                    //ExpandedSpells[4].Add("*");
-                    //ExpandedSpells[4].Add("*");
-                    //ExpandedSpells[5].Add("*");
-                    //ExpandedSpells[5].Add("*");
+                    ExpandedSpells[1].Add("Create or Destroy Water*");
+                    ExpandedSpells[1].Add("Thunderwave*");
+                    ExpandedSpells[2].Add("Gust of Wind*");
+                    ExpandedSpells[2].Add("Silence*");
+                    ExpandedSpells[3].Add("Lightning Bolt*");
+                    ExpandedSpells[3].Add("Sleet Storm*");
+                    ExpandedSpells[4].Add("Control Water*");
+                    ExpandedSpells[4].Add("Summon Elemental(water only)*");
+                    ExpandedSpells[5].Add("Bigby's Hand(appears as tentacle)*");
+                    ExpandedSpells[5].Add("Cone of Cold*");
 
-                    //result.ClassFeatures.Add("", "");
+                    int tentacle = 1;
+                    if (lvl >= 10)
+                    {
+                        tentacle++;
+                    }
+
+                    result.ClassFeatures.Add("Tentacle of the Deeps", $"PB/LR, bonus, 1 min, 60ft, create 10ft tentacle - make melee spell atk, {tentacle}D8 Cold, reduce speed by 10ft" +
+                        "\nbonus, move tentacle 30ft and atk again");
+                    result.ClassFeatures.Add("Gift of the Sea", "gain waterbreathing and Swim 40ft");
+                    character.Speedstring += ", Swim 40ft";
                     //if (lvl >= 6)
                     //{
                     //    result.ClassFeatures.Add("", "");
@@ -269,7 +278,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 else if (index == 2)
                 {
                     PactBoon = pactBoons[2];
-                    result.ClassFeatures.Add(PactBoon, "gain an amulet Talisman - prof bonus/LR, when wearer fails a check, check + 1D4");
+                    result.ClassFeatures.Add(PactBoon, "gain an amulet Talisman - PB/LR, when wearer fails a check, check + 1D4");
                 }
                 else if (index == 3)
                 {
