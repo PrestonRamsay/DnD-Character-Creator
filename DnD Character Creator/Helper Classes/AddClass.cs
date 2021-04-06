@@ -9,7 +9,11 @@ namespace DnD_Character_Creator.Helper_Classes
     {
         public static void ClassSpecifics(Character character, CharacterClass class1)
         {
-            character.Saves.AddRange(class1.Saves);
+            character.Init += character.DexMod;
+            foreach (var item in class1.Saves)
+            {
+                character.Saves.Add(item);
+            }
             foreach (var item in class1.ClassFeatures.Keys)
             {
                 character.ClassFeatures.Add(item, class1.ClassFeatures[item]);
@@ -87,12 +91,103 @@ namespace DnD_Character_Creator.Helper_Classes
                     character.Proficiencies.Add(item);
                 }
             }
+            if (character.Feats.ContainsKey("Weapon Master"))
+            {
+                var allWep = new List<string>();
+                allWep.AddRange(Options.SimpleMeleeWeapons);
+                allWep.AddRange(Options.MartialMeleeWeapons);
+                allWep.AddRange(Options.SimpleRangedWeapons);
+                allWep.AddRange(Options.MartialRangedWeapons);
+                var unknownWep = new List<string>();
+                foreach (var wep in allWep)
+                {
+                    int index = wep.IndexOf("(");
+                    string wepProf = wep.Substring(0, index) + "s";
+                    if (!character.Proficiencies.Contains(wepProf))
+                    {
+                        unknownWep.Add(wepProf);
+                    }
+                }
+                if (character.Proficiencies.Contains("Simple Weapons"))
+                {
+                    var simpleWep = new List<string>();
+                    simpleWep.AddRange(Options.SimpleMeleeWeapons);
+                    simpleWep.AddRange(Options.SimpleRangedWeapons);
+                    foreach (var wep in simpleWep)
+                    {
+                        int index = wep.IndexOf("(");
+                        string wepProf = wep.Substring(0, index) + "s";
+                        unknownWep.Remove(wepProf);
+                    }
+                }
+                if (character.Proficiencies.Contains("Martial Weapons"))
+                {
+                    var martialWep = new List<string>();
+                    martialWep.AddRange(Options.MartialMeleeWeapons);
+                    martialWep.AddRange(Options.MartialRangedWeapons);
+                    foreach (var wep in martialWep)
+                    {
+                        int index = wep.IndexOf("(");
+                        string wepProf = wep.Substring(0, index) + "s";
+                        unknownWep.Remove(wepProf);
+                    }
+                }
+                unknownWep.Sort();
+                Console.WriteLine("Pick 4 weapons to gain proficiency with");
+                for (int i = 0; i < 4; i++)
+                {
+                    string newWep = CLIHelper.PrintChoices(unknownWep);
+                    character.Proficiencies.Add(newWep);
+                    unknownWep.Remove(newWep);
+                }
+            }
             foreach (var item in class1.ToolProficiencies)
             {
                 if (!character.ToolProficiencies.Contains(item))
                 {
                     character.ToolProficiencies.Add(item);
                 }
+            }
+        }
+        public static void DetermineAC(Character character)
+        {
+            character.AC += 10 + character.DexMod;
+            string arch = character.Archetype;
+            if (character.ChosenClass == "Barbarian" || character.Feats.ContainsKey("Unarmored Defense(Con)"))
+            {
+                character.AC += character.Stats["Con"];
+            }
+            else if (character.ChosenClass == "Monk" || character.Feats.ContainsKey("Unarmored Defense(Wis)"))
+            {
+                character.AC += character.Stats["Wis"];
+            }
+            else if (arch == "Draconic Bloodline" || arch == "Stone Sorcery" || character.Feats.ContainsKey("Dragon Hide"))
+            {
+                character.AC += 3;
+            }
+            else
+            {
+                string armor = "";
+                int armorAC = 0;
+                int intValue = -1;
+                foreach (var item in character.Equipment)
+                {
+                    if (item.Contains("AC"))
+                    {
+                        int index = item.IndexOf("AC");
+                        armor = item.Substring(index - 2, 1);
+                    }
+                }
+                if (int.TryParse(armor, out intValue))
+                {
+                    armorAC = intValue;
+                }
+                character.AC += armorAC;
+            }
+            if (character.Feats.ContainsKey("Insightful Reflexes"))
+            {
+                character.AC += character.IntMod;
+                character.AC -= character.DexMod;
             }
         }
         public static void DetermineHP(Character character, CharacterClass class1)
@@ -106,7 +201,7 @@ namespace DnD_Character_Creator.Helper_Classes
             if (input == 1)
             {
                 int hitDieAvg = (class1.HitDie / 2) + 1;
-                character.HP = firstLvlHP + (remainingLvls * (hitDieAvg + character.ConMod));
+                character.HP += firstLvlHP + (remainingLvls * (hitDieAvg + character.ConMod));
             }
             else
             {
@@ -118,18 +213,22 @@ namespace DnD_Character_Creator.Helper_Classes
                     HP += (hitDie.RollDie() + character.ConMod);
                 }
 
-                character.HP = HP;
+                character.HP += HP;
             }
         }
         public static void ModifySkills(Character character)
         {
             var skillList = new List<string>();
+            var expList = new List<string>();
             var skills = new Dictionary<string, int>();
 
             foreach (string skill in character.Skills.Keys)
             {
                 skills.Add(skill, character.Skills[skill]);
-
+                if (skills[skill] != 0)
+                {
+                    expList.Add(skill);
+                }
                 if (skill.Contains("Str"))
                 {
                     skills[skill] += character.StrMod;
@@ -159,6 +258,10 @@ namespace DnD_Character_Creator.Helper_Classes
                 {
                     skills[skill] += character.ProficiencyBonus;
                     string fullSkill = $"(t) {skill}";
+                    if (expList.Contains(skill))
+                    {
+                        fullSkill = $"(e)(t) {skill}";
+                    }
                     skillList.Add(fullSkill);
                     skills.Add(fullSkill, skills[skill]);
                     skills.Remove(skill);
@@ -166,6 +269,10 @@ namespace DnD_Character_Creator.Helper_Classes
                 else
                 {
                     skillList.Add(skill);
+                    if (character.ClassFeatures.ContainsKey("Jack of All Trades") || character.Feats.ContainsKey("Jack of All Trades"))
+                    {
+                        skills[skill] += (character.ProficiencyBonus) / 2;
+                    }
                 }
             }
             character.Skills.Clear();
@@ -179,12 +286,11 @@ namespace DnD_Character_Creator.Helper_Classes
         {
             string classString = character.ChosenClass;
             int lvl = character.Lvl;
-            var cantrips = new List<string> { "Bard", "Cleric", "Druid", "Sorcerer", "Swordmage", "Warlock", "Wizard" };
+            var cantrips = new List<string> { "Artifcier", "Bard", "Cleric", "Druid", "Sorcerer", "Swordmage", "Warlock", "Wizard" };
 
             if (cantrips.Contains(classString))
             {
                 class1.CantripsKnown = 2;
-
                 if (lvl >= 4)
                 {
                     class1.CantripsKnown++;
@@ -244,9 +350,9 @@ namespace DnD_Character_Creator.Helper_Classes
         {
             string classString = character.ChosenClass;
             int lvl = character.Lvl;
-            var classes = new List<string> { "Bard", "Cleric", "Druid", "Sorcerer", "Wizard" };
+            var primaryCasters = new List<string> { "Bard", "Cleric", "Druid", "Sorcerer", "Wizard" };
 
-            if (classes.Contains(classString))
+            if (primaryCasters.Contains(classString))
             {
                 int spellSlotLvl = 0;
                 int lvlToInc = 5;
@@ -297,10 +403,11 @@ namespace DnD_Character_Creator.Helper_Classes
                     }
                 }
             }
-            if (classString == "Paladin" || classString == "Ranger" || classString == "Swordmage")
+            var secondaryCasters = new List<string> { "Artificer", "Paladin", "Ranger", "Swordmage" };
+            if (secondaryCasters.Contains(classString))
             {
                 int spellSlotLvl = 1;
-                if (classString != "Swordmage")
+                if (classString == "Paladin" || classString == "Ranger")
                 {
                     if (lvl >= 2)
                     {
@@ -311,24 +418,21 @@ namespace DnD_Character_Creator.Helper_Classes
                 {
                     class1.SpellSlots[1] += 2;
                 }
-                for (int i = 3; i <= lvl; i++)
+                for (int i = 3; i <= lvl; i += 2)
                 {
-                    if (i % 2 != 0)
+                    if ((i != 9 || i != 13) && i <= 17)
                     {
-                        if ((i != 9 || i != 13) && i <= 17)
-                        {
-                            class1.SpellSlots[spellSlotLvl]++;
-                        }
-                        if (i == 5 || i == 9)
-                        {
-                            spellSlotLvl++;
-                            class1.SpellSlots[spellSlotLvl] += 2;
-                        }
-                        if (i == 13 || i == 17)
-                        {
-                            spellSlotLvl++;
-                            class1.SpellSlots[spellSlotLvl]++;
-                        }
+                        class1.SpellSlots[spellSlotLvl]++;
+                    }
+                    if (i == 5 || i == 9)
+                    {
+                        spellSlotLvl++;
+                        class1.SpellSlots[spellSlotLvl] += 2;
+                    }
+                    if (i == 13 || i == 17)
+                    {
+                        spellSlotLvl++;
+                        class1.SpellSlots[spellSlotLvl]++;
                     }
                 }
             }

@@ -1,4 +1,5 @@
-﻿using DnD_Character_Creator.Helper_Classes;
+﻿using DnD_Character_Creator.CharacterPieces;
+using DnD_Character_Creator.Helper_Classes;
 using DnD_Character_Creator.Races;
 using System;
 using System.Collections.Generic;
@@ -350,12 +351,10 @@ namespace DnD_Character_Creator
             }
             else
             {
-                string pickMsg = "You get to pick a feat.";
-                int index = CLIHelper.PrintChoices(pickMsg, Options.Feats);
-                character.Feats.Add(Options.Feats[index]);
+                Feats.AddFeat(character);
             }
         }
-        private static void IncreaseStat(Character character, int incAmt)
+        public static void IncreaseStat(Character character, int incAmt)
         {
             bool gettingStat = true;
             int statMax = character.StatMax;
@@ -377,7 +376,7 @@ namespace DnD_Character_Creator
                 }
             }
         }
-        private static void IncreaseStat(Character character, string stat, int incAmt)
+        public static void IncreaseStat(Character character, string stat, int incAmt)
         {
             int statMax = character.StatMax;
 
@@ -389,6 +388,32 @@ namespace DnD_Character_Creator
             {
                 character.Stats[stat] = statMax;
             }
+        }
+        public static string IncreaseStat(Character character, int incAmt, bool retrn)
+        {
+            bool gettingStat = true;
+            int statMax = character.StatMax;
+            string returnValue = "";
+
+            while (gettingStat)
+            {
+                PrintStatsMenu(-1, Options.Stats);
+                int index = CLIHelper.GetIndex(Options.Stats);
+                string stat = Options.Stats[index];
+
+                if (character.Stats[stat] + incAmt <= statMax)
+                {
+                    character.Stats[stat] += incAmt;
+                    returnValue = stat;
+                    gettingStat = false;
+                }
+                else
+                {
+                    Console.WriteLine("You cannot exceed the max. Try again");
+                }
+            }
+
+            return returnValue;
         }
     }
 }

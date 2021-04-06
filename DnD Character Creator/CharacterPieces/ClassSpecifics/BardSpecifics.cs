@@ -86,7 +86,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         result.ClassFeatures.Add("Performance of Creation", $"LR or 2nd lvl spell slot, action, hr/PB, 10ft, create a {size} nonmagical item - value = lvl x 20gp, glimmers and soft music");
                         if (lvl >= 6)
                         {
-                            result.ClassFeatures.Add("Animating Performance", "LR or 3rd lvl spell slot, action, 1 hr, 30ft, animate a nonmagical item, default to Dodge, shares Init" +
+                            result.ClassFeatures.Add("Animating Performance", "LR or 3rd lvl spell slot, action, 1 hr, 30ft, animate a nonmagical item, defaults to Dodge, shares Init" +
                                 "\ncommand with bonus or when using Bardic Inspiration, if you're incap it can take any action");
                         }
                         if (lvl >= 14)

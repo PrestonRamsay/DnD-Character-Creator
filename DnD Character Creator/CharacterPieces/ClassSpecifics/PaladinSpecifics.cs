@@ -16,7 +16,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             { 2, new List<string>() },
             { 3, new List<string>() },
             { 4, new List<string>() },
-            { 5, new List<string>() },
+            { 5, new List<string>() }
         };
         public static CharacterClass Features(Character character, CharacterClass result)
         {
@@ -58,7 +58,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 result.ClassFeatures.Add("Channel Divinity uses", "1/SR");
                 string msg = "Pick a Sacred Oath that will give you features at levels 3, 7, 15, and 20.";
                 var archetype = new List<string> { "Oath of the Ancients", "Oath of Conquest", "Oath of the Crown", "Oath of Devotion",
-                    "Oath of Glory*", "Oath of Redemption", "Oath of Vengeance", "Oath of the Watchers*", "Oathbreaker" };
+                    "Oath of Glory", "Oath of Redemption", "Oath of Vengeance", "Oath of the Watchers", "Oathbreaker" };
                 int answer = CLIHelper.PrintChoices(msg, archetype);
 
                 if (answer == 0 || answer == 2 || answer == 7)
@@ -200,33 +200,65 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         }
                         break;
                     case "Glory":
-                        //tenets = new List<string> { "*", "*", "*", "*" };
-                        //character.Tenets.AddRange(tenets);
-                        //OathSpells[1].Add("*");
-                        //OathSpells[1].Add("*");
-                        //OathSpells[2].Add("*");
-                        //OathSpells[2].Add("*");
-                        //OathSpells[3].Add("*");
-                        //OathSpells[3].Add("*");
-                        //OathSpells[4].Add("*");
-                        //OathSpells[4].Add("*");
-                        //OathSpells[5].Add("*");
-                        //OathSpells[5].Add("*");
+                        tenets = new List<string> { "Actions over Words*", "Challenges Are but Tests*", "Hone the Body*", "Discipline the Soul*" };
+                        character.Tenets.AddRange(tenets);
+                        OathSpells[1].Add("Guiding Bolt*");
+                        OathSpells[1].Add("Heroism*");
+                        OathSpells[2].Add("Enhance Ability*");
+                        OathSpells[2].Add("Magic Weapon*");
+                        OathSpells[3].Add("Haste*");
+                        OathSpells[3].Add("Protection from Energy*");
+                        OathSpells[4].Add("Compulsion*");
+                        OathSpells[4].Add("Freedom of Movement*");
+                        OathSpells[5].Add("Commune*");
+                        OathSpells[5].Add("Flame Strike*");
 
-                        //result.ClassFeatures.Add("Channel Divinity()", "");
-                        //result.ClassFeatures.Add("Channel Divinity()", "");
-                        //if (lvl >= 7)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 15)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 20)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
+                        result.ClassFeatures.Add("Channel Divinity(Peerless Athlete)", "bonus, 10 min, gain adv on Acrobatics and Athletics, push/lift/drag twice as much, jump distance +10ft");
+                        result.ClassFeatures.Add("Channel Divinity(Inspiring Smire)", "bonus, 30ft, after smiting, distribute temp HP = 2D8 + lvl among you and allies");
+                        if (lvl >= 7)
+                        {
+                            result.ClassFeatures.Add("Aura of Alacrity", "adj allies gain speed +10ft");
+                            character.Speed += 10;
+                        }
+                        if (lvl >= 15)
+                        {
+                            result.ClassFeatures.Add("Glorious Defense", "Cha/LR, reaction, 10ft, when you or ally is hit, AC + Cha - if atk misses, make atk if within range");
+                        }
+                        if (lvl >= 20)
+                        {
+                            result.ClassFeatures.Add("Living Legend", "LR or 5th lvl spell slot, bonus, 1 min, gain adv on Cha checks / 1/turn - on miss, atk hits instead / reaction, reroll a save");
+                        }
+                        break;
+                    case "Oathbreaker":
+                        tenets = new List<string> { "Ambition*", "Corruption*", "Fear*", "Hatred*", "Honorless*", "Power*", "Villainous*" };
+                        character.Tenets.Clear();
+                        character.Tenets.AddRange(tenets);
+                        OathSpells[1].Add("Hellish Rebuke*");
+                        OathSpells[1].Add("Inflict Wounds*");
+                        OathSpells[2].Add("Crown of Madness*");
+                        OathSpells[2].Add("Darkness*");
+                        OathSpells[3].Add("Animate Dead*");
+                        OathSpells[3].Add("Bestow Curse*");
+                        OathSpells[4].Add("Blight*");
+                        OathSpells[4].Add("Confusion*");
+                        OathSpells[5].Add("Contagion*");
+                        OathSpells[5].Add("Dominate Person*");
+
+                        result.ClassFeatures.Add("Channel Divinity(Control Undead)", "action, 24hr, 30ft, 1 undead CR < lvl, Wis save, obeys commands");
+                        result.ClassFeatures.Add("Channel Divinity(Dreadful Aspect)", "action, 30ft, Wis save, fear 1 min, if more than 30ft Wis save to end");
+                        if (lvl >= 7)
+                        {
+                            result.ClassFeatures.Add("Aura of Hate", "10ft, fiends and undead dmg + Cha");
+                        }
+                        if (lvl >= 15)
+                        {
+                            result.ClassFeatures.Add("Supernatural Resistance", "gain Resistance to nonmagical B/P/S");
+                        }
+                        if (lvl >= 20)
+                        {
+                            result.ClassFeatures.Add("Dread Lord", "LR, action, 1 min, 30ft, aura reduces bright light to dim light, if fear in aura - 4D10 Psychic dmg" +
+                                "you and allies of choice impose disadv on atk / bonus, melee spell atk, 3D10 + Cha Necrotic dmg");
+                        }
                         break;
                     case "Redemption":
                         tenets = new List<string> { "Innocence*", "Patience*", "Peace*", "Wisdom*" };
@@ -287,67 +319,36 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         }
                         break;
                     case "Watchers":
-                        //tenets = new List<string> { "*", "*", "*", "*" };
-                        //character.Tenets.AddRange(tenets);
-                        //OathSpells[1].Add("*");
-                        //OathSpells[1].Add("*");
-                        //OathSpells[2].Add("*");
-                        //OathSpells[2].Add("*");
-                        //OathSpells[3].Add("*");
-                        //OathSpells[3].Add("*");
-                        //OathSpells[4].Add("*");
-                        //OathSpells[4].Add("*");
-                        //OathSpells[5].Add("*");
-                        //OathSpells[5].Add("*");
-
-                        //result.ClassFeatures.Add("Channel Divinity()", "");
-                        //result.ClassFeatures.Add("Channel Divinity()", "");
-                        //if (lvl >= 7)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 15)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 20)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        break;
-                    case "Oathbreaker":
-                        tenets = new List<string> { "Ambition*", "Corruption*", "Fear*", "Hatred*", "Honorless*", "Power*", "Villainous*" };
-                        character.Tenets.Clear();
+                        tenets = new List<string> { "Vigilance*", "Loyalty*", "Discipline*" };
                         character.Tenets.AddRange(tenets);
-                        OathSpells[1].Add("Hellish Rebuke*");
-                        OathSpells[1].Add("Inflict Wounds*");
-                        OathSpells[2].Add("Crown of Madness*");
-                        OathSpells[2].Add("Darkness*");
-                        OathSpells[3].Add("Animate Dead*");
-                        OathSpells[3].Add("Bestow Curse*");
-                        OathSpells[4].Add("Blight*");
-                        OathSpells[4].Add("Confusion*");
-                        OathSpells[5].Add("Contagion*");
-                        OathSpells[5].Add("Dominate Person*");
+                        OathSpells[1].Add("Alarm*");
+                        OathSpells[1].Add("Detect Magic*");
+                        OathSpells[2].Add("Moonbeam*");
+                        OathSpells[2].Add("See Invisibilty*");
+                        OathSpells[3].Add("Counterspell*");
+                        OathSpells[3].Add("Nondetection*");
+                        OathSpells[4].Add("Aura of Purity*");
+                        OathSpells[4].Add("Banishment*");
+                        OathSpells[5].Add("Hold Monster*");
+                        OathSpells[5].Add("Scrying*");
 
-                        result.ClassFeatures.Add("Channel Divinity(Control Undead)", "action, 24hr, 30ft, 1 undead CR < lvl, Wis save, obeys commands");
-                        result.ClassFeatures.Add("Channel Divinity(Dreadful Aspect)", "action, 30ft, Wis save, fear 1 min, if more than 30ft Wis save to end");
+                        result.ClassFeatures.Add("Channel Divinity(Watcher's Will)", "action, 1 min, 30ft, Cha creatures, gain adv on Int, Wis, and Cha saves");
+                        result.ClassFeatures.Add("Channel Divinity(Abjure the Extraplanar)", "action, 1 min, 30ft, Wis save - turn all aberration/celestial/elemental/fey/fiend");
                         if (lvl >= 7)
                         {
-                            result.ClassFeatures.Add("Aura of Hate", "10ft, fiends and undead dmg + Cha");
+                            result.ClassFeatures.Add("Aura of the Sentinel", "10ft, Init + PB");
                         }
                         if (lvl >= 15)
                         {
-                            result.ClassFeatures.Add("Supernatural Resistance", "gain Resistance to nonmagical B/P/S");
+                            result.ClassFeatures.Add("Vigilant Rebuke", "reaction, 30ft, when you or ally succeeds on Int, Wis or Cha save - deal 2D8 + Cha Force dmg to whoever forced the save");
                         }
                         if (lvl >= 20)
                         {
-                            result.ClassFeatures.Add("Dread Lord", "LR, action, 1 min, 30ft, aura reduces bright light to dim light, if fear in aura - 4D10 Psychic dmg" +
-                                "you and allies of choice impose disadv on atk / bonus, melee spell atk, 3D10 + Cha Necrotic dmg");
+                            result.ClassFeatures.Add("Mortal Bulwark", "LR or 5th lvl spell slot, bonus, 1 min, gain Truesight 120ft, gain adv on atks vs aberrations/celestials/elementals/fey/fiends" +
+                                "\nwhen you deal dmg, Cha save, banish creature to its native plane of existence for 24hr");
                         }
                         break;
                 }
-                result.Spells[1].AddRange(OathSpells[1]);
             }
             if (lvl >= 4)
             {
@@ -356,15 +357,10 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             if (lvl >= 5)
             {
                 result.ClassFeatures.Add("Extra Attack", "When using an atk action, atk twice");
-                result.Spells[2].AddRange(OathSpells[2]);
             }
             if (lvl >= 6)
             {
                 result.ClassFeatures.Add("Aura of Protection", "10ft, saves + Cha");
-            }
-            if (lvl >= 9)
-            {
-                result.Spells[3].AddRange(OathSpells[3]);
             }
             if (lvl >= 10)
             {
@@ -374,17 +370,9 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             {
                 result.ClassFeatures.Add("Improved Divine Smite", "all melee +1D8 Radiant");
             }
-            if (lvl >= 13)
-            {
-                result.Spells[3].AddRange(OathSpells[4]);
-            }
             if (lvl >= 14)
             {
                 result.ClassFeatures.Add("Cleansing Touch", "action, Cha/LR, dispel on creatures");
-            }
-            if (lvl >= 17)
-            {
-                result.Spells[4].AddRange(OathSpells[5]);
             }
             if (lvl >= 18)
             {
@@ -392,21 +380,28 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 result.ClassFeatures["Aura of Courage"] = "30ft, can't be frightened";
                 switch (SacredOath)
                 {
-                    case "Devotion":
-                        result.ClassFeatures["Aura of Devotion"] = "30ft, can't be charmed";
-                        break;
                     case "Ancients":
                         result.ClassFeatures["Aura of Warding"] = "30ft, Resistance to spell dmg";
                         break;
-                    case "Redemption":
-                        result.ClassFeatures["Aura of Guardian"] = "30ft, reaction, take ally dmg instead";
+                    case "Devotion":
+                        result.ClassFeatures["Aura of Devotion"] = "30ft, can't be charmed";
+                        break;
+                    case "Glory":
+                        result.ClassFeatures["Aura of Alacrity"] = "10ft, allies' speed +10ft";
                         break;
                     case "Oathbreaker":
                         result.ClassFeatures["Aura of Hate"] = "30ft, fiends and undead dmg + Cha";
                         break;
+                    case "Redemption":
+                        result.ClassFeatures["Aura of Guardian"] = "30ft, reaction, take ally dmg instead";
+                        break;
+                    case "Watchers":
+                        result.ClassFeatures["Aura of the Sentinel"] = "30ft, Init + PB";
+                        break;
                 }
             }
             //spells code
+            CLIHelper.AddSpells(result, OathSpells);
             string str2 = "You already have that spell";
             string pickMsg = "Pick a 1st level spell.";
             AllSpells spells = new AllSpells("Paladin");

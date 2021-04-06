@@ -1,21 +1,7 @@
 ﻿
-add non-ph archetypes
-
-fighter - echo knight (psi warrior, rune knight)		brawler?
-monk - mercy, astral self
-paladin - glory, watchers
-ranger - fey wanderer, swarmkeeper
-rogue - phantom, soulknife
-sorcerer - abberant mind, clockwork soul		phoenix, sea, stone (UA)
-warlock - fathomless, genie
-wizard - chron, grav (scribes)
-
--add special extra background (XGE)
--picking spells, remove from list?
--artificer + archetypes
 -bloodhunter/gunslinger?
--look at altering warlock - new invoc, invoc lvl req, new archetype? soul manipulation
-add feat definitions
+-psion (use schools as base spell lists, then have a main list)
 add spell descriptions
 add extended races
 add archetype methods to the class specifics for more readability
+convert character pieces to methods that add to character

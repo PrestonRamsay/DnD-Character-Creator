@@ -1,4 +1,5 @@
-﻿using DnD_Character_Creator.CharacterPieces.Spells;
+﻿using DnD_Character_Creator.CharacterPieces;
+using DnD_Character_Creator.CharacterPieces.Spells;
 using DnD_Character_Creator.Helper_Classes;
 using DnD_Character_Creator.Races;
 using System;
@@ -22,8 +23,12 @@ namespace DnD_Character_Creator.CLI_Classes
             {
                 character.Size = race.Size;
             }
-            character.Speed = race.Speed;
-            character.Speedstring = race.Speedstring;
+            character.Speed += race.Speed;
+            if (character.Feats.ContainsKey("Athlete"))
+                {
+                character.Speedstring += $", Climb {character.Speed}ft";
+            }
+            character.Speedstring += race.Speedstring;
             character.Vision = race.Vision;
             //in cli the other traits are assigned
             character.SkillProficiencies.UnionWith(race.SkillProficiencies);
@@ -51,7 +56,10 @@ namespace DnD_Character_Creator.CLI_Classes
             character.ToolProficiencies.UnionWith(race.ToolProficiencies);
             character.Proficiencies.UnionWith(race.Proficiencies);
             character.Cantrips.AddRange(race.Cantrips);
-            character.Feats.AddRange(race.Feats);
+            if (character.ChosenRace == "Human(Variant)")
+            {
+                Feats.AddFeat(character);
+            }
             character.DragonColor = race.DragonColor;
             character.TieflingMagic = race.TieflingMagic;
         }
@@ -108,6 +116,14 @@ namespace DnD_Character_Creator.CLI_Classes
                 race.Languages.Remove("Choice");
                 string input = CLIHelper.GetNew(Options.Languages, race.Languages, msg, errorMsg);
                 race.Languages.Add(input);
+            }
+            foreach (var item in race.Languages)
+            {
+                if (character.Languages.Contains(item))
+                {
+                    string newLang = CLIHelper.GetNew(Options.Languages, character.Languages, "Pick a new language", errorMsg);
+                    character.Languages.Add(newLang);
+                }
             }
             character.Languages.UnionWith(race.Languages);
         }

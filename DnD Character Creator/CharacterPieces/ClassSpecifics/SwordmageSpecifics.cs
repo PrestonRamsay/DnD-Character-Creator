@@ -16,7 +16,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             { 2, new List<string>() },
             { 3, new List<string>() },
             { 4, new List<string>() },
-            { 5, new List<string>() },
+            { 5, new List<string>() }
         };
         public static CharacterClass Features(CharacterClass result)
         {

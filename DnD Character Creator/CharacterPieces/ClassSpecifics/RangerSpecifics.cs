@@ -10,10 +10,19 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
     public static class RangerSpecifics
     {
         public static string RangerArchetype { get; set; }
+        public static Dictionary<int, string> PrimalAwarenessSpells { get; set; } = new Dictionary<int, string>()
+        {
+            { 1, "Speak with Animals" },
+            { 2, "Beast Sense" },
+            { 3, "Speak with Plants" },
+            { 4, "Locate Creature" },
+            { 5, "Commune with Nature" }
+        };
         public static CharacterClass Features(Character character, CharacterClass result)
         {
             int lvl = result.Lvl;
             string msg = "";
+            //begin lvl 1
             int favoredNum = 1;
             if (lvl >= 6)
             {
@@ -23,7 +32,6 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             {
                 favoredNum++;
             }
-            //begin lvl 1
             Console.WriteLine("Pick a Ranger class feature");
             CLIHelper.Print2Choices("Natural Explorer", "Deft Explorer");
             int num = CLIHelper.GetNumberInRange(1, 2);
@@ -137,32 +145,15 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 }
                 else
                 {
-                    if (lvl >= 3)
-                    {
-                        result.Spells[1].Add("Speak with Animals");
-                    }
-                    if (lvl >= 5)
-                    {
-                        result.Spells[2].Add("Beast Sense");
-                    }
-                    if (lvl >= 9)
-                    {
-                        result.Spells[3].Add("Speak with Plants");
-                    }
-                    if (lvl >= 13)
-                    {
-                        result.Spells[4].Add("Locate Creature");
-                    }
-                    if (lvl >= 15)
-                    {
-                        result.Spells[5].Add("Commune with Nature");
-                    }
+                    result.Spells[1].Add("Speak with Animals");
+                    CLIHelper.AddSpells(result, PrimalAwarenessSpells);
                 }
                 msg = "Pick a Ranger Archetype that will give you features at levels 3, 7, 11, and 15.";
-                var archetype = new List<string> { "Beast Master", "Fey Wanderer*", "Gloom Stalker", "Horizon Walker", "Hunter",
-                    "Monster Slayer", "Swarmkeeper*" };
+                var archetype = new List<string> { "Beast Master", "Fey Wanderer", "Gloom Stalker", "Horizon Walker", "Hunter",
+                    "Monster Slayer", "Swarmkeeper" };
                 int input = CLIHelper.PrintChoices(msg, archetype);
                 RangerArchetype = archetype[input];
+                var extendedSpells = new Dictionary<int, string>();
 
                 switch (RangerArchetype)
                 {
@@ -184,26 +175,54 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         }
                         break;
                     case "Fey Wanderer":
-                        //result.ClassFeatures.Add("", "");
-                        //if (lvl >= 7)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 11)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 15)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
+                        extendedSpells = new Dictionary<int, string> {
+                            { 2, "Misty Step" },
+                            { 3, "Dispel Magic" },
+                            { 4, "Dimension Door" },
+                            { 5, "Mislead" }
+                        };
+                        result.Spells[1].Add("Charm Person");
+                        CLIHelper.AddSpells(result, extendedSpells);
+                        var gifts = new List<string> { "Illusory butterflies flutter around you when you take SR or LR", 
+                            "Fresh, seasonal flowers sprout from your hair each dawn", "Your shadow dances when no one is looking directly at it",
+                            "You faintly smell of cinnamon, lavender, nutmeg, or another comforting herb or spice",
+                            "Horns or antlers sprout from your head", "Your skin and hair change color to match the season each dawn" };
+                        Console.WriteLine("Pick a Feywild gift that affects your appearance");
+                        string gift = CLIHelper.PrintChoices(gifts);
+                        result.ClassFeatures.Add("Feywild Gift", gift);
+                        int dmg = 4;
+                        if (lvl >= 11)
+                        {
+                            dmg += 2;
+                        }
+                        result.ClassFeatures.Add("Dreadful Strikes", $"1/turn, on hit, 1D{dmg} Psychic dmg");
+                        result.ClassFeatures.Add("Otherworldly Glamour", "Cha checks + Wis");
+                        var skills = new List<string> { "Deception", "Performance", "Persuasion" };
+                        Console.WriteLine("Pick a skill");
+                        string skill = CLIHelper.PrintChoices(skills);
+                        result.SkillProficiencies.Add(skill);
+                        if (lvl >= 7)
+                        {
+                            result.ClassFeatures.Add("Beguiling Twist", "gain adv on saves vs charm and fear / reaction, 120ft, successful save vs charm or fear, Wis save, charm or fear 1 min");
+                        }
+                        if (lvl >= 11)
+                        {
+                            result.ClassFeatures.Add("Fey Reinforcements", "LR, cast Summon Fey without using a spell slot - can modify duration from conc to 1 min");
+                        }
+                        if (lvl >= 15)
+                        {
+                            result.ClassFeatures.Add("Misty Wanderer", "LR, cast Misty Step without using a spell slot - can also teleport adj ally");
+                        }
                         break;
                     case "Gloom Stalker":
+                        extendedSpells = new Dictionary<int, string> {
+                            { 2, "Rope Trick" },
+                            { 3, "Fear" },
+                            { 4, "Greater Invisibility" },
+                            { 5, "Seeming" }
+                        };
                         result.Spells[1].Add("Disguise Self");
-                        result.Spells[2].Add("Rope Trick");
-                        result.Spells[3].Add("Fear");
-                        result.Spells[4].Add("Greater Invisibility");
-                        result.Spells[5].Add("Seeming");
+                        CLIHelper.AddSpells(result, extendedSpells);
                         if (!character.Vision.Contains("Darkvision"))
                         {
                             character.Vision = "Darkvision 60ft";
@@ -237,11 +256,14 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         }
                         break;
                     case "Horizon Walker":
+                        extendedSpells = new Dictionary<int, string> {
+                            { 2, "Misty Step" },
+                            { 3, "Haste" },
+                            { 4, "Banishment" },
+                            { 5, "Teleportation Circle" }
+                        };
                         result.Spells[1].Add("Protection from Evil and Good");
-                        result.Spells[2].Add("Misty Step");
-                        result.Spells[3].Add("Haste");
-                        result.Spells[4].Add("Banishment");
-                        result.Spells[5].Add("Teleportation Circle");
+                        CLIHelper.AddSpells(result, extendedSpells);
                         result.ClassFeatures.Add("Detect Portal", "SR, action, 1 mile, detect distance and direction of nearest planar portal");
                         int planarDice = 1;
                         if (lvl >= 11)
@@ -334,11 +356,14 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         }
                         break;
                     case "Monster Slayer":
+                        extendedSpells = new Dictionary<int, string> {
+                            { 2, "Zone of Truth" },
+                            { 3, "Magic Circle" },
+                            { 4, "Banishment" },
+                            { 5, "Hold Monster" }
+                        };
                         result.Spells[1].Add("Protection from Evil and Good");
-                        result.Spells[2].Add("Zone of Truth");
-                        result.Spells[3].Add("Magic Circle");
-                        result.Spells[4].Add("Banishment");
-                        result.Spells[5].Add("Hold Monster");
+                        CLIHelper.AddSpells(result, extendedSpells);
                         result.ClassFeatures.Add("Hunter's Sense", "Wis/LR, action, 60ft, learn Immunities, Resistances, Vulnerabilities of an enemy");
                         result.ClassFeatures.Add("Slayer's Prey", "SR, bonus, 60ft, 1/turn, dmg + 1D6");
                         if (lvl >= 7)
@@ -355,19 +380,38 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         }
                         break;
                     case "Swarmkeeper":
-                        //result.ClassFeatures.Add("", "");
-                        //if (lvl >= 7)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 11)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 15)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
+                        extendedSpells = new Dictionary<int, string> {
+                            { 2, "Web" },
+                            { 3, "Gaseous Form" },
+                            { 4, "Arcane Eye" },
+                            { 5, "Insect Plague" }
+                        };
+                        result.Spells[1].Add("Faerie Fire");
+                        result.Spells[1].Add("Mage Hand");
+                        CLIHelper.AddSpells(result, extendedSpells);
+                        var swarmList = new List<string> { "Swarming Insects", "Miniature Twig Blights", "Fluttering Birds", "Playful Pixies" };
+                        Console.WriteLine("Pick an appearance for your swarm");
+                        string swarm = CLIHelper.PrintChoices(swarmList);
+                        int swarmDmg = 6;
+                        if (lvl >= 11)
+                        {
+                            swarmDmg += 2;
+                        }
+                        result.ClassFeatures.Add("Gathered Swarm", $"1/turn, on hit, pick an effect - (dmg + 1D{swarmDmg} piercing), (Str save, slide enemy 15ft), or (move 5ft, costs no movement)" +
+                            $"\nSwarm Appearance - {swarm}");
+                        if (lvl >= 7)
+                        {
+                            result.ClassFeatures.Add("Writhing Tide", "PB/LR, bonus, 1 min, gain Hover and Fly 10ft");
+                        }
+                        if (lvl >= 11)
+                        {
+                            result.ClassFeatures.Add("Mighty Swarm", "if a creature fails Str save vs Gathered Swarm - knock prone" +
+                                "\nwhen you move with Gathered Swarm - gain half cover(+2 AC, Dex saves) 1 turn");
+                        }
+                        if (lvl >= 15)
+                        {
+                            result.ClassFeatures.Add("Swarming Dispersal", "PB/LR, reaction, when you take dmg, gain Resistance to dmg and teleport 30ft");
+                        }
                         break;
                 }
             }

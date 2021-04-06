@@ -98,17 +98,11 @@ namespace DnD_Character_Creator
                 return GetMod(Stats["Cha"]);
             }
         }
-        public int Init
-        {
-            get
-            {
-                return DexMod;
-            }
-        }
+        public int Init { get; set; }
         public int ProficiencyBonus { get; set; }
         public int AC { get; set; }
         public int HP { get; set; }
-        public List<string> Saves { get; set; } = new List<string>();
+        public HashSet<string> Saves { get; set; } = new HashSet<string>();
 
         public HashSet<string> Languages { get; set; } = new HashSet<string> { "Common" };
         public Dictionary<string, int> Skills { get; set; } = new Dictionary<string, int>
@@ -180,7 +174,7 @@ namespace DnD_Character_Creator
             { 8, 0 },
             { 9, 0 }
         };
-        public List<string> Feats { get; set; } = new List<string>();
+        public Dictionary<string, string> Feats { get; set; } = new Dictionary<string, string>();
         public string DragonColor { get; set; }
         public string TieflingMagic { get; set; }
         public List<string> Tenets { get; set; } = new List<string>();

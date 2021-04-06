@@ -15,7 +15,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             { 2, new List<string>() },
             { 3, new List<string>() },
             { 4, new List<string>() },
-            { 5, new List<string>() },
+            { 5, new List<string>() }
         };
         public static CharacterClass Features(CharacterClass result, Character character)
         {
@@ -158,22 +158,6 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                             CircleSpells[5].Add("Cloudkill*");
                             CircleSpells[5].Add("Insect Plague*");
                         }
-                        if (lvl >= 3)
-                        {
-                            result.Spells[2].AddRange(CircleSpells[2]);
-                        }
-                        if (lvl >= 5)
-                        {
-                            result.Spells[3].AddRange(CircleSpells[3]);
-                        }
-                        if (lvl >= 7)
-                        {
-                            result.Spells[4].AddRange(CircleSpells[4]);
-                        }
-                        if (lvl >= 9)
-                        {
-                            result.Spells[5].AddRange(CircleSpells[5]);
-                        }
 
                         if (lvl >= 6)
                         {
@@ -288,7 +272,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                             result.ClassFeatures["Starry Form"] = "bonus, 10 min, expend Wild Shape use, bright light 10ft/dim light 10ft - pick a form to gain benefits" +
                             "\nArcher(when activated or bonus, ranged spell atk, 60ft, 2D8 + Wis Radiant dmg)" +
                             "\nChalice(30ft, 1 creature, when you cast a heal spell, restore HP = 2D8 + Wis)" +
-                            "\nDragon(gain Fly 20ft and Hvoer, when you make an Int or Wis check or a Con save, treats rolls 9 or lower as a 10)");
+                            "\nDragon(gain Fly 20ft and Hvoer, when you make an Int or Wis check or a Con save, treats rolls 9 or lower as a 10)";
                         }
                         if (lvl >= 14)
                         {

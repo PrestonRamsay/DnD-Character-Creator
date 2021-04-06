@@ -16,7 +16,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             { 2, new List<string>() },
             { 3, new List<string>() },
             { 4, new List<string>() },
-            { 5, new List<string>() },
+            { 5, new List<string>() }
         };
         public static CharacterClass Features(CharacterClass result, Character character)
         {
@@ -712,7 +712,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     }
                     if (lvl >= 17)
                     {
-                        result.ClassFeatures.Add("Twilight Shroud", "you and allies in Twilight Sanctuary have half cover");
+                        result.ClassFeatures.Add("Twilight Shroud", "you and allies in Twilight Sanctuary have half cover(+2 AC, Dex saves)");
                     }
                     break;
                 case "War":
@@ -788,8 +788,6 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     }
                     break;
             }
-
-            result.Spells[1].AddRange(DomainSpells[1]);
             if (lvl >= 2)
             {
                 result.ClassFeatures.Add("Channel Divinity(Turn Undead)", "action, 30ft, Wis save - turn 1 min");
@@ -800,13 +798,8 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             {
                 result.ClassFeatures.Add("Cantrip Versatility", "When you get an Ability Score Improvement, you can replace a cantrip");
             }
-            if (lvl >= 4)
-            {
-                result.Spells[1].AddRange(DomainSpells[2]);
-            }
             if (lvl >= 5)
             {
-                result.Spells[1].AddRange(DomainSpells[3]);
                 int CR = 0;
                 result.ClassFeatures.Add("Destroy Undead", "CR under 1/2 that fail against Turn Undead are instantly destroyed");
                 for (int i = 8; i <= lvl ; i += 3)
@@ -819,17 +812,9 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             {
                 result.ClassFeatures["Channel Divinity uses"] = "2/SR";
             }
-            if (lvl >= 7)
-            {
-                result.Spells[1].AddRange(DomainSpells[4]);
-            }
             if (lvl >= 8)
             {
                 result.ClassFeatures.Add("Blessed Strikes", "instead of Divine Strike or Potent Spellcasting, weapon or cantrip dmg + 1D8 Radiant");
-            }
-            if (lvl >= 9)
-            {
-                result.Spells[1].AddRange(DomainSpells[5]);
             }
             if (lvl >= 10)
             {
@@ -844,6 +829,15 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 result.ClassFeatures["Divine Intervention"] = "automatically succeed, DM decides nature of intervention";
             }
             //spells code
+            int num = 1;
+            for (int i = 1; i <= lvl; i += 2)
+            {
+                if (i <= 9)
+                {
+                    result.Spells[num].AddRange(DomainSpells[num]);
+                    num++;
+                }
+            }
             string pickMsg = "Pick a cantrip.";
             string str2 = "You already have that cantrip.";
             int spellLvl = 1;

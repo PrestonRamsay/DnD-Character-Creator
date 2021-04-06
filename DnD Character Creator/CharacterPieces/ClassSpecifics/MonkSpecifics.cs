@@ -15,7 +15,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             int lvl = result.Lvl;
             int martialArtsDie = 4;
             int fastMovement = 10;
-            for (int i = 5; i >= 18; i++)
+            for (int i = 5; i <= lvl; i++)
             {
                 if (i == 5 || i == 11 || i == 17)
                 {
@@ -27,11 +27,14 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 }
             }
             result.ClassFeatures.Add("Unarmored Defense", "AC = 10 + Dex + Wis, while wearing no armor");
-            result.ClassFeatures.Add("Martial Arts", $"Dex for atk/dmg, dmg = 1D{martialArtsDie}, bonus - melee atk");
+            result.ClassFeatures.Add("Martial Arts", $"Dex for unarmed atk/dmg, unarmed dmg = 1D{martialArtsDie}, melee atk as bonus");
 
             if (lvl >= 2)
             {
-                result.ClassFeatures.Add("Ki", $"SR, meditate 30min, points = {lvl}");
+                result.ClassFeatures.Add("Ki", $"SR, meditate 30min, ki pts = {lvl}, gain the following features" +
+                    $"\nFlurry of Blows(1 ki pt, make 2 unarmed atks as a bonus)" +
+                    $"\nPatient Defense(1 ki pt, Dodge as bonus)" +
+                    $"\nStep of the Wind(1 ki pt, Disengage or Dash as bonus, jump distance is doubled this turn)");
                 result.ClassFeatures.Add("Unarmored Movement", $"speed + {fastMovement}ft");
                 FastMovement = fastMovement;
                 result.ClassFeatures.Add("Dedicated Weapon", "on SR/LR, touch non-Heavy wep you have prof with, it becomes a monk weapon");
@@ -41,8 +44,8 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 result.ClassFeatures.Add("Deflect Missiles", $"reaction, reduce ranged dmg by 1D10 + Dex + lvl, if dmg = 0 - 1 ki pt to make atk range 20/60, dmg = 1D{martialArtsDie}(MA die)");
                 result.ClassFeatures.Add("Ki-Fueled Attack", "bonus, when you take an action, spend 1 ki pt, make an mele atk");
                 string msg = "Pick a Monastic Tradition that will give you features at levels 3, 6, 11, and 17.";
-                var archetype = new List<string> { "Way of the Astral Self*", "Way of the Drunken Master", "Way of the Four Elements",
-                    "Way of the Kensai", "Way of the Long Death", "Way of Mercy*", "Way of the Open Hand", "Way of Shadow", "Way of the Sun Soul" };
+                var archetype = new List<string> { "Way of the Astral Self", "Way of the Drunken Master", "Way of the Four Elements",
+                    "Way of the Kensai", "Way of the Long Death", "Way of Mercy", "Way of the Open Hand", "Way of Shadow", "Way of the Sun Soul" };
                 int answer = CLIHelper.PrintChoices(msg, archetype);
 
                 if (answer == 5 || answer == 7)
@@ -57,19 +60,26 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 switch (MonasticTradition)
                 {
                     case "Astral Self":
-                        //result.ClassFeatures.Add("", "");
-                        //if (lvl >= 6)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 11)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 17)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
+                        result.ClassFeatures.Add("Arms of the Astral Self", "bonus, 10min, 10ft, 1 ki pt, Dex save, 2 Martial Arts dice Force dmg" +
+                            "\nuse Wis for Str checks/saves, unarmed atks / gain reach 5ft, unarmed dmg type = Force");
+                        if (lvl >= 6)
+                        {
+                            result.ClassFeatures.Add("Visage of the Astral Self", "bonus, 10min, 1 ki pt, gain a spectral mask/helmet - appearance of your choice and all benefits" +
+                                "\nAstral Sight(see through magical/nonmagical darkness 120ft)" +
+                                "\nWisdom of the Spirit(gain adv on Insight and Intimidation)" +
+                                "\nWord of the Spirit(you can make only 1 creature hear your voice within 60ft, or amplify your voice up to 600ft)");
+                        }
+                        if (lvl >= 11)
+                        {
+                            result.ClassFeatures.Add("Body of the Astral Self", "when your Arms of the Astral Self and Visage of the Astral Self are both active gain all benefits" +
+                                "\nDeflect Energy(reaction, when you take Acid, Cold, Fire, Force, Lightning or Thunder dmg, reduce dmg by 1D10 + Wis)" +
+                                "\nEmpowered Arms(1/turn, on hit, dmg + Martial Arts die)");
+                        }
+                        if (lvl >= 17)
+                        {
+                            result.ClassFeatures.Add("Awakened Astral Self", "bonus, 10min, 5 ki pts, summon Arms, Visage, and Body of the Astral Self and gain all benefits" +
+                                "\nArmor of the Spirit(+2 AC), Astral Barrage(when you use Attack action to make 2 atk with your astral arms, make 3 atk instead)");
+                        }
                         break;
                     case "Drunken Master":
                         character.SkillProficiencies.Add("Performance");
@@ -172,19 +182,27 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         }
                         break;
                     case "Mercy":
-                        //result.ClassFeatures.Add("", "");
-                        //if (lvl >= 6)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 11)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 17)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
+                        character.SkillProficiencies.Add("Insight");
+                        character.SkillProficiencies.Add("Medicine");
+                        result.ToolProficiencies.Add("Herbalism Kit");
+                        Console.WriteLine("Pick an appearance for your merciful mask");
+                        var masks = new List<string> { "Raven", "Blank white", "Crying visage", "Laughing visage", "Skull", "Butterfly" };
+                        result.Equipment.Add(CLIHelper.PrintChoices(masks));
+                        result.ClassFeatures.Add("Implements of Mercy", "gain prof in Insight, Medicine and Herbalism Kit");
+                        result.ClassFeatures.Add("Hand of Healing", "action, 1 ki pt, touch, restore HP = Martial Arts die + Wis / forgo an atk to use during Flurry of Blows");
+                        if (lvl >= 6)
+                        {
+                            result.ClassFeatures.Add("Hand of Harm", "1/turn, on hit, 1 ki pt, Martial Arts die + Wis Necrotic dmg");
+                        }
+                        if (lvl >= 11)
+                        {
+                            result.ClassFeatures.Add("Physician's Touch", "Hand of Healing can also cure disease or remove blind, deaf, paralyze, posion, stun" +
+                                "\nHand of Harm can influct poison condition(disadv on atks/ability checks)");
+                        }
+                        if (lvl >= 17)
+                        {
+                            result.ClassFeatures.Add("Hand of Ultimate Mercy", "LR, action, 5 ki pt, touch creature that died within 24hr, revives with 4D10 + Wis HP, removes blind, deaf, paralyze, posion, stun");
+                        }
                         break;
                     case "Open Hand":
                         result.ClassFeatures.Add("Open Hand Technique", "when use Flurry of Blows, gain one" +
@@ -193,11 +211,11 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                                 "\nenemy can't take reactions");
                         if (lvl >= 6)
                         {
-                            result.ClassFeatures.Add("Wholeness of Body", "action, LR, heal HP = lvl x 3");
+                            result.ClassFeatures.Add("Wholeness of Body", "LR, action, heal HP = lvl x 3");
                         }
                         if (lvl >= 11)
                         {
-                            result.ClassFeatures.Add("Tranquility", "after LR, gain Sanctuary spell effect, Wis-based DC");
+                            result.ClassFeatures.Add("Tranquility", "on LR, gain Sanctuary spell effect, Wis-based DC");
                         }
                         if (lvl >= 17)
                         {

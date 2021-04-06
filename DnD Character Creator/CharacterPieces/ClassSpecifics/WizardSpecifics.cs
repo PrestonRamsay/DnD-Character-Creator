@@ -20,8 +20,8 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             if (lvl >= 2)
             {
                 string msg = "Pick an Arcane Tradition that will give you features at levels 2, 6, 10, and 14.";
-                var archetypes = new List<string> { "Abjuration", "Chronurgy Magic*", "Conjuration", "Divination", "Enchantment",
-                    "Evocation", "Graviturgy Magic*", "Illusion", "Necromancy", "Order of Scribes*", "Transmutation", "War Magic" };
+                var archetypes = new List<string> { "Abjuration", "Chronurgy Magic", "Conjuration", "Divination", "Enchantment",
+                    "Evocation", "Graviturgy Magic", "Illusion", "Necromancy", "Order of Scribes", "Transmutation", "War Magic" };
                 if (Prompts.Elves.Contains(character.ChosenRace))
                 {
                     archetypes.Add("Bladesinging");
@@ -81,21 +81,21 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                             result.ClassFeatures.Add("Song of Victory", "While Bladesong is active, melee dmg + Int");
                         }
                         break;
-                    case "Chronurgy Magic*":
-                        //result.ClassFeatures.Add("", "");
-                        //result.ClassFeatures.Add("", "");
-                        //if (lvl >= 6)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 10)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 14)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
+                    case "Chronurgy Magic":
+                        result.ClassFeatures.Add("Chronal Shift", "2/LR, reaction, force reroll on atk, save, or check - after success or fail");
+                        result.ClassFeatures.Add("Temporal Awareness", "Init + Int");
+                        if (lvl >= 6)
+                        {
+                            result.ClassFeatures.Add("Momentary Stasis", "Int/LR, action, 1 turn, 60ft, Large or smaller creature, Con save, incap and speed = 0");
+                        }
+                        if (lvl >= 10)
+                        {
+                            result.ClassFeatures.Add("Arcane Abeyance", "SR, 1 hr, create Tiny gray bead (AC 15, 1 HP) that holds 4th lvl or lower spell, anyone can release the spell");
+                        }
+                        if (lvl >= 14)
+                        {
+                            result.ClassFeatures.Add("Convergent Future", "reaction, 60ft, 1 creature, decide whether atk, check, or save succeeds or fails / gain 1 lvl of exhuastion, only lost by LR");
+                        }
                         break;
                     case "Conjuration":
                         result.ClassFeatures.Add("Conjuration Savant", "gold/time to copy a Conjuration spell into your spellbook is halved");
@@ -163,21 +163,27 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                             result.ClassFeatures.Add("Overchannel", "max dmg for spells 1st-5th, if used before LR take 2D12/spell lvl + 1D12 per spell lvl for additional uses");
                         }
                         break;
-                    case "Graviturgy Magic*":
-                        //result.ClassFeatures.Add("", "");
-                        //result.ClassFeatures.Add("", "");
-                        //if (lvl >= 6)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 10)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 14)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
+                    case "Graviturgy Magic":
+                        string size = "Large";
+                        if (lvl >= 10)
+                        {
+                            size = "Huge";
+                        }
+                        result.ClassFeatures.Add("Adjust Density", $"action, 1 min conc, 30ft, {size} or smaller object or creature, half or double weight" +
+                            "\nHalved(speed +10ft, jump distance x 2, disadv on Str saves/checks), Doubled(speed -10ft, adv on Str saves/checks)");
+                        if (lvl >= 6)
+                        {
+                            result.ClassFeatures.Add("Gravity Well", "when you cast a spell on a creature - if you hit, the save is failed or the creature is willing - move creature 5ft to unoccupied sq");
+                        }
+                        if (lvl >= 10)
+                        {
+                            result.ClassFeatures.Add("Violent Attraction", "Int/LR, reaction, 60ft, when ally hits a wep atk, dmg + 1D10 / increase fall dmg by 2D10");
+                        }
+                        if (lvl >= 14)
+                        {
+                            result.ClassFeatures.Add("Event Horizon", "LR or 3rd lvl spell slot, action, 1 min conc, 30ft, Str save, hostiles take 2D10 Force and speed = 0 for 1 turn" +
+                                "\non successful save - half dmg and 1ft of movement = 3ft of movement");
+                        }
                         break;
                     case "Illusion":
                         result.ClassFeatures.Add("Illusion Savant", "gold/time to copy an Illusion spell into your spellbook is halved");
@@ -211,21 +217,25 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                             result.ClassFeatures.Add("Command Undead", "action, Cha save, if Int 8+ adv, if Int 12+ it can save every hr");
                         }
                         break;
-                    case "Order of Scribes*":
-                        //result.ClassFeatures.Add("", "");
-                        //result.ClassFeatures.Add("", "");
-                        //if (lvl >= 6)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 10)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 14)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
+                    case "Order of Scribes":
+                        result.ClassFeatures.Add("Wizardly Quill", "bonus, create Tiny quill - doesn't require ink, copies spells in 2 min/lvl, can erase anything you write");
+                        result.ClassFeatures.Add("Awakened Spellbook", "when you cast a spell, dmg type = another spell you know the same lvl / LR, cast a ritual in 10 min");
+                        result.ClassFeatures["Spellcasting"] = "use Int for spell DCs, use Arcane Focus or Spellbook as a spell focus";
+                        if (lvl >= 6)
+                        {
+                            result.ClassFeatures.Add("Manifest Mind", "LR, bonus, 60ft, Awakened Spellbook = spectral Tiny object - Darkvision 60ft, telepathy / bonus, move 30ft - must stay within 300ft" +
+                                "\nPB/LR, cast a spell from object's location");
+                        }
+                        if (lvl >= 10)
+                        {
+                            result.ClassFeatures.Add("Master Scrivener", "on LR, create scroll of 1st or 2nd lvl (cast time 1 action), treat spell as 1 lvl higher" +
+                                "\ncreating spell scroll magic items requires half time/gp costs");
+                        }
+                        if (lvl >= 14)
+                        {
+                            result.ClassFeatures.Add("One with the Word", "gain adv on Arcana / LR, reaction, when you take dmg, dismiss Manifest Mind to negate all dmg" +
+                                "\nafter reaction, temporarily lose 3D6 lvls of spells - regain them after 1D6 LR");
+                        }
                         break;
                     case "Transmutation":
                         result.ClassFeatures.Add("Transmutation Savant", "gold/time to copy a Transmutation spell into your spellbook is halved");
@@ -278,16 +288,28 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 result.ClassFeatures.Add("Signature Spells", "pick two 3rd lvl spells to cast 1/SR without expending a spell slot");
             }
             //spells code
+            var cantrips = new List<string>();
+            cantrips.AddRange(WizardSpells.Cantrips);
+            if (ArcaneTradition == "Chronurgy Magic" || ArcaneTradition == "Graviturgy Magic")
+            {
+                cantrips.Add("Sapping Sting");
+                cantrips.Sort();
+            }
             string pickMsg = "Pick a cantrip.";
             string errorMsg = "You already have that cantrip.";
-            AllSpells spells = new AllSpells("Wizard");
             for (int i = 0; i < result.CantripsKnown; i++)
             {
-                string spell = CLIHelper.GetNew(WizardSpells.Cantrips, result.Cantrips, pickMsg, errorMsg);
+                string spell = CLIHelper.GetNew(cantrips, result.Cantrips, pickMsg, errorMsg);
                 result.Cantrips.Add(spell);
+                cantrips.Remove(spell);
             }
             errorMsg = "You already have that spell";
             pickMsg = "Pick a 1st level spell.";
+            AllSpells spells = new AllSpells("Wizard");
+            if (ArcaneTradition == "Chronurgy Magic" || ArcaneTradition == "Graviturgy Magic")
+            {
+                AddDunamancySpells(spells.Wizard, ArcaneTradition);
+            }
             for (int i = 0; i < 6; i++)
             {
                 string spell = CLIHelper.GetNew(spells.Wizard[1], result.Spells[1], pickMsg, errorMsg);
@@ -324,6 +346,33 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             //end spells code
 
             return result;
+        }
+        public static void AddDunamancySpells(Dictionary<int, List<string>> dict, string arcaneTrad)
+        {
+            if (arcaneTrad == "Chronurgy Magic")
+            {
+                dict[1].Add("Gift of Alacrity");
+                dict[5].Add("Temporal Shunt");
+                dict[8].Add("Reality Break");
+                dict[9].Add("Time Ravage");
+            }
+            if (arcaneTrad == "Graviturgy Magic")
+            {
+                dict[1].Add("Magnify Gravity");
+                dict[2].Add("Immovable Object");
+                dict[4].Add("Gravity Sinkhole");
+                dict[6].Add("Gravity Fissure");
+                dict[8].Add("Dark Star");
+                dict[9].Add("Ravenous Void");
+            }
+            dict[2].Add("Fortune's Favor");
+            dict[2].Add("Wristpocket");
+            dict[3].Add("Pulse Wave");
+            dict[7].Add("Tether Essence");
+            foreach (var item in dict.Keys)
+            {
+                dict[item].Sort();
+            }
         }
     }
 }

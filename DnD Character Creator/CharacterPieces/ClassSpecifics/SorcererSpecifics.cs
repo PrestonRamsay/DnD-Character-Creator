@@ -17,7 +17,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             { 2, new List<string>() },
             { 3, new List<string>() },
             { 4, new List<string>() },
-            { 5, new List<string>() },
+            { 5, new List<string>() }
         };
         public static CharacterClass Features(CharacterClass result, Character character)
         {
@@ -28,41 +28,42 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             var spells = new Dictionary<int, List<string>>();
 
             string msg = "Pick a Sorcerous Origin that will give you features at levels 1, 6, 14, and 18.";
-            var archetypes = new List<string> { "Aberrant Mind*", "Clockwork Soul*", "Divine Soul", "Draconic Bloodline", "Pyromancer",
-                "Shadow Magic", "Storm Sorcery", "Wild Magic" };
-            //"Phoenix*", "Sea Sorcery*", "Stone Sorcery*", 
+            var archetypes = new List<string> { "Aberrant Mind", "Clockwork Soul", "Divine Soul", "Draconic Bloodline", "Phoenix", "Pyromancer",
+                "Sea Sorcery", "Shadow Magic", "Stone Sorcery", "Storm Sorcery", "Wild Magic" };
             int archetype = CLIHelper.PrintChoices(msg, archetypes);
             SorcerousOrigin = archetypes[archetype];
 
             switch (SorcerousOrigin)
             {
                 case "Aberrant Mind":
-                    ExpandedSpells[0].Add("Mind Sliver");
-                    ExpandedSpells[1].Add("Arms of Hadar");
-                    ExpandedSpells[1].Add("Dissonant Whispers");
-                    ExpandedSpells[2].Add("Calm Emotions");
-                    ExpandedSpells[2].Add("Detect Thoughts");
-                    ExpandedSpells[3].Add("Hunger of Hadar");
-                    ExpandedSpells[3].Add("Sending");
-                    ExpandedSpells[4].Add("Evard's Black Tentacles");
-                    ExpandedSpells[4].Add("Summon Aberration");
-                    ExpandedSpells[5].Add("Rary's Telepathic Bond");
-                    ExpandedSpells[5].Add("Telekinesis");
+                    ExpandedSpells[0].Add("Mind Sliver*");
+                    ExpandedSpells[1].Add("Arms of Hadar*");
+                    ExpandedSpells[1].Add("Dissonant Whispers*");
+                    ExpandedSpells[2].Add("Calm Emotions*");
+                    ExpandedSpells[2].Add("Detect Thoughts*");
+                    ExpandedSpells[3].Add("Hunger of Hadar*");
+                    ExpandedSpells[3].Add("Sending*");
+                    ExpandedSpells[4].Add("Evard's Black Tentacles*");
+                    ExpandedSpells[4].Add("Summon Aberration*");
+                    ExpandedSpells[5].Add("Rary's Telepathic Bond*");
+                    ExpandedSpells[5].Add("Telekinesis*");
 
                     result.ClassFeatures.Add("Psionic Spells", "your spell list gains additional spells based on your lvl");
                     result.ClassFeatures.Add("Telepathic Speech", "bonus, lvl min, 30ft, 1 creature, speak telepathically from Cha miles");
-                    //if (lvl >= 6)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
-                    //if (lvl >= 14)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
-                    //if (lvl >= 18)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
+                    if (lvl >= 6)
+                    {
+                        result.ClassFeatures.Add("Psionic Sorcery", "sorcery pt = spell lvl, cast a Psionic Spell without V/S components");
+                        result.ClassFeatures.Add("Psychic Defenses", "gain adv vs charm/fear, gain Resistance to Psychic dmg");
+                    }
+                    if (lvl >= 14)
+                    {
+                        result.ClassFeatures.Add("Revelation in Flesh", "bonus, sorcery pts = options, 10 min - (see invisible creatures 60ft), (gain Hover and Fly speed)" +
+                            "\n(gain Swim speed = speed x 2), or (become slime - move through 1 inch spaces, spend 5ft movement to escape nonmagical restraints/grapples)");
+                    }
+                    if (lvl >= 18)
+                    {
+                        result.ClassFeatures.Add("Warping Implosion", "LR or 5 sorcery pts, action, 30ft(previous location), teleport 120ft, Str save, 3D10 Force dmg, pull to center");
+                    }
                     break;
                 case "Clockwork Soul":
                     ExpandedSpells[1].Add("Alarm");
@@ -78,18 +79,18 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
 
                     result.ClassFeatures.Add("Clockwork Magic", "your spell list gains additional spells based on your lvl");
                     result.ClassFeatures.Add("Restore Balance", "PB/LR, reaction, 60ft, when a creature rolls with adv or disadv - negate the adv or disadv");
-                    //if (lvl >= 6)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
-                    //if (lvl >= 14)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
-                    //if (lvl >= 18)
-                    //{
-                    //    result.ClassFeatures.Add("", "");
-                    //}
+                    if (lvl >= 6)
+                    {
+                        result.ClassFeatures.Add("Bastion of Law", "action, 1-5 sorcery pts, 30ft, 1 creature, gain sorcery pt dice, reduce dmg by # of dice expended");
+                    }
+                    if (lvl >= 14)
+                    {
+                        result.ClassFeatures.Add("Trance of Order", "LR or 5 sorcery pts, bonus, 1 min, atks against you can't have adv / atks, checks, saves below 10 are treated as 10s");
+                    }
+                    if (lvl >= 18)
+                    {
+                        result.ClassFeatures.Add("Clockwork Cavalcade", "LR or 7 sorcery pts, action, 30ft, restore up to 100 HP, repair damaged objects, end all 6th lvl or lower spells");
+                    }
                     break;
                 case "Divine Soul":
                     cantrips.AddRange(ClericSpells.Cantrips);
@@ -180,7 +181,6 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     result.ClassFeatures.Add("Dragon Ancestor", $"double PB on Cha checks when interacting with {color} Dragons");
                     result.ClassFeatures.Add("Draconic Resilience", "increase HP by 1 per lvl, AC = 13 + Dex");
                     character.HP += lvl;
-                    character.AC += 3;
 
                     if (lvl >= 6)
                     {
@@ -194,6 +194,23 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     if (lvl >= 18)
                     {
                         result.ClassFeatures.Add("Draconic Presence", "action, 5 sorcery pts, 60ft, Wis save or fear");
+                    }
+                    break;
+                case "Phoenix":
+                    result.ClassFeatures.Add("Ignite", "magically start a fire by touching a flammable object");
+                    result.ClassFeatures.Add("Mantle of Flame", "LR, bonus, 1 min, bright light 30ft/dim light 30ft, if hit by melee - Cha Fire dmg, Fire spells dmg + Cha");
+                    if (lvl >= 6)
+                    {
+                        result.ClassFeatures.Add("Phoenix Spark", "LR, reaction, 10ft, when you drop to 0 HP drop to 1 instead, deal Fire dmg = 1/2 lvl + Cha" +
+                            "\nif using Mantle of Flame when you activate - Fire dmg = lvl + Cha x 2 instead");
+                    }
+                    if (lvl >= 14)
+                    {
+                        result.ClassFeatures.Add("Nourishing Fire", "when you cast a Fire dmg spell, gain HP = spell lvl + Cha");
+                    }
+                    if (lvl >= 18)
+                    {
+                        result.ClassFeatures.Add("Form of the Phoenix", "gain Fly 40ft, gain Resistance to all dmg, Phoenix Spark dmg + 20");
                     }
                     break;
                 case "Pyromancer":
@@ -211,9 +228,31 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         result.ClassFeatures.Add("Fiery Soul", "gain Immunity to Fire, all spells and effects ignore Fire Resistance and treat Immunity as Resistance");
                     }
                     break;
+                case "Sea Sorcery":
+                    result.ClassFeatures.Add("Soul of the Sea", "gain Swim speed and waterbreathing");
+                    result.ClassFeatures.Add("Curse of the Sea", "on cantrip hit - mark target, when you cast Cold or Lightning dmg spell or a spell that forces movement, gain extra benefit" +
+                        "\nCold dmg(reduce target speed by 15ft), Lightning dmg(dmg + Cha), forced movement(increase dist by 15ft)");
+                    if (lvl >= 6)
+                    {
+                        result.ClassFeatures.Add("Watery Defense", "SR, when hit by B/P/S, reduce dmg by Cha and move 30ft without atk op");
+                    }
+                    if (lvl >= 14)
+                    {
+                        result.ClassFeatures.Add("Shifting Form", "can move through enemies, gain Resistance to dmg from atk op, move through 3 inch space");
+                    }
+                    if (lvl >= 18)
+                    {
+                        result.ClassFeatures.Add("Water Soul", "don't need to eat, drink, or sleep / negate crits / gain Resistance to B/P/S");
+                    }
+                    break;
                 case "Shadow Magic":
                     result.ClassFeatures.Add("Eyes of the Dark", "gain Superior Darkvision 120ft");
                     result.ClassFeatures.Add("Strength of the Grave", "LR, if you drop to 0 HP, Cha save(DC 5 + dmg), drop to 1 HP - can't be used if dmg is Radiant or a crit");
+                    if (lvl >= 3)
+                    {
+                        result.Spells[2].Add("Darkness");
+                        result.ClassFeatures["Eyes of the Dark"] += ", cast Darkness for 2 sorcery pt - if so, you can see through the darkness";
+                    }
                     if (lvl >= 6)
                     {
                         result.ClassFeatures.Add("Hound of Ill Omen", "bonus, 120ft, 1 target, 3 sorcery pts, as Dire Wolf except its a Monstrosity, temp HP = 1/2 lvl" +
@@ -227,6 +266,40 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     if (lvl >= 18)
                     {
                         result.ClassFeatures.Add("Umbral Form", "bonus, 1 min, 6 sorcery pts, gain Resistance to all dmg except Radiant, move through creatures and objects as difficult terrain");
+                    }
+                    break;
+                case "Stone Sorcery":
+                    ExpandedSpells[1].Add("Compelled Duel");
+                    ExpandedSpells[1].Add("Searing Smite");
+                    ExpandedSpells[1].Add("Thunderous Smite");
+                    ExpandedSpells[1].Add("Wrathful Smite");
+                    ExpandedSpells[2].Add("Branding Smite");
+                    ExpandedSpells[2].Add("Magic Weapon");
+                    ExpandedSpells[3].Add("Blinding Smite");
+                    ExpandedSpells[3].Add("Elemental Weapon");
+                    ExpandedSpells[4].Add("Staggering Smite");
+                    result.Proficiencies.Add("Shields");
+                    result.Proficiencies.Add("Simple weapons");
+                    result.Proficiencies.Add("Martial weapons");
+                    result.ClassFeatures.Add("Stone's Durability", "increase HP by 1 per lvl, AC = 13 + Dex");
+                    character.HP += lvl;
+                    if (lvl >= 6)
+                    {
+                        int dmg = 1;
+                        for (int i = 11; i <= lvl; i += 6)
+                        {
+                            dmg++;
+                        }
+                        result.ClassFeatures.Add("Stone Aegis", "bonus, 60ft, 1 min, 1 ally, reduce B/P/S dmg by 2 + 1/4 lvl" +
+                            $"\nreaction, when ally is hit, teleport adj and make melee atk, dmg = {dmg}D10 Force");
+                    }
+                    if (lvl >= 14)
+                    {
+                        result.ClassFeatures.Add("Stone's Edge", "1/spell, 1 creature, dmg + 1/2 lvl Force");
+                    }
+                    if (lvl >= 18)
+                    {
+                        result.ClassFeatures.Add("Stone Master's Aegis", "give Stone Aegis benefits to 3 allies");
                     }
                     break;
                 case "Storm Sorcery":
@@ -284,39 +357,30 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             }
             if (lvl >= 3)
             {
-                msg = "You get 2 metamagic options of your choice";
-                metamagic = CLIHelper.PrintChoices(Options.Metamagic, metamagicList, msg);
-                metamagicList.Remove(metamagic);
-                string metamagic1 = CLIHelper.PrintChoices(Options.Metamagic, metamagicList, msg);
-                metamagicList.Remove(metamagic1);
-                result.ClassFeatures.Add("Metamagic", $"{metamagic}({Options.Metamagic[metamagic]})" +
-                    $"\n{metamagic1}({Options.Metamagic[metamagic1]})");
-                if (archetypes[archetype] == "Shadow Magic")
+                int options = 2;
+                for (int i = 10; i <= lvl; i += 7)
                 {
-                    result.Spells[2].Add("Darkness");
-                    result.ClassFeatures["Eyes of the Dark"] += ", cast Darkness for 2 sorcery pt - if so, you can see through the darkness";
+                    options++;
                 }
+                for (int i = 0; i < options; i++)
+                {
+                    if (i == 0)
+                    {
+                        msg = "You get 2 metamagic options of your choice";
+                    }
+                    else
+                    {
+                        msg = "Pick a new metamagic option";
+                    }
+                    metamagic = CLIHelper.PrintChoices(Options.Metamagic, metamagicList, msg);
+                    metamagicList.Remove(metamagic);
+                    result.ClassFeatures["Metamagic"] += $"\n{metamagic}({Options.Metamagic[metamagic]})";
+                }
+                result.ClassFeatures.Add("Magical Guidance", "1 sorcery pt, when you fail a check, reroll the check, must use new roll");
             }
             if (lvl >= 4)
             {
                 result.ClassFeatures.Add("Sorcerous Versatility", "When you get an Ability Score Improvement, you can replace a Metamagic option or Sorcerer cantrip");
-            }
-            if (lvl >= 3)
-            {
-                result.ClassFeatures.Add("Magical Guidance", "1 sorcery pt, when you fail a check, reroll the check, must use new roll");
-            }
-            if (lvl >= 10)
-            {
-                msg = "Pick a new metamagic option";
-                metamagic = CLIHelper.PrintChoices(Options.Metamagic, metamagicList, msg);
-                metamagicList.Remove(metamagic);
-                result.ClassFeatures["Metamagic"] += $"\n{metamagic}({Options.Metamagic[metamagic]})";
-            }
-            if (lvl >= 17)
-            {
-                msg = "Pick a new metamagic option";
-                metamagic = CLIHelper.PrintChoices(Options.Metamagic, metamagicList, msg);
-                result.ClassFeatures["Metamagic"] += $"\n{metamagic}({Options.Metamagic[metamagic]})";
             }
             if (lvl >= 20)
             {

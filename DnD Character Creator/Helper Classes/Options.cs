@@ -9,6 +9,7 @@ namespace DnD_Character_Creator.Helper_Classes
     {
         public static List<string> Classes { get; set; } = new List<string>
         {
+            "Artificer",
             "Barbarian",
             "Bard",
             "Cleric",
@@ -49,14 +50,20 @@ namespace DnD_Character_Creator.Helper_Classes
             "Bugbear",
             "Centaur",
             "Firbolg",
+            "Genasi",
             "Gith",
             "Goblin",
+            //"Grung",
             "Hobgoblin",
+            //"Kalashtar",
             "Kenku",
             "Kobold",
+            //"Leonin",
             "Lizardfolk",
+            //"Locathah",
             "Loxodon",
             "Orc",
+            //"Satyr",
             "Shifter",
             "Simic Hybird",
             "Tabaxi",
@@ -73,15 +80,21 @@ namespace DnD_Character_Creator.Helper_Classes
             "Doppelganger",
             "Dryad",
             "Gargoyle",
-            "Genasi",
-            "Kalashtar",
             "Myconid",
             "Pixie",
-            "Satyr",
             "Shardmind",
             "Skeleton",
             "Wilden",
             "Zombie"
+        };
+        public static List<string> UARaces { get; set; } = new List<string>
+        {
+            "Dhampir",
+            "Fairy",
+            "Hexblood",
+            "Owlfolk",
+            "Rabbitfolk",
+            "Reborn"
         };
         public static List<string> SubRaces { get; set; } = new List<string>
         {
@@ -114,11 +127,15 @@ namespace DnD_Character_Creator.Helper_Classes
             "Gnome(Rock)",
             "Halfling(Lightfoot)",
             "Halfling(Stout)",
+            //"Hobgoblin of the Feywild",
             "Human",
             "Human(Variant)",
             "Myconid(Compost)",
             "Myconid(Growth)",
             "Myconid(Sporemaster)",
+            //"Orc",
+            //"Orc of Eberron",
+            //"Orc of Exandria",
             "Shardmind(God Shard)",
             "Shardmind(Shard Slayer)",
             "Shardmind(Thought Builder)",
@@ -268,84 +285,103 @@ namespace DnD_Character_Creator.Helper_Classes
             "Wis",
             "Cha"
         };
-        public static List<string> Feats { get; set; } = new List<string>
+        public static Dictionary<string, string> FeatDefinitions { get; set; } = new Dictionary<string, string>
         {
-            "Acute Fighting",
-            "Alert",
-            "Arcane Initiate",
-            "Athlete",
-            "Actor",
-            "Charger",
-            "Chef",
-            "Crossbow Expert",
-            "Crusher",
-            "Defensive Duelist",
-            "Dual Wielder",
-            "Dungeon Delver",
-            "Durable",
-            "Eldritch Adept",
-            "Elemental Adept",
-            "Fey Touched",
-            "Fighting Initiate",
-            "Finesse Weapon Master",
-            "Grappler",
-            "Great Weapon Master",
-            "Gunner",
-            "Healer",
-            "Heavily Armored",
-            "Heavy Armor Master",
-            "Improved Critical",
-            "Insightful Reflexes",
-            "Inspiring Leader",
-            "Jack of All Trades",
-            "Keen Mind",
-            "Lightly Armored",
-            "Linguist",
-            "Lucky",
-            "Mage Slayer",
-            "Magic Initiate",
-            "Martial Adept",
-            "Medium Armor Master",
-            "Metamagic Adept",
-            "Mobile",
-            "Moderately Armored",
-            "Mounted Combatant",
-            "Observant",
-            "Piercer",
-            "Point Blank Shot",
-            "Poisoner",
-            "Polearm Master",
-            "Rapid Shot",
-            "Regeneration",
-            "Resilient",
-            "Ritual Caster",
-            "Savage Attacker",
-            "Sentinel",
-            "Shadow Touched",
-            "Sharpshooter",
-            "Shield Master",
-            "Skill Expert",
-            "Skilled",
-            "Skirmisher",
-            "Skulker",
-            "Slasher",
-            "Spell Focus",
-            "Spell Sniper",
-            "Tavern Brawler",
-            "Telekinetic",
-            "Telepathic",
-            "Tough",
-            "Unarmored Defense",
-            "War Caster",
-            "Weapon Focus",
-            "Weapon Master",
-            "Whirlwind Attack"
+            { "Acute Fighting", "wep dmg + 1D4" },
+            { "Alert", "Init + 5, can't be surprsied, negate adv from hiding" },
+            { "Arcane Initiate", "gain an Artificer cantrip and LR, 1st lvl Artificer spell, prof with 1 set of Artisan's Tools" },
+            { "Athlete", "Increase Str or Dex by 1, when prone - stand up for 5ft of movement, gain Climb speed, standing jumps count as running jumps" },
+            { "Actor", "Increase Int by 1, gain adv on Deception and Performance when impersonating, mimic speech if heard for 1 min(Decepetion vs Insight)" },
+            { "Bountiful Luck", "reaction, 30ft, when ally rolls a 1 on atk, save, or check they can reroll" },
+            { "Charger", "bonus, Dash make a melee atk - if you move 10ft, +5 dmg or push 10ft" },
+            { "Chef", "Increase Con or Wis by 1, gain prof with Cook's Utensils / on SR, 4 + PB creatures, regain 1D8 HP" +
+                "\n         on LR, 8 hr, PB treats - bonus, gain PB temp HP" },
+            { "Crossbow Expert", "ignore Loading, no disadv when threatened / bonus, when you use Attack action with One-Handed wep, make atk with Hand Crossbow" },
+            { "Crusher", "Increase Str or Con by 1 / on hit, 1/turn, if bludgeoning - push 5ft / on bludgeoning crit - adv on atk next turn" },
+            { "Defensive Duelist", "reaction, when you're hit with melee, AC + PB" },
+            { "Dragon Fear", "Increase Str, Con, or Cha by 1 / expend Breath Weapon, 30ft, Cha-based Wis save, fear 1 min" },
+            { "Dragon Hide", "Increase Str, Con, or Cha by 1 / AC = 13 + Dex while not wearing armor" },
+            { "Drow High Magic", "cast Detect Magic at-will, gain Levitate and Dispel Magic spells" },
+            { "Dual Wielder", "while wielding 2 weapons, +1 AC / use Two-Weapon Fighting with non-Light weapons / draw or stow 2 weapons" },
+            { "Dungeon Delver", "gain adv on Perception or Investigation to detect secret doors, adv on saves to avoid traps" +
+                "\n         gain Resistance to trap dmg, search for traps at normal pace" },
+            { "Durable", "Increase Con by 1 / on SR, when you roll HD to gain HP, regain HP = Con * 2" },
+            { "Dwarven Fortitude", "Increase Con by 1 / when you take Dodge action, expend 1 Hit Die to heal Hit Die + Con HP" },
+            { "Eldritch Adept", "gain a Warlock Invocation, you can replace it at lvl ups, must meet requirements" },
+            { "Elemental Adept", "spells of dmg type (Cold, Fire, Lightning, Thunder) ignore Resistance and dmg rolls of 1 are considered 2s" },
+            { "Elven Accuracy", "Increase Dex, Int, Wis, or Cha by 1 / when you have adv on an atk using Dex, Int, Wis, or Cha - reroll 1 die once" },
+            { "Fade Away", "Increase Dex or Int by 1 / SR, reaction, when you take dmg, become invisible" },
+            { "Fey Teleportation", "Increase Int or Cha by 1 / learn Sylvan / SR, cast Misty Step without using a spell slot" },
+            { "Fey Touched", "Increase Int, Wis, or Cha by 1 / gain a 1st lvl divination or enchantment spell / LR, cast Misty spell or 1st lvl spell" },
+            { "Fighting Initiate", "gain a Fighting Style, you can replace it when you gain an Ability Score Improvement" },
+            { "Finesse Weapon Master", "-5 atk = +10 dmg, Acrobatics check to gain adv" },
+            { "Flames of Phlegethos", "Increase Int or Cha by 1 / reroll 1s on Fire dmg spells then for 1 turn - bright light 30ft/dim light 30ft, adj 1D4 Fire dmg" },
+            { "Grappler", "gain adv on atks vs creatures you are grappling, make another grapple check to restrain, grapple one size larger" },
+            { "Great Weapon Master", "-5 atk = +10 dmg, if crit or kill - make melee atk as bonus" },
+            { "Gunner", "Increase Dex by 1 / gain prof with Firearms, ignore Loading, no disadv when threatened" },
+            { "Healer", "using Healer's Kit to stabilize also grants 1 HP / SR, action, use Healer's Kit to restore HP = 1D6 + 4 + creature's HD" },
+            { "Heavily Armored", "Increase Str by 1 / gain prof with Heavy Armor" },
+            { "Heavy Armor Master", "Increase Str by 1 / while wearing Heavy Armor, reduce nonmagical B/P/S by 3" },
+            { "Improved Critical", "increase your crit range by 1 (ex. 20 = 19-20)" },
+            { "Infernal Constitution", "Increase Con by 1 / gain Resistance to Cold and Poison, gain adv on saves vs poison(condition)" },
+            { "Insightful Reflexes", "use Int for AC instead of Dex" },
+            { "Inspiring Leader", "SR, spend 10 min, 30ft, 6 creatures, gain temp HP = lvl + Cha" },
+            { "Jack of All Trades", "1/2 PB to all untrained skills" },
+            { "Keen Mind", "Increase Int by 1 / always know true north, always know hr before sunrise/sunset, accurately recall anything seen/heard in past month" },
+            { "Lightly Armored", "Increase Str or Dex by 1 / gain prof with Light Armor" },
+            { "Linguist", "Increase Int by 1 / gain 3 languages, create written ciphers (Int DC = Int score + PB)" },
+            { "Lucky", "LR, gain 3 luck pts - roll twice for atk, save, or check and use either roll / can also use on atk against you" },
+            { "Mage Slayer", "reaction, if adj creature casts a spell, make a melee atk / impose disadv on Con checks for conc" +
+                "\n         adv on saves vs spells cast by adj creature" },
+            { "Magic Initiate", "gain 2 (Bard, Cleric, Druid, Sorcerer, Warlock, or Wizard) cantrips and a 1st lvl spell (LR to cast)" },
+            { "Martial Adept", "gain a Superior Die (if none = D6), gain 2 Maneuvers from Battle Master, Str or Dex-based DCs" },
+            { "Medium Armor Master", "Medium Armor doesn't impose disadv on Stealth, +1 AC" },
+            { "Metamagic Adept", "gain 2 Sorcery pts, learn 2 Metamagic options, you can replace a Metamagic option when you gain an Ability Score Improvement" },
+            { "Mobile", "speed +10ft, ignore difficult terrain when you Dash, when you atk - no atk op from that creature this turn" },
+            { "Moderately Armored", "Increase Str or Dex by 1 / gain prof with Medium Armor and Shields" },
+            { "Mounted Combatant", "gain adv on melee atk vs unmounted(smaller than mount), force an atk against your mount to target you, mount gains Evasion" },
+            { "Observant", "Increase Int or Wis by 1 / lip-reading if you share a language, +5 to Perception and Investigation" },
+            { "Orcish Fury", "Increase Str or Con by 1 / SR, on hit, dmg + 1 weapon die / reaction, after using Relentless Endurance, make an atk" },
+            { "Piercer", "Increase Str or Dex by 1 / 1/turn, reroll piercing dmg / on piercing crit, dmg + 1 weapon die" },
+            { "Point Blank Shot", "no disadv when threatened / no action, 1 turn, 30ft, dmg + 4" },
+            { "Poisoner", "ignore Poison Resistance, apply poison as a bonus, gain prof with Poisoner's Kit / 1 hr & 50gp, PB doses - 1 min, Con DC 14, 2D8 Poison dmg" },
+            { "Polearm Master", "while wielding Glaive, Halberd, or Quarterstaff - make melee atk as a bonus(1D4 bludgeoning), provoke atk op when creatures enter your reach" },
+            { "Prodigy", "gain a skill, tool prof, and lang / gain Expertise in 1 skill" },
+            { "Rapid Shot", "make a ranged atk as a bonus" },
+            { "Regeneration", "1/turn, no action, heal 1 HP / action, heal 1D6 + Con / outside combat, heal 1D6 HP/hr" },
+            { "Resilient", "Increase any Stat by 1 / gain prof in saves for chosen Stat" },
+            { "Ritual Caster", "gain 2 (Bard, Cleric, Druid, Sorcerer, Warlock, or Wizard) 1st lvl ritual spells / (2 hr and 50gp)/spell lvl, copy a new ritual if its on spell list" },
+            { "Savage Attacker", "1/turn, roll melee weapon dmg twice and use either roll" },
+            { "Second Chance", "Increase Dex, Con, or Cha by 1 / SR or Init, reaction, when hit, reroll atk against you" },
+            { "Sentinel", "on atk op hit, speed = 0 / negate Disengage benefits / reaction, adj creature atks ally, make a melee atk" },
+            { "Shadow Touched", "Increase Int, Wis, or Cha by 1 / gain a 1st lvl illusion or necromancy spell / LR, cast Invisibility spell or 1st lvl spell" },
+            { "Sharpshooter", "-5 atk = +10 dmg, long range doesn't impose disadv, ranged atks ignore half and 3/4 cover" },
+            { "Shield Master", "bonus, when you make Attack action, shove adj creature / Dex saves + Shield AC bonus / reaction, on successful Dex save, no dmg instead of 1/2" },
+            { "Skill Expert", "Increase any Stat by 1 / gain prof in 1 skill / gain Expertise in 1 skill" },
+            { "Skilled", "gain prof in any combination of 3 skills/tools" },
+            { "Skirmisher", "bonus, Disengage, gain +1 AC and dmg + 1D6 for 1 turn" },
+            { "Skulker", "use Hide when only lightly obscured, while Hidden - missing a ranged atk doesn't reveal position, dim light doesn't impose disadv on Perception" },
+            { "Slasher", "Increase Str or Dex by 1 / 1/turn, if slashing - reduce speed by 10ft / on slashing crit, target suffers disadv on atk next turn" },
+            { "Spell Focus", "spell DCs + 2" },
+            { "Spell Sniper", "double spells' range, spells ignore 1/2 and 3/4 cover, gain a (Bard, Cleric, Druid, Sorcerer, Warlock, or Wizard) cantrip" },
+            { "Squat Nimbleness", "Increase Str or Dex by 1 / increase speed by 5ft, gain prof in Acrobatics or Athletics, gain adv on checks vs grapple" },
+            { "Tavern Brawler", "Increase Str or Dex by 1 / gain prof with improvised and unarmed atks, unarmed dmg = 1D4 / bonus, hit with improvised for unarmed atk, grapple check" },
+            { "Telekinetic", "Increase Int, Wis, or Cha by 1 / gain Mage Hand cantrip (if you already know range +30ft), its invisibile and doesn't require V or S components" +
+                "\n         bonus, 30ft, Str save, push 5ft" },
+            { "Telepathic", "Increase Int, Wis, or Cha by 1 / gain Telepathy 60ft / LR or 2nd lvl spell slot, cast Detect Thoughts" },
+            { "Tough", "gain max HP = lvl x 2, each lvl up gain 2 max HP" },
+            { "Unarmored Defense", "while wearing no armor, AC = 10 + Dex + (Con or Wis)" },
+            { "War Caster", "gain adv on Con saves for conc, perform somatic components while both hands are holding weapons/shields / reaction, atk op with spell" },
+            { "Weapon Focus", "pick a specific weapon(ex. Longsword, Unarmed Strike, Club), +2 atk/dmg" },
+            { "Weapon Master", "Increase Str or Dex by 1 / gain prof with 4 weapons of your choice" },
+            { "Whirlwind Attack", "action, make an melee atk against each enemy within reach" },
+            { "Wood Elf Magic", "gain a Druid cantrip, gain Longstrider and Pass without Trace spells" }
         };
         public static List<string> LightArmor { get; set; } = new List<string>
         {
             "Padded(+1 AC, Stealth disadv)(5gp, 8lb.)",
             "Leather(+1 AC)(10gp, 10lb.)",
-            "Studded Leather(+2 AC)(45gp, 13lb.)"
+            "Studded leather(+2 AC)(45gp, 13lb.)"
         };
         public static List<string> MediumArmor { get; set; } = new List<string>
         {
@@ -426,15 +462,15 @@ namespace DnD_Character_Creator.Helper_Classes
         };
         public static List<string> HolySymbols { get; set; } = new List<string>
         {
-            "Holy symbol(amulet)",
-            "Holy symbol(emblem)",
-            "Holy symbol(reliquary)"
+            "Holy symbol(Amulet)",
+            "Holy symbol(Emblem)",
+            "Holy symbol(Reliquary)"
         };
         public static List<string> DruidicFocuses { get; set; } = new List<string>
         {
             "Druidic Focus(Sprig of mistletoe)",
             "Druidic Focus(Totem)",
-            "Druidic Focus(Wooden Staff)",
+            "Druidic Focus(Wooden staff)",
             "Druidic Focus(Yew wand)"
         };
         public static List<string> ArcaneFocuses { get; set; } = new List<string>
@@ -453,6 +489,24 @@ namespace DnD_Character_Creator.Helper_Classes
             "Star Map(Collection of maps bound with ebony cover)",
             "Star Map(Crystal that projects starry patterns when in light)",
             "Star Map(Glass disks that depict constellations)"
+        };
+        public static List<string> MercifulMasks { get; set; } = new List<string>
+        {
+            "Merciful Mask(Raven)",
+            "Merciful Mask(Blank white)",
+            "Merciful Mask(Crying visage)",
+            "Merciful Mask(Laughing visage)",
+            "Merciful Mask(Skull)",
+            "Merciful Mask(Butterfly)"
+        };
+        public static List<string> GenieVessels { get; set; } = new List<string>
+        {
+            "Genie Vessel(Oil lamp)",
+            "Genie Vessel(Urn)",
+            "Genie Vessel(Ring with a compartment)",
+            "Genie Vessel(Stoppered bottle)",
+            "Genie Vessel(Hollow statuette)",
+            "Genie Vessel(Ornate lantern)"
         };
         public static List<string> MusicalInstruments { get; set; } = new List<string>
         {
@@ -526,21 +580,28 @@ namespace DnD_Character_Creator.Helper_Classes
         };
         public static Dictionary<string, string> Maneuvers { get; set; } = new Dictionary<string, string>
         {
+            { "Ambush", "on Init, Stealth + SD" },
+            { "Bait and Switch", "switch places with adj ally, no atk op, you and ally gain AC + SD, 1 turn" },
+            { "Brace", "reaction, when creature comes in reach, make atk, dmg + SD" },
             { "Commander's Strike", "bonus, forgo atk to have ally use reaction to atk + SD" },
+            { "Commanding Presence", "Intimidation, Performance, or Persuasin check + SD" },
             { "Disarming Strike", "on hit, dmg + SD, Str save to disarm" },
             { "Distracting Strike", "on hit, dmg + SD, next atk gets adv" },
             { "Evasive Footwork", "on move, AC + SD until movement ends" },
             { "Feinting Attack", "bonus, adv on atk - on hit, dmg + SD" },
             { "Goading Attack", "on hit, dmg + SD, Wis save to impose disadv" },
+            { "Grappling Strike", "bonus, on hit, grapple target, Athletics + SD" },
             { "Lunging Attack", "+5ft reach on atk, dmg + SD" },
             { "Manuevering Attack", "on hit, dmg + SD, ally use reaction to move 1/2 speed without atk op" },
             { "Menacing Attack", "on hit, dmg + SD, Wis save for fear 1 turn" },
             { "Parry", "reaction, reduce dmg by Dex + SD" },
             { "Precision Attack", "atk + SD, before or after roll" },
             { "Pushing Attack", "on hit, dmg + SD, Str save push 15ft" },
+            { "Quick Toss", "bonus, make a ranged atk with thrown weapon and draw a weapon, dmg + SD" },
             { "Rally", "bonus, ally gains temp HP = Cha + SD" },
             { "Riposte", "on enemy miss, reaction - make melee atk, dmg + SD" },
             { "Sweeping Attack", "on hit, use atk roll against adj enemy - deal SD dmg" },
+            { "Tactical Assessment", "History, Insight, or Investigation" },
             { "Trip Attack", "on hit, dmg + SD, Str save to knock prone" }
         };
         public static Dictionary<string, string> ArcaneShotOptions { get; set; } = new Dictionary<string, string>
@@ -577,6 +638,45 @@ namespace DnD_Character_Creator.Helper_Classes
             { "Subtle Spell", "1 sorcery pt, cast a spell without verbal or somatic components" },
             { "Transmuted Spell", "1 sorcery pt, change a spell's dmg type to Acid, Cold, Fire, Lightning, Poison, or Thunder" },
             { "Twinned Spell", "spell lvl(1 for cantrip) sorcery pt, make a spell that targets 1 creature target 2 instead" }
+        };
+        public static Dictionary<string, string> Infusions { get; set; } = new Dictionary<string, string>
+        {
+            { "Arcane Propulsion Armor", "increase speed by 5ft, gauntlet(1D8 Force, Thrown 20/60, Returning), can't be removed, replaces limbs" },
+            { "Armor of Magical Strength", "6 charges(regain 1D6 at dawn), 1 charge - (Str check/save + Int) or (reaction, negate being knocked prone)" },
+            { "Boots of the Winding Path", "bonus, teleport 15ft" },
+            { "Enhanced Arcane Focus", "+1 (+2 if lvl 10) to spell atks and spells ignore half cover" },
+            { "Enhanced Defense", "AC + 1 (+2 if lvl 10)" },
+            { "Enhanced Weapon", "+1 to atk/dmg (+2 if lvl 10)" },
+            { "Helm of Awareness", "gain adv on Init, can't be surprised" },
+            { "Homunculus Servant", "uses your prof bonus, defaults to Dodge, bonus to command, Mending spell heals 2D6 HP" },
+            { "Mind Sharpener", "4 charges(regain 1D4 at dawn), 1 charge - succeed a Con save for conc" },
+            { "Radiant Weapon", "+1 to atk/dmg, bonus - bright light 30ft/dim light 30ft / 4 charges(regain 1D4 at dawn), 1 charge - reaction, blind 1 turn" },
+            { "Repeating Shot", "+1 to ranged atk/dmg, ignore Loading property, creates ammo" },
+            { "Replicate Magic Item", "see Tasha's Cauldron for options, DM's Guide for defintions" },
+            { "Repulsion Shield", "AC + 1 / 4 charges(regain 1D4 at dawn), 1 charge - reaction, after being hit, push 15ft" },
+            { "Resistant Armor", "gain Resistance to Acid, Cold, Fire, Force, Lightning, Necrotic, Poison, Psychic, Radiant, or Thunder" },
+            { "Returning Weapon", "+1 to atk/dmg, returns back to your hand after a ranged atk" },
+            { "Spell-Refueling Ring", "dawn, action, recover a 3rd lvl or lower spell slot" }
+        };
+        public static List<string> BaseInfusions { get; set; } = new List<string>
+        {
+            "Armor of Magical Strength",
+            "Enhanced Arcane Focus",
+            "Enhanced Defense",
+            "Enhanced Weapon",
+            "Homunculus Servant",
+            "Mind Sharpener",
+            "Repeating Shot",
+            "Replicate Magic Item",
+            "Returning Weapon"
+        };
+        public static List<string> Lvl6Infusions { get; set; } = new List<string>
+        {
+            "Boots of the Winding Path",
+            "Radiant Weapon",
+            "Repulsion Shield",
+            "Resistant Armor",
+            "Spell-Refueling Ring"
         };
         public static Dictionary<string, string> AllInvocations { get; set; } = new Dictionary<string, string>
         {
@@ -639,57 +739,57 @@ namespace DnD_Character_Creator.Helper_Classes
         };
         public static List<string> BaseInvocations { get; set; } = new List<string>
         {
-            { "Agonizing Blast" },
-            { "Armor of Shadows" },
-            { "Beast Speech" },
-            { "Beguiling Influence" },
-            { "Devil's Sight" },
-            { "Eldritch Mind" },
-            { "Eldritch Sight" },
-            { "Eldritch Spear" },
-            { "Eyes of the Rune Keeper" },
-            { "Fiendish Vigor" },
-            { "Gaze of Two Minds" },
-            { "Grasp of Hadar" },
-            { "Lance of Lethargy" },
-            { "Mask of Many Faces" },
-            { "Misty Visions" },
-            { "Repelling Blast" },
-            { "Thief of Five Fates" }
+            "Agonizing Blast",
+            "Armor of Shadows",
+            "Beast Speech",
+            "Beguiling Influence",
+            "Devil's Sight",
+            "Eldritch Mind",
+            "Eldritch Sight",
+            "Eldritch Spear",
+            "Eyes of the Rune Keeper",
+            "Fiendish Vigor",
+            "Gaze of Two Minds",
+            "Grasp of Hadar",
+            "Lance of Lethargy",
+            "Mask of Many Faces",
+            "Misty Visions",
+            "Repelling Blast",
+            "Thief of Five Fates"
         };
         public static List<string> LvlFiveInvoc { get; set; } = new List<string>
         {
-            { "Cloak of Flies" },
-            { "Gift of the Depths" },
-            { "Maddening Hex" },
-            { "Mire the Mind" },
-            { "One with Shadows" },
-            { "Sign of Ill Omen" },
-            { "Tomb of Levistus" },
-            { "Undying Servitude" }
+            "Cloak of Flies",
+            "Gift of the Depths",
+            "Maddening Hex",
+            "Mire the Mind",
+            "One with Shadows",
+            "Sign of Ill Omen",
+            "Tomb of Levistus",
+            "Undying Servitude"
         };
         public static List<string> LvlSevenInvoc { get; set; } = new List<string>
         {
-            { "Bewitching Whispers" },
-            { "Dreadful Word" },
-            { "Ghostly Gaze" },
-            { "Relentless Hex" },
-            { "Sculptor of Flesh" },
-            { "Trickster's Escape" },
+            "Bewitching Whispers",
+            "Dreadful Word",
+            "Ghostly Gaze",
+            "Relentless Hex",
+            "Sculptor of Flesh",
+            "Trickster's Escape"
         };
         public static List<string> LvlNineInvoc { get; set; } = new List<string>
         {
-            { "Ascendant Step" },
-            { "Minions of Chaos" },
-            { "Otherworldly Leap" },
-            { "Whispers of the Grave" },
+            "Ascendant Step",
+            "Minions of Chaos",
+            "Otherworldly Leap",
+            "Whispers of the Grave"
         };
         public static List<string> LvlFifteenInvoc { get; set; } = new List<string>
         {
-            { "Master of Myriad Forms" },
-            { "Shroud of Shadow" },
-            { "Visions of Distant Realms" },
-            { "Witch Sight" },
+            "Master of Myriad Forms",
+            "Shroud of Shadow",
+            "Visions of Distant Realms",
+            "Witch Sight"
         };
         public static Dictionary<string, string> Talents { get; set; } = new Dictionary<string, string>
         {
@@ -774,6 +874,9 @@ namespace DnD_Character_Creator.Helper_Classes
             { "Fey Presence", "1/SR, action, 10ft, Wis save, charm creatures" },
             { "Fighting Style", "pick from: Archery, Blind Fighting, Defense, Dueling, Great Weapon Fighting, Interception, Protection, " +
                 "Superior Technique, Thrown Weapon Fighting, Two-Weapon Fighting, Unarmed Fighting" },
+            { "Genie's Vessel", "AC = spell DC, HP = lvl + PB, Immunity to Poison and Psychic" +
+                "\nBottled Respite(LR, action, PB x 2 hr, enter/exit extradimensional space inside the vessel)" +
+                $"\nGenie's Wrath(1/turn, on hit, dmg + PB bludgeoning, Cold, Fire, or Thunder - pick when you gain feature)" },
             { "Gift of the Sea", "gain waterbreathing and Swim 40ft" },
             { "Healing Light", "LR, gain D6 pool = 1 + lvl, bonus, 60ft, 1 creature, heal D6s - max dice spent at once = Cha" },
             { "Heart of Fire", "when you cast a fire dmg spell, 10ft, creatures of your choice, fire dmg = 1/2 lvl" },
@@ -801,8 +904,8 @@ namespace DnD_Character_Creator.Helper_Classes
             { "Tentacle of the Deeps", $"PB/LR, bonus, 1 min, 60ft, create 10ft tentacle - make melee spell atk, 1D8 Cold, reduce speed by 10ft" +
                         "\nbonus, move tentacle 30ft and atk again" },
             { "Thieves' Cant", "secret thief language, speaking/writing takes 4x longer" },
-            { "Unarmed Defense(Con)", "AC = 10 + Dex + Con" },
-            { "Unarmed Defense(Wis)", "AC = 10 + Dex + Wis" },
+            { "Unarmored Defense(Con)", "AC = 10 + Dex + Con" },
+            { "Unarmored Defense(Wis)", "AC = 10 + Dex + Wis" },
             { "Vigilant Blessing", "action, touch, 1 creature, give adv on Init" },
             { "Voice of Authority", "when you cast a non-cantrip spell on an ally, 1 ally can use reaction to make a weapon atk" },
             { "War Priest", "Wis/LR, atk as bonus" },

@@ -10,6 +10,14 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
         {
             switch (classString)
             {
+                case "Artificer":
+                    Artificer.Add(0, ArtificerSpells.Cantrips);
+                    Artificer.Add(1, ArtificerSpells.FirstLvls);
+                    Artificer.Add(2, ArtificerSpells.SecondLvls);
+                    Artificer.Add(3, ArtificerSpells.ThirdLvls);
+                    Artificer.Add(4, ArtificerSpells.FourthLvls);
+                    Artificer.Add(5, ArtificerSpells.FifthLvls);
+                    break;
                 case "Bard":
                     Bard.Add(0, BardSpells.Cantrips);
                     Bard.Add(1, BardSpells.FirstLvls);
@@ -128,8 +136,9 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
                     Wizard.Add(8, WizardSpells.EigthLvls);
                     Wizard.Add(9, WizardSpells.NinthLvls);
                     break;
-            } 
+            }
         }
+        public Dictionary<int, List<string>> Artificer { get; set; } = new Dictionary<int, List<string>>();
         public Dictionary<int, List<string>> Bard { get; set; } = new Dictionary<int, List<string>>();
         public Dictionary<int, List<string>> Cleric { get; set; } = new Dictionary<int, List<string>>();
         public Dictionary<int, List<string>> Druid { get; set; } = new Dictionary<int, List<string>>();
@@ -188,6 +197,47 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "True Strike",
             "Vicious Mockery",
             "Word of Radiance"
+        };
+        public static List<string> FirstLvlDivination { get; set; } = new List<string>
+        {
+            "Beast Bond",
+            "Comprehend Languages",
+            "Detect Evil and Good",
+            "Detect Magic",
+            "Detect Poison and Disease",
+            "Gift of Alacrity",
+            "Hunter's Mark",
+            "Identify",
+            "Speak with Animals"
+        };
+        public static List<string> FirstLvlEnchantment { get; set; } = new List<string>
+        {
+            "Animal Friendship",
+            "Bane",
+            "Bless",
+            "Charm Person",
+            "Command",
+            "Compelled Duel",
+            "Dissonant Whispers",
+            "Heroism",
+            "Hex",
+            "Sleep",
+            "Tasha's Hideous Laughter"
+        };
+        public static List<string> FirstLvlIllusion { get; set; } = new List<string>
+        {
+            "Color Spray",
+            "Disguise Self",
+            "Distort Value",
+            "Illusory Script",
+            "Silent Image"
+        };
+        public static List<string> FirstLvlNecromancy { get; set; } = new List<string>
+        {
+            "Cause Fear",
+            "False Life",
+            "Inflict Wounds",
+            "Ray of Sickness"
         };
         public static Dictionary<string, string> Descriptions { get; set; } = new Dictionary<string, string>
         {
@@ -549,7 +599,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             { "Protection from Evil and Good", "" },
             { "Protection from Poison", "" },
             { "Psychic Scream", "" },
-            //{ "Pulse Wave", "" }, explorer's guide to wildemount
+            { "Pulse Wave", "" },
             { "Purify Food and Drink", "" },
             { "Pyrotechnics", "" },
             { "Raise Dead", "" },
@@ -558,7 +608,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             { "Ray of Enfeeblement", "" },
             { "Ray of Frost", "" },
             { "Ray of Sickness", "" },
-            //{ "Reality Break", "" }, explorer's guide to wildemount
+            { "Reality Break", "" },
             { "Regenerate", "" },
             { "Reincarnate", "" },
             { "Remove Curse", "" },
@@ -644,10 +694,10 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             { "Teleport", "" },
             { "Teleportation Circle", "" },
             { "Temple of the Gods", "" },
-            //{ "Temporal Shunt", "" }, explorer's guide to wildemount
+            { "Temporal Shunt", "" },
             { "Tenser's Floating Disk", "" },
             { "Tenser's Transformation", "" },
-            //{ "Tether Essence", "" }, explorer's guide to wildemount
+            { "Tether Essence", "" },
             { "Thaumaturgy", "" },
             { "Thorn Whip", "" },
             { "Thunder Step", "" },
@@ -655,7 +705,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             { "Thunderous Smite", "" },
             { "Thunder Wave", "" },
             { "Tidal Wave", "" },
-            //{ "Time Ravage", "" }, explorer's guide to wildemount
+            { "Time Ravage", "" },
             { "Time Stop", "" },
             { "Tiny Servant", "" },
             { "Toll the Dead", "" },

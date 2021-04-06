@@ -78,6 +78,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Catnap",
             "Counterspell",
             "Dispel Magic",
+            "Elemental Weapon",
             "Fear",
             "Fireball",
             "Haste",

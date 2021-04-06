@@ -86,7 +86,7 @@ namespace DnD_Character_Creator
             {
                 Console.Clear();
                 Console.WriteLine(msg + "\n");
-                string option = CLIHelper.PrintChoices(dictOptions);
+                string option = PrintChoices(dictOptions);
                 returnList.Add(option);
                 dictOptions.Remove(option);
             }
@@ -258,6 +258,32 @@ namespace DnD_Character_Creator
             {
                 string skill = GetNew(classSkills, race.SkillProficiencies, pickMsg, errorMsg);
                 race.SkillProficiencies.Add(skill);
+            }
+        }
+        public static void AddSpells(CharacterClass result, Dictionary<int, string> dict)
+        {
+            int spellLvl = 2;
+            for (int i = 3; i <= result.Lvl; i += 2)
+            {
+                result.Spells[spellLvl].Add(dict[spellLvl]);
+                spellLvl++;
+                if (i == 5 || i == 9)
+                {
+                    i += 2;
+                }
+            }
+        }
+        public static void AddSpells(CharacterClass result, Dictionary<int, List<string>> dict)
+        {
+            int spellLvl = 2;
+            for (int i = 3; i <= result.Lvl; i += 2)
+            {
+                result.Spells[spellLvl].AddRange(dict[spellLvl]);
+                spellLvl++;
+                if (i == 5 || i == 9)
+                {
+                    i += 2;
+                }
             }
         }
     }

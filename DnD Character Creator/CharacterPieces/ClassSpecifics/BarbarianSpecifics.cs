@@ -223,13 +223,13 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                                     result.ClassFeatures.Add("Aspect of the Beast(Elk)", "Travel pace is doubled, up to 10 allies, 60ft");
                                     break;
                                 case 3:
-                                    var skills = new List<string> { "Acrobatis", "Athletics", "Stealth", "Survival" };
-                                    pickMsg = "Pick 2 skills.";
-                                    int skill = CLIHelper.PrintChoices(pickMsg, skills);
-                                    character.SkillProficiencies.Add(skills[skill]);
-                                    skills.RemoveAt(skill);
-                                    skill = CLIHelper.PrintChoices(pickMsg, skills);
-                                    character.SkillProficiencies.Add(skills[skill]);
+                                    Console.WriteLine("Pick 2 skills");
+                                    var skills = new List<string> { "Athletics", "Acrobatics", "Stealth", "Survival" };
+                                    string skill = CLIHelper.PrintChoices(skills);
+                                    character.SkillProficiencies.Add(skill);
+                                    skills.Remove(skill);
+                                    skill = CLIHelper.PrintChoices(skills);
+                                    character.SkillProficiencies.Add(skill);
                                     result.ClassFeatures.Add("Aspect of the Beast(Tiger)", "gain prof in 2 skills");
                                     break;
                                 case 4:
@@ -326,7 +326,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             }
             if (lvl >= 9)
             {
-                result.ClassFeatures.Add("Brutal Critical", $"When you crit, roll {brutalCritDice} extra weapon dmg die");
+                result.ClassFeatures.Add("Brutal Critical", $"When you crit, dmg + {brutalCritDice} weapon die");
             }
             if (lvl >= 10)
             {
@@ -349,7 +349,6 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             {
                 result.ClassFeatures.Add("Indomitable Might", "If your total Str check is less than your Str score, you can use your Str score instead");
             }
-            
             if (lvl >= 20)
             {
                 result.ClassFeatures.Add("Primal Champion", "Increase Str and Con by 4, the max for Str and Con are now 24");

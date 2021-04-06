@@ -21,48 +21,78 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     sneakAtkDice++;
                 }
             }
+            string msg = "Pick a Roguish Archetype that will give you features at levels 3, 9, 13, and 17.";
+            var archetype = new List<string> { "Arcane Trickster", "Assassin", "Inquisitive", "Mastermind", "Ninja", "Phantom", "Scout",
+                    "Soulknife", "Swashbuckler", "Thief" };
+            int input = CLIHelper.PrintChoices(msg, archetype);
+            RoguishArchetype = archetype[input];
 
             result.ClassFeatures.Add($"Sneak Attack({sneakAtkDice}D6)", "1/turn, if you have adv or tar is flanked, must use finesse or ranged wep");
             result.ClassFeatures.Add("Expertise","pick 2 skills, or 1 skill and 1 tool prof, double PB");
-            Console.WriteLine("Would you like to gain Expertise in 2 skills or 1 skill and 1 tool prof?");
-            CLIHelper.Print2Choices("2 skills", "1 skill and 1 tool prof");
-            int num = CLIHelper.GetNumberInRange(1, 2);
-            string expertise = "";
-            var prof = new List<string>();
-            prof.AddRange(character.SkillProficiencies);
-            if (num == 1)
+            if (RoguishArchetype != "Ninja")
             {
-                expertise = CLIHelper.PrintChoices(prof);
-                character.Skills[expertise] += character.ProficiencyBonus;
-                prof.Remove(expertise);
-                expertise = CLIHelper.PrintChoices(prof);
-                character.Skills[expertise] += character.ProficiencyBonus;
+                Console.WriteLine("Would you like to gain Expertise in 2 skills or 1 skill and 1 tool prof?");
+                CLIHelper.Print2Choices("2 skills", "1 skill and 1 tool prof");
+                int num = CLIHelper.GetNumberInRange(1, 2);
+                string expertise = "";
+                var prof = new List<string>();
+                prof.AddRange(character.SkillProficiencies);
+                if (num == 1)
+                {
+                    expertise = CLIHelper.PrintChoices(prof);
+                    character.Skills[expertise] += character.ProficiencyBonus;
+                    prof.Remove(expertise);
+                    expertise = CLIHelper.PrintChoices(prof);
+                    character.Skills[expertise] += character.ProficiencyBonus;
+                }
+                else
+                {
+                    expertise = CLIHelper.PrintChoices(prof);
+                    character.Skills[expertise] += character.ProficiencyBonus;
+                    prof.Clear();
+                    prof.AddRange(character.ToolProficiencies);
+                    expertise = CLIHelper.PrintChoices(prof);
+                    character.ToolProficiencies.Remove(expertise);
+                    character.ToolProficiencies.Add(expertise + "(Expertise)");
+                }
+                character.Skills["Acrobatics"] += character.ProficiencyBonus;
             }
             else
             {
-                expertise = CLIHelper.PrintChoices(prof);
-                character.Skills[expertise] += character.ProficiencyBonus;
-                prof.Clear();
-                prof.AddRange(character.ToolProficiencies);
-                expertise = CLIHelper.PrintChoices(prof);
-                character.ToolProficiencies.Remove(expertise);
-                character.ToolProficiencies.Add(expertise + "(Expertise)");
+                Console.WriteLine("Would you like to gain Expertise in a skill or a tool proficiency?");
+                CLIHelper.Print2Choices("Skill", "Tool Proficiency");
+                int num = CLIHelper.GetNumberInRange(1, 2);
+                string expertise = "";
+                var prof = new List<string>();
+                if (num == 1)
+                {
+                    prof.AddRange(character.SkillProficiencies);
+                    if (prof.Contains("Acrobatics"))
+                    {
+                        prof.Remove("Acrobatics");
+                    }
+                    expertise = CLIHelper.PrintChoices(prof);
+                    character.Skills[expertise] += character.ProficiencyBonus;
+                }
+                else
+                {
+                    prof.AddRange(character.ToolProficiencies);
+                    expertise = CLIHelper.PrintChoices(prof);
+                    character.ToolProficiencies.Remove(expertise);
+                    character.ToolProficiencies.Add(expertise + "(Expertise)");
+                }
             }
+            
             result.ClassFeatures.Add("Thieves' Cant", "secret thief language, speaking/writing takes 4x longer");
             character.Languages.Add("Thieves' Cant");
 
             if (lvl >= 2)
             {
-                result.ClassFeatures.Add("Cunning Action", "bonus, Dash, Disengage, or Hide");
+                result.ClassFeatures.Add("Cunning Action", "bonus, take Dash, Disengage, or Hide action");
             }
             if (lvl >= 3)
             {
                 result.ClassFeatures.Add("Steady Aim", "bonus, gain adv on next atk - can't move before or after using");
-                string msg = "Pick a Roguish Archetype that will give you features at levels 3, 9, 13, and 17.";
-                var archetype = new List<string> { "Arcane Trickster", "Assassin", "Inquisitive", "Mastermind", "Phantom*", "Scout",
-                    "Soulknife*", "Swashbuckler", "Thief" };
-                int input = CLIHelper.PrintChoices(msg, archetype);
-                RoguishArchetype = archetype[input];
 
                 switch (RoguishArchetype)
                 {
@@ -218,20 +248,43 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                                 "\ngain Immunity to mind-reading, if telepathy or mind-reading is used on you, Deception vs Insight to present false thoughts");
                         }
                         break;
+                    case "Ninja":
+                        result.ClassFeatures.Add("Ki", $"Ki pts = PB/LR, on SR gain 1 ki pt, Ghost Step(1 ki pt, become invisible for 1 turn)");
+                        result.ClassFeatures.Add("Remarkable Mobility", "gain Climb speed, jump dist + Dex, 1 use of Expertise must go to Acrobatics(gain prof if you don't have)");
+                        result.SkillProficiencies.Add("Acrobatics");
+                        if (lvl >= 9)
+                        {
+                            result.ClassFeatures.Add("Ghost Strike", "wep atks are considered magical, you can hit ethereal creatures");
+                            result.ClassFeatures["Ki"] += "\nKi Dodge(1 ki pt, as Blur spell)";
+                        }
+                        if (lvl >= 13)
+                        {
+                            result.ClassFeatures.Add("Ghost Mind", "Detection spells must succeed on Wis-based Wis DC to detect you");
+                            result.ClassFeatures["Ki"] = $"Ki pts = PB/LR, on SR gain 1 ki pt, Ghost Step(1 ki pt, become invisible or etheral for 1 turn)" +
+                                $"\nKi Dodge(1 ki pt, as Blur spell)";
+                        }
+                        if (lvl >= 17)
+                        {
+                            result.ClassFeatures.Add("Ghost Sight", "you can see invisible and etheral creatures normally");
+                            result.ClassFeatures["Ki"] += "\nGhost Walk(2 ki pt, as Etherealness spell)";
+                        }
+                        break;
                     case "Phantom":
-                        //result.ClassFeatures.Add("", "");
-                        //if (lvl >= 9)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 13)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 17)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
+                        result.ClassFeatures.Add("Whispers of the Dead", "on SR/LR, gain a skill or tool proficiency of your choice");
+                        result.ClassFeatures.Add("Wails from the Grave", "PB/LR, 30ft, when you hit Sneak Attack, target new creature, 1/2 Sneak Attack dice rounded up (Necrotic dmg)");
+                        if (lvl >= 9)
+                        {
+                            result.ClassFeatures.Add("Tokens of the Departed", "reaction, 30ft, when creature dies, create soul trinket, max trinkets = PB, gain adv on Con and death saves" +
+                                "\ndestroy soul trinket - (use Wails from the Grave without expending a use) or (action, ask trinket spirit a question)");
+                        }
+                        if (lvl >= 13)
+                        {
+                            result.ClassFeatures.Add("Ghost Walk", "bonus, 10 min, gain Hover and Fly 10ft");
+                        }
+                        if (lvl >= 17)
+                        {
+                            result.ClassFeatures.Add("Death's Friend", "Wails from the Grave also effect Sneak Attack target, on LR - gain a soul trinket");
+                        }
                         break;
                     case "Scout":
                         result.ClassFeatures.Add("Skirmisher", "reaction, if enemy ends turn adj, move half your speed with no atk op");
@@ -247,7 +300,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                             if (character.Speedstring.Contains("Swim"))
                             {
                                 string tensFeet = character.Speedstring.Substring(character.Speedstring.Length - 4, 1);
-                                int num = int.Parse(tensFeet);
+                                num = int.Parse(tensFeet);
                                 num++;
                                 string speed = character.Speedstring.Substring(0, character.Speedstring.Length - 4);
                                 character.Speedstring = $"{speed}{num}0ft";
@@ -263,19 +316,28 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         }
                         break;
                     case "Soul Knife":
-                        //result.ClassFeatures.Add("", "");
-                        //if (lvl >= 9)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 13)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 17)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
+                        int dice = 6;
+                        for (int i = 5; i <= lvl; i += 6)
+                        {
+                            dice += 2;
+                        }
+                        result.ClassFeatures.Add("Psionic Power", $"PB * 2 Psionic Energy dice(D{dice})/ SR, bonus, regain 1 Psionic Energy die" +
+                            $"\nPsi-Bolstered Knack(when you fail a skill or tool check you are prof with, check + Psionic Energy die)" +
+                            $"\nPsychic Whispers(LR, action, 1 mile, Psionic Energy die hr, PB creatures, gain telepathy - no action to use)");
+                        result.ClassFeatures.Add("Psychic Blades", "manifest psychic blade(1D6 Psychic, Finesse, Light, Thrown 60) / bonus, atk with psychic blade(1D4 Psychic)");
+                        if (lvl >= 9)
+                        {
+                            result.ClassFeatures.Add("Soul Blades", "Homing Strikes(when you miss atk with Psychic Blades, atk + Psionic Energy die)" +
+                                "\nPsychic Teleportation(bonus, teleport Psionic Energy die x 10ft)");
+                        }
+                        if (lvl >= 13)
+                        {
+                            result.ClassFeatures.Add("Psychic Veil", "LR or Psionic Energy die, action, 1 hr, become invisible");
+                        }
+                        if (lvl >= 17)
+                        {
+                            result.ClassFeatures.Add("Rend Mind", "LR or 3 Psionic Energy dice, when you Sneak Attack with Psychic Blades, Dex-based Wis save, stun 1 min");
+                        }
                         break;
                     case "Swashbuckler":
                         result.ClassFeatures.Add("Fancy Footwork", "if you make an atk, creature attacked can't take atk op");

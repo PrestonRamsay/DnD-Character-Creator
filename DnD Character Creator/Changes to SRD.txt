@@ -6,6 +6,8 @@ barbarian(storm herald) - change env on SR instead of lvl up
 cleric(ice, tempest) - ice domain is homebrew, tempest has alternate domain spells
 monk(way of four elements) - reduced ki pt costs
 paladin tenets (sword coast)
+swordmage, fighter(brawler), rogue(ninja) added
 grim hollow advanced background holdings
+new feats
 
 racial changes documented seperately

@@ -35,7 +35,6 @@ namespace DnD_Character_Creator.Races
         public List<string> ToolProficiencies { get; set; } = new List<string>();
         public List<string> Proficiencies { get; set; } = new List<string>();
         public List<string> Cantrips { get; set; } = new List<string>();
-        public List<string> Feats { get; set; } = new List<string>();
         public string DragonColor { get; set; }
         public string TieflingMagic { get; set; }
         public string Name { get; set; }
@@ -1296,10 +1295,6 @@ namespace DnD_Character_Creator.Races
             int index = CLIHelper.PrintChoices(msg, Options.Skills);
             string pickedSkill = Options.Skills[index];
             result.SkillProficiencies.Add(pickedSkill);
-            msg = "You get to pick a feat. Enter the feat you'd like here.";
-            index = CLIHelper.PrintChoices(msg, Options.Feats);
-            string feat = Options.Feats[index];
-            result.Feats.Add(feat);
 
             return result;
         }

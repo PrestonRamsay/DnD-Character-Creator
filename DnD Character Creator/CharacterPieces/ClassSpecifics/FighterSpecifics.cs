@@ -48,8 +48,8 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             if (lvl >= 3)
             {
                 string msg = "Pick a Martial Archetype that will give you features at levels 3, 7, 10, 15, and 18.";
-                var archetype = new List<string> { "Arcane Archer", "Battle Master", "Cavalier", "Champion", "Echo Knight*", "Eldritch Knight",
-                    "Psi Warrior*", "Purple Dragon Knight", "Rune Knight*", "Samurai" };
+                var archetype = new List<string> { "Arcane Archer", "Battle Master", "Brawler", "Cavalier", "Champion", "Echo Knight", "Eldritch Knight",
+                    "Psi Warrior", "Purple Dragon Knight", "Rune Knight", "Samurai" };
                 int answer = CLIHelper.PrintChoices(msg, archetype);
                 MartialArchetype = archetype[answer];
 
@@ -127,7 +127,27 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                                 }
                             }
                         }
+                        var manDict = new Dictionary<string, string>();
+                        var featMan = new List<string>();
+                        foreach (var item in Options.Maneuvers.Keys)
+                        {
+                            manDict.Add(item, Options.Maneuvers[item]);
+                        }
+                        if (character.Feats.ContainsKey("Martial Adept"))
+                        {
+                            character.ClassFeatures.Remove("Maneuvers(D6)");
+                            foreach (var item in Options.Maneuvers.Keys)
+                            {
+                                if (character.ClassFeatures.ContainsKey(item))
+                                {
+                                    character.ClassFeatures.Remove(item);
+                                    manDict.Remove(item);
+                                    featMan.Add(item);
+                                }
+                            }
+                        }
                         List<string> maneuvers = CLIHelper.GetDictionaryOptions(Options.Maneuvers, man, "Pick a new maneuver");
+                        maneuvers.AddRange(featMan);
                         foreach (var item in maneuvers)
                         {
                             result.ClassFeatures["Combat Superiority"] += $"\n{item}({Options.Maneuvers[item]})";
@@ -140,6 +160,36 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         if (lvl >= 15)
                         {
                             result.ClassFeatures.Add("Relentless", "on Init, if no superiority dice - regain 1");
+                        }
+                        break;
+                    case "Brawler":
+                        int dmg = 4;
+                        for (int i = 5; i <= lvl; i += 6)
+                        {
+                            dmg += 2;
+                        }
+                        result.ClassFeatures.Add("Pugilist", $"unarmed dmg = 1D{dmg}, melee atk as bonus, op atk dmg + 1D4");
+                        result.ClassFeatures.Add("Array of Strikes", "PB/LR, 1/turn, on hit, pick a type of attack to gain benefits, Str-based DCs" +
+                            "\nHaymaker(Str save, push 15ft)" +
+                            "\nSucker Punch(gain adv on next unarmed atk)" +
+                            "\nThunderclap Strike(Con save, disadv on atk for 1 turn)" +
+                            "\nUppercut(Str save, knock prone)");
+                        result.ClassFeatures.Add("Fast Footwork", "bonus, take Dash, Disengage, or Dodge action");
+                        if (lvl >= 7)
+                        {
+                            result.ClassFeatures.Add("Iron Fists", "unarmed atks count as magical / when you crit, dmg + Pugilist unarmed die");
+                        }
+                        if (lvl >= 10)
+                        {
+                            result.ClassFeatures.Add("Knockout Punch", "SR, action, creature Large or smaller, Str-based DC Con save, knock unconscious until successful save");
+                        }
+                        if (lvl >= 15)
+                        {
+                            result.ClassFeatures.Add("Hand to Hand Mastery", "unarmed dmg + 1/2 PB, unarmed atks crit on 19 and 20");
+                        }
+                        if (lvl >= 18)
+                        {
+                            result.ClassFeatures.Add("Stonejaw", "gain Resistance to bludgeoning, reduce all dmg by 3");
                         }
                         break;
                     case "Cavalier":
@@ -211,23 +261,25 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         }
                         break;
                     case "Echo Knight":
-                        //result.ClassFeatures.Add("", "");
-                        //if (lvl >= 7)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 10)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 15)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 18)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
+                        result.ClassFeatures.Add("Manifest Echo", "bonus, echo stats(AC = 14 + PB, 1 HP, uses your saves, Immunity to all conditions), no action - move echo 30ft" +
+                            "\nbonus, range = any, teleport/swap places with echo for 15ft movement / atks can originate from echo / reaction, make an atk op with echo");
+                        result.ClassFeatures.Add("Unleash Incarnation", "Con/LR, when you use Attack action, make an extra atk with echo");
+                        if (lvl >= 7)
+                        {
+                            result.ClassFeatures.Add("Echo Avatar", "action, 10 min, see and hear through echo - causes blindness/deafness, echo can move up to 1000ft away from you");
+                        }
+                        if (lvl >= 10)
+                        {
+                            result.ClassFeatures.Add("Shadow Martyr", "SR, reaction, sight, atk is made, teleport echo adj to you or ally - atk is redirected to echo");
+                        }
+                        if (lvl >= 15)
+                        {
+                            result.ClassFeatures.Add("Reclaim Potential", "Con/LR, when echo is destroyed by taking dmg, gain temp HP = 2D6 + Con");
+                        }
+                        if (lvl >= 18)
+                        {
+                            result.ClassFeatures.Add("Legion of One", "bonus, create 2 echoes with Manifest Echo / on Init, if no uses of Unleash Incarnation - gain 1 use");
+                        }
                         break;
                     case "Eldritch Knight":
                         result.ClassFeatures.Add("Weapon Bond", "1hr ritual to bond, can't be disarmed, bonus to teleport to hand, " +
@@ -326,23 +378,32 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         }
                         break;
                     case "Psi Warrior":
-                        //result.ClassFeatures.Add("", "");
-                        //if (lvl >= 7)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 10)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 15)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 18)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
+                        int energy = 6;
+                        for (int i = 5; i <= lvl; i += 6)
+                        {
+                            energy += 2;
+                        }
+                        result.ClassFeatures.Add("Psionic Power", $"gain Psionic Energy dice(D{energy}) = PB x 2/LR / SR, bonus, regain 1 Psionic Energy die" +
+                            $"\nProtective Field(reaction, 30ft, when creature takes dmg, reduce dmg by Psionice Energy die + Int)" +
+                            $"\nPsionic Strike(1/turn, on weapon hit, 30ft, Psionce Enerdy die + Int Force dmg)" +
+                            $"\nTelekinetic Movement(LR or Psionice Energy die, action, 30ft, move Large or smaller object or ally 30ft, if Tiny move to/from hand)");
+                        if (lvl >= 7)
+                        {
+                            result.ClassFeatures.Add("Telekinetic Adept", $"Psi-Powered Leap(SR, bonus, 1 turn, gain Fly {character.Speed * 2}ft)" +
+                                $"\nTelekinetic Thrust(when you deal dmg with Psionic Strike, Str save(Int-based DC), knock prone or slide 10ft)");
+                        }
+                        if (lvl >= 10)
+                        {
+                            result.ClassFeatures.Add("Guarded Mind", "gain Resistance to Psychic, expend Psionic Energy die to end charm/fear on self");
+                        }
+                        if (lvl >= 15)
+                        {
+                            result.ClassFeatures.Add("Bulwark of Force", "LR or Psionice Energy die, bonus, 1 min, 30ft, Int creatures, half cover(+2 AC, Dex saves)");
+                        }
+                        if (lvl >= 18)
+                        {
+                            result.ClassFeatures.Add("Telekinetic Master", "LR or Psionice Energy die, cast Telekinesis, while conc and turn cast - bonus, make wep atk");
+                        }
                         break;
                     case "Purple Dragon Knight":
                         result.ClassFeatures.Add("Banneret", "Knighthood given on battle for courage, troop commander status");
@@ -380,23 +441,51 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         }
                         break;
                     case "Rune Knight":
-                        //result.ClassFeatures.Add("", "");
-                        //if (lvl >= 7)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 10)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 15)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
-                        //if (lvl >= 18)
-                        //{
-                        //    result.ClassFeatures.Add("", "");
-                        //}
+                        character.Languages.Add("Giant");
+                        result.ToolProficiencies.Add("Smith's Tools");
+                        int runes = 2;
+                        for (int i = 7; i <= lvl; i += 3)
+                        {
+                            runes++;
+                            if (i == 10)
+                            {
+                                i += 2;
+                            }
+                        }
+                        int giantDmg = 6;
+                        if (lvl >= 10)
+                        {
+                            giantDmg = 8;
+                        }
+                        if (lvl >= 18)
+                        {
+                            giantDmg = 10;
+                        }
+                        result.ClassFeatures.Add("Giant's Might", $"PB/LR, bonus, 1 min, become Large, gain adv on Str checks/saves, 1/turn dmg + 1D{giantDmg}");
+                        result.ClassFeatures.Add("Rune Carver", $"on LR, touch {runes} objects to imbue with a Rune, each object can only have 1 rune, Con-based DC" +
+                            "\nCloud Rune(gain adv on Deception and Sleight of Hand / SR, reaction, 30ft, creature is hit, transfer atk to new target)" +
+                            "\nFire Rune(PB for Tools x 2 / SR, on hit, dmg + 2D6 Fire, Str save, 1 min, restrain with shackles)" +
+                            "\nFrost Rune(gain adv on Animal Handling and Intimidation / SR, bonus, 10 min, all Str and Con checks + 2)" +
+                            "\nStone Rune(gain adv on Insight and Darkvision 120ft / SR, reaction, 1 min, 30ft, Wis save, charm - incap and speed = 0)");
+                        if (lvl >= 7)
+                        {
+                            result.ClassFeatures["Rune Carver"] += "\nHill Rune(gain adv on saves vs poison(condition) and Resistance to Poison dmg / SR, bonus, 1 min, gain Resistance to B/P/S)" +
+                            "\nStorm Rune(gain adv on Arcana, can't be surprised / SR, bonus, 1 min - reaction, 60ft, 1 creature, give atk, save, check adv or disadv)";
+                            result.ClassFeatures.Add("Runic Shield", "PB/LR, reaction, 60ft, when ally is hit, force atk reroll");
+                        }
+                        if (lvl >= 10)
+                        {
+                            result.ClassFeatures.Add("Great Stature", "height + 3D4 inches");
+
+                        }
+                        if (lvl >= 15)
+                        {
+                            result.ClassFeatures.Add("Master of Runes", "you can use each rune from your Rune Carver feature twice/SR");
+                        }
+                        if (lvl >= 18)
+                        {
+                            result.ClassFeatures.Add("Runic Juggernaut", "you can increase your size to Huge when you use Giant's Might, if you do - gain reach 5ft");
+                        }
                         break;
                     case "Samurai":
                         pickLang = "Pick a language";

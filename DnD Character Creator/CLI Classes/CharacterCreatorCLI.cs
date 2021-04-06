@@ -1,4 +1,5 @@
 ﻿using DnD_Character_Creator.Backgrounds;
+using DnD_Character_Creator.CharacterPieces;
 using DnD_Character_Creator.Classes;
 using DnD_Character_Creator.CLI_Classes;
 using DnD_Character_Creator.Helper_Classes;
@@ -267,8 +268,17 @@ namespace DnD_Character_Creator
                 character.Skills[expertise] += character.ProficiencyBonus;
             }
 
+            AddClass.DetermineAC(character);
             AddClass.DetermineHP(character, classObject);
+            if (character.Feats.ContainsKey("Tough"))
+            {
+                character.HP += character.Lvl * 2;
+            }
             AddClass.AddProficiencies(character, classObject);
+            if (character.Feats.ContainsKey("Skilled") || character.Feats.ContainsKey("Prodigy"))
+            {
+                Feats.GetSkillsOrTools(character);
+            }
             AddClass.ClassSpecifics(character, classObject);
             AddClass.AddEquipment(character, classObject);
             AddClass.ModifySkills(character);
@@ -297,7 +307,6 @@ namespace DnD_Character_Creator
             string profs = String.Join(", ", character.Proficiencies);
             string toolProfs = String.Join(", ", character.ToolProficiencies);
             string additionalBackgroundInfo = WriteAdditionalBackgroundProperty(character);
-            int AC = character.AC + 10 + character.DexMod;
 
             Console.Clear();
             Console.WriteLine($"Name: {character.Name}           Height: {height}{size}                    Class: {character.ChosenClass}({character.Archetype})");
@@ -312,7 +321,7 @@ namespace DnD_Character_Creator
             Console.WriteLine("----------------------------------------------------------------------------------------------------------------");
             Console.WriteLine($"Str: {character.Stats["Str"]} + {character.StrMod}| Init: {character.Init}");
             Console.WriteLine($"Dex: {character.Stats["Dex"]} + {character.DexMod}| Proficiency Bonus: +{character.ProficiencyBonus}");
-            Console.WriteLine($"Con: {character.Stats["Con"]} + {character.ConMod}| AC: {AC}");
+            Console.WriteLine($"Con: {character.Stats["Con"]} + {character.ConMod}| AC: {character.AC}");
             Console.WriteLine($"Int: {character.Stats["Int"]} + {character.IntMod}| HP: {character.HP}");
             Console.WriteLine($"Wis: {character.Stats["Wis"]} + {character.WisMod}| Saves: {saves}");
             Console.WriteLine($"Cha: {character.Stats["Cha"]} + {character.ChaMod}");
@@ -352,9 +361,9 @@ namespace DnD_Character_Creator
             {
                 Console.WriteLine($"\nFeats:");
                 Console.WriteLine("------------------------------------");
-                foreach (string feat in character.Feats)
+                foreach (string feat in character.Feats.Keys)
                 {
-                    Console.WriteLine($"{feat}");
+                    Console.WriteLine($"{feat}: {character.Feats[feat]}");
                 }
             }
             Console.WriteLine("\nProficiencies:");
@@ -444,7 +453,6 @@ namespace DnD_Character_Creator
                 string profs = String.Join(", ", character.Proficiencies);
                 string toolProfs = String.Join(", ", character.ToolProficiencies);
                 string additionalBackgroundInfo = WriteAdditionalBackgroundProperty(character);
-                int AC = character.AC + 10 + character.DexMod;
 
                 sw.WriteLine($"Name: {character.Name}           Height: {height}{size}             Class: {character.ChosenClass}({character.Archetype})");
                 sw.WriteLine($"Age: {character.Age}{character.ChosenTemplate}                Weight: {character.Weight} lbs.              Level: {character.Lvl}");
@@ -458,7 +466,7 @@ namespace DnD_Character_Creator
                 sw.WriteLine("----------------------------------------------------------------------------------------------------------------");
                 sw.WriteLine($"Str: {character.Stats["Str"]} + {character.StrMod}| Init: {character.Init}");
                 sw.WriteLine($"Dex: {character.Stats["Dex"]} + {character.DexMod}| Proficiency Bonus: +{character.ProficiencyBonus}");
-                sw.WriteLine($"Con: {character.Stats["Con"]} + {character.ConMod}| AC: {AC}");
+                sw.WriteLine($"Con: {character.Stats["Con"]} + {character.ConMod}| AC: {character.AC}");
                 sw.WriteLine($"Int: {character.Stats["Int"]} + {character.IntMod}| HP: {character.HP}");
                 sw.WriteLine($"Wis: {character.Stats["Wis"]} + {character.WisMod}| Saves: {saves}");
                 sw.WriteLine($"Cha: {character.Stats["Cha"]} + {character.ChaMod}");
@@ -498,9 +506,9 @@ namespace DnD_Character_Creator
                 {
                     sw.WriteLine($"\nFeats:");
                     sw.WriteLine("------------------------------------");
-                    foreach (string feat in character.Feats)
+                    foreach (string feat in character.Feats.Keys)
                     {
-                        sw.WriteLine($"{feat}");
+                        sw.WriteLine($"{feat}: {character.Feats[feat]}");
                     }
                 }
                 sw.WriteLine("\nProficiencies:");
@@ -728,36 +736,6 @@ namespace DnD_Character_Creator
                 {
                     character.Equipment.Add(Options.HolySymbols[2]);
                 }
-            }
-        }
-        public static void DetermineAC(Character character)
-        {
-            if (character.ChosenClass == "Barbarian")
-            {
-                character.AC += character.Stats["Con"];
-            }
-            if (character.ChosenClass == "Monk")
-            {
-                character.AC += character.Stats["Wis"];
-            }
-            if (character.ChosenClass != "Barbarian" || character.ChosenClass != "Monk")
-            {
-                string armor = "";
-                int armorAC = 0;
-                int intValue = -1;
-                foreach (var item in character.Equipment)
-                {
-                    if (item.Contains("AC"))
-                    {
-                        int index = item.IndexOf("AC");
-                        armor = item.Substring(index - 2, 1);
-                    }
-                }
-                if (int.TryParse(armor, out intValue))
-                {
-                    armorAC = intValue;
-                }
-                character.AC += armorAC;
             }
         }
     }

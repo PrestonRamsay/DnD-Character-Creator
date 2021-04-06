@@ -51,6 +51,9 @@ namespace DnD_Character_Creator.Classes
         {
             switch (character.ChosenClass)
             {
+                case "Artificer":
+                    result = Artificer(character, result);
+                    break;
                 case "Barbarian":
                     result = Barbarian(character, result);
                     break;
@@ -103,6 +106,50 @@ namespace DnD_Character_Creator.Classes
                 string skill = CLIHelper.GetNew(classSkills, character.SkillProficiencies, pickMsg, errorMsg);
                 character.SkillProficiencies.Add(skill);
             }
+        }
+        public static CharacterClass Artificer(Character character, CharacterClass result)
+        {
+            var classSkills = new List<string>() { "Arcana", "History", "Investigation", "Medicine", "Nature", "Perception", "Sleight of Hand" };
+
+            result.GP = 125;
+            result.HitDie = 8;
+            result.Proficiencies.Add("Light armor");
+            result.Proficiencies.Add("Medium armor");
+            result.Proficiencies.Add("Shields");
+            result.Proficiencies.Add("Simple weapons");
+            result.Proficiencies.Add("Firearms");
+            result.ToolProficiencies.Add("Thieves' Tools");
+            result.ToolProficiencies.Add("Tinker's Tools");
+            Console.WriteLine("Pick a set of Artisan's Tools to gain proficiency with");
+            string tool = CLIHelper.PrintChoices(Options.ArtisanTools);
+            result.ToolProficiencies.Add(tool);
+            result.Saves.Add("Con");
+            result.Saves.Add("Int");
+
+            GetSkills(character, "Artificer", classSkills, 2);
+
+            Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
+            result.Equipment.Add("Simple melee weapon");
+            result.Equipment.Add("Simple melee weapon2");
+            result.Equipment.Add(Options.SimpleRangedWeapons[0]);
+            result.Equipment.Add("20 bolts");
+            CLIHelper.Print2Choices("Studded leather armor", "Scale mail");
+            int input = CLIHelper.GetNumberInRange(1, 2);
+
+            if (input == 1)
+            {
+                result.Equipment.Add(Options.LightArmor[2]);
+            }
+            else
+            {
+                result.Equipment.Add(Options.MediumArmor[2]);
+            }
+            result.Equipment.Add("Thieves' Tools");
+            result.Equipment.Add(Options.Packs[2]);
+            result = ArtificerSpecifics.Features(character, result);
+            character.Archetype = ArtificerSpecifics.ArtificerSpecialist;
+
+            return result;
         }
         public static CharacterClass Barbarian(Character character, CharacterClass result)
         {
@@ -739,7 +786,8 @@ namespace DnD_Character_Creator.Classes
             }
             else
             {
-                int index = CLIHelper.PrintChoices("Pick an arcane focus.", Options.ArcaneFocuses);
+                var focuses = new List<string> { "Crystal", "Orb", "Rod", "Staff", "Wand" };
+                int index = CLIHelper.PrintChoices("Pick an arcane focus.", focuses);
                 result.Equipment.Add(Options.ArcaneFocuses[index]);
             }
             if (input3 == 1)
@@ -770,7 +818,7 @@ namespace DnD_Character_Creator.Classes
             result.Proficiencies.Add("Simple weapons");
             foreach (var item in swords)
             {
-                result.Proficiencies.Add(item);
+                result.Proficiencies.Add(item + "s");
             }
             result.Saves.Add("Dex");
             result.Saves.Add("Cha");
@@ -851,7 +899,8 @@ namespace DnD_Character_Creator.Classes
             }
             else
             {
-                int index = CLIHelper.PrintChoices("Pick an arcane focus.", Options.ArcaneFocuses); ;
+                var focuses = new List<string> { "Crystal", "Orb", "Rod", "Staff", "Wand" };
+                int index = CLIHelper.PrintChoices("Pick an arcane focus.", focuses);
                 result.Equipment.Add(Options.ArcaneFocuses[index]);
             }
             if (input3 == 1)
@@ -917,7 +966,8 @@ namespace DnD_Character_Creator.Classes
             }
             else
             {
-                int index = CLIHelper.PrintChoices("Pick an arcane focus.", Options.ArcaneFocuses); ;
+                var focuses = new List<string> { "Crystal", "Orb", "Rod", "Staff", "Wand" };
+                int index = CLIHelper.PrintChoices("Pick an arcane focus.", focuses);
                 result.Equipment.Add(Options.ArcaneFocuses[index]);
             }
             if (input3 == 1)
