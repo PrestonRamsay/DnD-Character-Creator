@@ -27,6 +27,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Resistance",
             "Shocking Grasp",
             "Spare the Dying",
+            "Sword Burst",
             "Thorn Whip",
             "Thunderclap"
         };
@@ -40,7 +41,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Expeditious Retreat",
             "Faerie Fire",
             "False Life",
-            "Feather Fall",
+            "Featherfall",
             "Grease",
             "Identify",
             "Jump",

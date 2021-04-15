@@ -153,6 +153,7 @@ namespace DnD_Character_Creator.Helper_Classes
         {
             character.AC += 10 + character.DexMod;
             string arch = character.Archetype;
+            var AC13 = new List<string> { "Draconic Bloodline", "Psychometabolism(Egoist)", "Stone Sorcery" };
             if (character.ChosenClass == "Barbarian" || character.Feats.ContainsKey("Unarmored Defense(Con)"))
             {
                 character.AC += character.Stats["Con"];
@@ -161,7 +162,7 @@ namespace DnD_Character_Creator.Helper_Classes
             {
                 character.AC += character.Stats["Wis"];
             }
-            else if (arch == "Draconic Bloodline" || arch == "Stone Sorcery" || character.Feats.ContainsKey("Dragon Hide"))
+            else if (AC13.Contains(arch) || character.Feats.ContainsKey("Dragon Hide"))
             {
                 character.AC += 3;
             }
@@ -286,7 +287,7 @@ namespace DnD_Character_Creator.Helper_Classes
         {
             string classString = character.ChosenClass;
             int lvl = character.Lvl;
-            var cantrips = new List<string> { "Artifcier", "Bard", "Cleric", "Druid", "Sorcerer", "Swordmage", "Warlock", "Wizard" };
+            var cantrips = new List<string> { "Artifcier", "Bard", "Cleric", "Druid", "Psion", "Sorcerer", "Swordmage", "Warlock", "Wizard" };
 
             if (cantrips.Contains(classString))
             {
@@ -308,6 +309,7 @@ namespace DnD_Character_Creator.Helper_Classes
                     class1.CantripsKnown += 2;
                 }
             }
+            //end cantrips
             if (classString == "Bard")
             {
                 class1.SpellsKnown = 4;
@@ -334,7 +336,7 @@ namespace DnD_Character_Creator.Helper_Classes
                     }
                 }
             }
-            if (classString == "Warlock")
+            if (classString == "Psion" || classString == "Warlock")
             {
                 class1.SpellsKnown = 2;
                 for (int i = 2; i <= lvl; i++)

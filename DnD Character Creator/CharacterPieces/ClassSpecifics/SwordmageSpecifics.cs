@@ -34,7 +34,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 string fightStyleValue = Options.FightingStyles[fightStyle];
                 result.ClassFeatures.Add(fightStyleKey, fightStyleValue);
                 result.ClassFeatures.Add("Enchanted Blade", "bonus to teleport to you, +1D6 dmg, on SR/LR - change the dmg type to: " +
-                    "\nCold, Fire, Force, Lightning, Necrotic, or Radiant (pick one to have at base)");
+                    "\n        Cold, Fire, Force, Lightning, Necrotic, or Radiant (pick one to have at base)");
             }
             if (lvl >= 3)
             {
@@ -48,71 +48,13 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 switch (ArcaneSwordStyle)
                 {
                     case "Assault":
-                        ExpandedSpells[1].Add("Hex*");
-                        ExpandedSpells[1].Add("Hunter's Mark*");
-                        ExpandedSpells[2].Add("Blindness/Deafness*");
-                        ExpandedSpells[2].Add("Magic Weapon*");
-                        ExpandedSpells[3].Add("Bestow Curse*");
-                        ExpandedSpells[3].Add("Crusader's Mantle*");
-                        ExpandedSpells[4].Add("Fire Shield*");
-                        ExpandedSpells[4].Add("Ice Storm*");
-                        ExpandedSpells[5].Add("Hold Monster*");
-                        ExpandedSpells[5].Add("Negative Energy Flood*");
-                        result.ClassFeatures.Add("Supernatural Focus", "SR, atk + 10, after roll before hit or miss");
-
-                        if (lvl >= 7)
-                        {
-                            result.ClassFeatures.Add("Persistent Swordsman", "hit with atk op, teleport 20ft toward enemy");
-                        }
-                        if (lvl >= 15)
-                        {
-                            result.ClassFeatures.Add("Duelist Strike", "mark as bonus, if target atks, reaction melee atk");
-                        }
+                        Assault(result);
                         break;
                     case "Ensnaring":
-                        ExpandedSpells[1].Add("Arms of Hadar*");
-                        ExpandedSpells[1].Add("Ensnaring Strike*");
-                        ExpandedSpells[2].Add("Hold Person*");
-                        ExpandedSpells[2].Add("Spike Growth*");
-                        ExpandedSpells[3].Add("Plant Growth*");
-                        ExpandedSpells[3].Add("Sleet Storm*");
-                        ExpandedSpells[4].Add("Evard's Black Tentacles*");
-                        ExpandedSpells[4].Add("Grasping Vine*");
-                        ExpandedSpells[5].Add("Dominate Person*");
-                        ExpandedSpells[5].Add("Wrath of Nature*");
-                        result.ClassFeatures.Add("Debilitating Hex", "mark as bonus, target has disadv on atk for 1 min");
-
-                        if (lvl >= 7)
-                        {
-                            result.ClassFeatures.Add("Countercharm", "action, 30ft, end charm/fear effects");
-                        }
-                        if (lvl >= 15)
-                        {
-                            result.ClassFeatures.Add("Arcane Redirect", "Cha/LR, 60ft, decrease atk/dmg/save of enemy by D10");
-                        }
+                        Ensnaring(result);
                         break;
                     case "Shielding":
-                        ExpandedSpells[1].Add("Sanctuary*");
-                        ExpandedSpells[1].Add("Shield of Faith*");
-                        ExpandedSpells[2].Add("Calm Emotions*");
-                        ExpandedSpells[2].Add("Warding Bond*");
-                        ExpandedSpells[3].Add("Glyph of Warding*");
-                        ExpandedSpells[3].Add("Remove Curse*");
-                        ExpandedSpells[4].Add("Death Ward*");
-                        ExpandedSpells[4].Add("Guardian of Faith*");
-                        ExpandedSpells[5].Add("Circle of Power*");
-                        ExpandedSpells[5].Add("Wall of Force*");
-                        result.ClassFeatures.Add("Arcane Wards", "action, 30ft, wards provide 5 temp HP, # wards = lvl");
-                        result.Proficiencies.Add("Shields");
-
-                        if (lvl >= 7)
-                        {
-                            result.ClassFeatures.Add("Aura of Shielding", "20ft, you and allies gain Resistance vs spells");
-                        }
-                        if (lvl >= 15)
-                        {
-                            result.ClassFeatures.Add("Aura of Absorption", "reaction, 30ft, if you or allies take dmg, reduce dmg by 1D12 + Con");
-                        }
+                        Shielding(result);
                         break;
                 }
             }
@@ -127,7 +69,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             if (lvl >= 6)
             {
                 result.ClassFeatures.Add("Channel Spell", "3D6 + 1D6/lvl(above 1) of your Enchanted Blade's dmg type," +
-                    "\nif you cast Flame Blade or Shadow Blade, infuse your weapon instead of conjuring a new one");
+                    "\n        if you cast Flame Blade or Shadow Blade, infuse your weapon instead of conjuring a new one");
                 result.ClassFeatures.Add("War Magic", "When you cast a cantrip, bonus melee atk");
             }
             if (lvl >= 10)
@@ -152,8 +94,86 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             {
                 result.ClassFeatures.Add("Arcane Burst", "LR, 60ft radius, Con save, 15D6 force, knock prone and fear 1 min");
             }
+            Spells(result);
 
-            //spells code
+            return result;
+        }
+        public static void Assault(CharacterClass result)
+        {
+            int lvl = result.Lvl;
+            ExpandedSpells[1].Add("Hex");
+            ExpandedSpells[1].Add("Hunter's Mark");
+            ExpandedSpells[2].Add("Blindness/Deafness");
+            ExpandedSpells[2].Add("Magic Weapon");
+            ExpandedSpells[3].Add("Bestow Curse");
+            ExpandedSpells[3].Add("Crusader's Mantle");
+            ExpandedSpells[4].Add("Fire Shield");
+            ExpandedSpells[4].Add("Ice Storm");
+            ExpandedSpells[5].Add("Hold Monster");
+            ExpandedSpells[5].Add("Negative Energy Flood");
+            result.ClassFeatures.Add("Supernatural Focus", "SR, atk + 10, after roll before hit or miss");
+
+            if (lvl >= 7)
+            {
+                result.ClassFeatures.Add("Persistent Swordsman", "hit with atk op, teleport 20ft toward enemy");
+            }
+            if (lvl >= 15)
+            {
+                result.ClassFeatures.Add("Duelist Strike", "mark as bonus, if target atks, reaction melee atk");
+            }
+        }
+        public static void Ensnaring(CharacterClass result)
+        {
+            int lvl = result.Lvl;
+            ExpandedSpells[1].Add("Arms of Hadar");
+            ExpandedSpells[1].Add("Ensnaring Strike");
+            ExpandedSpells[2].Add("Hold Person");
+            ExpandedSpells[2].Add("Spike Growth");
+            ExpandedSpells[3].Add("Plant Growth");
+            ExpandedSpells[3].Add("Sleet Storm");
+            ExpandedSpells[4].Add("Evard's Black Tentacles");
+            ExpandedSpells[4].Add("Grasping Vine");
+            ExpandedSpells[5].Add("Dominate Person");
+            ExpandedSpells[5].Add("Wrath of Nature");
+            result.ClassFeatures.Add("Debilitating Hex", "mark as bonus, target has disadv on atk for 1 min");
+
+            if (lvl >= 7)
+            {
+                result.ClassFeatures.Add("Countercharm", "action, 30ft, end charm/fear effects");
+            }
+            if (lvl >= 15)
+            {
+                result.ClassFeatures.Add("Arcane Redirect", "Cha/LR, 60ft, decrease atk/dmg/save of enemy by D10");
+            }
+        }
+        public static void Shielding(CharacterClass result)
+        {
+            int lvl = result.Lvl;
+            ExpandedSpells[1].Add("Sanctuary");
+            ExpandedSpells[1].Add("Shield of Faith");
+            ExpandedSpells[2].Add("Calm Emotions");
+            ExpandedSpells[2].Add("Warding Bond");
+            ExpandedSpells[3].Add("Glyph of Warding");
+            ExpandedSpells[3].Add("Remove Curse");
+            ExpandedSpells[4].Add("Death Ward");
+            ExpandedSpells[4].Add("Guardian of Faith");
+            ExpandedSpells[5].Add("Circle of Power");
+            ExpandedSpells[5].Add("Wall of Force");
+            result.ClassFeatures.Add("Arcane Wards", "action, 30ft, wards provide 5 temp HP, # wards = lvl");
+            result.Proficiencies.Add("Shields");
+
+            if (lvl >= 7)
+            {
+                result.ClassFeatures.Add("Aura of Shielding", "20ft, you and allies gain Resistance vs spells");
+            }
+            if (lvl >= 15)
+            {
+                result.ClassFeatures.Add("Aura of Absorption", "reaction, 30ft, if you or allies take dmg, reduce dmg by 1D12 + Con");
+            }
+        }
+        public static void Spells(CharacterClass result)
+        {
+            int lvl = result.Lvl;
             string pickMsg = "Pick a cantrip.";
             string errorMsg = "You already have that cantrip.";
             AllSpells spells = new AllSpells("Swordmage");
@@ -170,7 +190,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
 
             for (int i = 1; i <= result.SpellsKnown; i++)
             {
-                
+
                 if (i == 6)
                 {
                     spellLvl++;
@@ -190,9 +210,6 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 result.Spells[spellLvl].Add(spell);
                 spells.Swordmage[spellLvl].Remove(spell);
             }
-            //end spells code
-
-            return result;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
     public static class RangerSpecifics
     {
         public static string RangerArchetype { get; set; }
-        public static Dictionary<int, string> PrimalAwarenessSpells { get; set; } = new Dictionary<int, string>()
+        public static Dictionary<int, string> PrimalAwarenessSpells { get; set; } = new Dictionary<int, string>
         {
             { 1, "Speak with Animals" },
             { 2, "Beast Sense" },
@@ -141,7 +141,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 if (num == 1)
                 {
                     result.ClassFeatures.Add("Primeval Awareness", "expend spell slot, 1 min per spell lvl sense presence of aberrations, celestials," +
-                        "\ndragons, elementals, fey, fiends, and undead within 1 mile or 6 mile if favored terrain");
+                        "\n        dragons, elementals, fey, fiends, and undead within 1 mile or 6 mile if favored terrain");
                 }
                 else
                 {
@@ -158,260 +158,25 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 switch (RangerArchetype)
                 {
                     case "Beast Master":
-                        result.ClassFeatures.Add("Ranger's Companion", "medium beast, CR 1/4 or lower, + PB to AC, atks, dmg, saves, skills, HP = normal or lvl x 4" +
-                            "\naction to command it to atk, Dash, Disengage, Dodge, or Help - if you have extra atk, you can atk and command beast");
-
-                        if (lvl >= 7)
-                        {
-                            result.ClassFeatures.Add("Exceptional Training", "bonus, if beast doesn't atk - command beast to Dash, Disengage, Dodge, or Help");
-                        }
-                        if (lvl >= 11)
-                        {
-                            result.ClassFeatures.Add("Bestial Fury", "when beast atks, it can make 2 atks or use Multiattack action if it has it");
-                        }
-                        if (lvl >= 15)
-                        {
-                            result.ClassFeatures.Add("Share Spells", "when you cast a spell on yourself, if beast is within 30ft - it gains benefits too");
-                        }
+                        BeastMaster(character, result);
                         break;
                     case "Fey Wanderer":
-                        extendedSpells = new Dictionary<int, string> {
-                            { 2, "Misty Step" },
-                            { 3, "Dispel Magic" },
-                            { 4, "Dimension Door" },
-                            { 5, "Mislead" }
-                        };
-                        result.Spells[1].Add("Charm Person");
-                        CLIHelper.AddSpells(result, extendedSpells);
-                        var gifts = new List<string> { "Illusory butterflies flutter around you when you take SR or LR", 
-                            "Fresh, seasonal flowers sprout from your hair each dawn", "Your shadow dances when no one is looking directly at it",
-                            "You faintly smell of cinnamon, lavender, nutmeg, or another comforting herb or spice",
-                            "Horns or antlers sprout from your head", "Your skin and hair change color to match the season each dawn" };
-                        Console.WriteLine("Pick a Feywild gift that affects your appearance");
-                        string gift = CLIHelper.PrintChoices(gifts);
-                        result.ClassFeatures.Add("Feywild Gift", gift);
-                        int dmg = 4;
-                        if (lvl >= 11)
-                        {
-                            dmg += 2;
-                        }
-                        result.ClassFeatures.Add("Dreadful Strikes", $"1/turn, on hit, 1D{dmg} Psychic dmg");
-                        result.ClassFeatures.Add("Otherworldly Glamour", "Cha checks + Wis");
-                        var skills = new List<string> { "Deception", "Performance", "Persuasion" };
-                        Console.WriteLine("Pick a skill");
-                        string skill = CLIHelper.PrintChoices(skills);
-                        result.SkillProficiencies.Add(skill);
-                        if (lvl >= 7)
-                        {
-                            result.ClassFeatures.Add("Beguiling Twist", "gain adv on saves vs charm and fear / reaction, 120ft, successful save vs charm or fear, Wis save, charm or fear 1 min");
-                        }
-                        if (lvl >= 11)
-                        {
-                            result.ClassFeatures.Add("Fey Reinforcements", "LR, cast Summon Fey without using a spell slot - can modify duration from conc to 1 min");
-                        }
-                        if (lvl >= 15)
-                        {
-                            result.ClassFeatures.Add("Misty Wanderer", "LR, cast Misty Step without using a spell slot - can also teleport adj ally");
-                        }
+                        FeyWanderer(character, result);
                         break;
                     case "Gloom Stalker":
-                        extendedSpells = new Dictionary<int, string> {
-                            { 2, "Rope Trick" },
-                            { 3, "Fear" },
-                            { 4, "Greater Invisibility" },
-                            { 5, "Seeming" }
-                        };
-                        result.Spells[1].Add("Disguise Self");
-                        CLIHelper.AddSpells(result, extendedSpells);
-                        if (!character.Vision.Contains("Darkvision"))
-                        {
-                            character.Vision = "Darkvision 60ft";
-                        }
-                        else
-                        {
-                            string vision = character.Vision;
-                            if (vision.Contains("Superior"))
-                            {
-                                character.Vision = vision.Substring(0, vision.Length - 5) + "150ft";
-                            }
-                            else
-                            {
-                                character.Vision = vision.Substring(0, vision.Length - 4) + "90ft";
-                            }
-                        }
-                        result.ClassFeatures.Add("Umbral Sight", "While in darkness, you are invisible to creatures who rely on Darkvision");
-                        result.ClassFeatures.Add("Dread Ambusher", "Init + Wis, 1st turn, speed +10ft, gain extra atk, dmg + 1D8 on that atk");
-                        if (lvl >= 7)
-                        {
-                            result.ClassFeatures.Add("Iron Mind", "gain prof in Wis saves(if already have gain Int or Cha instead)");
-                            character.Saves.Add("Wis");
-                        }
-                        if (lvl >= 11)
-                        {
-                            result.ClassFeatures.Add("Stalker's Flurry", "1/turn, when you miss an atk, make an extra atk");
-                        }
-                        if (lvl >= 15)
-                        {
-                            result.ClassFeatures.Add("Shadowy Dodge", "reaction, when an enemy atk doesn't have adv, impose disadv");
-                        }
+                        GloomStalker(character, result);
                         break;
                     case "Horizon Walker":
-                        extendedSpells = new Dictionary<int, string> {
-                            { 2, "Misty Step" },
-                            { 3, "Haste" },
-                            { 4, "Banishment" },
-                            { 5, "Teleportation Circle" }
-                        };
-                        result.Spells[1].Add("Protection from Evil and Good");
-                        CLIHelper.AddSpells(result, extendedSpells);
-                        result.ClassFeatures.Add("Detect Portal", "SR, action, 1 mile, detect distance and direction of nearest planar portal");
-                        int planarDice = 1;
-                        if (lvl >= 11)
-                        {
-                            planarDice++;
-                        }
-                        result.ClassFeatures.Add("Planar Warrior", $"bonus, 30ft, next atk's dmg becomes force, +{planarDice}D8 force dmg");
-                        if (lvl >= 7)
-                        {
-                            result.ClassFeatures.Add("Ethereal Step", "SR, bonus, cast Etherealness");
-                        }
-                        if (lvl >= 11)
-                        {
-                            result.ClassFeatures.Add("Distant Strike", "When you use Attack action, teleport 10ft, if you atk 2 creatures - gain extra atk vs a 3rd creature");
-                        }
-                        if (lvl >= 15)
-                        {
-                            result.ClassFeatures.Add("Spectral Defense", "reaction, when hit, gain Resistance to dmg");
-                        }
+                        HorizonWalker(character, result);
                         break;
                     case "Hunter":
-                        msg = "Pick one of the following features";
-                        if (lvl >= 3)
-                        {
-                            Console.WriteLine(msg);
-                            CLIHelper.Print3Choices("Colossus Slayer", "Giant Killer", "Horde Breaker");
-                            int choice = CLIHelper.GetNumberInRange(1, 3);
-                            if (choice == 1)
-                            {
-                                result.ClassFeatures.Add("Colossus Slayer", "1/turn, if enemy is not max HP, +1D8 dmg");
-                            }
-                            else if (choice == 2)
-                            {
-                                result.ClassFeatures.Add("Giant Killer", "reaction, if Large or larger creature atks, free atk if within 5ft");
-                            }
-                            else if (choice == 3)
-                            {
-                                result.ClassFeatures.Add("Horde Breaker", "1/turn, make extra wep atk against 2nd creature");
-                            }
-                        }
-                        if (lvl >= 7)
-                        {
-                            Console.WriteLine(msg);
-                            CLIHelper.Print3Choices("Escape the Horde", "Multiattack Defense", "Steel Will");
-                            int choice = CLIHelper.GetNumberInRange(1, 3);
-                            if (choice == 1)
-                            {
-                                result.ClassFeatures.Add("Escape the Horde", "enemy op atks are made at disadv");
-                            }
-                            else if (choice == 2)
-                            {
-                                result.ClassFeatures.Add("Multiattack Defense", "after being hit, gain +4 AC");
-                            }
-                            else if (choice == 3)
-                            {
-                                result.ClassFeatures.Add("Steel Will", "adv on saves vs fear");
-                            }
-                        }
-                        if (lvl >= 11)
-                        {
-                            Console.WriteLine(msg);
-                            CLIHelper.Print2Choices("Volley", "Whirlwind Attack");
-                            int choice = CLIHelper.GetNumberInRange(1, 2);
-                            if (choice == 1)
-                            {
-                                result.ClassFeatures.Add("Volley", "action, atk all creatures you can see within 10ft");
-                            }
-                            else if (choice == 2)
-                            {
-                                result.ClassFeatures.Add("Whirlwind Attack", "action, melee atk all creatures within 5ft");
-                            }
-                        }
-                        if (lvl >= 15)
-                        {
-                            Console.WriteLine(msg);
-                            CLIHelper.Print3Choices("Evasion", "Stand Against the Tide", "Uncanny Dodge");
-                            int choice = CLIHelper.GetNumberInRange(1, 3);
-                            if (choice == 1)
-                            {
-                                result.ClassFeatures.Add("Evasion", "Dex saves = 1/2 or no dmg");
-                            }
-                            else if (choice == 2)
-                            {
-                                result.ClassFeatures.Add("Stand Against the Tide", "reaction, when enemy misses melee atk, force enemy to atk another creature");
-                            }
-                            else if (choice == 3)
-                            {
-                                result.ClassFeatures.Add("Uncanny Dodge", "reaction, 1/2 dmg");
-                            }
-                        }
+                        Hunter(character, result);
                         break;
                     case "Monster Slayer":
-                        extendedSpells = new Dictionary<int, string> {
-                            { 2, "Zone of Truth" },
-                            { 3, "Magic Circle" },
-                            { 4, "Banishment" },
-                            { 5, "Hold Monster" }
-                        };
-                        result.Spells[1].Add("Protection from Evil and Good");
-                        CLIHelper.AddSpells(result, extendedSpells);
-                        result.ClassFeatures.Add("Hunter's Sense", "Wis/LR, action, 60ft, learn Immunities, Resistances, Vulnerabilities of an enemy");
-                        result.ClassFeatures.Add("Slayer's Prey", "SR, bonus, 60ft, 1/turn, dmg + 1D6");
-                        if (lvl >= 7)
-                        {
-                            result.ClassFeatures.Add("Supernatural Defense", "when your Slayer's Prey target makes you roll a save/opposed grapple gain +1D6");
-                        }
-                        if (lvl >= 11)
-                        {
-                            result.ClassFeatures.Add("Magic-User's Nemesis", "reaction, 60ft, Wis save, when a spell is cast or a creature teleports, their spell or teleport fails");
-                        }
-                        if (lvl >= 15)
-                        {
-                            result.ClassFeatures.Add("Slayer's Counter", "reaction, before your Slayer's Prey makes you roll a save, make an atk - if it hits, auto-success on your save");
-                        }
+                        MonsterSlayer(character, result);
                         break;
                     case "Swarmkeeper":
-                        extendedSpells = new Dictionary<int, string> {
-                            { 2, "Web" },
-                            { 3, "Gaseous Form" },
-                            { 4, "Arcane Eye" },
-                            { 5, "Insect Plague" }
-                        };
-                        result.Spells[1].Add("Faerie Fire");
-                        result.Spells[1].Add("Mage Hand");
-                        CLIHelper.AddSpells(result, extendedSpells);
-                        var swarmList = new List<string> { "Swarming Insects", "Miniature Twig Blights", "Fluttering Birds", "Playful Pixies" };
-                        Console.WriteLine("Pick an appearance for your swarm");
-                        string swarm = CLIHelper.PrintChoices(swarmList);
-                        int swarmDmg = 6;
-                        if (lvl >= 11)
-                        {
-                            swarmDmg += 2;
-                        }
-                        result.ClassFeatures.Add("Gathered Swarm", $"1/turn, on hit, pick an effect - (dmg + 1D{swarmDmg} piercing), (Str save, slide enemy 15ft), or (move 5ft, costs no movement)" +
-                            $"\nSwarm Appearance - {swarm}");
-                        if (lvl >= 7)
-                        {
-                            result.ClassFeatures.Add("Writhing Tide", "PB/LR, bonus, 1 min, gain Hover and Fly 10ft");
-                        }
-                        if (lvl >= 11)
-                        {
-                            result.ClassFeatures.Add("Mighty Swarm", "if a creature fails Str save vs Gathered Swarm - knock prone" +
-                                "\nwhen you move with Gathered Swarm - gain half cover(+2 AC, Dex saves) 1 turn");
-                        }
-                        if (lvl >= 15)
-                        {
-                            result.ClassFeatures.Add("Swarming Dispersal", "PB/LR, reaction, when you take dmg, gain Resistance to dmg and teleport 30ft");
-                        }
+                        Swarmkeeper(character, result);
                         break;
                 }
             }
@@ -453,9 +218,285 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             {
                 result.ClassFeatures.Add("Foe Slayer", "1/turn, + Wis to atk or dmg against favored enemy");
             }
-            //spells code
-            string str2 = "You already have that spell";
+            Spells(character, result);
+
+            return result;
+        }
+        public static void BeastMaster(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            result.ClassFeatures.Add("Ranger's Companion", "medium beast, CR 1/4 or lower, + PB to AC, atks, dmg, saves, skills, HP = normal or lvl x 4" +
+                "\bonus to command it to atk, Dash, Disengage, Dodge, or Help - if you have extra atk, you can atk and command beast");
+
+            if (lvl >= 7)
+            {
+                result.ClassFeatures.Add("Exceptional Training", "bonus, if beast doesn't atk - command beast to Dash, Disengage, Dodge, or Help");
+            }
+            if (lvl >= 11)
+            {
+                result.ClassFeatures.Add("Bestial Fury", "when beast atks, it can make 2 atks or use Multiattack action if it has it");
+            }
+            if (lvl >= 15)
+            {
+                result.ClassFeatures.Add("Share Spells", "when you cast a spell on yourself, if beast is within 30ft - it gains benefits too");
+            }
+        }
+        public static void FeyWanderer(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            var extendedSpells = new Dictionary<int, string> {
+                            { 2, "Misty Step" },
+                            { 3, "Dispel Magic" },
+                            { 4, "Dimension Door" },
+                            { 5, "Mislead" }
+                        };
+            result.Spells[1].Add("Charm Person");
+            CLIHelper.AddSpells(result, extendedSpells);
+            var gifts = new List<string> { "Illusory butterflies flutter around you when you take SR or LR",
+                            "Fresh, seasonal flowers sprout from your hair each dawn", "Your shadow dances when no one is looking directly at it",
+                            "You faintly smell of cinnamon, lavender, nutmeg, or another comforting herb or spice",
+                            "Horns or antlers sprout from your head", "Your skin and hair change color to match the season each dawn" };
+            Console.WriteLine("Pick a Feywild gift that affects your appearance");
+            string gift = CLIHelper.PrintChoices(gifts);
+            result.ClassFeatures.Add("Feywild Gift", gift);
+            int dmg = 4;
+            if (lvl >= 11)
+            {
+                dmg += 2;
+            }
+            result.ClassFeatures.Add("Dreadful Strikes", $"1/turn, on hit, 1D{dmg} Psychic dmg");
+            result.ClassFeatures.Add("Otherworldly Glamour", "Cha checks + Wis");
+            var skills = new List<string> { "Deception", "Performance", "Persuasion" };
+            Console.WriteLine("Pick a skill");
+            string skill = CLIHelper.PrintChoices(skills);
+            result.SkillProficiencies.Add(skill);
+            if (lvl >= 7)
+            {
+                result.ClassFeatures.Add("Beguiling Twist", "gain adv on saves vs charm and fear / reaction, 120ft, successful save vs charm or fear, Wis save, charm or fear 1 min");
+            }
+            if (lvl >= 11)
+            {
+                result.ClassFeatures.Add("Fey Reinforcements", "LR, cast Summon Fey without using a spell slot - can modify duration from conc to 1 min");
+            }
+            if (lvl >= 15)
+            {
+                result.ClassFeatures.Add("Misty Wanderer", "LR, cast Misty Step without using a spell slot - can also teleport adj ally");
+            }
+        }
+        public static void GloomStalker(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            var extendedSpells = new Dictionary<int, string> {
+                            { 2, "Rope Trick" },
+                            { 3, "Fear" },
+                            { 4, "Greater Invisibility" },
+                            { 5, "Seeming" }
+                        };
+            result.Spells[1].Add("Disguise Self");
+            CLIHelper.AddSpells(result, extendedSpells);
+            if (!character.Vision.Contains("Darkvision"))
+            {
+                character.Vision = "Darkvision 60ft";
+            }
+            else
+            {
+                string vision = character.Vision;
+                if (vision.Contains("Superior"))
+                {
+                    character.Vision = "Superior Darkvision 150ft";
+                }
+                else
+                {
+                    character.Vision = "Darkvision 90ft";
+                }
+            }
+            result.ClassFeatures.Add("Umbral Sight", "While in darkness, you are invisible to creatures who rely on Darkvision");
+            result.ClassFeatures.Add("Dread Ambusher", "Init + Wis, 1st turn, speed +10ft, gain extra atk, dmg + 1D8 on that atk");
+            if (lvl >= 7)
+            {
+                result.ClassFeatures.Add("Iron Mind", "gain prof in Wis saves(if already have gain Int or Cha instead)");
+                character.Saves.Add("Wis");
+            }
+            if (lvl >= 11)
+            {
+                result.ClassFeatures.Add("Stalker's Flurry", "1/turn, when you miss an atk, make an extra atk");
+            }
+            if (lvl >= 15)
+            {
+                result.ClassFeatures.Add("Shadowy Dodge", "reaction, when an enemy atk doesn't have adv, impose disadv");
+            }
+        }
+        public static void HorizonWalker(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            var extendedSpells = new Dictionary<int, string> {
+                            { 2, "Misty Step" },
+                            { 3, "Haste" },
+                            { 4, "Banishment" },
+                            { 5, "Teleportation Circle" }
+                        };
+            result.Spells[1].Add("Protection from Evil and Good");
+            CLIHelper.AddSpells(result, extendedSpells);
+            result.ClassFeatures.Add("Detect Portal", "SR, action, 1 mile, detect distance and direction of nearest planar portal");
+            int planarDice = 1;
+            if (lvl >= 11)
+            {
+                planarDice++;
+            }
+            result.ClassFeatures.Add("Planar Warrior", $"bonus, 30ft, next atk's dmg becomes force, +{planarDice}D8 force dmg");
+            if (lvl >= 7)
+            {
+                result.ClassFeatures.Add("Ethereal Step", "SR, bonus, cast Etherealness");
+            }
+            if (lvl >= 11)
+            {
+                result.ClassFeatures.Add("Distant Strike", "When you use Attack action, teleport 10ft, if you atk 2 creatures - gain extra atk vs a 3rd creature");
+            }
+            if (lvl >= 15)
+            {
+                result.ClassFeatures.Add("Spectral Defense", "reaction, when hit, gain Resistance to dmg");
+            }
+        }
+        public static void Hunter(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            string msg = "Pick one of the following features";
+            if (lvl >= 3)
+            {
+                Console.WriteLine(msg);
+                CLIHelper.Print3Choices("Colossus Slayer", "Giant Killer", "Horde Breaker");
+                int choice = CLIHelper.GetNumberInRange(1, 3);
+                if (choice == 1)
+                {
+                    result.ClassFeatures.Add("Colossus Slayer", "1/turn, if enemy is not max HP, +1D8 dmg");
+                }
+                else if (choice == 2)
+                {
+                    result.ClassFeatures.Add("Giant Killer", "reaction, if Large or larger creature atks, free atk if within 5ft");
+                }
+                else if (choice == 3)
+                {
+                    result.ClassFeatures.Add("Horde Breaker", "1/turn, make extra wep atk against 2nd creature");
+                }
+            }
+            if (lvl >= 7)
+            {
+                Console.WriteLine(msg);
+                CLIHelper.Print3Choices("Escape the Horde", "Multiattack Defense", "Steel Will");
+                int choice = CLIHelper.GetNumberInRange(1, 3);
+                if (choice == 1)
+                {
+                    result.ClassFeatures.Add("Escape the Horde", "enemy op atks are made at disadv");
+                }
+                else if (choice == 2)
+                {
+                    result.ClassFeatures.Add("Multiattack Defense", "after being hit, gain +4 AC");
+                }
+                else if (choice == 3)
+                {
+                    result.ClassFeatures.Add("Steel Will", "adv on saves vs fear");
+                }
+            }
+            if (lvl >= 11)
+            {
+                Console.WriteLine(msg);
+                CLIHelper.Print2Choices("Volley", "Whirlwind Attack");
+                int choice = CLIHelper.GetNumberInRange(1, 2);
+                if (choice == 1)
+                {
+                    result.ClassFeatures.Add("Volley", "action, atk all creatures you can see within 10ft");
+                }
+                else if (choice == 2)
+                {
+                    result.ClassFeatures.Add("Whirlwind Attack", "action, melee atk all creatures within 5ft");
+                }
+            }
+            if (lvl >= 15)
+            {
+                Console.WriteLine(msg);
+                CLIHelper.Print3Choices("Evasion", "Stand Against the Tide", "Uncanny Dodge");
+                int choice = CLIHelper.GetNumberInRange(1, 3);
+                if (choice == 1)
+                {
+                    result.ClassFeatures.Add("Evasion", "Dex saves = 1/2 or no dmg");
+                }
+                else if (choice == 2)
+                {
+                    result.ClassFeatures.Add("Stand Against the Tide", "reaction, when enemy misses melee atk, force enemy to atk another creature");
+                }
+                else if (choice == 3)
+                {
+                    result.ClassFeatures.Add("Uncanny Dodge", "reaction, 1/2 dmg");
+                }
+            }
+        }
+        public static void MonsterSlayer(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            var extendedSpells = new Dictionary<int, string> {
+                            { 2, "Zone of Truth" },
+                            { 3, "Magic Circle" },
+                            { 4, "Banishment" },
+                            { 5, "Hold Monster" }
+                        };
+            result.Spells[1].Add("Protection from Evil and Good");
+            CLIHelper.AddSpells(result, extendedSpells);
+            result.ClassFeatures.Add("Hunter's Sense", "Wis/LR, action, 60ft, learn Immunities, Resistances, Vulnerabilities of an enemy");
+            result.ClassFeatures.Add("Slayer's Prey", "SR, bonus, 60ft, 1/turn, dmg + 1D6");
+            if (lvl >= 7)
+            {
+                result.ClassFeatures.Add("Supernatural Defense", "when your Slayer's Prey target makes you roll a save/opposed grapple gain +1D6");
+            }
+            if (lvl >= 11)
+            {
+                result.ClassFeatures.Add("Magic-User's Nemesis", "reaction, 60ft, Wis save, when a spell is cast or a creature teleports, their spell or teleport fails");
+            }
+            if (lvl >= 15)
+            {
+                result.ClassFeatures.Add("Slayer's Counter", "reaction, before your Slayer's Prey makes you roll a save, make an atk - if it hits, auto-success on your save");
+            }
+        }
+        public static void Swarmkeeper(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            var extendedSpells = new Dictionary<int, string> {
+                            { 2, "Web" },
+                            { 3, "Gaseous Form" },
+                            { 4, "Arcane Eye" },
+                            { 5, "Insect Plague" }
+                        };
+            result.Spells[1].Add("Faerie Fire");
+            result.Spells[1].Add("Mage Hand");
+            CLIHelper.AddSpells(result, extendedSpells);
+            var swarmList = new List<string> { "Swarming Insects", "Miniature Twig Blights", "Fluttering Birds", "Playful Pixies" };
+            Console.WriteLine("Pick an appearance for your swarm");
+            string swarm = CLIHelper.PrintChoices(swarmList);
+            int swarmDmg = 6;
+            if (lvl >= 11)
+            {
+                swarmDmg += 2;
+            }
+            result.ClassFeatures.Add("Gathered Swarm", $"1/turn, on hit, pick an effect - (dmg + 1D{swarmDmg} Piercing), (Str save, slide enemy 15ft), or (move 5ft, costs no movement)" +
+                $"\n        Swarm Appearance - {swarm}");
+            if (lvl >= 7)
+            {
+                result.ClassFeatures.Add("Writhing Tide", "PB/LR, bonus, 1 min, gain Hover and Fly 10ft");
+            }
+            if (lvl >= 11)
+            {
+                result.ClassFeatures.Add("Mighty Swarm", "if a creature fails Str save vs Gathered Swarm - knock prone" +
+                    "\n        when you move with Gathered Swarm - gain half cover(+2 AC, Dex saves) 1 turn");
+            }
+            if (lvl >= 15)
+            {
+                result.ClassFeatures.Add("Swarming Dispersal", "PB/LR, reaction, when you take dmg, gain Resistance to dmg and teleport 30ft");
+            }
+        }
+        public static void Spells(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
             string pickMsg = "Pick a 1st level spell.";
+            string errorMsg = "You already have that spell";
             AllSpells spells = new AllSpells("Ranger");
             foreach (var slotLvl in result.SpellSlots.Keys)
             {
@@ -474,14 +515,11 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 int slots = result.SpellSlots[slotLvl];
                 for (int i = 0; i < slots; i++)
                 {
-                    string spell = CLIHelper.GetNew(spells.Ranger[slotLvl], result.Spells[slotLvl], pickMsg, str2);
+                    string spell = CLIHelper.GetNew(spells.Ranger[slotLvl], result.Spells[slotLvl], pickMsg, errorMsg);
                     result.Spells[slotLvl].Add(spell);
                     spells.Ranger[slotLvl].Remove(spell);
                 }
             }
-            //end spells code
-
-            return result;
         }
     }
 }

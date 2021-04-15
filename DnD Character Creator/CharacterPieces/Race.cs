@@ -663,7 +663,7 @@ namespace DnD_Character_Creator.Races
         {
             Race result = new Race();
 
-            result.RacialTraits.Add("Bite - 1D6 piercing");
+            result.RacialTraits.Add("Bite - 1D6 Piercing");
             result.RacialTraits.Add("Blood Drain: after bite, bonus, grapple check - 1/D12 + Cha Necrotic dmg, heal HP = dmg");
             result.RacialTraits.Add("Regeneration: 1/turn, heal HP = 1/4 lvl, negated by sunlight, radiant or holy water dmg");
             result.MinHeight = 60;
@@ -725,8 +725,8 @@ namespace DnD_Character_Creator.Races
 
             result.RacialTraits.Add($"Damage Resistance: gain Resistance to {dmgType}");
             result.RacialTraits.Add($"Breath Weapon: 3D8 + (1D8 per 5 lvls above 1st) dmg, {shape} of {dmgType} - Dex save" +
-                $"\nrecharge SR, Con-based DC");
-            result.RacialTraits.Add("Bite - 1D6 piercing");
+                $"\n        recharge SR, Con-based DC");
+            result.RacialTraits.Add("Bite - 1D6 Piercing");
             result.MinHeight = 75;
             result.MaxHeight = 81;
             result.MinWeight = 200;
@@ -765,7 +765,7 @@ namespace DnD_Character_Creator.Races
 
             result.RacialTraits.Add("Dwarven Resilience: gain Resistance to Poison, and advantage on saves vs Poison");
             result.RacialTraits.Add("Stonecunning: History checks on stonework are treated as if you are proficient and " +
-                "\ngain add your Proficiency bonus x2");
+                "\n        gain add your Proficiency bonus x2");
             result.RacialTraits.Add("Dwarven Toughness");
             result.MinHeight = 48;
             result.MaxHeight = 60;
@@ -808,7 +808,7 @@ namespace DnD_Character_Creator.Races
 
             result.RacialTraits.Add("Dwarven Resilience: gain Resistance to Poison, and Advantage on saves vs Poison");
             result.RacialTraits.Add("Stonecunning: History checks on stonework are treated as if you are proficient and " +
-                "\ngain add your Proficiency bonus x2");
+                "\n        gain add your Proficiency bonus x2");
             result.MinHeight = 48;
             result.MaxHeight = 60;
             result.MinWeight = 100;
@@ -836,7 +836,7 @@ namespace DnD_Character_Creator.Races
 
             result.RacialTraits.Add("Fey Ancestry: gain Advantage on saves vs charms and magic can't put you to sleep");
             result.RacialTraits.Add("Trance: you don't need sleep, instead you meditate in a semiconscious state for 4hr. " +
-                "\nAfter resting in such a way, you gain the benefits of a long rest");
+                "\n        After resting in such a way, you gain the benefits of a long rest");
             result.RacialTraits.Add("Aerial Reach: melee reach +5ft");
             result.MinHeight = 60;
             result.MaxHeight = 76;
@@ -865,10 +865,8 @@ namespace DnD_Character_Creator.Races
             Race result = new Race();
 
             result.RacialTraits.Add("Fey Ancestry: gain Advantage on saves vs charms and magic can't put you to sleep");
-            result.RacialTraits.Add("Trance: you don't need sleep, instead you meditate in a semiconscious state for 4hr. " +
-                "\nAfter resting in such a way, you gain the benefits of a long rest");
-            result.RacialTraits.Add("Sunlight Sensitivity: take a Disadvantage on attacks and Perception checks that rely " +
-                "\non sight while you or the target of your check/attack is in direct sunlight");
+            result.RacialTraits.Add("Trance: you don't need sleep, meditate semiconscious for 4hr to gain benefits of LR");
+            result.RacialTraits.Add("Sunlight Sensitivity: suffer disadv on atks and sight Perception checks when you or target is in sunlight");
             result.MinHeight = 60;
             result.MaxHeight = 72;
             result.MinWeight = 120;
@@ -895,13 +893,12 @@ namespace DnD_Character_Creator.Races
             Race result = new Race();
 
             result.RacialTraits.Add("Fey Ancestry: gain Advantage on saves vs charms and magic can't put you to sleep");
-            result.RacialTraits.Add("Trance: you don't need sleep, instead you meditate in a semiconscious state for 4hr. " +
-                "\nAfter resting in such a way, you gain the benefits of a long rest");
-            result.RacialTraits.Add("Fey Step: bonus, SR, teleport 30ft & seasonal effect(Cha-based DC)" +
-                "\nAutumn - 2 creatures within 10ft charm Wis save" +
-                "\nSpring - teleport 1 willing creature within 30ft instead of yourself" +
-                "\nSummer - creatures you can see within 5ft take Cha Fire dmg" +
-                "\nWinter - 1 creature within 5ft fear Wis save");
+            result.RacialTraits.Add("Trance: you don't need sleep, meditate semiconscious for 4hr to gain benefits of LR");
+            result.RacialTraits.Add("Fey Step: SR, bonus, teleport 30ft & seasonal effect(Cha-based DC)" +
+                "\n        Autumn - 2 creatures within 10ft, Wis save, charm 1 turn" +
+                "\n        Spring - teleport adj creature within 30ft instead of yourself" +
+                "\n        Summer - creatures you can see within 5ft take Cha Fire dmg" +
+                "\n        Winter - 1 creature within 5ft, Wis save, fear 1 turn");
             result.MinHeight = 60;
             result.MaxHeight = 76;
             result.MinWeight = 120;
@@ -922,8 +919,7 @@ namespace DnD_Character_Creator.Races
             Race result = new Race();
 
             result.RacialTraits.Add("Fey Ancestry: gain Advantage on saves vs charms and magic can't put you to sleep");
-            result.RacialTraits.Add("Trance: you don't need sleep, instead you meditate in a semiconscious state for 4hr. " +
-                "\nAfter resting in such a way, you gain the benefits of a long rest");
+            result.RacialTraits.Add("Trance: you don't need sleep, meditate semiconscious for 4hr to gain benefits of LR");
             result.MinHeight = 60;
             result.MaxHeight = 72;
             result.MinWeight = 120;
@@ -954,8 +950,7 @@ namespace DnD_Character_Creator.Races
             Race result = new Race();
 
             result.RacialTraits.Add("Fey Ancestry: gain Advantage on saves vs charms and magic can't put you to sleep");
-            result.RacialTraits.Add("Trance: you don't need sleep, instead you meditate in a semiconscious state for 4hr. " +
-                "\nAfter resting in such a way, you gain the benefits of a long rest");
+            result.RacialTraits.Add("Trance: you don't need sleep, meditate semiconscious for 4hr to gain benefits of LR");
             result.RacialTraits.Add("Waterbreathing");
             result.RacialTraits.Add("Friend of the Sea: communicate basic ideas with water creatures");
             result.MinHeight = 60;
@@ -987,8 +982,7 @@ namespace DnD_Character_Creator.Races
             result.Stat1 = new Tuple<string, int>("Dex", 2);
             result.Stat2 = new Tuple<string, int>("Con", 1);
             result.RacialTraits.Add("Fey Ancestry: gain Advantage on saves vs charms and magic can't put you to sleep");
-            result.RacialTraits.Add("Trance: you don't need sleep, instead you meditate in a semiconscious state for 4hr. " +
-                "\nAfter resting in such a way, you gain the benefits of a long rest");
+            result.RacialTraits.Add("Trance: you don't need sleep, meditate semiconscious for 4hr to gain benefits of LR");
             result.RacialTraits.Add("Blessing of the Raven Queen: bonus, LR, teleport 30ft");
             result.RacialTraits.Add("Servant of Shadow: Resistance to Necrotic");
             result.MinHeight = 60;
@@ -1011,8 +1005,7 @@ namespace DnD_Character_Creator.Races
             Race result = new Race();
 
             result.RacialTraits.Add("Fey Ancestry: gain Advantage on saves vs charms and magic can't put you to sleep");
-            result.RacialTraits.Add("Trance: you don't need sleep, instead you meditate in a semiconscious state for 4hr. " +
-                "\nAfter resting in such a way, you gain the benefits of a long rest");
+            result.RacialTraits.Add("Trance: you don't need sleep, meditate semiconscious for 4hr to gain benefits of LR");
             result.MinHeight = 60;
             result.MaxHeight = 72;
             result.MinWeight = 120;
@@ -1041,8 +1034,7 @@ namespace DnD_Character_Creator.Races
             Race result = new Race();
 
             result.RacialTraits.Add("Fey Ancestry: gain Advantage on saves vs charms and magic can't put you to sleep");
-            result.RacialTraits.Add("Trance: you don't need sleep, instead you meditate in a semiconscious state for 4hr. " +
-                "\nAfter resting in such a way, you gain the benefits of a long rest");
+            result.RacialTraits.Add("Trance: you don't need sleep, meditate semiconscious for 4hr to gain benefits of LR");
             result.MinHeight = 60;
             result.MaxHeight = 72;
             result.MinWeight = 120;
@@ -1071,10 +1063,9 @@ namespace DnD_Character_Creator.Races
             Race result = new Race();
 
             result.RacialTraits.Add("Fey Ancestry: gain Advantage on saves vs charms and magic can't put you to sleep");
-            result.RacialTraits.Add("Trance: you don't need sleep, instead you meditate in a semiconscious state for 4hr. " +
-                "\nAfter resting in such a way, you gain the benefits of a long rest");
+            result.RacialTraits.Add("Trance: you don't need sleep, meditate semiconscious for 4hr to gain benefits of LR");
             result.RacialTraits.Add("Mask of the Wild: you can attempt to hide even when you are only lightly obscured " +
-                "\nby foliage, heavy rain, falling snow, mist, and other natural phenomena.");
+                "\n        by foliage, heavy rain, falling snow, mist, and other natural phenomena.");
             result.MinHeight = 60;
             result.MaxHeight = 72;
             result.MinWeight = 120;
@@ -1101,7 +1092,7 @@ namespace DnD_Character_Creator.Races
 
             result.RacialTraits.Add("Gnome Cunning: you gain Advantage on Int, Wis, and Cha saves vs magic");
             result.RacialTraits.Add("Speak with Small Beasts: Through sounds and gestures, you can communicate with " +
-                "\nsimple ideas to small or smaller beasts");            
+                "\n        simple ideas to small or smaller beasts");            
             result.MinHeight = 36;
             result.MaxHeight = 48;
             result.Size = "Small";
@@ -1125,12 +1116,12 @@ namespace DnD_Character_Creator.Races
 
             result.RacialTraits.Add("Gnome Cunning: you gain Advantage on Int, Wis, and Cha saves vs magic");
             result.RacialTraits.Add("Artificer's Lore: History checks on items or devices that are based on magic, " +
-                "\ntechnology, or alchemy are treated as if you are proficient and add your Proficiency bonus x2");
+                "\n        technology, or alchemy are treated as if you are proficient and add your Proficiency bonus x2");
             result.RacialTraits.Add("Tinker: you can spend 1hr and 10gp to create a tiny clockwork device that has 1HP and " +
-                "\nan AC of 5. The device ceases to function after 24hr unless you spend 1hr to repair it. You can also use " +
-                "\nyour action to dismantle the device and reclaim it's materials. You can make: a fire starter(creates " +
-                "\nminiature flame), a music box(single song at a moderate volume), or a clockwork toy(moves 5ft in a random " +
-                "\ndirection and makes noise approriate to the creature it represents).");
+                "\n        an AC of 5. The device ceases to function after 24hr unless you spend 1hr to repair it. You can also use " +
+                "\n        your action to dismantle the device and reclaim it's materials. You can make: a fire starter(creates " +
+                "\n        miniature flame), a music box(single song at a moderate volume), or a clockwork toy(moves 5ft in a random " +
+                "\n        direction and makes noise approriate to the creature it represents).");
             result.MinHeight = 36;
             result.MaxHeight = 48;
             result.Size = "Small";
@@ -1152,7 +1143,7 @@ namespace DnD_Character_Creator.Races
             Race result = new Race();
 
             result.RacialTraits.Add("Mountain Born: can endure cold climates above 20,000ft");
-            result.RacialTraits.Add("Stone's Endurance: reaction, SR, reduce dmg by 1D12 + Con");
+            result.RacialTraits.Add("Stone's Endurance: SR, reaction, reduce dmg by 1D12 + Con");
             result.RacialTraits.Add("Powerful Build: count as Large for carry capacity, etc");
             result.MinHeight = 84;
             result.MaxHeight = 96;
@@ -1327,7 +1318,7 @@ namespace DnD_Character_Creator.Races
         {
             Race result = new Race();
 
-            result.RacialTraits.Add("Horns - 1D6 piercing");
+            result.RacialTraits.Add("Horns - 1D6 Piercing");
             result.RacialTraits.Add("Goring Rush: after Dash that moves 20ft, melee bonus with Horns");
             result.RacialTraits.Add("Hammering Horns: on hit, bonus, Str DC - push 10ft");
             result.MinHeight = 72;

@@ -309,7 +309,7 @@ namespace DnD_Character_Creator.CLI_Classes
                         break;
                     case "Aasimar(Fallen)":
                         character.RacialTraits.Add("Necrotic Shroud: LR, 1 min - grow ghostly, skeletal (flightless) wings" +
-                        "\n10ft - Cha save, fear & 1/turn - extra Necrotic dmg = lvl");
+                        "\n        10ft - Cha save, fear & 1/turn - extra Necrotic dmg = lvl");
                         break;
                     case "Cambion":
                         if (character.Alignment == "L-E")
@@ -363,7 +363,7 @@ namespace DnD_Character_Creator.CLI_Classes
                             index = character.RacialTraits.IndexOf(item);
                         }
                     }
-                    character.RacialTraits[index] += "\nenemies that move in the area take Wis dmg per 5ft";
+                    character.RacialTraits[index] += "\n        enemies that move in the area take Wis dmg per 5ft";
                     break;
                 case "The Sky":
                     foreach (var item in character.RacialTraits)

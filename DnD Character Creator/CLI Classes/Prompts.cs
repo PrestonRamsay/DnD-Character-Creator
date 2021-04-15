@@ -20,7 +20,7 @@ namespace DnD_Character_Creator
             if (characterPiece == "race")
             {
                 //num = 0;
-                //Console.WriteLine("\nEnter 0 to pick from a list of racial categories\n");
+                //Console.WriteLine("\n        Enter 0 to pick from a list of racial categories\n        ");
             }
             int newPiece = CLIHelper.GetNumberInRange(num, pieceList.Count) - 1;
             //if (newPiece == 0)
@@ -105,7 +105,7 @@ namespace DnD_Character_Creator
         {
             Console.Clear();
             Console.WriteLine($"If you'd like to pick your {backgroundPiece} enter '1'." +
-                            $"\nIf you want to roll it randomly enter '2'.");
+                            $"\n        If you want to roll it randomly enter '2'.");
             int answer = CLIHelper.GetNumberInRange(1, 2);
             int index = 0;
 
@@ -129,9 +129,9 @@ namespace DnD_Character_Creator
 
 
                     Console.WriteLine($"Your {backgroundPiece} is:" +
-                        $"\n{backgroundProperty[index]}");
+                        $"\n        {backgroundProperty[index]}");
                     Console.WriteLine($"If you'd like to keep that {backgroundPiece} enter '1', if not hit enter." +
-                        $"\nIf you'd like to pick from the list instead, enter '2'.");
+                        $"\n        If you'd like to pick from the list instead, enter '2'.");
                     int input = CLIHelper.GetNumberInRange(1, 2);
 
                     if (input == 1)
@@ -152,7 +152,7 @@ namespace DnD_Character_Creator
         public static string ExtendedRaces()
         {
             string returnString = "";
-            Console.WriteLine("Would you like a Official Race or an Extended Race?\n");
+            Console.WriteLine("Would you like a Official Race or an Extended Race?\n        ");
             CLIHelper.Print2Choices("Official Race(SRD)", "Extended Race(Homebrew)");
             int choice = CLIHelper.GetNumberInRange(1, 2);
             Console.Clear();

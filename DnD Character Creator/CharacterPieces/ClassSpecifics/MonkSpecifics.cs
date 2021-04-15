@@ -9,7 +9,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
     public static class MonkSpecifics
     {
         public static string MonasticTradition { get; set; }
-        public static int FastMovement { get; set; } = 0;
+        public static int MartialArtsDie { get; set; }
         public static CharacterClass Features(Character character, CharacterClass result)
         {
             int lvl = result.Lvl;
@@ -26,17 +26,18 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     fastMovement += 5;
                 }
             }
+            MartialArtsDie = martialArtsDie;
             result.ClassFeatures.Add("Unarmored Defense", "AC = 10 + Dex + Wis, while wearing no armor");
             result.ClassFeatures.Add("Martial Arts", $"Dex for unarmed atk/dmg, unarmed dmg = 1D{martialArtsDie}, melee atk as bonus");
 
             if (lvl >= 2)
             {
                 result.ClassFeatures.Add("Ki", $"SR, meditate 30min, ki pts = {lvl}, gain the following features" +
-                    $"\nFlurry of Blows(1 ki pt, make 2 unarmed atks as a bonus)" +
-                    $"\nPatient Defense(1 ki pt, Dodge as bonus)" +
-                    $"\nStep of the Wind(1 ki pt, Disengage or Dash as bonus, jump distance is doubled this turn)");
+                    $"\n        Flurry of Blows(1 ki pt, make 2 unarmed atks as a bonus)" +
+                    $"\n        Patient Defense(1 ki pt, Dodge as bonus)" +
+                    $"\n        Step of the Wind(1 ki pt, Disengage or Dash as bonus, jump distance is doubled this turn)");
                 result.ClassFeatures.Add("Unarmored Movement", $"speed + {fastMovement}ft");
-                FastMovement = fastMovement;
+                character.Speed += fastMovement;
                 result.ClassFeatures.Add("Dedicated Weapon", "on SR/LR, touch non-Heavy wep you have prof with, it becomes a monk weapon");
             }
             if (lvl >= 3)
@@ -60,198 +61,31 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 switch (MonasticTradition)
                 {
                     case "Astral Self":
-                        result.ClassFeatures.Add("Arms of the Astral Self", "bonus, 10min, 10ft, 1 ki pt, Dex save, 2 Martial Arts dice Force dmg" +
-                            "\nuse Wis for Str checks/saves, unarmed atks / gain reach 5ft, unarmed dmg type = Force");
-                        if (lvl >= 6)
-                        {
-                            result.ClassFeatures.Add("Visage of the Astral Self", "bonus, 10min, 1 ki pt, gain a spectral mask/helmet - appearance of your choice and all benefits" +
-                                "\nAstral Sight(see through magical/nonmagical darkness 120ft)" +
-                                "\nWisdom of the Spirit(gain adv on Insight and Intimidation)" +
-                                "\nWord of the Spirit(you can make only 1 creature hear your voice within 60ft, or amplify your voice up to 600ft)");
-                        }
-                        if (lvl >= 11)
-                        {
-                            result.ClassFeatures.Add("Body of the Astral Self", "when your Arms of the Astral Self and Visage of the Astral Self are both active gain all benefits" +
-                                "\nDeflect Energy(reaction, when you take Acid, Cold, Fire, Force, Lightning or Thunder dmg, reduce dmg by 1D10 + Wis)" +
-                                "\nEmpowered Arms(1/turn, on hit, dmg + Martial Arts die)");
-                        }
-                        if (lvl >= 17)
-                        {
-                            result.ClassFeatures.Add("Awakened Astral Self", "bonus, 10min, 5 ki pts, summon Arms, Visage, and Body of the Astral Self and gain all benefits" +
-                                "\nArmor of the Spirit(+2 AC), Astral Barrage(when you use Attack action to make 2 atk with your astral arms, make 3 atk instead)");
-                        }
+                        AstralSelf(character, result);
                         break;
                     case "Drunken Master":
-                        character.SkillProficiencies.Add("Performance");
-                        result.ToolProficiencies.Add("Brewer's Supplies");
-                        result.ClassFeatures.Add("Drunken Technique", "When you use Flurry of Blows, gain benefits of Disengage and speed +10ft");
-                        if (lvl >= 6)
-                        {
-                            result.ClassFeatures.Add("Tipsy Sway", "Leap to Your Feet(while prone, stand up for 5ft of movement)" +
-                                "\nRedirect Attack(when an atk vs you misses, 1 ki pt to cause the atk to hit an adj creature)");
-                        }
-                        if (lvl >= 11)
-                        {
-                            result.ClassFeatures.Add("Drunkard's Luck", "When you make an atk, save or check at disadv, 2 ki pt to cancel the disadv");
-                        }
-                        if (lvl >= 17)
-                        {
-                            result.ClassFeatures.Add("Intoxicated Frenzy", "When you use Flurry of Blows, atk up to 5 times if you atk different creatures");
-                        }
+                        DrunkenMaster(character, result);
                         break;
                     case "Four Elements":
-                        int maxKi = 2;
-                        result.ClassFeatures.Add("Disciple of the Elements", "use ki to cast spells");
-                        result.ClassFeatures.Add("Elemental Attunement", "Prestidigation");
-                        result.ClassFeatures.Add("Fangs of Fire Snake", "1 ki pt, reach 10ft, spend ki pt to add 1D10 Fire dmg");
-                        result.ClassFeatures.Add("Fist of Four Thunders", "2 ki pt, cast Thunderwave");
-                        result.ClassFeatures.Add("Fist of Unbroken Air", "2 ki pt, 30ft, Str save - 3D10 + 1D10 per ki pt, push 20ft, knock prone");
-                        result.ClassFeatures.Add("Rush of Gale Spirits", "2 ki pt, cast Gust of Wind");
-                        result.ClassFeatures.Add("Shape of Flowing Water", "1 ki pt, 120ft, transform or shape 30ft of water or ice");
-                        result.ClassFeatures.Add("Sweeping Cinder Strike", "2 ki pt, cast Burning Hands");
-                        result.ClassFeatures.Add("Water Whip", "bonus, 2 ki pt, 30ft, Dex save - knock prone or pull 25ft, 3D10, spend ki pt to add 1D10 dmg");
-                        if (lvl >= 5)
-                        {
-                            for (int i = 5; i <= lvl; i += 4)
-                            {
-                                maxKi++;
-                            }
-                            result.ClassFeatures.Add("Casting Elemental Spells", $"you can spend additional ki pts to use a discipline at a" +
-                                $"\nhigher lvl up to a max of {maxKi}");
-                        }
-                        if (lvl >= 6)
-                        {
-                            result.ClassFeatures["Fangs of Fire Snake"] = "1 ki pt, reach 10ft +1D10 Fire, spend ki pt to add 1D10 Fire dmg";
-                            result.ClassFeatures["Fist of Four Thunders"] = "1 ki pt, cast Thunderwave";
-                            result.ClassFeatures["Fist of Unbroken Air"] = "1 ki pt, 30ft, Str save - 3D10 + 1D10 per ki pt, push 20ft, knock prone";
-                            result.ClassFeatures["Rush of Gale Spirits"] = "1 ki pt, cast Gust of Wind";
-                            result.ClassFeatures["Sweeping Cinder Strike"] = "1 ki pt, cast Burning Hands";
-                            result.ClassFeatures["Water Whip"] = "bonus, 1 ki pt, 30ft, Dex save - knock prone or pull 25ft, 3D10, spend ki pt to add 1D10 dmg";
-                            result.ClassFeatures.Add("Clench of the North Wind", "2 ki pt, cast Hold Person");
-                            result.ClassFeatures.Add("Gong of the Summit", "2 ki pt, cast Shatter");
-                        }
-                        if (lvl >= 11)
-                        {
-                            result.ClassFeatures["Clench of the North Wind"] = "1 ki pt, cast Hold Person";
-                            result.ClassFeatures["Gong of the Summit"] = "1 ki pt, cast Shatter";
-                            result.ClassFeatures.Add("Eternal Mountain Defense", "3 ki pt, cast Stoneskin");
-                            result.ClassFeatures.Add("Flames of the Phoenix", "2 ki pt, cast Fireball");
-                            result.ClassFeatures.Add("Mist Stance", "2 ki pt, cast Gaseous Form");
-                        }
-                        if (lvl >= 17)
-                        {
-                            result.ClassFeatures["Eternal Mountain Defense"] = "2 ki pt, cast Stoneskin";
-                            result.ClassFeatures.Add("Breath of Winter", "3 ki pt, cast Cone of Cold");
-                            result.ClassFeatures.Add("River of Hungry Flame", "3 ki pt, cast Wall of Fire");
-                            result.ClassFeatures.Add("Wave of Rolling Earth", "3 ki pt, cast Wall of Stone");
-                        }
+                        FourElements(character, result);
                         break;
                     case "Kensai":
-                        string kensaiWep = GetKensaiWeapons(result, lvl);
-                        result.ClassFeatures.Add("Path of the Kensai", $"Kensai Weapons(treat as monk wep: {kensaiWep})" +
-                            $"\nAgile Parry(while holding Kensai wep, if you make unarmed atk, +2 AC), Kensai's Shot(bonus, ranged dmg + 1D4)");
-                        var deftStrokes = new List<string> { "Calligrapher's Supplies", "Painter's Supplies" };
-                        int index = CLIHelper.PrintChoices("Pick a tool", deftStrokes);
-                        result.ToolProficiencies.Add(deftStrokes[index]);
-                        if (lvl >= 6)
-                        {
-                            result.ClassFeatures.Add("One with the Blade", "Kensai Weapons are considered magical, Deft Strike(on hit with Kensai Weapon, 1/turn, 1 ki pt, dmg + Martial Arts Die)");
-                        }
-                        if (lvl >= 11)
-                        {
-                            result.ClassFeatures.Add("Sharpen the Blade", "bonus, 3 ki pt, 1 min, atk/dmg + 3");
-                        }
-                        if (lvl >= 17)
-                        {
-                            result.ClassFeatures.Add("Unerring Accuracy", "1/turn, if miss with monk weapon, reroll atk");
-                        }
+                        Kensai(character, result);
                         break;
                     case "Long Death":
-                        result.ClassFeatures.Add("Touch of Death", "When you kill a creature, gain temp HP = Wis + lvl");
-                        if (lvl >= 6)
-                        {
-                            result.ClassFeatures.Add("Hour of Reaping", "action, 30ft, Wis save, fear");
-                        }
-                        if (lvl >= 11)
-                        {
-                            result.ClassFeatures.Add("Mastery of Death", "When you drop to 0 HP - expend 1 ki pt, drop to 1 HP instead");
-                        }
-                        if (lvl >= 17)
-                        {
-                            result.ClassFeatures.Add("Touch of the Long Death", "action, Con save, expend 1-10 ki pt, 2D10 Necrotic dmg per ki pt");
-                        }
+                        LongDeath(character, result);
                         break;
                     case "Mercy":
-                        character.SkillProficiencies.Add("Insight");
-                        character.SkillProficiencies.Add("Medicine");
-                        result.ToolProficiencies.Add("Herbalism Kit");
-                        Console.WriteLine("Pick an appearance for your merciful mask");
-                        var masks = new List<string> { "Raven", "Blank white", "Crying visage", "Laughing visage", "Skull", "Butterfly" };
-                        result.Equipment.Add(CLIHelper.PrintChoices(masks));
-                        result.ClassFeatures.Add("Implements of Mercy", "gain prof in Insight, Medicine and Herbalism Kit");
-                        result.ClassFeatures.Add("Hand of Healing", "action, 1 ki pt, touch, restore HP = Martial Arts die + Wis / forgo an atk to use during Flurry of Blows");
-                        if (lvl >= 6)
-                        {
-                            result.ClassFeatures.Add("Hand of Harm", "1/turn, on hit, 1 ki pt, Martial Arts die + Wis Necrotic dmg");
-                        }
-                        if (lvl >= 11)
-                        {
-                            result.ClassFeatures.Add("Physician's Touch", "Hand of Healing can also cure disease or remove blind, deaf, paralyze, posion, stun" +
-                                "\nHand of Harm can influct poison condition(disadv on atks/ability checks)");
-                        }
-                        if (lvl >= 17)
-                        {
-                            result.ClassFeatures.Add("Hand of Ultimate Mercy", "LR, action, 5 ki pt, touch creature that died within 24hr, revives with 4D10 + Wis HP, removes blind, deaf, paralyze, posion, stun");
-                        }
+                        Mercy(character, result);
                         break;
                     case "Open Hand":
-                        result.ClassFeatures.Add("Open Hand Technique", "when use Flurry of Blows, gain one" +
-                                "\nStr save - push 15ft" +
-                                "\nDex save - knock prone" +
-                                "\nenemy can't take reactions");
-                        if (lvl >= 6)
-                        {
-                            result.ClassFeatures.Add("Wholeness of Body", "LR, action, heal HP = lvl x 3");
-                        }
-                        if (lvl >= 11)
-                        {
-                            result.ClassFeatures.Add("Tranquility", "on LR, gain Sanctuary spell effect, Wis-based DC");
-                        }
-                        if (lvl >= 17)
-                        {
-                            result.ClassFeatures.Add("Quivering Palm", "on hit, 3 ki pt, Con save - 0 HP or 10D10 Necrotic dmg");
-                        }
+                        OpenHand(character, result);
                         break;
                     case "Shadow":
-                        result.ClassFeatures.Add("Shadow Arts", "action, 2 ki pt, cast - Darkness, Darkvision, Pass Without a Trace, or Silence");
-                        result.Cantrips.Add("Minor Illusion");
-                        if (lvl >= 6)
-                        {
-                            result.ClassFeatures.Add("Shadow Step", "bonus, teleport 60ft, adv on next melee atk");
-                        }
-                        if (lvl >= 11)
-                        {
-                            result.ClassFeatures.Add("Cloak of Shadows", "action, in dim light or darkness become invisible");
-                        }
-                        if (lvl >= 17)
-                        {
-                            result.ClassFeatures.Add("Opportunist", "reaction, when creature is hit by someone else you can melee atk");
-                        }
+                        Shadow(character, result);
                         break;
                     case "Sun Soul":
-                        result.ClassFeatures.Add("Radiant Sun Bolt", $"action, 30ft, 1D{martialArtsDie}(MA die) + Dex Radiant dmg, 1 ki pt to atk again with bonus");
-                        if (lvl >= 6)
-                        {
-                            result.ClassFeatures.Add("Searing Arc Strike", "after Attack action, 2 ki pt, cast Burning Hands as bonus, spend ki pt to increase spell lvl (max 1/2 lvl - 2)");
-                        }
-                        if (lvl >= 11)
-                        {
-                            result.ClassFeatures.Add("Searing Sunburst", "action, 20ft within 150ft, Con save, 2D6 Radiant dmg, spend up to 3 ki pt to increase dmg by 2D6 per ki pt");
-                        }
-                        if (lvl >= 17)
-                        {
-                            result.ClassFeatures.Add("Sun Shield", "bonus, 30ft bright light, 30ft dim light, if hit - reaction, 5 + Wis Radiant dmg");
-                        }
+                        SunSoul(character, result);
                         break;
                 }
             }
@@ -298,7 +132,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             if (lvl >= 18)
             {
                 result.ClassFeatures.Add("Empty Body", "action, 4 ki pt, 1 min, become invisible, gain Resistance to all dmg except Force," +
-                    "\nor 8 ki pt to cast Astral Projection spell");
+                    "\n        or 8 ki pt to cast Astral Projection spell");
             }
             if (lvl >= 20)
             {
@@ -306,6 +140,218 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             }
 
             return result;
+        }
+        public static void AstralSelf(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            result.ClassFeatures.Add("Arms of the Astral Self", "bonus, 10min, 10ft, 1 ki pt, Dex save, 2 Martial Arts dice Force dmg" +
+                "\n        use Wis for Str checks/saves, unarmed atks / gain reach 5ft, unarmed dmg type = Force");
+            if (lvl >= 6)
+            {
+                result.ClassFeatures.Add("Visage of the Astral Self", "bonus, 10min, 1 ki pt, gain a spectral mask/helmet - appearance of your choice and all benefits" +
+                    "\n        Astral Sight(see through magical/nonmagical darkness 120ft)" +
+                    "\n        Wisdom of the Spirit(gain adv on Insight and Intimidation)" +
+                    "\n        Word of the Spirit(you can make only 1 creature hear your voice within 60ft, or amplify your voice up to 600ft)");
+            }
+            if (lvl >= 11)
+            {
+                result.ClassFeatures.Add("Body of the Astral Self", "when your Arms of the Astral Self and Visage of the Astral Self are both active gain all benefits" +
+                    "\n        Deflect Energy(reaction, when you take Acid, Cold, Fire, Force, Lightning or Thunder dmg, reduce dmg by 1D10 + Wis)" +
+                    "\n        Empowered Arms(1/turn, on hit, dmg + Martial Arts die)");
+            }
+            if (lvl >= 17)
+            {
+                result.ClassFeatures.Add("Awakened Astral Self", "bonus, 10min, 5 ki pts, summon Arms, Visage, and Body of the Astral Self and gain all benefits" +
+                    "\n        Armor of the Spirit(+2 AC), Astral Barrage(when you use Attack action to make 2 atk with your astral arms, make 3 atk instead)");
+            }
+        }
+        public static void DrunkenMaster(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            character.SkillProficiencies.Add("Performance");
+            result.ToolProficiencies.Add("Brewer's Supplies");
+            result.ClassFeatures.Add("Drunken Technique", "When you use Flurry of Blows, gain benefits of Disengage and speed +10ft");
+            if (lvl >= 6)
+            {
+                result.ClassFeatures.Add("Tipsy Sway", "Leap to Your Feet(while prone, stand up for 5ft of movement)" +
+                    "\n        Redirect Attack(when an atk vs you misses, 1 ki pt to cause the atk to hit an adj creature)");
+            }
+            if (lvl >= 11)
+            {
+                result.ClassFeatures.Add("Drunkard's Luck", "When you make an atk, save or check at disadv, 2 ki pt to cancel the disadv");
+            }
+            if (lvl >= 17)
+            {
+                result.ClassFeatures.Add("Intoxicated Frenzy", "When you use Flurry of Blows, atk up to 5 times if you atk different creatures");
+            }
+        }
+        public static void FourElements(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            int maxKi = 2;
+            result.ClassFeatures.Add("Disciple of the Elements", "use ki to cast spells");
+            result.ClassFeatures.Add("Elemental Attunement", "Prestidigation");
+            result.ClassFeatures.Add("Fangs of Fire Snake", "1 ki pt, reach 10ft, spend ki pt to add 1D10 Fire dmg");
+            result.ClassFeatures.Add("Fist of Four Thunders", "2 ki pt, cast Thunderwave");
+            result.ClassFeatures.Add("Fist of Unbroken Air", "2 ki pt, 30ft, Str save - 3D10 + 1D10 per ki pt, push 20ft, knock prone");
+            result.ClassFeatures.Add("Rush of Gale Spirits", "2 ki pt, cast Gust of Wind");
+            result.ClassFeatures.Add("Shape of Flowing Water", "1 ki pt, 120ft, transform or shape 30ft of water or ice");
+            result.ClassFeatures.Add("Sweeping Cinder Strike", "2 ki pt, cast Burning Hands");
+            result.ClassFeatures.Add("Water Whip", "bonus, 2 ki pt, 30ft, Dex save - knock prone or pull 25ft, 3D10, spend ki pt to add 1D10 dmg");
+            if (lvl >= 5)
+            {
+                for (int i = 5; i <= lvl; i += 4)
+                {
+                    maxKi++;
+                }
+                result.ClassFeatures.Add("Casting Elemental Spells", $"you can spend additional ki pts to use a discipline at a" +
+                    $"\n        higher lvl up to a max of {maxKi}");
+            }
+            if (lvl >= 6)
+            {
+                result.ClassFeatures["Fangs of Fire Snake"] = "1 ki pt, reach 10ft +1D10 Fire, spend ki pt to add 1D10 Fire dmg";
+                result.ClassFeatures["Fist of Four Thunders"] = "1 ki pt, cast Thunderwave";
+                result.ClassFeatures["Fist of Unbroken Air"] = "1 ki pt, 30ft, Str save - 3D10 + 1D10 per ki pt, push 20ft, knock prone";
+                result.ClassFeatures["Rush of Gale Spirits"] = "1 ki pt, cast Gust of Wind";
+                result.ClassFeatures["Sweeping Cinder Strike"] = "1 ki pt, cast Burning Hands";
+                result.ClassFeatures["Water Whip"] = "bonus, 1 ki pt, 30ft, Dex save - knock prone or pull 25ft, 3D10, spend ki pt to add 1D10 dmg";
+                result.ClassFeatures.Add("Clench of the North Wind", "2 ki pt, cast Hold Person");
+                result.ClassFeatures.Add("Gong of the Summit", "2 ki pt, cast Shatter");
+            }
+            if (lvl >= 11)
+            {
+                result.ClassFeatures["Clench of the North Wind"] = "1 ki pt, cast Hold Person";
+                result.ClassFeatures["Gong of the Summit"] = "1 ki pt, cast Shatter";
+                result.ClassFeatures.Add("Eternal Mountain Defense", "3 ki pt, cast Stoneskin");
+                result.ClassFeatures.Add("Flames of the Phoenix", "2 ki pt, cast Fireball");
+                result.ClassFeatures.Add("Mist Stance", "2 ki pt, cast Gaseous Form");
+            }
+            if (lvl >= 17)
+            {
+                result.ClassFeatures["Eternal Mountain Defense"] = "2 ki pt, cast Stoneskin";
+                result.ClassFeatures.Add("Breath of Winter", "3 ki pt, cast Cone of Cold");
+                result.ClassFeatures.Add("River of Hungry Flame", "3 ki pt, cast Wall of Fire");
+                result.ClassFeatures.Add("Wave of Rolling Earth", "3 ki pt, cast Wall of Stone");
+            }
+        }
+        public static void Kensai(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            string kensaiWep = GetKensaiWeapons(result, lvl);
+            result.ClassFeatures.Add("Path of the Kensai", $"Kensai Weapons(treat as monk wep: {kensaiWep})" +
+                $"\n        Agile Parry(while holding Kensai wep, if you make unarmed atk, +2 AC), Kensai's Shot(bonus, ranged dmg + 1D4)");
+            var deftStrokes = new List<string> { "Calligrapher's Supplies", "Painter's Supplies" };
+            int index = CLIHelper.PrintChoices("Pick a tool", deftStrokes);
+            result.ToolProficiencies.Add(deftStrokes[index]);
+            if (lvl >= 6)
+            {
+                result.ClassFeatures.Add("One with the Blade", "Kensai Weapons are considered magical, Deft Strike(on hit with Kensai Weapon, 1/turn, 1 ki pt, dmg + Martial Arts Die)");
+            }
+            if (lvl >= 11)
+            {
+                result.ClassFeatures.Add("Sharpen the Blade", "bonus, 3 ki pt, 1 min, atk/dmg + 3");
+            }
+            if (lvl >= 17)
+            {
+                result.ClassFeatures.Add("Unerring Accuracy", "1/turn, if miss with monk weapon, reroll atk");
+            }
+        }
+        public static void LongDeath(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            result.ClassFeatures.Add("Touch of Death", "When you kill a creature, gain temp HP = Wis + lvl");
+            if (lvl >= 6)
+            {
+                result.ClassFeatures.Add("Hour of Reaping", "action, 30ft, Wis save, fear");
+            }
+            if (lvl >= 11)
+            {
+                result.ClassFeatures.Add("Mastery of Death", "When you drop to 0 HP - expend 1 ki pt, drop to 1 HP instead");
+            }
+            if (lvl >= 17)
+            {
+                result.ClassFeatures.Add("Touch of the Long Death", "action, Con save, expend 1-10 ki pt, 2D10 Necrotic dmg per ki pt");
+            }
+        }
+        public static void Mercy(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            character.SkillProficiencies.Add("Insight");
+            character.SkillProficiencies.Add("Medicine");
+            result.ToolProficiencies.Add("Herbalism Kit");
+            Console.WriteLine("Pick an appearance for your merciful mask");
+            var masks = new List<string> { "Raven", "Blank white", "Crying visage", "Laughing visage", "Skull", "Butterfly" };
+            result.Equipment.Add(CLIHelper.PrintChoices(masks));
+            result.ClassFeatures.Add("Implements of Mercy", "gain prof in Insight, Medicine and Herbalism Kit");
+            result.ClassFeatures.Add("Hand of Healing", "action, 1 ki pt, touch, restore HP = Martial Arts die + Wis / forgo an atk to use during Flurry of Blows");
+            if (lvl >= 6)
+            {
+                result.ClassFeatures.Add("Hand of Harm", "1/turn, on hit, 1 ki pt, Martial Arts die + Wis Necrotic dmg");
+            }
+            if (lvl >= 11)
+            {
+                result.ClassFeatures.Add("Physician's Touch", "Hand of Healing can also cure disease or remove blind, deaf, paralyze, posion, stun" +
+                    "\n        Hand of Harm can influct poison condition(disadv on atks/ability checks)");
+            }
+            if (lvl >= 17)
+            {
+                result.ClassFeatures.Add("Hand of Ultimate Mercy", "LR, action, 5 ki pt, touch creature that died within 24hr, revives with 4D10 + Wis HP, removes blind, deaf, paralyze, posion, stun");
+            }
+        }
+        public static void OpenHand(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            result.ClassFeatures.Add("Open Hand Technique", "when use Flurry of Blows, gain one" +
+                    "\n        Str save - push 15ft" +
+                    "\n        Dex save - knock prone" +
+                    "\n        enemy can't take reactions");
+            if (lvl >= 6)
+            {
+                result.ClassFeatures.Add("Wholeness of Body", "LR, action, heal HP = lvl x 3");
+            }
+            if (lvl >= 11)
+            {
+                result.ClassFeatures.Add("Tranquility", "on LR, gain Sanctuary spell effect, Wis-based DC");
+            }
+            if (lvl >= 17)
+            {
+                result.ClassFeatures.Add("Quivering Palm", "on hit, 3 ki pt, Con save - 0 HP or 10D10 Necrotic dmg");
+            }
+        }
+        public static void Shadow(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            result.ClassFeatures.Add("Shadow Arts", "action, 2 ki pt, cast - Darkness, Darkvision, Pass Without a Trace, or Silence");
+            result.Cantrips.Add("Minor Illusion");
+            if (lvl >= 6)
+            {
+                result.ClassFeatures.Add("Shadow Step", "bonus, teleport 60ft, adv on next melee atk");
+            }
+            if (lvl >= 11)
+            {
+                result.ClassFeatures.Add("Cloak of Shadows", "action, in dim light or darkness become invisible");
+            }
+            if (lvl >= 17)
+            {
+                result.ClassFeatures.Add("Opportunist", "reaction, when creature is hit by someone else you can melee atk");
+            }
+        }
+        public static void SunSoul(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            result.ClassFeatures.Add("Radiant Sun Bolt", $"action, 30ft, 1D{MartialArtsDie}(MA die) + Dex Radiant dmg, 1 ki pt to atk again with bonus");
+            if (lvl >= 6)
+            {
+                result.ClassFeatures.Add("Searing Arc Strike", "after Attack action, 2 ki pt, cast Burning Hands as bonus, spend ki pt to increase spell lvl (max 1/2 lvl - 2)");
+            }
+            if (lvl >= 11)
+            {
+                result.ClassFeatures.Add("Searing Sunburst", "action, 20ft within 150ft, Con save, 2D6 Radiant dmg, spend up to 3 ki pt to increase dmg by 2D6 per ki pt");
+            }
+            if (lvl >= 17)
+            {
+                result.ClassFeatures.Add("Sun Shield", "bonus, 30ft bright light, 30ft dim light, if hit - reaction, 5 + Wis Radiant dmg");
+            }
         }
         public static string GetKensaiWeapons(CharacterClass result, int lvl)
         {

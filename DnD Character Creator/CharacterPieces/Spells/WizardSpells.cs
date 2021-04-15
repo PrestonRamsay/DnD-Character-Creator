@@ -57,7 +57,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Earth Tremor",
             "Expeditious Retreat",
             "False Life",
-            "Feather Fall",
+            "Featherfall",
             "Find Familiar",
             "Fog Cloud",
             "Frost Fingers",

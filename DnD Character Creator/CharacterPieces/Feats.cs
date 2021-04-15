@@ -272,7 +272,7 @@ namespace DnD_Character_Creator.CharacterPieces
                             "Eldritch Mind", "Eldritch Sight", "Eyes of the Rune Keeper", "Fiendish Vigor", "Gaze of Two Minds",
                             "Grasp of Hadar", "Lance of Lethargy", "Mask of Many Faces", "Misty Visions", "Thief of Five Fates" };
                     string newInvoc = CLIHelper.PrintChoices(Options.AllInvocations, invoc, "Pick an Invocation");
-                    character.ClassFeatures.Add("Invocations", "\n------------------------------------");
+                    character.ClassFeatures.Add("Invocations", "\n        ------------------------------------");
                     character.ClassFeatures.Add(newInvoc, Options.AllInvocations[newInvoc]);
                     invoc.Remove(newInvoc);
                     newInvoc = CLIHelper.PrintChoices(Options.AllInvocations, invoc, "Pick an Invocation");
@@ -315,7 +315,7 @@ namespace DnD_Character_Creator.CharacterPieces
                     break;
                 case "Martial Adept":
                     List<string> maneuvers = CLIHelper.GetDictionaryOptions(Options.Maneuvers, 2, "Pick a new maneuver");
-                    character.ClassFeatures.Add("Maneuvers(D6)", "\n------------------------------------");
+                    character.ClassFeatures.Add("Maneuvers(D6)", "\n        ------------------------------------");
                     foreach (var item in maneuvers)
                     {
                         character.ClassFeatures.Add(item, Options.Maneuvers[item]);
@@ -332,7 +332,7 @@ namespace DnD_Character_Creator.CharacterPieces
                     }
                     Console.WriteLine("You get 2 metamagic options of your choice");
                     string metamagic = CLIHelper.PrintChoices(Options.Metamagic, metamagicList, "Pick an option");
-                    character.ClassFeatures.Add("Metamagic Options", "\n------------------------------------");
+                    character.ClassFeatures.Add("Metamagic Options", "\n        ------------------------------------");
                     character.ClassFeatures.Add(metamagic, Options.Metamagic[metamagic]);
                     metamagicList.Remove(metamagic);
                     break;

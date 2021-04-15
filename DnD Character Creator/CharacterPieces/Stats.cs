@@ -40,7 +40,7 @@ namespace DnD_Character_Creator
         }
         public static string PrintStats(IList<int> stats)
         {
-            return $"Your stats are {stats[0]}, {stats[1]}, {stats[2]}, {stats[3]}, {stats[4]}, {stats[5]}\n";
+            return $"Your stats are {stats[0]}, {stats[1]}, {stats[2]}, {stats[3]}, {stats[4]}, {stats[5]}\n        ";
         }
         public static void Roll(List<int> allStats)
         {
@@ -75,8 +75,8 @@ namespace DnD_Character_Creator
             {
                 for (int j = 0; j < 6; j++)
                 {
-                    Console.WriteLine($"\nEnter a value between 8 and 15. If you'd like to see cost for each value enter '1'." +
-                        $"\nPoints remaining: {points}\n");
+                    Console.WriteLine($"\n        Enter a value between 8 and 15. If you'd like to see cost for each value enter '1'." +
+                        $"\n        Points remaining: {points}\n        ");
                     int stat = CLIHelper.GetNumberInRange(1, 15);
                     Dictionary<int, int> costOf = SetCosts();
                     if (stat == 1)
@@ -125,7 +125,7 @@ namespace DnD_Character_Creator
 
             foreach (int stat in costOf.Keys)
             {
-                str += $"Score of {stat} costs {costOf[stat]} points\n";
+                str += $"Score of {stat} costs {costOf[stat]} points\n        ";
             }
 
             Console.WriteLine(str);
@@ -160,7 +160,7 @@ namespace DnD_Character_Creator
         {
             DieRoll d6 = new DieRoll(6);
             int totalRoll = d6.RollDie() + d6.RollDie();
-            Console.WriteLine($"You rolled: {totalRoll} on your 2D6.\n");
+            Console.WriteLine($"You rolled: {totalRoll} on your 2D6.\n        ");
             var statsDisplay = new Stats();
 
             while (totalRoll != 0)
@@ -206,7 +206,7 @@ namespace DnD_Character_Creator
                 Console.Write($"({i + 1})  {stats[i]}   ");
                 Console.ForegroundColor = ConsoleColor.White;
             }
-            Console.WriteLine("\n");
+            Console.WriteLine("\n        ");
         }
         public void PrintStatsToAssign(List<int> stats)
         {
@@ -214,7 +214,7 @@ namespace DnD_Character_Creator
             {
                 Console.Write($"({i + 1})  {stats[i]}    ");
             }
-            Console.WriteLine("\n");
+            Console.WriteLine("\n        ");
         }
         public void AssignStats(Character character, List<int> statNums)
         {
@@ -309,21 +309,21 @@ namespace DnD_Character_Creator
         }
         public static void AbilityScoreInc(Character character)
         {
-            Console.WriteLine("\nYou have an ability score increase, pick from the options.");
+            Console.WriteLine("\n        You have an ability score increase, pick from the options.");
             CLIHelper.Print3Choices("Increase 1 stat by 2", "Increase 2 stats by 1", "Pick a feat");
             int input = CLIHelper.GetNumberInRange(1, 3);
 
             if (input == 1)
             {
-                Console.Write($"\nYour stats are ");
+                Console.Write($"\n        Your stats are ");
                 foreach (var stat in Options.Stats)
                 {
                     Console.Write($"{stat}: {character.Stats[stat]}  ");
                 }
-                Console.WriteLine("\n\nPick the stat you'd like to increase.");
+                Console.WriteLine("\n        \n        Pick the stat you'd like to increase.");
                 IncreaseStat(character, 2);
                 Console.Clear();
-                Console.Write($"\nYour stats are now ");
+                Console.Write($"\n        Your stats are now ");
                 foreach (var stat in Options.Stats)
                 {
                     Console.Write($"{stat}: {character.Stats[stat]}  ");
@@ -332,17 +332,17 @@ namespace DnD_Character_Creator
             }
             else if (input == 2)
             {
-                Console.Write($"\nYour stats are ");
+                Console.Write($"\n        Your stats are ");
                 foreach (var stat in Options.Stats)
                 {
                     Console.Write($"{stat}: {character.Stats[stat]}  ");
                 }
-                Console.WriteLine("\n\nPick the first stat you'd like to increase.");
+                Console.WriteLine("\n        \n        Pick the first stat you'd like to increase.");
                 IncreaseStat(character, 1);
                 Console.WriteLine("Pick the second stat you'd like to increase.");
                 IncreaseStat(character, 1);
                 Console.Clear();
-                Console.Write($"\nYour stats are now ");
+                Console.Write($"\n        Your stats are now ");
                 foreach (var stat in Options.Stats)
                 {
                     Console.Write($"{stat}: {character.Stats[stat]}  ");

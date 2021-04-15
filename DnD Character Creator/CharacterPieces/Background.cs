@@ -89,9 +89,9 @@ namespace DnD_Character_Creator.Backgrounds
             result.Equipment.Add("Belt pouch for coins");
             result.GP = 15;
             result.Feature = "Shelter of the Faithful: you can perform religious ceremonies of your deity, you and your party can expect to " +
-                "\nreceive free healing and care at a temple, shrine or other established presence, but you must provide the spell" +
-                "\ncomponents. You (and only you) will be supported for a modest lifestyle. You have a residence at your home temple," +
-                "\nand the priests there will provide you assistance as long as it isn't hazardous.";
+                "\n        receive free healing and care at a temple, shrine or other established presence, but you must provide the spell" +
+                "\n        components. You (and only you) will be supported for a modest lifestyle. You have a residence at your home temple," +
+                "\n        and the priests there will provide you assistance as long as it isn't hazardous.";
             result.PersonalityTrait[0] = "I idolize a particular hero of my faith, and constantly refer to that person’s deeds and example.";
             result.PersonalityTrait[1] = "I can find common ground between the fiercest enemies, empathizing with them and always working toward peace.";
             result.PersonalityTrait[2] = "I see omens in every event and action. The gods try to speak to us, we just need to listen.";
@@ -134,7 +134,7 @@ namespace DnD_Character_Creator.Backgrounds
             result.Equipment.Add("Belt pouch for coins");
             result.GP = 15;
             result.Feature = "False Identity: you have documentation, established acquaintances, and disguises for a second persona." +
-                "\nYou can also forge documents as long as you've seen as example of that kind of document/handwriting.";
+                "\n        You can also forge documents as long as you've seen as example of that kind of document/handwriting.";
             result.FavoriteScam[0] = "I cheat at games of chance.";
             result.FavoriteScam[1] = "I shave coins or forge documents.";
             result.FavoriteScam[2] = "I insinuate myself into people’s lives to prey on their weakness and secure their fortunes.";
@@ -183,7 +183,7 @@ namespace DnD_Character_Creator.Backgrounds
             result.Equipment.Add("Belt pouch for coins");
             result.GP = 15;
             result.Feature = "Criminal Contact: you have a reliable contact who acts as your liason to a criminal network." +
-                "\nYou can get them messages over long distances because you know local/corrupt individuals who can deliver the messages.";
+                "\n        You can get them messages over long distances because you know local/corrupt individuals who can deliver the messages.";
             result.PersonalityTrait[0] = "I always have a plan for what to do when things go wrong.";
             result.Specialty[0] = "Blackmailer";
             result.Specialty[1] = "Burglar";
@@ -252,9 +252,9 @@ namespace DnD_Character_Creator.Backgrounds
             result.Equipment.Add("Belt pouch for coins");
             result.GP = 15;
             result.Feature = "By Popular Demand: you can always find a place to perform, usually an inn or a tavern, but it could be a circus," +
-                "\ntheater or even a noble's court. The place you perform will provide you with free lodging and a modest/comfortable" +
-                "\nlevel of food (as long as you perform each night). Your performances also make you a local figure - strangers recognize" +
-                "\nyou and usually like you.";
+                "\n        theater or even a noble's court. The place you perform will provide you with free lodging and a modest/comfortable" +
+                "\n        level of food (as long as you perform each night). Your performances also make you a local figure - strangers recognize" +
+                "\n        you and usually like you.";
             result.Routine[0] = "Actor";
             result.Routine[1] = "Dancer";
             result.Routine[2] = "Fire-eater";
@@ -309,7 +309,7 @@ namespace DnD_Character_Creator.Backgrounds
             result.Equipment.Add("Belt pouch for coins");
             result.GP = 10;
             result.Feature = "Rustic Hospitality: common folk will give you a place to hide, rest, or recuperate unless you've shown you're a danger." +
-                "\nThey will shield you from the law or anyone searching from you, but they will not risk their lives.";
+                "\n        They will shield you from the law or anyone searching from you, but they will not risk their lives.";
             result.DefiningEvent[0] = "I stood up to a tyrant’s agents.";
             result.DefiningEvent[1] = "I saved people during a natural disaster.";
             result.DefiningEvent[2] = "I stood alone against a terrible monster.";
@@ -364,11 +364,11 @@ namespace DnD_Character_Creator.Backgrounds
             result.Equipment.Add("Belt pouch for coins");
             result.GP = 15;
             result.Feature = "Guild Membership: guild members will provide yu with food and lodging if necessary (they'll also pay for your funeral" +
-                "\nif necessary). The guild hall offers a place for you to meet others in your profession, potential patrons, allies, or" +
-                "\nhirelings. Guilds wield tremendous political power - if accused of a crime, they will support you if a good case can be" +
-                "\nmade or if the crime is justifiable. You can also gain access to political figures, if you're in good standing, but a" +
-                "\ndonation of money or magical items to the guild coffers might be required. You must pay the guild 5GP per month." +
-                "\nIf you fall behind to can payback missed dues to remain in good standing.";
+                "\n        if necessary). The guild hall offers a place for you to meet others in your profession, potential patrons, allies, or" +
+                "\n        hirelings. Guilds wield tremendous political power - if accused of a crime, they will support you if a good case can be" +
+                "\n        made or if the crime is justifiable. You can also gain access to political figures, if you're in good standing, but a" +
+                "\n        donation of money or magical items to the guild coffers might be required. You must pay the guild 5GP per month." +
+                "\n        If you fall behind to can payback missed dues to remain in good standing.";
             result.GuildBusiness[0] = "Alchemists and apothecaries";
             result.GuildBusiness[1] = "Armorers, locksmiths, and finesmiths";
             result.GuildBusiness[2] = "Brewers, distillers, and vintners";
@@ -432,8 +432,8 @@ namespace DnD_Character_Creator.Backgrounds
             result.Equipment.Add("Herbalism Kit");
             result.GP = 5;
             result.Feature = "Discovery: your seclusion gave you access to a unique and powerful discovery. It could be: a great truth about" +
-                "\nthe cosmos/deities/powerful beings/forces of nature, a site no one has ever seen, an uncovered fact that has been long" +
-                "\nforgotten, an unearthered relic, etc. Work with your DM to determine the details of your discovery.";
+                "\n        the cosmos/deities/powerful beings/forces of nature, a site no one has ever seen, an uncovered fact that has been long" +
+                "\n        forgotten, an unearthered relic, etc. Work with your DM to determine the details of your discovery.";
             result.LifeOfSeclusion[0] = "I was searching for spiritual enlightenment.";
             result.LifeOfSeclusion[1] = "I was partaking of communal living in accordance with the dictates of a religious order.";
             result.LifeOfSeclusion[2] = "I was exiled for a crime I didn’t commit.";
@@ -485,9 +485,9 @@ namespace DnD_Character_Creator.Backgrounds
             result.Equipment.Add("Coin purse");
             result.GP = 25;
             result.Feature = "Position of Privilege: people are inclined to think better of you, you are welcome in high society, and people assume" +
-                "\nyou have the right to be wherever you are. Common folk make every effort to accomodate you and avoid your displeasure." +
-                "\nOther people of high birth treat you as a member of the same social sphere." +
-                "\nYou can secure an audience with a local noble if you need to.";
+                "\n        you have the right to be wherever you are. Common folk make every effort to accomodate you and avoid your displeasure." +
+                "\n        Other people of high birth treat you as a member of the same social sphere." +
+                "\n        You can secure an audience with a local noble if you need to.";
             result.PersonalityTrait[0] = "My eloquent flattery makes everyone I talk to feel like the most wonderful and important person in the world.";
             result.PersonalityTrait[1] = "The common folk love me for my kindness and generosity.";
             result.PersonalityTrait[2] = "No one could doubt by looking at my regal bearing that I am a cut above the unwashed masses.";
@@ -532,8 +532,8 @@ namespace DnD_Character_Creator.Backgrounds
             result.Equipment.Add("Belt pouch for coins");
             result.GP = 10;
             result.Feature = "Wanderer: you can always recall the general layout of terrain, settlements, and other" +
-                "\nfeatures around you. You can find food and fresh water for yourself and up to 5 people each day," +
-                "\nas long as the land offers berries, small game, water, etc.";
+                "\n        features around you. You can find food and fresh water for yourself and up to 5 people each day," +
+                "\n        as long as the land offers berries, small game, water, etc.";
             result.Origin[0] = "Forester";
             result.Origin[1] = "Trapper";
             result.Origin[2] = "Homesteader";
@@ -588,7 +588,7 @@ namespace DnD_Character_Creator.Backgrounds
             result.Equipment.Add("Belt pouch for coins");
             result.GP = 10;
             result.Feature = "Researcher: when you want to learn new lore, you usually know where to find it - whether it's" +
-                "\nin a book, a sage or other creature knows it, etc. The DM may rule the knowledge is inaccessible.";
+                "\n        in a book, a sage or other creature knows it, etc. The DM may rule the knowledge is inaccessible.";
             result.Specialty[0] = "Alchemist";
             result.Specialty[1] = "Astronomer";
             result.Specialty[2] = "Discredited academic";
@@ -654,8 +654,8 @@ namespace DnD_Character_Creator.Backgrounds
             result.Equipment.Add("Belt pouch for coins");
             result.GP = 10;
             result.Feature = "Ship's Passage: you can secure free passage on a sailing ship for you and your party. You won't determine the route" +
-                "\nor what stops the ship will make, and the crew expects the party to assist them along the way." +
-                "\nThe DM decides how long the journey takes.";
+                "\n        or what stops the ship will make, and the crew expects the party to assist them along the way." +
+                "\n        The DM decides how long the journey takes.";
             result.PersonalityTrait[0] = "My friends know they can rely on me, no matter what.";
             result.PersonalityTrait[1] = "I work hard so that I can play hard when the work is done.";
             result.PersonalityTrait[2] = "I enjoy sailing into new ports and making new friends over a flagon of ale.";
@@ -732,8 +732,8 @@ namespace DnD_Character_Creator.Backgrounds
             result.Equipment.Add("Belt pouch for coins");
             result.GP = 15;
             result.Feature = "Military Rank: soldiers loyal to your former military organization still recognize your authority," +
-                "\ndeferring to you if they are a lower rank. You can exert your influence over other soldiers and requisition simple" +
-                "\nequipment or horses for temporary use. You can usually gain access to friendly military encampments/fortresses.";
+                "\n        deferring to you if they are a lower rank. You can exert your influence over other soldiers and requisition simple" +
+                "\n        equipment or horses for temporary use. You can usually gain access to friendly military encampments/fortresses.";
             result.Specialty[0] = "Officer";
             result.Specialty[1] = "Scout";
             result.Specialty[2] = "Infantry";
@@ -787,7 +787,7 @@ namespace DnD_Character_Creator.Backgrounds
             result.Equipment.Add("Belt pouch for coins");
             result.GP = 15;
             result.Feature = "City Secrets: you know secret passages through the urban sprawl. Outside of combat, you can travel through any two" +
-                "\nlocations in the city twice as fast as your speed normally allows.";
+                "\n        locations in the city twice as fast as your speed normally allows.";
             result.PersonalityTrait[0] = "I hide scraps of food and trinkets away in my pockets.";
             result.PersonalityTrait[1] = "I ask a lot of questions.";
             result.PersonalityTrait[2] = "I like to squeeze into small places where no one else can get to me.";

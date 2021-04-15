@@ -1,0 +1,20 @@
+﻿
+AC: 12 + PB		HP: 5 + (5 x lvl)		Speed: 30ft, Fly 30ft or Swim 30ft
+Str: 15 + 2
+Dex: 13 + 1
+Con: 14 + 2
+Int: 14 + 2
+Wis: 11 + 0
+Cha: 10 + 0
+Saves: Dex(1 + PB), Wis(PB)
+Damage Resistances: one from(Acid, Cold, Fire, Lightning, or Thunder)
+Damage Immunities: Poison
+Condition Immunities: charm, exhaustion, poison
+Senses: Darkvision 60ft, passive Perception 10
+Languages: same as player languages
+PB = player PB
+
+Actions
+Psychic Slam(1D8 + PB Psychic)
+Forceful Gore(1D8 + PB Force)
+3/day - Buff(gain 2D8 + PB temp HP)

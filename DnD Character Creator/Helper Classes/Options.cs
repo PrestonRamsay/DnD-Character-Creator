@@ -12,11 +12,13 @@ namespace DnD_Character_Creator.Helper_Classes
             "Artificer",
             "Barbarian",
             "Bard",
+            "Bloodhunter",
             "Cleric",
             "Druid",
             "Fighter",
             "Monk",
             "Paladin",
+            "Psion",
             "Ranger",
             "Rogue",
             "Sorcerer",
@@ -295,16 +297,16 @@ namespace DnD_Character_Creator.Helper_Classes
             { "Bountiful Luck", "reaction, 30ft, when ally rolls a 1 on atk, save, or check they can reroll" },
             { "Charger", "bonus, Dash make a melee atk - if you move 10ft, +5 dmg or push 10ft" },
             { "Chef", "Increase Con or Wis by 1, gain prof with Cook's Utensils / on SR, 4 + PB creatures, regain 1D8 HP" +
-                "\n         on LR, 8 hr, PB treats - bonus, gain PB temp HP" },
+                "\n                 on LR, 8 hr, PB treats - bonus, gain PB temp HP" },
             { "Crossbow Expert", "ignore Loading, no disadv when threatened / bonus, when you use Attack action with One-Handed wep, make atk with Hand Crossbow" },
-            { "Crusher", "Increase Str or Con by 1 / on hit, 1/turn, if bludgeoning - push 5ft / on bludgeoning crit - adv on atk next turn" },
+            { "Crusher", "Increase Str or Con by 1 / on hit, 1/turn, if Bludgeoning - push 5ft / on Bludgeoning crit - adv on atk next turn" },
             { "Defensive Duelist", "reaction, when you're hit with melee, AC + PB" },
             { "Dragon Fear", "Increase Str, Con, or Cha by 1 / expend Breath Weapon, 30ft, Cha-based Wis save, fear 1 min" },
             { "Dragon Hide", "Increase Str, Con, or Cha by 1 / AC = 13 + Dex while not wearing armor" },
             { "Drow High Magic", "cast Detect Magic at-will, gain Levitate and Dispel Magic spells" },
             { "Dual Wielder", "while wielding 2 weapons, +1 AC / use Two-Weapon Fighting with non-Light weapons / draw or stow 2 weapons" },
             { "Dungeon Delver", "gain adv on Perception or Investigation to detect secret doors, adv on saves to avoid traps" +
-                "\n         gain Resistance to trap dmg, search for traps at normal pace" },
+                "\n                 gain Resistance to trap dmg, search for traps at normal pace" },
             { "Durable", "Increase Con by 1 / on SR, when you roll HD to gain HP, regain HP = Con * 2" },
             { "Dwarven Fortitude", "Increase Con by 1 / when you take Dodge action, expend 1 Hit Die to heal Hit Die + Con HP" },
             { "Eldritch Adept", "gain a Warlock Invocation, you can replace it at lvl ups, must meet requirements" },
@@ -332,7 +334,7 @@ namespace DnD_Character_Creator.Helper_Classes
             { "Linguist", "Increase Int by 1 / gain 3 languages, create written ciphers (Int DC = Int score + PB)" },
             { "Lucky", "LR, gain 3 luck pts - roll twice for atk, save, or check and use either roll / can also use on atk against you" },
             { "Mage Slayer", "reaction, if adj creature casts a spell, make a melee atk / impose disadv on Con checks for conc" +
-                "\n         adv on saves vs spells cast by adj creature" },
+                "\n                 adv on saves vs spells cast by adj creature" },
             { "Magic Initiate", "gain 2 (Bard, Cleric, Druid, Sorcerer, Warlock, or Wizard) cantrips and a 1st lvl spell (LR to cast)" },
             { "Martial Adept", "gain a Superior Die (if none = D6), gain 2 Maneuvers from Battle Master, Str or Dex-based DCs" },
             { "Medium Armor Master", "Medium Armor doesn't impose disadv on Stealth, +1 AC" },
@@ -342,10 +344,10 @@ namespace DnD_Character_Creator.Helper_Classes
             { "Mounted Combatant", "gain adv on melee atk vs unmounted(smaller than mount), force an atk against your mount to target you, mount gains Evasion" },
             { "Observant", "Increase Int or Wis by 1 / lip-reading if you share a language, +5 to Perception and Investigation" },
             { "Orcish Fury", "Increase Str or Con by 1 / SR, on hit, dmg + 1 weapon die / reaction, after using Relentless Endurance, make an atk" },
-            { "Piercer", "Increase Str or Dex by 1 / 1/turn, reroll piercing dmg / on piercing crit, dmg + 1 weapon die" },
+            { "Piercer", "Increase Str or Dex by 1 / 1/turn, reroll Piercing dmg / on Piercing crit, dmg + 1 weapon die" },
             { "Point Blank Shot", "no disadv when threatened / no action, 1 turn, 30ft, dmg + 4" },
             { "Poisoner", "ignore Poison Resistance, apply poison as a bonus, gain prof with Poisoner's Kit / 1 hr & 50gp, PB doses - 1 min, Con DC 14, 2D8 Poison dmg" },
-            { "Polearm Master", "while wielding Glaive, Halberd, or Quarterstaff - make melee atk as a bonus(1D4 bludgeoning), provoke atk op when creatures enter your reach" },
+            { "Polearm Master", "while wielding Glaive, Halberd, or Quarterstaff - make melee atk as a bonus(1D4 Bludgeoning), provoke atk op when creatures enter your reach" },
             { "Prodigy", "gain a skill, tool prof, and lang / gain Expertise in 1 skill" },
             { "Rapid Shot", "make a ranged atk as a bonus" },
             { "Regeneration", "1/turn, no action, heal 1 HP / action, heal 1D6 + Con / outside combat, heal 1D6 HP/hr" },
@@ -361,13 +363,13 @@ namespace DnD_Character_Creator.Helper_Classes
             { "Skilled", "gain prof in any combination of 3 skills/tools" },
             { "Skirmisher", "bonus, Disengage, gain +1 AC and dmg + 1D6 for 1 turn" },
             { "Skulker", "use Hide when only lightly obscured, while Hidden - missing a ranged atk doesn't reveal position, dim light doesn't impose disadv on Perception" },
-            { "Slasher", "Increase Str or Dex by 1 / 1/turn, if slashing - reduce speed by 10ft / on slashing crit, target suffers disadv on atk next turn" },
+            { "Slasher", "Increase Str or Dex by 1 / 1/turn, if Slashing - reduce speed by 10ft / on Slashing crit, target suffers disadv on atk next turn" },
             { "Spell Focus", "spell DCs + 2" },
             { "Spell Sniper", "double spells' range, spells ignore 1/2 and 3/4 cover, gain a (Bard, Cleric, Druid, Sorcerer, Warlock, or Wizard) cantrip" },
             { "Squat Nimbleness", "Increase Str or Dex by 1 / increase speed by 5ft, gain prof in Acrobatics or Athletics, gain adv on checks vs grapple" },
             { "Tavern Brawler", "Increase Str or Dex by 1 / gain prof with improvised and unarmed atks, unarmed dmg = 1D4 / bonus, hit with improvised for unarmed atk, grapple check" },
             { "Telekinetic", "Increase Int, Wis, or Cha by 1 / gain Mage Hand cantrip (if you already know range +30ft), its invisibile and doesn't require V or S components" +
-                "\n         bonus, 30ft, Str save, push 5ft" },
+                "\n                 bonus, 30ft, Str save, push 5ft" },
             { "Telepathic", "Increase Int, Wis, or Cha by 1 / gain Telepathy 60ft / LR or 2nd lvl spell slot, cast Detect Thoughts" },
             { "Tough", "gain max HP = lvl x 2, each lvl up gain 2 max HP" },
             { "Unarmored Defense", "while wearing no armor, AC = 10 + Dex + (Con or Wis)" },
@@ -400,64 +402,73 @@ namespace DnD_Character_Creator.Helper_Classes
         };
         public static List<string> SimpleMeleeWeapons { get; set; } = new List<string>
         {
-            "Club(1D4 bludgeoning, Light)(1sp, 2lb.)",
-            "Dagger(1D4 piercing, Finesse, Light, Thrown 20/60)(2gp, 1lb.)",
-            "Greatclub(1D8 bludgeoning, Two-Handed)(2sp, 10lb.)",
-            "Handaxe(1D6 slashing, Light, Thrown 20/60)(5gp, 2lb.)",
-            "Javelin(1D6 piercing, Thrown 30/120)(5sp, 2lb.)",
-            "Light hammer(1D4 bludgeoning, Light, Thrown 20/60)(2gp, 2lb.)",
-            "Mace(1D6 bludgeoning)(5gp, 4lb.)",
-            "Quarterstaff(1D6 bludgeoning, Versatile-D8)(2sp, 4lb.)",
-            "Sickle(1D4 slashing, Light)(1gp, 2lb.)",
-            "Spear(1D6 piercing, Thrown 20/60, Versatile-D8)(1gp, 3lb.)"
+            "Club(1D4 Bludgeoning, Light)(1sp, 2lb.)",
+            "Dagger(1D4 Piercing, Finesse, Light, Thrown 20/60)(2gp, 1lb.)",
+            "Greatclub(1D8 Bludgeoning, Two-Handed)(2sp, 10lb.)",
+            "Handaxe(1D6 Slashing, Light, Thrown 20/60)(5gp, 2lb.)",
+            "Javelin(1D6 Piercing, Thrown 30/120)(5sp, 2lb.)",
+            "Light hammer(1D4 Bludgeoning, Light, Thrown 20/60)(2gp, 2lb.)",
+            "Mace(1D6 Bludgeoning)(5gp, 4lb.)",
+            "Quarterstaff(1D6 Bludgeoning, Versatile-D8)(2sp, 4lb.)",
+            "Sickle(1D4 Slashing, Light)(1gp, 2lb.)",
+            "Spear(1D6 Piercing, Thrown 20/60, Versatile-D8)(1gp, 3lb.)"
         };
         public static List<string> SimpleRangedWeapons { get; set; } = new List<string>
         {
-            "Light crossbow(1D8 piercing, Ammo 80/320, Loading, Two-Handed)(25gp, 5lb.)",
-            "Dart(1D4 piercing, Finesse, Thrown 20/60)(5cp, 1/4lb.)",
-            "Shortbow(1D6 piercing, Ammo 80/320, Two-Handed)(25gp, 2lb.)",
-            "Sling(1D4 bludgeoning, Ammo 30/120)(1sp, 0lb.)"
+            "Light crossbow(1D8 Piercing, 80/320, Ammo, Loading, Two-Handed)(25gp, 5lb.)",
+            "Dart(1D4 Piercing, Finesse, Thrown 20/60)(5cp, 1/4lb.)",
+            "Shortbow(1D6 Piercing, 80/320, Ammo, Two-Handed)(25gp, 2lb.)",
+            "Sling(1D4 Bludgeoning, 30/120, Ammo)(1sp, 0lb.)"
         };
         public static List<string> MartialMeleeWeapons { get; set; } = new List<string>
         {
-            "Battleaxe(1D8 slashing Versatile-D10)(10gp, 4lb.)",
-            "Flail(1D8 bludgeoning)(10gp, 2lb.)",
-            "Glaive(1D10 slashing, Heavy, Reach, Two-Handed)(20gp, 6lb.)",
-            "Greataxe(1D12 slashing, Heavy, Two-Handed)(30gp, 7lb.)",
-            "Greatsword(2D6 slashing, Heavy, Two-Handed)(50gp, 6lb.)",
-            "Halberd(1D10 slashing, Heavy, Reach, Two-Handed)(20gp, 6lb.)",
-            "Lance(1D12 piercing, Reach, Special)(10gp, 6lb.)",
-            "Longsword(1D8 slashing, Versatile-D10)(15gp, 3lb.)",
-            "Maul(2D6 bludgeoning, Heavy, Two-Handed)(10gp, 10lb.)",
-            "Morningstar(1D8 piercing)(15gp, 4lb.)",
-            "Pike(1D10 piercing, Heavy, Reach, Two-Handed)(5gp, 18lb.)",
-            "Rapier(1D8 piercing, Finesse)(25gp, 2lb.)",
-            "Scimitar(1D6 slashing, Finesse, Light)(25gp, 3lb.)",
-            "Shortsword(1D6 piercing, Finesse, Light)(10gp, 2lb.)",
-            "Trident(1D6 piercing, Thrown 20/60, Versatile-D8)(5gp, 4lb.)",
-            "Warpick(1D8 piercing)(5gp, 2lb.)",
-            "Warhammer(1D8 bludgeoning, Versatile-D10)(15gp, 2lb.)",
-            "Whip(1D4 slashing, Finesse, Reach)(2gp, 3lb.)"
+            "Battleaxe(1D8 Slashing Versatile-D10)(10gp, 4lb.)",
+            "Flail(1D8 Bludgeoning)(10gp, 2lb.)",
+            "Glaive(1D10 Slashing, Heavy, Reach, Two-Handed)(20gp, 6lb.)",
+            "Greataxe(1D12 Slashing, Heavy, Two-Handed)(30gp, 7lb.)",
+            "Greatsword(2D6 Slashing, Heavy, Two-Handed)(50gp, 6lb.)",
+            "Halberd(1D10 Slashing, Heavy, Reach, Two-Handed)(20gp, 6lb.)",
+            "Lance(1D12 Piercing, Reach, Special)(10gp, 6lb.)",
+            "Longsword(1D8 Slashing, Versatile-D10)(15gp, 3lb.)",
+            "Maul(2D6 Bludgeoning, Heavy, Two-Handed)(10gp, 10lb.)",
+            "Morningstar(1D8 Piercing)(15gp, 4lb.)",
+            "Pike(1D10 Piercing, Heavy, Reach, Two-Handed)(5gp, 18lb.)",
+            "Rapier(1D8 Piercing, Finesse)(25gp, 2lb.)",
+            "Scimitar(1D6 Slashing, Finesse, Light)(25gp, 3lb.)",
+            "Shortsword(1D6 Piercing, Finesse, Light)(10gp, 2lb.)",
+            "Trident(1D6 Piercing, Thrown 20/60, Versatile-D8)(5gp, 4lb.)",
+            "Warpick(1D8 Piercing)(5gp, 2lb.)",
+            "Warhammer(1D8 Bludgeoning, Versatile-D10)(15gp, 2lb.)",
+            "Whip(1D4 Slashing, Finesse, Reach)(2gp, 3lb.)"
         };
         public static List<string> MartialRangedWeapons { get; set; } = new List<string>
         {
-            "Blowgun(1 piercing, Ammo 25/100, Loading)(10gp, 1lb.)",
-            "Hand crossbow(1D6 piercing, Ammo 30/120, Light, Loading)(75gp, 3lb.)",
-            "Heavy crossbow(1D10 piercing, Ammo 100/400, Heavy, Loading, Two-Handed)(50gp, 18lb.)",
-            "Longbow(1D8 piercing, Ammo 150/600, Heavy, Two-Handed)(50gp, 2lb.)",
+            "Blowgun(1 Piercing, 25/100, Ammo, Loading)(10gp, 1lb.)",
+            "Hand crossbow(1D6 Piercing, 30/120, Ammo, Light, Loading)(75gp, 3lb.)",
+            "Heavy crossbow(1D10 Piercing, 100/400, Ammo, Heavy, Loading, Two-Handed)(50gp, 18lb.)",
+            "Longbow(1D8 Piercing, 150/600, Ammo, Heavy, Two-Handed)(50gp, 2lb.)",
             "Net(Thrown 5/15, Special)(1gp, 3lb.)"
+        };
+        public static List<string> Firearms { get; set; } = new List<string>
+        {
+            "Pistol(1D10 Piercing, 100/400, Reload 4, Misfire 1)(250gp, 3lb.)",
+            "Musket/Rifle(1D12 Piercing, 200/800, Two-Handed, Reload 1, Misfire 2)(500gp, 10lb.)",
+            "Pepperbox(1D10 Piercing, 150/600, Reload 6, Misfire 2)(450gp, 5lb.)",
+            "Scattergun(1D8 Piercing, 15/30, Scatter, Reload 2, Misfire 3)(500gp, 10lb.)",
+            "Bad News(2D12 Piercing, 300/1200, Two-Handed, Reload 1, Misfire 3)(crafted, 25lb.)",
+            "Hand Mortar(2D8 Fire, 30/60, Explosive, Reload 1, Misfire 3)(crafted, 10lb.)"
         };
         public static List<string> Packs { get; set; } = new List<string>
         {
             "Burglar's Pack(backpack, 1000 ball bearings, 10ft of string, bell, 5 candles, crowbar, hammer, 10 pitons, hooded lantern," +
-            "\n2 flasks of oil, 5 days of rations, tinderbox, waterskin, 50ft of rope)",
+            "\n        2 flasks of oil, 5 days of rations, tinderbox, waterskin, 50ft of rope)",
             "Diplomat's Pack(chest, 2 cases for maps/scrolls, fine clothes, bottle of ink, ink pen, lamp, 2 flasks of oil, 5 sheets of paper," +
-            "\nvial of perfume, sealing wax, soap)",
+            "\n        vial of perfume, sealing wax, soap)",
             "Dungeoneer's Pack(backpack, crowbar, hammer, 10 pitons, 10 torches, tinderbox, 10 days of rations, waterskin, 50ft of rope)",
             "Entertainer's Pack(backpack, bedroll, 2 costumes, 5 candles, 5 days of rations, waterskin, Disguise Kit",
             "Explorer's Pack(backpack, bedroll, mess kit, tinderbox, 10 torches, 10 days of rations, waterskin, 50ft of rope)",
             "Priest's Pack(backpack, blanket, 10 candles, tinderbox, alms box, 2 blocks of incense, censer, vestments," +
-            "\n2 days of rations, waterskin)",
+            "\n        2 days of rations, waterskin)",
             "Scholar's Pack(backpack, book of lore, bottle of ink, ink pen, 10 sheets of parchment, little bag of sand, small knife)"
         };
         public static List<string> HolySymbols { get; set; } = new List<string>
@@ -480,6 +491,18 @@ namespace DnD_Character_Creator.Helper_Classes
             "Arcane Focus(Rod)",
             "Arcane Focus(Staff)",
             "Arcane Focus(Wand)"
+        };
+        public static List<string> PsiCrystals { get; set; } = new List<string>
+        {
+            "Psi Crystal(Bully)",
+            "Psi Crystal(Calm)",
+            "Psi Crystal(Creative)",
+            "Psi Crystal(Cunning)",
+            "Psi Crystal(Friendly)",
+            "Psi Crystal(Hero)",
+            "Psi Crystal(Observant)",
+            "Psi Crystal(Sympathetic)",
+            "Psi Crystal(Wise)"
         };
         public static List<string> StarMaps { get; set; } = new List<string>
         {
@@ -610,8 +633,8 @@ namespace DnD_Character_Creator.Helper_Classes
             { "Beguiling Arrow", "2D6 Psychic dmg, 30ft, choose ally, Wis save, charm 1 turn" },
             { "Bursting Arrow", "10ft, 2D6 Force dmg" },
             { "Enfeebling Arrow", "2D6 Necrotic dmg, Con save, dmg is halved for 1 turn" },
-            { "Grasping Arrow", "2D6 Poison dmg, 1 min, speed -10ft, 1st move each turn - 2D6 slashing, Athletics vs DC to free" },
-            { "Piercing Arrow", "no atk roll, Dex save, 30ft line, ignores cover, +1D6 piercing dmg" },
+            { "Grasping Arrow", "2D6 Poison dmg, 1 min, speed -10ft, 1st move each turn - 2D6 Slashing, Athletics vs DC to free" },
+            { "Piercing Arrow", "no atk roll, Dex save, 30ft line, ignores cover, +1D6 Piercing dmg" },
             { "Seeking Arrow", "no atk roll, Dex save, turns corners, ignores 3/4 cover, +1D6 Force dmg" },
             { "Shadow Arrow", "2D6 Psychic dmg, Wis save, can only see 5ft" }
         };
@@ -621,8 +644,8 @@ namespace DnD_Character_Creator.Helper_Classes
             { "Beguiling Arrow", "4D6 Psychic dmg, 30ft, choose ally, Wis save, charm 1 turn" },
             { "Bursting Arrow", "10ft, 4D6 Force dmg" },
             { "Enfeebling Arrow", "4D6 Necrotic dmg, Con save, dmg is halved for 1 turn" },
-            { "Grasping Arrow", "4D6 Poison dmg, 1 min, speed -10ft, 1st move each turn - 2D6 slashing, Athletics action vs DC to free" },
-            { "Piercing Arrow", "no atk roll, Dex save, 30ft line, ignores cover, +2D6 piercing dmg" },
+            { "Grasping Arrow", "4D6 Poison dmg, 1 min, speed -10ft, 1st move each turn - 2D6 Slashing, Athletics action vs DC to free" },
+            { "Piercing Arrow", "no atk roll, Dex save, 30ft line, ignores cover, +2D6 Piercing dmg" },
             { "Seeking Arrow", "no atk roll, Dex save, turns corners, ignores 3/4 cover, +2D6 Force dmg" },
             { "Shadow Arrow", "4D6 Psychic dmg, Wis save, can only see 5ft" }
         };
@@ -638,6 +661,41 @@ namespace DnD_Character_Creator.Helper_Classes
             { "Subtle Spell", "1 sorcery pt, cast a spell without verbal or somatic components" },
             { "Transmuted Spell", "1 sorcery pt, change a spell's dmg type to Acid, Cold, Fire, Lightning, Poison, or Thunder" },
             { "Twinned Spell", "spell lvl(1 for cantrip) sorcery pt, make a spell that targets 1 creature target 2 instead" }
+        };
+        public static Dictionary<string, string> BloodCurses { get; set; } = new Dictionary<string, string>
+        {
+            { "Blood Curse of Binding", "bonus, 30ft, 1 Large or smaller creature, Wis-based Str save, speed = 0ft for 1 turn" +
+                "\n        Amplified - 1 Hitdie, no size limit, duration = until successful save" },
+            { "Blood Curse of the Eyeless", "bonus, 30ft, next atk - Wis" +
+                "\n        Amplified - 1 Hitdie, atk - Wis for 1 turn" },
+            { "Blood Curse of the Fallen Puppet", "reaction, 30ft, when creature dies/falls unconscious, creature makes an atk" +
+                "\n        Amplified - 1 Hitdie, atk/dmg + Wis" },
+            { "Blood Curse of the Fending Rite", "reaction, when enemy casts a spell, save + Wis" +
+                "\n        Amplified - 1 Hitdie, allies within 10ft gain save + Wis" },
+            { "Blood Curse of the Marked", "bonus, 1 turn, 30ft, Crimson Rite dmg x 2" +
+                "\n        Amplified - 1 Hitdie, target loses Resistance to Crimson Rite dmg type" },
+            { "Blood Curse of Mutual Suffering", "bonus, Wis rounds, 30ft, when target dmgs you, Necrotic dmg = 1/2 dmg taken" +
+                "\n        Amplified - 1 Hitdie, duration = 1 min, this curse ignores Necrotic Resistance" },
+            { "Blood Curse of Spell Sunder", "reaction, 30ft, when a spell atk targets you, impose disadv" +
+                "\n        Amplified - 2 Hitdie, Wis check = 10 + lvl to dispel the atk, fail = impose disadv" }
+        };
+        public static Dictionary<string, string> Mutagens { get; set; } = new Dictionary<string, string>
+        {
+            { "Aether", "gain Fly 20ft, suffer disadv on Str and Dex checks" }, //lvl 10
+            { "Celerity", "Dex + mutation score, Wis - mutation score" },
+            { "Conversant", "gain adv on Int checks, suffer disadv on Cha checks" },
+            { "Cruelty", "gain extra atk, suffer disadv on saves" },
+            { "Impermeable", "gain Resistance to Piercing, suffer Vulnerability to Slashing" },
+            { "Mobility", "Init - (mutation score x 2), gain Immunity to grapple, restrain" }, //if lvl 10 += , paralyze
+            { "Nighteye", "gain or increase Darkvision 60ft, gain Sunlight Sensitivity(disadv on atks and Perception in sunlight)" },
+            { "Potency", "Str + mutation score, Dex - mutation score" },
+            { "Precision", "crit on 19-20, half all healing received" }, //lvl 7, if lvl 15 - crit 18-20
+            { "Rapidity", "gain speed +10ft, enemies crit on 19-20" }, //if lvl 15 - speed +15ft
+            { "Reconstruction", "speed -10ft, if above 0 HP - 1/turn, heal HP = mutation score x 2" },
+            { "Sagacity", "Wis + mutation score, AC - mutation score" },
+            { "Shielded", "gain Resistance to Slashing, suffer Vulnerability to Bludgeoning" },
+            { "Unbreakable", "gain Resistance to Bludgeoning, suffer Vulnerability to Piercing" },
+            { "Wariness", "Init + (mutation score x 2), suffer disadv on Perception" }
         };
         public static Dictionary<string, string> Infusions { get; set; } = new Dictionary<string, string>
         {
@@ -708,7 +766,7 @@ namespace DnD_Character_Creator.Helper_Classes
             { "Grasp of Hadar", "1/turn, on hit with Eldritch Blast, pull 10ft" },
             { "Improved Pact Weapon", "your Pact Weapon can be a spell focus, atk/dmg + 1, you can summon any bow except hand crossbow" },
             { "Investment of the Chain Master", "cast Find Familiar to infuse with benefits" +
-                "\n(gain Fly or Swim 40ft, command as bonus, atks are magical, uses your spell DC, use reaciton to grant it Resistance)" },
+                "\n        (gain Fly or Swim 40ft, command as bonus, atks are magical, uses your spell DC, use reaciton to grant it Resistance)" },
             { "Lance of Lethargy", "1/turn, on hit with Eldritch Blast, reduce enemy's speed by 10ft" },
             { "Lifedrinker", "dmg + Cha Necrotic" },
             { "Maddening Hex", "bonus, 30ft, cursed target, deal Cha Psychic dmg to target and adj" },
@@ -729,7 +787,7 @@ namespace DnD_Character_Creator.Helper_Classes
             { "Thief of Five Fates", "LR, cast Bane using a spell slot" },
             { "Thirsting Blade", "When using an Attack action, atk twice" },
             { "Tomb of Levistus", "SR, reaction, when you take dmg, gain 10 temp HP/lvl - ends next turn / after dmg resolution," +
-                "\nsuffer Vulnerability to fire, speed = 0ft, gain incap" },
+                "\n        suffer Vulnerability to fire, speed = 0ft, gain incap" },
             { "Trickster's Escape", "LR, cast Freedom of Movement" },
             { "Undying Servitude", "LR, cast Animate Dead" },
             { "Visions of Distant Realms", "cast Arcane Eye at-will" },
@@ -867,7 +925,7 @@ namespace DnD_Character_Creator.Helper_Classes
             { "Eyes of the Dark", "gain Superior Darkvision 120ft" },
             { "Eyes of the Grave", "Wis/LR, action, 60ft, not behind total cover, detect the location of undead" },
             { "Eyes of Night", "LR or spell slot, action, 1 hr, 10ft, Wis creatures, share Darkvision" +
-                        "\ngain Darkvision 300ft, dim light = bright light, darkness = dim light," },
+                        "\n        gain Darkvision 300ft, dim light = bright light, darkness = dim light," },
             { "Favored by the Gods", "SR, if you fail a save or miss an atk, +2D4 to the save or atk" },
             { "Favored Enemy(1 type)", "adv on Survival checks, gain 1 lang" },
             { "Favored Foe", "PB/LR, on hit, mark 1 min conc, dmg + 1D4" },
@@ -875,8 +933,8 @@ namespace DnD_Character_Creator.Helper_Classes
             { "Fighting Style", "pick from: Archery, Blind Fighting, Defense, Dueling, Great Weapon Fighting, Interception, Protection, " +
                 "Superior Technique, Thrown Weapon Fighting, Two-Weapon Fighting, Unarmed Fighting" },
             { "Genie's Vessel", "AC = spell DC, HP = lvl + PB, Immunity to Poison and Psychic" +
-                "\nBottled Respite(LR, action, PB x 2 hr, enter/exit extradimensional space inside the vessel)" +
-                $"\nGenie's Wrath(1/turn, on hit, dmg + PB bludgeoning, Cold, Fire, or Thunder - pick when you gain feature)" },
+                "\n        Bottled Respite(LR, action, PB x 2 hr, enter/exit extradimensional space inside the vessel)" +
+                $"\n        Genie's Wrath(1/turn, on hit, dmg + PB Bludgeoning, Cold, Fire, or Thunder - pick when you gain feature)" },
             { "Gift of the Sea", "gain waterbreathing and Swim 40ft" },
             { "Healing Light", "LR, gain D6 pool = 1 + lvl, bonus, 60ft, 1 creature, heal D6s - max dice spent at once = Cha" },
             { "Heart of Fire", "when you cast a fire dmg spell, 10ft, creatures of your choice, fire dmg = 1/2 lvl" },
@@ -902,7 +960,7 @@ namespace DnD_Character_Creator.Helper_Classes
             { "Telepathic Speech", "bonus, lvl min, 30ft, 1 creature, speak telepathically from Cha miles" },
             { "Tempestous Magic", "bonus, after you cast non-cantrip, fly 10ft no atk op" },
             { "Tentacle of the Deeps", $"PB/LR, bonus, 1 min, 60ft, create 10ft tentacle - make melee spell atk, 1D8 Cold, reduce speed by 10ft" +
-                        "\nbonus, move tentacle 30ft and atk again" },
+                        "\n        bonus, move tentacle 30ft and atk again" },
             { "Thieves' Cant", "secret thief language, speaking/writing takes 4x longer" },
             { "Unarmored Defense(Con)", "AC = 10 + Dex + Con" },
             { "Unarmored Defense(Wis)", "AC = 10 + Dex + Wis" },

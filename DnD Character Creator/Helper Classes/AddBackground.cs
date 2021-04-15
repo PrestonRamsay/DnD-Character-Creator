@@ -140,7 +140,7 @@ namespace DnD_Character_Creator.Helper_Classes
             else if (backgroundString == "Entertainer")
             {
                 Console.WriteLine("A good entertainer is versatile, spicing things up every performance with a variety of different routines." +
-                    "\nYou can have up to 3 routines that define your expertise. Enter a number(1-3) to decide how many routines you have.");
+                    "\n        You can have up to 3 routines that define your expertise. Enter a number(1-3) to decide how many routines you have.");
                 int routines = CLIHelper.GetNumberInRange(1, 3);
                 for (int i = 0; i < routines; i++)
                 {
@@ -225,7 +225,7 @@ namespace DnD_Character_Creator.Helper_Classes
             else if (backgroundString.Contains("Entertainer"))
             {
                 Console.WriteLine("A good entertainer is versatile, spicing things up every performance with a variety of different routines." +
-                    "\nYou can have up to 3 routines that define your expertise. Enter a number(1-3) to decide how many routines you have.");
+                    "\n        You can have up to 3 routines that define your expertise. Enter a number(1-3) to decide how many routines you have.");
                 int routines = CLIHelper.GetNumberInRange(1, 3);
                 for (int i = 0; i < routines; i++)
                 {

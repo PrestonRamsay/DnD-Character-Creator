@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DnD_Character_Creator.CharacterPieces.Spells
 {
-    class AllSpells
+    public class AllSpells
     {
         public AllSpells(string classString)
         {
@@ -104,6 +104,18 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
                     Sorcerer.Add(8, SorcererSpells.EigthLvls);
                     Sorcerer.Add(9, SorcererSpells.NinthLvls);
                     break;
+                case "Psion":
+                    Psion.Add(0, PsionSpells.Cantrips);
+                    Psion.Add(1, PsionSpells.FirstLvls);
+                    Psion.Add(2, PsionSpells.SecondLvls);
+                    Psion.Add(3, PsionSpells.ThirdLvls);
+                    Psion.Add(4, PsionSpells.FourthLvls);
+                    Psion.Add(5, PsionSpells.FifthLvls);
+                    Psion.Add(6, PsionSpells.SixthLvls);
+                    Psion.Add(7, PsionSpells.SeventhLvls);
+                    Psion.Add(8, PsionSpells.EigthLvls);
+                    Psion.Add(9, PsionSpells.NinthLvls);
+                    break;
                 case "Swordmage":
                     Swordmage.Add(0, SwordmageSpells.Cantrips);
                     Swordmage.Add(1, SwordmageSpells.FirstLvls);
@@ -146,6 +158,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
         public Dictionary<int, List<string>> Paladin { get; set; } = new Dictionary<int, List<string>>();
         public Dictionary<int, List<string>> Ranger { get; set; } = new Dictionary<int, List<string>>();
         public Dictionary<int, List<string>> Rogue { get; set; } = new Dictionary<int, List<string>>();
+        public Dictionary<int, List<string>> Psion { get; set; } = new Dictionary<int, List<string>>();
         public Dictionary<int, List<string>> Sorcerer { get; set; } = new Dictionary<int, List<string>>();
         public Dictionary<int, List<string>> Swordmage { get; set; } = new Dictionary<int, List<string>>();
         public Dictionary<int, List<string>> Warlock { get; set; } = new Dictionary<int, List<string>>();
@@ -721,7 +734,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             { "Unseen Servant", "" },
             { "Vampiric Touch", "" },
             { "Vicious Mockery", "" },
-            { "Vitrolic Sphere", "" },
+            { "Vitriolic Sphere", "" },
             { "Wall of Fire", "" },
             { "Wall of Force", "" },
             { "Wall of Ice", "" },

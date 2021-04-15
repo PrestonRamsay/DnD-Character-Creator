@@ -1,6 +1,4 @@
 ﻿
--bloodhunter/gunslinger?
--psion (use schools as base spell lists, then have a main list)
 add spell descriptions
 add extended races
 add archetype methods to the class specifics for more readability

@@ -33,278 +33,28 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             switch (OtherworldlyPatron)
             {
                 case "Archfey":
-                    ExpandedSpells[1].Add("Faerie Fire*");
-                    ExpandedSpells[1].Add("Sleep*");
-                    ExpandedSpells[2].Add("Calm Emotions*");
-                    ExpandedSpells[2].Add("Phantasmal Force*");
-                    ExpandedSpells[3].Add("Blink*");
-                    ExpandedSpells[3].Add("Plant Growth*");
-                    ExpandedSpells[4].Add("Dominate Best*");
-                    ExpandedSpells[4].Add("Greater Invisibility*");
-                    ExpandedSpells[5].Add("Dominate Person*");
-                    ExpandedSpells[5].Add("Seeming*");
-
-                    result.ClassFeatures.Add("Fey Presence", "1/SR, action, 10ft, Wis save, charm creatures");
-                    if (lvl >= 6)
-                    {
-                        result.ClassFeatures.Add("Misty Escape", "1/SR, reaction, when you take dmg - teleport 60ft and become invisible");
-                    }
-                    if (lvl >= 10)
-                    {
-                        result.ClassFeatures.Add("Beguiling Defenses", "gain Immunity to charm, use reaction to turn charm back - Wis save, 1 min charm");
-                    }
-                    if (lvl >= 14)
-                    {
-                        result.ClassFeatures.Add("Dark Delirium", "1/SR, action, 60ft, 1 min, 1 creature, Wis save, charm or frighten - they think their lost in a misty realm");
-                    }
+                    Archfey(character, result);
                     break;
                 case "Celestial":
-                    ExpandedSpells[1].Add("Cure Wounds*");
-                    ExpandedSpells[1].Add("Guiding Bolt*");
-                    ExpandedSpells[2].Add("Flaming Sphere*");
-                    ExpandedSpells[2].Add("Lesser Restoration*");
-                    ExpandedSpells[3].Add("Daylight*");
-                    ExpandedSpells[3].Add("Revivify*");
-                    ExpandedSpells[4].Add("Guardian of Faith*");
-                    ExpandedSpells[4].Add("Wall of Fire*");
-                    ExpandedSpells[5].Add("Flame Strike*");
-                    ExpandedSpells[5].Add("Greater Restoration*");
-                    result.Cantrips.Add("Light");
-                    result.Cantrips.Add("Sacred Flame");
-
-                    result.ClassFeatures.Add("Healing Light", "LR, gain D6 pool = 1 + lvl, bonus, 60ft, 1 creature, heal D6s - max dice spent at once = Cha");
-                    if (lvl >= 6)
-                    {
-                        result.ClassFeatures.Add("Radiant Soul", "gain Resistance to Fire, when you cast a Radiant or Fire dmg spell, dmg + Cha Radiant or Fire");
-                    }
-                    if (lvl >= 10)
-                    {
-                        result.ClassFeatures.Add("Celestial Resilience", "on SR/LR gain temp HP = lvl + Cha, choose up to 5 creatures - they gain temp HP = 1/2 lvl + Cha");
-                    }
-                    if (lvl >= 14)
-                    {
-                        result.ClassFeatures.Add("Searing Vengeance", "LR, when your turn starts with a death save, regain HP = 1/2 max HP and stand up " +
-                            "\neach creature, 30ft, 2D8 + Cha Radiant dmg and blinded");
-                    }
+                    Celestial(character, result);
                     break;
                 case "The Fathomless":
-                    ExpandedSpells[1].Add("Create or Destroy Water*");
-                    ExpandedSpells[1].Add("Thunderwave*");
-                    ExpandedSpells[2].Add("Gust of Wind*");
-                    ExpandedSpells[2].Add("Silence*");
-                    ExpandedSpells[3].Add("Lightning Bolt*");
-                    ExpandedSpells[3].Add("Sleet Storm*");
-                    ExpandedSpells[4].Add("Control Water*");
-                    ExpandedSpells[4].Add("Summon Elemental(water only)*");
-                    ExpandedSpells[5].Add("Bigby's Hand(appears as tentacle)*");
-                    ExpandedSpells[5].Add("Cone of Cold*");
-
-                    int tentacle = 1;
-                    if (lvl >= 10)
-                    {
-                        tentacle++;
-                    }
-
-                    result.ClassFeatures.Add("Tentacle of the Deeps", $"PB/LR, bonus, 1 min, 60ft, create 10ft tentacle - make melee spell atk, {tentacle}D8 Cold, reduce speed by 10ft" +
-                        "\nbonus, move tentacle 30ft and atk again");
-                    result.ClassFeatures.Add("Gift of the Sea", "gain waterbreathing and Swim 40ft");
-                    character.Speedstring += ", Swim 40ft";
-                    if (lvl >= 6)
-                    {
-                        result.ClassFeatures.Add("Oceanic Soul", "gain Resistance to Cold dmg, if you and another creature are fully submerged - understand each other");
-                        int dmg = 1;
-                        if (lvl >= 10)
-                        {
-                            dmg++;
-                        }
-                        result.ClassFeatures.Add("Guardian Coil", $"reaction, 10ft, reduce dmg by {dmg}D8");
-                    }
-                    if (lvl >= 10)
-                    {
-                        result.ClassFeatures.Add("Grasping Tentacles", "LR, cast Evard's Black Tentacles without using a spell slot" +
-                            "\nwhenever you cast Evard's Black Tentacles, gain temp HP = lvl, dmg can't break conc");
-                        result.Spells[4].Add("Evard's Black Tentacles");
-                    }
-                    if (lvl >= 14)
-                    {
-                        result.ClassFeatures.Add("Fathomless Plunge", "action, 30ft, 5 creatures, teleport up to 1 mile in or 30ft from body of water you've seen (everyone must be within 30ft)");
-                    }
+                    TheFathomless(character, result);
                     break;
                 case "Fiend":
-                    ExpandedSpells[1].Add("Burning Hands*");
-                    ExpandedSpells[1].Add("Command*");
-                    ExpandedSpells[2].Add("Blindness/Deafness*");
-                    ExpandedSpells[2].Add("Scorching Ray*");
-                    ExpandedSpells[3].Add("Fireball*");
-                    ExpandedSpells[3].Add("Stinking Cloud*");
-                    ExpandedSpells[4].Add("Fire Shield*");
-                    ExpandedSpells[4].Add("Wall of Fire*");
-                    ExpandedSpells[5].Add("Flame Strike*");
-                    ExpandedSpells[5].Add("Hallow*");
-
-                    result.ClassFeatures.Add("Dark One's Blessing", "on kill, gain temp HP = Cha + lvl");
-                    if (lvl >= 6)
-                    {
-                        result.ClassFeatures.Add("Dark One's Own Luck", "1/SR, on ability check, Init, or save + 1D10");
-                    }
-                    if (lvl >= 10)
-                    {
-                        result.ClassFeatures.Add("Fiendish Resilience", "on SR/LR choose Resistance to one dmg type - bypassed by magical/silver weps");
-                    }
-                    if (lvl >= 14)
-                    {
-                        result.ClassFeatures.Add("Hurl Through Hell", "on hit, disappears til next turn - if not a fiend, take 10D10 Psychic dmg");
-                    }
+                    Fiend(character, result);
                     break;
                 case "Genie":
-                    ExpandedSpells[1].Add("Detect Evil and Good*");
-                    ExpandedSpells[2].Add("Phatasmal Force*");
-                    ExpandedSpells[3].Add("Create Food and Water*");
-                    ExpandedSpells[4].Add("Phantasmal Killer*");
-                    ExpandedSpells[5].Add("Creation*");
-                    var genies = new List<string> { "Dao(Earth)", "Djinni(Air)", "Efreeti(Fire)", "Marid(Water)" };
-                    Console.WriteLine("Pick which kind of Genie you want your Otherworldly Patron to be");
-                    string patron = CLIHelper.PrintChoices(genies);
-                    string dmgType = "";
-                    switch (patron)
-                    {
-                        case "Dao(Earth)":
-                            OtherworldlyPatron += "(Dao)";
-                            ExpandedSpells[1].Add("Sanctuary*");
-                            ExpandedSpells[2].Add("Spike Growth*");
-                            ExpandedSpells[3].Add("Meld Into Stone*");
-                            ExpandedSpells[4].Add("Stoneshape*");
-                            ExpandedSpells[5].Add("Wall of Stone*");
-                            dmgType = "bludgeoning";
-                            break;
-                        case "Djinni(Air)":
-                            OtherworldlyPatron += "(Djinni)";
-                            ExpandedSpells[1].Add("Thunderwave*");
-                            ExpandedSpells[2].Add("Gust of Wind*");
-                            ExpandedSpells[3].Add("Wind Wall*");
-                            ExpandedSpells[4].Add("Greater Invisibility*");
-                            ExpandedSpells[5].Add("Seeming*");
-                            dmgType = "Thunder";
-                            break;
-                        case "Efreeti(Fire)":
-                            OtherworldlyPatron += "(Efreeti)";
-                            ExpandedSpells[1].Add("Burning Hands*");
-                            ExpandedSpells[2].Add("Scorching Ray*");
-                            ExpandedSpells[3].Add("Fireball*");
-                            ExpandedSpells[4].Add("Fire Shield*");
-                            ExpandedSpells[5].Add("Flame Strike*");
-                            dmgType = "Fire";
-                            break;
-                        case "Marid(Water)":
-                            OtherworldlyPatron += "(Marid)";
-                            ExpandedSpells[1].Add("Fog Cloud*");
-                            ExpandedSpells[2].Add("Blur*");
-                            ExpandedSpells[3].Add("Sleet Storm*");
-                            ExpandedSpells[4].Add("Control Water*");
-                            ExpandedSpells[5].Add("Cone of Cold*");
-                            dmgType = "Cold";
-                            break;
-                    }
-
-                    result.ClassFeatures.Add("Genie's Vessel", "AC = spell DC, HP = lvl + PB, Immunity to Poison and Psychic" +
-                        "\nBottled Respite(LR, action, PB x 2 hr, enter/exit extradimensional space inside the vessel)" +
-                        $"\nGenie's Wrath(1/turn, on hit, dmg + PB {dmgType})");
-                    result.ClassFeatures["Spellcasting"] = "use Cha for spell DCs, use Arcane Focus or Genie Vessel as a spell focus";
-                    if (lvl >= 6)
-                    {
-                        result.ClassFeatures.Add("Elemental Gift", $"gain Resistance to {dmgType} / PB/LR, bonus, 10 min, gain Hover and Fly 30ft");
-                    }
-                    if (lvl >= 10)
-                    {
-                        result.ClassFeatures.Add("Sanctuary Vessel", "you can bring 5 creatures when you use Bottled Respite, bonus to eject / 10 min = SR, Hit Dice + PB for healing");
-                    }
-                    if (lvl >= 14)
-                    {
-                        result.ClassFeatures.Add("Limited Wish", "1D4 LR, action, gain effect of any 6th lvl or lower spell (cast time 1 action)");
-                    }
+                    Genie(character, result);
                     break;
                 case "Hexblade":
-                    ExpandedSpells[1].Add("Shield*");
-                    ExpandedSpells[1].Add("Wrathful Smite*");
-                    ExpandedSpells[2].Add("Blur*");
-                    ExpandedSpells[2].Add("Branding Smite*");
-                    ExpandedSpells[3].Add("Blink*");
-                    ExpandedSpells[3].Add("Elemental Weapon*");
-                    ExpandedSpells[4].Add("Phantasmal Killer*");
-                    ExpandedSpells[4].Add("Staggering Smite*");
-                    ExpandedSpells[5].Add("Banishing Smite*");
-                    ExpandedSpells[5].Add("Cone of Cold*");
-
-                    result.ClassFeatures.Add("Hexblade's Curse", "bonus, 30ft, 1 min, dmg + Prof, crit on 19, on death - regain HP = lvl + Cha");
-                    result.ClassFeatures.Add("Hex Warrior", "on LR, touch One-Handed wep, use Cha for atk/dmg (Pact Weapon auto-gets this feature)");
-                    result.Proficiencies.Add("Medium Armor");
-                    result.Proficiencies.Add("Shields");
-                    result.Proficiencies.Add("Martial Weapons");
-                    if (lvl >= 6)
-                    {
-                        result.ClassFeatures.Add("Accursed Specter", "LR, on kill, raise humanoid as specter - it gains temp HP = 1/2 lvl, atk + Cha, obeys verbal commands");
-                    }
-                    if (lvl >= 10)
-                    {
-                        result.ClassFeatures.Add("Armor of Hexes", "reaction, if Hexblade Curse target hits, roll 1D6 - if 4+ then atk misses");
-                    }
-                    if (lvl >= 14)
-                    {
-                        result.ClassFeatures.Add("Master of Hexes", "Hexblade Curse target dies, 30ft, apply Curse to new target instead of regaining HP");
-                    }
+                    Hexblade(character, result);
                     break;
                 case "The Great Old One":
-                    ExpandedSpells[1].Add("Dissonant Whispers*");
-                    ExpandedSpells[1].Add("Tasha's Hideous Laughter*");
-                    ExpandedSpells[2].Add("Detect Thoughts*");
-                    ExpandedSpells[2].Add("Phantasmal Force*");
-                    ExpandedSpells[3].Add("Clairvoyance*");
-                    ExpandedSpells[3].Add("Sending*");
-                    ExpandedSpells[4].Add("Dominate Beast*");
-                    ExpandedSpells[4].Add("Evard's Black Tentacles*");
-                    ExpandedSpells[5].Add("Dominate Person*");
-                    ExpandedSpells[5].Add("Telekinesis*");
-
-                    result.ClassFeatures.Add("Awakened Mind", "30ft, commmunicate telepathically without common language");
-                    if (lvl >= 6)
-                    {
-                        result.ClassFeatures.Add("Entropic Ward", "1/SR, reaction, impose disadv on atk - if miss, gain adv on next atk");
-                    }
-                    if (lvl >= 10)
-                    {
-                        result.ClassFeatures.Add("Thought Shield", "Resistance to Psychic, thoughts can't be telepathically read unless you allow it");
-                    }
-                    if (lvl >= 14)
-                    {
-                        result.ClassFeatures.Add("Create Thrall", "action, touch incapacitated humanoid, charmed until Remove Curse is cast, can communicate telepathically");
-                    }
+                    TheGreatOldOne(character, result);
                     break;
                 case "The Undying":
-                    ExpandedSpells[1].Add("False Life*");
-                    ExpandedSpells[1].Add("Ray of Sickness*");
-                    ExpandedSpells[2].Add("Blindness/Deafness*");
-                    ExpandedSpells[2].Add("Silence*");
-                    ExpandedSpells[3].Add("Feign Death*");
-                    ExpandedSpells[3].Add("Speak with Dead*");
-                    ExpandedSpells[4].Add("Aura of Life*");
-                    ExpandedSpells[4].Add("Death Ward*");
-                    ExpandedSpells[5].Add("Contagion*");
-                    ExpandedSpells[5].Add("Legend Lore*");
-
-                    result.ClassFeatures.Add("Among the Dead", "adv on saves vs disease, undead must make Wis save to atk, on fail must choose new target");
-                    result.Cantrips.Add("Spare the Dying");
-                    if (lvl >= 6)
-                    {
-                        result.ClassFeatures.Add("Defy Death", "LR, when you use Spare the Dying or you succeed on a death save, regain 1D8 + Con HP");
-                    }
-                    if (lvl >= 10)
-                    {
-                        result.ClassFeatures.Add("Undying Nature", "for every 10yr you only age 1 yr, can't be aged magically, you don't need to eat, drink, sleep, or breathe");
-                    }
-                    if (lvl >= 14)
-                    {
-                        result.ClassFeatures.Add("Indestructible Life", "SR, bonus, regain HP = 1D8 + lvl, can reattach severed limbs");
-                    }
+                    TheUndying(character, result);
                     break;
             }
 
@@ -365,7 +115,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         invocations++;
                     }
                 }
-                result.ClassFeatures.Add("Invocations", "\n------------------------------------");
+                result.ClassFeatures.Add("Invocations", "\n        ------------------------------------");
                 var invocDictionary = Invocations(PactBoon, lvl);
                 List<string> invocList = CLIHelper.GetDictionaryOptions(invocDictionary, invocations, "Pick an new Invocation");
                 foreach (var item in invocList)
@@ -390,52 +140,299 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             {
                 result.ClassFeatures.Add("Eldritch Master", "1/LR, spend 1 min to regain all spell slots");
             }
-            //spells code
-            string pickMsg = "Pick a cantrip.";
-            string str2 = "You already have that cantrip.";
-            int spellLvl = 1;
-            AllSpells spells = new AllSpells("Warlock");
-            foreach (var newLvl in ExpandedSpells.Keys)
-            {
-                spells.Warlock[newLvl].AddRange(ExpandedSpells[newLvl]);
-            }
-            if (OtherworldlyPatron.Contains("Genie"))
-            {
-                spells.Warlock[9].Add("Wish");
-            }
-
-            for (int i = 0; i < result.CantripsKnown; i++)
-            {
-                string spell = CLIHelper.GetNew(WarlockSpells.Cantrips, result.Cantrips, pickMsg, str2);
-                result.Cantrips.Add(spell);
-            }
-            str2 = "You already have that spell";
-            pickMsg = "Pick a 1st level spell.";
-            for (int i = 1; i <= result.SpellsKnown; i++)
-            {
-                if (4 >= i && i >= 10 && i % 2 == 0)
-                {
-                    spellLvl++;
-                }
-                if (i == 4)
-                {
-                    pickMsg = "Pick a 2nd level spell.";
-                }
-                if (i == 6)
-                {
-                    pickMsg = "Pick a 3rd level spell.";
-                }
-                if (i >= 8)
-                {
-                    pickMsg = $"Pick a {spellLvl}th level spell.";
-                }
-                string spell = CLIHelper.GetNew(spells.Warlock[spellLvl], result.Spells[spellLvl], pickMsg, str2);
-                result.Spells[spellLvl].Add(spell);
-                spells.Warlock[spellLvl].Remove(spell);
-            }
-            //end spells code
+            Spells(character, result);
 
             return result;
+        }
+        public static void Archfey(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            ExpandedSpells[1].Add("Faerie Fire");
+            ExpandedSpells[1].Add("Sleep");
+            ExpandedSpells[2].Add("Calm Emotions");
+            ExpandedSpells[2].Add("Phantasmal Force");
+            ExpandedSpells[3].Add("Blink");
+            ExpandedSpells[3].Add("Plant Growth");
+            ExpandedSpells[4].Add("Dominate Best");
+            ExpandedSpells[4].Add("Greater Invisibility");
+            ExpandedSpells[5].Add("Dominate Person");
+            ExpandedSpells[5].Add("Seeming");
+
+            result.ClassFeatures.Add("Fey Presence", "SR, action, 10ft, Wis save, charm creatures");
+            if (lvl >= 6)
+            {
+                result.ClassFeatures.Add("Misty Escape", "SR, reaction, when you take dmg - teleport 60ft and become invisible for 1 turn");
+            }
+            if (lvl >= 10)
+            {
+                result.ClassFeatures.Add("Beguiling Defenses", "gain Immunity to charm, use reaction to turn charm back - Wis save, 1 min charm");
+            }
+            if (lvl >= 14)
+            {
+                result.ClassFeatures.Add("Dark Delirium", "SR, action, 60ft, 1 min, 1 creature, Wis save, charm or frighten - they think their lost in a misty realm");
+            }
+        }
+        public static void Celestial(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            ExpandedSpells[1].Add("Cure Wounds");
+            ExpandedSpells[1].Add("Guiding Bolt");
+            ExpandedSpells[2].Add("Flaming Sphere");
+            ExpandedSpells[2].Add("Lesser Restoration");
+            ExpandedSpells[3].Add("Daylight");
+            ExpandedSpells[3].Add("Revivify");
+            ExpandedSpells[4].Add("Guardian of Faith");
+            ExpandedSpells[4].Add("Wall of Fire");
+            ExpandedSpells[5].Add("Flame Strike");
+            ExpandedSpells[5].Add("Greater Restoration");
+            result.Cantrips.Add("Light");
+            result.Cantrips.Add("Sacred Flame");
+
+            result.ClassFeatures.Add("Healing Light", "LR, gain D6 pool = 1 + lvl, bonus, 60ft, 1 creature, heal D6s - max dice spent at once = Cha");
+            if (lvl >= 6)
+            {
+                result.ClassFeatures.Add("Radiant Soul", "gain Resistance to Fire, when you cast a Radiant or Fire dmg spell, dmg + Cha Radiant or Fire");
+            }
+            if (lvl >= 10)
+            {
+                result.ClassFeatures.Add("Celestial Resilience", "on SR/LR gain temp HP = lvl + Cha, choose up to 5 creatures - they gain temp HP = 1/2 lvl + Cha");
+            }
+            if (lvl >= 14)
+            {
+                result.ClassFeatures.Add("Searing Vengeance", "LR, when your turn starts with a death save, regain HP = 1/2 max HP and stand up " +
+                    "\n        each creature, 30ft, 2D8 + Cha Radiant dmg and blinded");
+            }
+        }
+        public static void TheFathomless(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            ExpandedSpells[1].Add("Create or Destroy Water");
+            ExpandedSpells[1].Add("Thunderwave");
+            ExpandedSpells[2].Add("Gust of Wind");
+            ExpandedSpells[2].Add("Silence");
+            ExpandedSpells[3].Add("Lightning Bolt");
+            ExpandedSpells[3].Add("Sleet Storm");
+            ExpandedSpells[4].Add("Control Water");
+            ExpandedSpells[4].Add("Summon Elemental(water only)");
+            ExpandedSpells[5].Add("Bigby's Hand(appears as tentacle)");
+            ExpandedSpells[5].Add("Cone of Cold");
+
+            int tentacle = 1;
+            if (lvl >= 10)
+            {
+                tentacle++;
+            }
+
+            result.ClassFeatures.Add("Tentacle of the Deeps", $"PB/LR, bonus, 1 min, 60ft, create 10ft tentacle - make melee spell atk, {tentacle}D8 Cold, reduce speed by 10ft" +
+                "\n        bonus, move tentacle 30ft and atk again");
+            result.ClassFeatures.Add("Gift of the Sea", "gain waterbreathing and Swim 40ft");
+            character.Speedstring += ", Swim 40ft";
+            if (lvl >= 6)
+            {
+                result.ClassFeatures.Add("Oceanic Soul", "gain Resistance to Cold dmg, if you and another creature are fully submerged - understand each other");
+                int dmg = 1;
+                if (lvl >= 10)
+                {
+                    dmg++;
+                }
+                result.ClassFeatures.Add("Guardian Coil", $"reaction, 10ft, reduce dmg by {dmg}D8");
+            }
+            if (lvl >= 10)
+            {
+                result.ClassFeatures.Add("Grasping Tentacles", "LR, cast Evard's Black Tentacles without using a spell slot" +
+                    "\n        whenever you cast Evard's Black Tentacles, gain temp HP = lvl, dmg can't break conc");
+                result.Spells[4].Add("Evard's Black Tentacles");
+            }
+            if (lvl >= 14)
+            {
+                result.ClassFeatures.Add("Fathomless Plunge", "action, 30ft, 5 creatures, teleport up to 1 mile in or 30ft from body of water you've seen (everyone must be within 30ft)");
+            }
+        }
+        public static void Fiend(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            ExpandedSpells[1].Add("Burning Hands");
+            ExpandedSpells[1].Add("Command");
+            ExpandedSpells[2].Add("Blindness/Deafness");
+            ExpandedSpells[2].Add("Scorching Ray");
+            ExpandedSpells[3].Add("Fireball");
+            ExpandedSpells[3].Add("Stinking Cloud");
+            ExpandedSpells[4].Add("Fire Shield");
+            ExpandedSpells[4].Add("Wall of Fire");
+            ExpandedSpells[5].Add("Flame Strike");
+            ExpandedSpells[5].Add("Hallow");
+
+            result.ClassFeatures.Add("Dark One's Blessing", "on kill, gain temp HP = Cha + lvl");
+            if (lvl >= 6)
+            {
+                result.ClassFeatures.Add("Dark One's Own Luck", "SR, on ability check, Init, or save + 1D10");
+            }
+            if (lvl >= 10)
+            {
+                result.ClassFeatures.Add("Fiendish Resilience", "on SR/LR choose Resistance to one dmg type - bypassed by magical/silver weps");
+            }
+            if (lvl >= 14)
+            {
+                result.ClassFeatures.Add("Hurl Through Hell", "on hit, disappears til next turn - if not a fiend, take 10D10 Psychic dmg");
+            }
+        }
+        public static void Genie(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            ExpandedSpells[1].Add("Detect Evil and Good");
+            ExpandedSpells[2].Add("Phatasmal Force");
+            ExpandedSpells[3].Add("Create Food and Water");
+            ExpandedSpells[4].Add("Phantasmal Killer");
+            ExpandedSpells[5].Add("Creation");
+            var genies = new List<string> { "Dao(Earth)", "Djinni(Air)", "Efreeti(Fire)", "Marid(Water)" };
+            Console.WriteLine("Pick which kind of Genie you want your Otherworldly Patron to be");
+            string patron = CLIHelper.PrintChoices(genies);
+            string dmgType = "";
+            switch (patron)
+            {
+                case "Dao(Earth)":
+                    OtherworldlyPatron += "(Dao)";
+                    ExpandedSpells[1].Add("Sanctuary");
+                    ExpandedSpells[2].Add("Spike Growth");
+                    ExpandedSpells[3].Add("Meld Into Stone");
+                    ExpandedSpells[4].Add("Stoneshape");
+                    ExpandedSpells[5].Add("Wall of Stone");
+                    dmgType = "Bludgeoning";
+                    break;
+                case "Djinni(Air)":
+                    OtherworldlyPatron += "(Djinni)";
+                    ExpandedSpells[1].Add("Thunderwave");
+                    ExpandedSpells[2].Add("Gust of Wind");
+                    ExpandedSpells[3].Add("Wind Wall");
+                    ExpandedSpells[4].Add("Greater Invisibility");
+                    ExpandedSpells[5].Add("Seeming");
+                    dmgType = "Thunder";
+                    break;
+                case "Efreeti(Fire)":
+                    OtherworldlyPatron += "(Efreeti)";
+                    ExpandedSpells[1].Add("Burning Hands");
+                    ExpandedSpells[2].Add("Scorching Ray");
+                    ExpandedSpells[3].Add("Fireball");
+                    ExpandedSpells[4].Add("Fire Shield");
+                    ExpandedSpells[5].Add("Flame Strike");
+                    dmgType = "Fire";
+                    break;
+                case "Marid(Water)":
+                    OtherworldlyPatron += "(Marid)";
+                    ExpandedSpells[1].Add("Fog Cloud");
+                    ExpandedSpells[2].Add("Blur");
+                    ExpandedSpells[3].Add("Sleet Storm");
+                    ExpandedSpells[4].Add("Control Water");
+                    ExpandedSpells[5].Add("Cone of Cold");
+                    dmgType = "Cold";
+                    break;
+            }
+
+            result.ClassFeatures.Add("Genie's Vessel", "AC = spell DC, HP = lvl + PB, Immunity to Poison and Psychic" +
+                "\n        Bottled Respite(LR, action, PB x 2 hr, enter/exit extradimensional space inside the vessel)" +
+                $"\n        Genie's Wrath(1/turn, on hit, dmg + PB {dmgType})");
+            result.ClassFeatures["Spellcasting"] = "use Cha for spell DCs, use Arcane Focus or Genie Vessel as a spell focus";
+            if (lvl >= 6)
+            {
+                result.ClassFeatures.Add("Elemental Gift", $"gain Resistance to {dmgType} / PB/LR, bonus, 10 min, gain Hover and Fly 30ft");
+            }
+            if (lvl >= 10)
+            {
+                result.ClassFeatures.Add("Sanctuary Vessel", "you can bring 5 creatures when you use Bottled Respite, bonus to eject / 10 min = SR, Hit Dice + PB for healing");
+            }
+            if (lvl >= 14)
+            {
+                result.ClassFeatures.Add("Limited Wish", "1D4 LR, action, gain effect of any 6th lvl or lower spell (cast time 1 action)");
+            }
+        }
+        public static void Hexblade(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            ExpandedSpells[1].Add("Shield");
+            ExpandedSpells[1].Add("Wrathful Smite");
+            ExpandedSpells[2].Add("Blur");
+            ExpandedSpells[2].Add("Branding Smite");
+            ExpandedSpells[3].Add("Blink");
+            ExpandedSpells[3].Add("Elemental Weapon");
+            ExpandedSpells[4].Add("Phantasmal Killer");
+            ExpandedSpells[4].Add("Staggering Smite");
+            ExpandedSpells[5].Add("Banishing Smite");
+            ExpandedSpells[5].Add("Cone of Cold");
+
+            result.ClassFeatures.Add("Hexblade's Curse", "bonus, 30ft, 1 min, dmg + Prof, crit on 19, on death - regain HP = lvl + Cha");
+            result.ClassFeatures.Add("Hex Warrior", "on LR, touch One-Handed wep, use Cha for atk/dmg (Pact Weapon auto-gets this feature)");
+            result.Proficiencies.Add("Medium Armor");
+            result.Proficiencies.Add("Shields");
+            result.Proficiencies.Add("Martial Weapons");
+            if (lvl >= 6)
+            {
+                result.ClassFeatures.Add("Accursed Specter", "LR, on kill, raise humanoid as specter - it gains temp HP = 1/2 lvl, atk + Cha, obeys verbal commands");
+            }
+            if (lvl >= 10)
+            {
+                result.ClassFeatures.Add("Armor of Hexes", "reaction, if Hexblade Curse target hits, roll 1D6 - if 4+ then atk misses");
+            }
+            if (lvl >= 14)
+            {
+                result.ClassFeatures.Add("Master of Hexes", "Hexblade Curse target dies, 30ft, apply Curse to new target instead of regaining HP");
+            }
+        }
+        public static void TheGreatOldOne(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            ExpandedSpells[1].Add("Dissonant Whispers");
+            ExpandedSpells[1].Add("Tasha's Hideous Laughter");
+            ExpandedSpells[2].Add("Detect Thoughts");
+            ExpandedSpells[2].Add("Phantasmal Force");
+            ExpandedSpells[3].Add("Clairvoyance");
+            ExpandedSpells[3].Add("Sending");
+            ExpandedSpells[4].Add("Dominate Beast");
+            ExpandedSpells[4].Add("Evard's Black Tentacles");
+            ExpandedSpells[5].Add("Dominate Person");
+            ExpandedSpells[5].Add("Telekinesis");
+
+            result.ClassFeatures.Add("Awakened Mind", "30ft, commmunicate telepathically without common language");
+            if (lvl >= 6)
+            {
+                result.ClassFeatures.Add("Entropic Ward", "SR, reaction, impose disadv on atk - if miss, gain adv on next atk");
+            }
+            if (lvl >= 10)
+            {
+                result.ClassFeatures.Add("Thought Shield", "Resistance to Psychic, thoughts can't be telepathically read unless you allow it");
+            }
+            if (lvl >= 14)
+            {
+                result.ClassFeatures.Add("Create Thrall", "action, touch incapacitated humanoid, charmed until Remove Curse is cast, can communicate telepathically");
+            }
+        }
+        public static void TheUndying(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            ExpandedSpells[1].Add("False Life");
+            ExpandedSpells[1].Add("Ray of Sickness");
+            ExpandedSpells[2].Add("Blindness/Deafness");
+            ExpandedSpells[2].Add("Silence");
+            ExpandedSpells[3].Add("Feign Death");
+            ExpandedSpells[3].Add("Speak with Dead");
+            ExpandedSpells[4].Add("Aura of Lif");
+            ExpandedSpells[4].Add("Death Ward");
+            ExpandedSpells[5].Add("Contagion");
+            ExpandedSpells[5].Add("Legend Lore");
+
+            result.ClassFeatures.Add("Among the Dead", "adv on saves vs disease, undead must make Wis save to atk, on fail must choose new target");
+            result.Cantrips.Add("Spare the Dying");
+            if (lvl >= 6)
+            {
+                result.ClassFeatures.Add("Defy Death", "LR, when you use Spare the Dying or you succeed on a death save, regain 1D8 + Con HP");
+            }
+            if (lvl >= 10)
+            {
+                result.ClassFeatures.Add("Undying Nature", "for every 10yr you only age 1 yr, can't be aged magically, you don't need to eat, drink, sleep, or breathe");
+            }
+            if (lvl >= 14)
+            {
+                result.ClassFeatures.Add("Indestructible Life", "SR, bonus, regain HP = 1D8 + lvl, can reattach severed limbs");
+            }
         }
         public static Dictionary<string, string> Invocations(string pact, int lvl)
         {
@@ -516,6 +513,52 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             }
 
             return dict;
+        }
+        public static void Spells(Character character, CharacterClass result)
+        {
+            int lvl = character.Lvl;
+            string pickMsg = "Pick a cantrip.";
+            string str2 = "You already have that cantrip.";
+            int spellLvl = 1;
+            AllSpells spells = new AllSpells("Warlock");
+            foreach (var newLvl in ExpandedSpells.Keys)
+            {
+                spells.Warlock[newLvl].AddRange(ExpandedSpells[newLvl]);
+            }
+            if (OtherworldlyPatron.Contains("Genie"))
+            {
+                spells.Warlock[9].Add("Wish");
+            }
+
+            for (int i = 0; i < result.CantripsKnown; i++)
+            {
+                string spell = CLIHelper.GetNew(WarlockSpells.Cantrips, result.Cantrips, pickMsg, str2);
+                result.Cantrips.Add(spell);
+            }
+            str2 = "You already have that spell";
+            pickMsg = "Pick a 1st level spell.";
+            for (int i = 1; i <= result.SpellsKnown; i++)
+            {
+                if (4 <= i && i <= 10 && i % 2 == 0)
+                {
+                    spellLvl++;
+                }
+                if (i == 4)
+                {
+                    pickMsg = "Pick a 2nd level spell.";
+                }
+                if (i == 6)
+                {
+                    pickMsg = "Pick a 3rd level spell.";
+                }
+                if (i >= 8)
+                {
+                    pickMsg = $"Pick a {spellLvl}th level spell.";
+                }
+                string spell = CLIHelper.GetNew(spells.Warlock[spellLvl], result.Spells[spellLvl], pickMsg, str2);
+                result.Spells[spellLvl].Add(spell);
+                spells.Warlock[spellLvl].Remove(spell);
+            }
         }
     }
 }

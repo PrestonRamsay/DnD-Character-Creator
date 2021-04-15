@@ -90,8 +90,8 @@ namespace DnD_Character_Creator.Races
 
             if (lvl >= 1)
             {
-                result.Boons.Add("Aberrant Adaptations", "\nChitinous Shell(bonus, 1 min, +2 AC, speed -10ft)" +
-                    "\nEldritch Limbs(when atk, unarmed atks becomes 1D6 dmg of choice, can't hold anything in that hand)");
+                result.Boons.Add("Aberrant Adaptations", "\n        Chitinous Shell(bonus, 1 min, +2 AC, speed -10ft)" +
+                    "\n        Eldritch Limbs(when atk, unarmed atks becomes 1D6 dmg of choice, can't hold anything in that hand)");
                 result.Boons.Add("Aberrant Form", "your type becomes Aberration");
                 result.Flaws.Add("Unstable Mutations", "after LR roll D% for Unstable Form, if same as previous reroll");
             }
@@ -105,21 +105,21 @@ namespace DnD_Character_Creator.Races
                 {
                     case 0:
                         result.Boons.Add($"{boons[0]}", "Bludgeoning(unarm dmg + 1D6, same atk roll vs adj to do 1D6 + Str dmg)" +
-                            $"\nPiercing(ranged atk, 30ft, 2D6 + Str dmg), Slashing(unarm dmg + 1D6, Con save - 1 min, bleeding: no healing)");
+                            $"\n        Piercing(ranged atk, 30ft, 2D6 + Str dmg), Slashing(unarm dmg + 1D6, Con save - 1 min, bleeding: no healing)");
                         break;
                     case 1:
                         result.Boons.Add($"{boons[1]}", "bonus to grow, bonus to use, 10ft, unarm atk, 1D4 + Str" +
-                            $"\nToxic Spray(Con save - poisoned, disadv on atks/ability checks), Constrict(no dmg, grapple check = atk roll)" +
-                            $"\nHypnotic Trance(Wis save - adv on atks on vs target)");
+                            $"\n        Toxic Spray(Con save - poisoned, disadv on atks/ability checks), Constrict(no dmg, grapple check = atk roll)" +
+                            $"\n        Hypnotic Trance(Wis save - adv on atks on vs target)");
                         break;
                     case 2:
                         result.Boons.Add($"{boons[2]}", "action to change Adaptation" +
-                            $"\nScopulae(climb as move speed), Gills/Flippers(swim as move speed)" +
-                            $"\nRegenerative Tissues(regen Con HP, negate if take Fire/Acid dmg)");
+                            $"\n        Scopulae(climb as move speed), Gills/Flippers(swim as move speed)" +
+                            $"\n        Regenerative Tissues(regen Con HP, negate if take Fire/Acid dmg)");
                         break;
                 }
                 result.Flaws.Add("Hideous Appearance", "true form revealed if (use conc spell, unconscious, hallowed ground, or DM Con save)" +
-                    "\nNon-evil creatures who see your true form instantly become hostile unless GM decides overwise");
+                    "\n        Non-evil creatures who see your true form instantly become hostile unless GM decides overwise");
             }
             if (lvl >= 3)
             {
@@ -154,13 +154,13 @@ namespace DnD_Character_Creator.Races
                         break;
                     case 1:
                         result.Boons.Add($"{boons[1]}", "SR, action, 15ft, Dex save - 1 min, Poison, disadv on atks/ability checks" +
-                            $"\nspeed = 0, adv on atks vs target");
+                            $"\n        speed = 0, adv on atks vs target");
                         break;
                     case 2:
                         result.Boons.Add($"{boons[2]}", "Metamorphosis(action to switch benefits)" +
-                            $"\n-Resist B/P/S and fall dmg = 1 per 10ft, max 20" +
-                            $"\n-Resist Fire, Lightning, Acid and immune to hot climates" +
-                            $"\n-Resist Cold, Thunder, Poison and immune to cold climates");
+                            $"\n        -Resist B/P/S and fall dmg = 1 per 10ft, max 20" +
+                            $"\n        -Resist Fire, Lightning, Acid and immune to hot climates" +
+                            $"\n        -Resist Cold, Thunder, Poison and immune to cold climates");
                         break;
                 }
                 result.Flaws.Add("Entropic Abomination", "on failed save vs magic, roll Unstable Mutation - if lower than current replace it");
@@ -207,7 +207,7 @@ namespace DnD_Character_Creator.Races
                         break;
                 }
                 result.Flaws.Add("Hideous Appearance", "true form revealed if (use conc spell, unconscious, hallowed ground, or DM Con save)" +
-                    "\nNon-evil creatures who see your true form instantly become hostile unless GM decides overwise");
+                    "\n        Non-evil creatures who see your true form instantly become hostile unless GM decides overwise");
             }
             if (lvl >= 3)
             {
@@ -219,7 +219,7 @@ namespace DnD_Character_Creator.Races
                 {
                     case 0:
                         result.Boons.Add($"{boons[0]}", "gain prof in Deception and Persuasion or double your PB if already prof" +
-                            $"\nMagic always identifies you as telling the truth and you can't be compelled to tell the truth");
+                            $"\n        Magic always identifies you as telling the truth and you can't be compelled to tell the truth");
                         if (character.SkillProficiencies.Contains("Deception"))
                         {
                             Console.WriteLine("You already have proficiency in Deception, so double your PB is added");
@@ -248,7 +248,7 @@ namespace DnD_Character_Creator.Races
                         break;
                 }
                 result.Flaws.Add("True Name", "you are reborn - choose new name, receive a brass/brimstone talisman with your name on it" +
-                    "\nA creature that knows your true name - action, 10ft, Wis save - charm 8hr, must obey commands");
+                    "\n        A creature that knows your true name - action, 10ft, Wis save - charm 8hr, must obey commands");
             }
             if (lvl >= 4)
             {
@@ -289,12 +289,12 @@ namespace DnD_Character_Creator.Races
             if (lvl >= 1)
             {
                 result.Boons.Add("Harvester of Souls", "when kill, phylactery charge lvl = CR (max 27, below 1/4 is too low)" +
-                    "\naction, expend charge lvls to regain spell slot = 1/3 of charges consumed");
+                    "\n        action, expend charge lvls to regain spell slot = 1/3 of charges consumed");
                 result.Boons.Add("Undead Form", "your type becomes Undead, you don't require air, food, drink, or sleep" +
-                    "\nhealing gives you temp HP instead of real HP, you no longer age/immune to aging effects");
+                    "\n        healing gives you temp HP instead of real HP, you no longer age/immune to aging effects");
                 result.Flaws.Add("Phylactery", "AC 18, HP 90, immune to Poison, Psychic, and nonmagical B/P/S" +
-                    "\nResistant to Necrotic, Cold, Thunder, Lightning, Force, Fire" +
-                    "\nIf phylactery is destroyed you die instantly, if you die and it has charges - your body is reconstructed in 7 days");
+                    "\n        Resistant to Necrotic, Cold, Thunder, Lightning, Force, Fire" +
+                    "\n        If phylactery is destroyed you die instantly, if you die and it has charges - your body is reconstructed in 7 days");
             }
             if (lvl >= 2)
             {
@@ -309,16 +309,16 @@ namespace DnD_Character_Creator.Races
                         break;
                     case 1:
                         result.Boons.Add($"{boons[1]}", "when you kill with a spell, gain an additional effect" +
-                            $"\nFire(create smoke that heavily obscures adj creatures)" +
-                            $"\nNecrotic(regain Int + lvl HP)" +
-                            $"\nPoison(10ft, Con save, 1 min, poisoned - disadv on atks/ability checks)");
+                            $"\n        Fire(create smoke that heavily obscures adj creatures)" +
+                            $"\n        Necrotic(regain Int + lvl HP)" +
+                            $"\n        Poison(10ft, Con save, 1 min, poisoned - disadv on atks/ability checks)");
                         break;
                     case 2:
                         result.Boons.Add($"{boons[2]}", "LR, action, 5ft, 20ft radius, 1 min, Con save, 10D10 Necrotic dmg, Undead are immune");
                         break;
                 }
                 result.Flaws.Add("Hideous Appearance", "true form revealed if (use conc spell, unconscious, hallowed ground, or DM Con save)" +
-                    "\nNon-evil creatures who see your true form instantly become hostile unless GM decides overwise");
+                    "\n        Non-evil creatures who see your true form instantly become hostile unless GM decides overwise");
             }
             if (lvl >= 3)
             {
@@ -339,7 +339,7 @@ namespace DnD_Character_Creator.Races
                         break;
                 }
                 result.Flaws.Add("Necromatic Dystrophy", "everyday must absorb 4 CR of charges or you can't" +
-                    "\nuse Dash, Dodge, Disengage, or reactions / can't hide your Hideous Appearance");
+                    "\n        use Dash, Dodge, Disengage, or reactions / can't hide your Hideous Appearance");
             }
             if (lvl >= 4)
             {
@@ -351,7 +351,7 @@ namespace DnD_Character_Creator.Races
                 {
                     case 0:
                         result.Boons.Add($"{boons[0]}", "whenever you kill a humanoid you can reanimate it as a zombie" +
-                            $"\nits permanently under your control and follows verbal commands");
+                            $"\n        its permanently under your control and follows verbal commands");
                         break;
                     case 1:
                         result.Boons.Add($"{boons[1]}", "gain access to the Wizard's spell list, gain Int spells known");
@@ -361,7 +361,7 @@ namespace DnD_Character_Creator.Races
                         break;
                 }
                 result.Flaws.Add("Weight of Ages", "everyday must absorb 8 CR of charges or you can't use atk actions" +
-                    "\nif you move you can't use bonus actions or reactions / if you use bonus, speed = 0");
+                    "\n        if you move you can't use bonus actions or reactions / if you use bonus, speed = 0");
             }
 
             return result;
@@ -383,7 +383,7 @@ namespace DnD_Character_Creator.Races
                 result.Boons.Add("Hybrid Transformation", "AC = 10 + Dex + Con, Claw(D6 slash), Bite(D8 pierc), bonus - claw or bite");
                 result.Boons.Add("Shapechanger's Form", "your type becomes Shapechanger");
                 result.Flaws.Add("Lust for the Hunt", "DC 10 Wis save every turn, full moon = auto-fail" +
-                    "\nif you lose control - must atk nearest non-player creature");
+                    "\n        if you lose control - must atk nearest non-player creature");
             }
             bool kindredForm = false;
             if (lvl >= 2)
@@ -402,8 +402,8 @@ namespace DnD_Character_Creator.Races
                         break;
                     case 2:
                         result.Boons.Add($"{boons[2]}", "gain an Animal form, can only use claw and bite, auto-succeed on Lust for the Hunt" +
-                            $"\nWolf(speak with wolves, if adj ally gain adv on atks, speed + 20ft)" +
-                            $"\nBear(speak with bears, saves + Con, +15 HP)");
+                            $"\n        Wolf(speak with wolves, if adj ally gain adv on atks, speed + 20ft)" +
+                            $"\n        Bear(speak with bears, saves + Con, +15 HP)");
                         kindredForm = true;
                         break;
                 }
@@ -423,7 +423,7 @@ namespace DnD_Character_Creator.Races
                         break;
                     case 1:
                         result.Boons.Add($"{boons[1]}", "double your jump distance, if in Hybrid form after a jump - atk then Str save to " +
-                            $"\nknock prone and then you can grapple check");
+                            $"\n        knock prone and then you can grapple check");
                         break;
                     case 2:
                         result.Boons.Add($"{boons[2]}", "claw and bite are magical and +1 base die, +1 AC, gain Immunity to charm and fear");
@@ -455,8 +455,8 @@ namespace DnD_Character_Creator.Races
                         break;
                 }
                 result.Flaws.Add("Predatory Nature", "if you can sense a helpless creature you gain disadv on Wis saves" +
-                    "\nif you sense a hostile/helpless nonplayer creature, DC 10 Wis save or turn into Hybrid form, success = immune until dawn" +
-                    "\nafter a kill, you can't transform into human until dawn (you can transform into Kindred form)");
+                    "\n        if you sense a hostile/helpless nonplayer creature, DC 10 Wis save or turn into Hybrid form, success = immune until dawn" +
+                    "\n        after a kill, you can't transform into human until dawn (you can transform into Kindred form)");
             }
 
             return result;
@@ -499,7 +499,7 @@ namespace DnD_Character_Creator.Races
                         break;
                 }
                 result.Flaws.Add("Divine Appearance", "true form revealed if (use conc spell, unconscious, hallowed ground, or DM Con save)" +
-                    "\nEvil creatures who see your true form instantly become hostile unless GM decides overwise");
+                    "\n        Evil creatures who see your true form instantly become hostile unless GM decides overwise");
             }
             if (lvl >= 3)
             {
@@ -517,11 +517,11 @@ namespace DnD_Character_Creator.Races
                         break;
                     case 2:
                         result.Boons.Add($"{boons[2]}", "bonus to summon longbow, doesn't require ammo, bright light 5ft/dim light 5ft" +
-                            $"\ndmg + 1D8 Radiant or 2D8 if Fiend, Fey, or Undead");
+                            $"\n        dmg + 1D8 Radiant or 2D8 if Fiend, Fey, or Undead");
                         break;
                 }
                 result.Flaws.Add("Beacon to Darkness", "when an act of greater evil is committed within 30ft - gain 1 corruption pt" +
-                    "\natks/saves vs evil take minus = corruption pts (SR/LR and 1hr prayer reduces pts by 1)");
+                    "\n        atks/saves vs evil take minus = corruption pts (SR/LR and 1hr prayer reduces pts by 1)");
             }
             if (lvl >= 4)
             {
@@ -562,15 +562,15 @@ namespace DnD_Character_Creator.Races
             if (lvl >= 1)
             {
                 result.Boons.Add("Blood Fury Abilities", "every atk gain 1 FP (max 4), after a SR/LR they reset to 0" +
-                    "\n(1 FP)Fanged Bite - unarmed Dex atk, bonus, 1D4 + Str or Dex, Con save - 2D6 Necrotic, on kill - gain 3 FP" +
-                    "\n(1 FP)Calculated Strike - dmg + 1D6, gain no FP from this atk" +
-                    "\n(2 FP)Vampiric Mist - bonus, teleport 30ft" +
-                    "\n(1 FP)Unearthly Reflexes - reaction, on Dex save, half or no dmg" +
-                    "\n(3 FP)Deathly Horror - bonus, 30ft, Wis save, fear 1 min");
+                    "\n        (1 FP)Fanged Bite - unarmed Dex atk, bonus, 1D4 + Str or Dex, Con save - 2D6 Necrotic, on kill - gain 3 FP" +
+                    "\n        (1 FP)Calculated Strike - dmg + 1D6, gain no FP from this atk" +
+                    "\n        (2 FP)Vampiric Mist - bonus, teleport 30ft" +
+                    "\n        (1 FP)Unearthly Reflexes - reaction, on Dex save, half or no dmg" +
+                    "\n        (3 FP)Deathly Horror - bonus, 30ft, Wis save, fear 1 min");
                 result.Boons.Add("Undead Form", "your type becomes Undead, you don't require air, food, drink, or sleep" +
-                    "\nhealing gives you temp HP instead of real HP, you no longer age/immune to aging effects");
+                    "\n        healing gives you temp HP instead of real HP, you no longer age/immune to aging effects");
                 result.Flaws.Add("The Curse Sanguine", "residence(1D10 Psychic), Darkvision 60ft," +
-                    "\nsunlight = disadv on atks/ability checks, must feed every week");
+                    "\n        sunlight = disadv on atks/ability checks, must feed every week");
             }
             bool dreadKnightCmb = false;
             if (lvl >= 2)
@@ -583,21 +583,21 @@ namespace DnD_Character_Creator.Races
                 switch (index)
                 {
                     case 0:
-                        result.Boons.Add($"{boons[0]}", "bonus to enter or exit a stance, use Dex for atk/dmg with slashing weapon" +
-                            $"\nOffensive(dmg + current FP), Defensive(AC + 1/2 current FP), Accuracy(atk + 1/2 current FP)");
+                        result.Boons.Add($"{boons[0]}", "bonus to enter or exit a stance, use Dex for atk/dmg with Slashing weapon" +
+                            $"\n        Offensive(dmg + current FP), Defensive(AC + 1/2 current FP), Accuracy(atk + 1/2 current FP)");
                         dreadKnightCmb = true;
                         break;
                     case 1:
                         result.Boons.Add($"{boons[1]}", "change dmg type of spells to Necrotic, spells grant FP");
-                        result.Boons["Blood Fury Abilities"] += "\n(1 FP)Cast in Blood - cantrip dmg + Cha" +
-                            "\n(3 FP)Sanguine Spellbinding - impose disadv on Int, Wis, Cha saves vs your spells";
+                        result.Boons["Blood Fury Abilities"] += "\n        (1 FP)Cast in Blood - cantrip dmg + Cha" +
+                            "\n        (3 FP)Sanguine Spellbinding - impose disadv on Int, Wis, Cha saves vs your spells";
                         break;
                     case 2:
                         result.Boons.Add($"{boons[2]}", "action, turn into bat(fly 30ft) or mist(fly 20ft, adv on physical saves, gain Immunity to nonmagical dmg)");
                         break;
                 }
                 result.Flaws.Add("Hideous Appearance", "true form revealed if (use conc spell, unconscious, hallowed ground, or DM Con save)" +
-                    "\nNon-evil creatures who see your true form instantly become hostile unless GM decides overwise");
+                    "\n        Non-evil creatures who see your true form instantly become hostile unless GM decides overwise");
             }
             bool captivatingGlance = false;
             if (lvl >= 3)
@@ -638,7 +638,7 @@ namespace DnD_Character_Creator.Races
                         break;
                 }
                 result.Flaws.Add("Greater Sanguine Curse", "1d10 Acid dmg in running water, gain Superior Darkvision 120ft," +
-                    "\n1d10 Radiant dmg in sunlight, must feed every 3 days");
+                    "\n        1d10 Radiant dmg in sunlight, must feed every 3 days");
             }
             if (lvl >= 4)
             {
@@ -663,11 +663,11 @@ namespace DnD_Character_Creator.Races
                         break;
                     case "Beguiler's Entrancement":
                         result.Boons.Add($"{boon}", "LR, action, charm incap human for 24hrs, after a month become permanently charmed" +
-                            "\nmax # of enthralled = Cha, perma-charm can be removed by Remove Curse, other spells, etc");
+                            "\n        max # of enthralled = Cha, perma-charm can be removed by Remove Curse, other spells, etc");
                         break;
                     case "Regenerate":
                         result.Boons.Add($"{boon}", "Gain regen 10 if HP >= 1, and not in sunlight orover running water" +
-                            "\nIf you take Radiant dmg or dmg from holy water, no regen that turn");
+                            "\n        If you take Radiant dmg or dmg from holy water, no regen that turn");
                         break;
                 }
                 result.Flaws.Add("Stake to the Heart", "when enemy crits with a wooden or silver wep and HP <= 50, you are paralyzed for 1 hr");

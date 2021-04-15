@@ -60,6 +60,9 @@ namespace DnD_Character_Creator.Classes
                 case "Bard":
                     result = Bard(character, result);
                     break;
+                case "Bloodhunter":
+                    result = Bloodhunter(character, result);
+                    break;
                 case "Cleric":
                     result = Cleric(character, result);
                     break;
@@ -74,6 +77,9 @@ namespace DnD_Character_Creator.Classes
                     break;
                 case "Paladin":
                     result = Paladin(character, result);
+                    break;
+                case "Psion":
+                    result = Psion(character, result);
                     break;
                 case "Ranger":
                     result = Ranger(character, result);
@@ -109,7 +115,7 @@ namespace DnD_Character_Creator.Classes
         }
         public static CharacterClass Artificer(Character character, CharacterClass result)
         {
-            var classSkills = new List<string>() { "Arcana", "History", "Investigation", "Medicine", "Nature", "Perception", "Sleight of Hand" };
+            var classSkills = new List<string> { "Arcana", "History", "Investigation", "Medicine", "Nature", "Perception", "Sleight of Hand" };
 
             result.GP = 125;
             result.HitDie = 8;
@@ -153,7 +159,7 @@ namespace DnD_Character_Creator.Classes
         }
         public static CharacterClass Barbarian(Character character, CharacterClass result)
         {
-            var classSkills = new List<string>() { "Animal Handling", "Athletics", "Intimidation", "Nature", "Perception", "Survival" };
+            var classSkills = new List<string> { "Animal Handling", "Athletics", "Intimidation", "Nature", "Perception", "Survival" };
 
             result.GP = 50;
             result.HitDie = 12;
@@ -194,7 +200,6 @@ namespace DnD_Character_Creator.Classes
             result.Equipment.Add($"4 {Options.SimpleMeleeWeapons[4]}");
             result = BarbarianSpecifics.Features(character, result);
             character.Archetype = BarbarianSpecifics.PathName;
-            character.Speed += BarbarianSpecifics.FastMovement;
 
             return result;
         }
@@ -213,7 +218,7 @@ namespace DnD_Character_Creator.Classes
             var instruments = new List<string>();
             instruments.AddRange(Options.MusicalInstruments);
             string msg = "You have proficiency with 3 musical instruments" +
-                "\nPick your 1st instrument";
+                "\n        Pick your 1st instrument";
             int index = CLIHelper.PrintChoices(msg, instruments);
             string instrument1 = instruments[index];
             result.ToolProficiencies.Add(instrument1);
@@ -277,9 +282,62 @@ namespace DnD_Character_Creator.Classes
 
             return result;
         }
+        public static CharacterClass Bloodhunter(Character character, CharacterClass result)
+        {
+            var classSkills = new List<string> { "Acrobatics", "Arcana", "Athletics", "Insight", "Investigation", "Survival" };
+
+            result.GP = 125;
+            result.HitDie = 10;
+            result.Proficiencies.Add("Light armor");
+            result.Proficiencies.Add("Medium armor");
+            result.Proficiencies.Add("Simple weapons");
+            result.Proficiencies.Add("Martial weapons");
+            result.Saves.Add("Str");
+            result.Saves.Add("Wis");
+
+            GetSkills(character, "Bloodhunter", classSkills, 2);
+
+            Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
+            CLIHelper.Print2Choices("Any martial weapon", "Two simple weapons");
+            int input = CLIHelper.GetNumberInRange(1, 2);
+            if (input == 1)
+            {
+                result.Equipment.Add($"Martial Weapon");
+            }
+            else
+            {
+                result.Equipment.Add("Simple melee weapon");
+                result.Equipment.Add("Simple melee weapon2");
+            }
+            CLIHelper.Print2Choices("Light crossbow", "Hand crossbow");
+            input = CLIHelper.GetNumberInRange(1, 2);
+            if (input == 1)
+            {
+                result.Equipment.Add(Options.SimpleRangedWeapons[0]);
+            }
+            else
+            {
+                result.Equipment.Add(Options.MartialRangedWeapons[1]);
+            }
+            CLIHelper.Print2Choices("Studded leather armor", "Scale mail");
+            input = CLIHelper.GetNumberInRange(1, 2);
+            if (input == 1)
+            {
+                result.Equipment.Add(Options.LightArmor[2]);
+            }
+            else
+            {
+                result.Equipment.Add(Options.MediumArmor[2]);
+            }
+            result.Equipment.Add(Options.Packs[4]);
+            result = BloodhunterSpecifics.Features(character, result);
+            character.Archetype = BloodhunterSpecifics.BloodhunterOrder;
+
+            return result;
+        }
         public static CharacterClass Cleric(Character character, CharacterClass result)
         {
-            List<string> classSkills = new List<string>() { "History", "Insight", "Medicine", "Persuasion", "Religion" };
+            List<string> classSkills = new List<string> { "History", "Insight", "Medicine", "Persuasion", "Religion" };
 
             result.GP = 125;
             result.HitDie = 8;
@@ -559,7 +617,6 @@ namespace DnD_Character_Creator.Classes
             result.Equipment.Add($"10 {Options.SimpleRangedWeapons[1]}");
             result = MonkSpecifics.Features(character, result);
             character.Archetype = MonkSpecifics.MonasticTradition;
-            character.Speed += MonkSpecifics.FastMovement;
 
             return result;
         }
@@ -617,10 +674,91 @@ namespace DnD_Character_Creator.Classes
 
             result.Equipment.Add(Options.HeavyArmor[3]);
             result.Equipment.Add("Holy symbol");
-            character.Tenets = new List<string> { "Bravery", "Content", "Honesty", "Honor", "Humility", "Kindness", "Leadership",
-                "Piety", "Respect", "Tolerance", "Unselfishness", "Utilitarian" };
             result = PaladinSpecifics.Features(character, result);
             character.Archetype = PaladinSpecifics.SacredOath;
+
+            return result;
+        }
+        public static CharacterClass Psion(Character character, CharacterClass result)
+        {
+            string msg = "Pick a type of Discipline that will determine your skill list, saves and give you features at levels 1, 6, and 14.";
+            var archetype = new List<string> { "Clairsentience(Seer)", "Metacreativity(Shaper)", "Psychokinesis(Savant)", 
+                "Psychometabolism(Egoist)", "Psychoportation(Nomad)", "Telepathy(Telepath)" };
+            int input = CLIHelper.PrintChoices(msg, archetype);
+            character.Archetype = archetype[input];
+            var classSkills = new List<string>();
+
+            switch (character.Archetype)
+            {
+                case "Clairsentience(Seer)":
+                    classSkills = new List<string> { "Arcana", "History", "Insight", "Investigation", "Nature", "Perception", "Religion" };
+                    result.Saves.Add("Int");
+                    result.Saves.Add("Wis");
+                    break;
+                case "Metacreativity(Shaper)":
+                    classSkills = new List<string> { "Animal Handling", "Arcana", "Insight", "Nature", "Persuasion", "Religion", "Stealth" };
+                    result.Saves.Add("Wis");
+                    result.Saves.Add("Cha");
+                    break;
+                case "Psychokinesis(Savant)":
+                    classSkills = new List<string> { "Arcana", "Athletics", "Deception", "Intimidation", "Perception", "Survival" };
+                    result.Saves.Add("Con");
+                    result.Saves.Add("Cha");
+                    break;
+                case "Psychometabolism(Egoist)":
+                    classSkills = new List<string> { "Acrobatics", "Athletics", "Intimidation", "Perception", "Performance", "Sleight of Hand", "Stealth" };
+                    result.Saves.Add("Str");
+                    result.Saves.Add("Con");
+                    break;
+                case "Psychoportation(Nomad)":
+                    classSkills = new List<string> { "Acrobatics", "Athletics", "History", "Investigation", "Nature", "Perception", "Survival" };
+                    result.Saves.Add("Dex");
+                    result.Saves.Add("Int");
+                    break;
+                case "Telepathy(Telepath)":
+                    classSkills = new List<string> { "Arcana", "Deception", "Insight", "Intimidation", "Investigation", "Persuasion", "Stealth" };
+                    result.Saves.Add("Wis");
+                    result.Saves.Add("Cha");
+                    break;
+            }
+            result.GP = 75;
+            result.HitDie = 6;
+            result.Proficiencies.Add("Daggers");
+            result.Proficiencies.Add("Darts");
+            result.Proficiencies.Add("Slings");
+            result.Proficiencies.Add("Quarterstaffs");
+            result.Proficiencies.Add("Light crossbows");
+
+            GetSkills(character, "Psion", classSkills, 2);
+
+            Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
+            CLIHelper.Print2Choices("Light crossbow and 20 bolts", "Any simple weapon");
+            int input1 = CLIHelper.GetNumberInRange(1, 2);
+            int input2 = CLIHelper.PrintChoices("Pick a psi crystal personality for your spell focus", Options.PsiCrystals);
+            result.Equipment.Add(Options.PsiCrystals[input2]);
+            CLIHelper.Print2Choices("Scholar's Pack", "Explorer's Pack");
+            int input3 = CLIHelper.GetNumberInRange(1, 2);
+
+            if (input1 == 1)
+            {
+                result.Equipment.Add(Options.SimpleRangedWeapons[0]);
+                result.Equipment.Add("20 bolts");
+            }
+            else
+            {
+                result.Equipment.Add("Simple weapon");
+            }
+            if (input3 == 1)
+            {
+                result.Equipment.Add(Options.Packs[6]);
+            }
+            else
+            {
+                result.Equipment.Add(Options.Packs[4]);
+            }
+            result.Equipment.Add($"2 {Options.SimpleMeleeWeapons[1]}");
+
+            result = PsionSpecifics.Features(character, result);
 
             return result;
         }
@@ -807,9 +945,10 @@ namespace DnD_Character_Creator.Classes
         }
         public static CharacterClass Swordmage(Character character, CharacterClass result)
         {
-            var classSkills = new List<string>() { "Acrobatics", "Arcana", "Athletics", "History", "Insight", "Intimidation",
+            result.Lvl = character.Lvl;
+            var classSkills = new List<string> { "Acrobatics", "Arcana", "Athletics", "History", "Insight", "Intimidation",
                 "Perception", "Persuasion" };
-            var swords = new List<string>() { "Claymore", "Greatsword", "Longsword", "Rapier", "Sabre", "Scimitar", "Shortsword" };
+            var swords = new List<string> { "Claymore", "Greatsword", "Longsword", "Rapier", "Sabre", "Scimitar", "Shortsword" };
 
             result.GP = 125;
             result.HitDie = 10;
