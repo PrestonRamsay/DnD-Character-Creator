@@ -1,133 +1,114 @@
-﻿using DnD_Character_Creator.CharacterPieces;
+﻿using DnD_Character_Creator.CharacterPieces.Races;
 using DnD_Character_Creator.CharacterPieces.Spells;
-using DnD_Character_Creator.Helper_Classes;
-using DnD_Character_Creator.Races;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DnD_Character_Creator.CLI_Classes
 {
     public static class AddRace
     {
-        public static void RacialSpecifics(Character character, Race race)
+        public static void NewRace(Character character)
         {
-            character.RacialTraits.AddRange(race.RacialTraits);
-            if (character.ChosenRace == "Half-Elf")
+            switch (character.ChosenRace)
             {
-                Console.WriteLine("Pick a 1st lvl class feature for Dilettante, you will have to add this feature manually");
-                string feature = CLIHelper.PrintChoices(Options.Lvl1Features);
-                character.ClassFeatures.Add(feature, Options.Lvl1Features[feature]);
+                case "Aasimar(Protector)":
+                    Aasimar.Protector(character);
+                    break;
+                case "Aasimar(Scourge)":
+                    Aasimar.Scourge(character);
+                    break;
+                case "Aasimar(Fallen)":
+                    Aasimar.Fallen(character);
+                    break;
+                case "Cambion":
+                    Cambion.Base(character);
+                    break;
+                case "Changeling":
+                    Changeling.Base(character);
+                    break;
+                case "Dhampir":
+                    Dhampir.Base(character);
+                    break;
+                case "Dragonborn":
+                    Dragonborn.Base(character);
+                    break;
+                case "Hill Dwarf":
+                    Dwarf.Hill(character);
+                    break;
+                case "Mountain Dwarf":
+                    Dwarf.Mountain(character);
+                    break;
+                case "Avariel":
+                    Elf.Avariel(character);
+                    break;
+                case "Drow":
+                    Elf.Drow(character);
+                    break;
+                case "Eladrin":
+                    Elf.Eladrin(character);
+                    break;
+                case "Moon Elf":
+                    Elf.Moon(character);
+                    break;
+                case "Sea Elf":
+                    Elf.Sea(character);
+                    break;
+                case "Shadar-Kai":
+                    Elf.ShadarKai(character);
+                    break;
+                case "High Elf":
+                    Elf.High(character);
+                    break;
+                case "Wild Elf":
+                    Elf.Wild(character);
+                    break;
+                case "Wood Elf":
+                    Elf.Wood(character);
+                    break;
+                case "Forest Gnome":
+                    Gnome.Forest(character);
+                    break;
+                case "Rock Gnome":
+                    Gnome.Rock(character);
+                    break;
+                case "Goliath":
+                    Goliath.Base(character);
+                    break;
+                case "Half-Elf":
+                    HalfElf.Base(character);
+                    break;
+                case "Half-Orc":
+                    HalfOrc.Base(character);
+                    break;
+                case "Lightfoot Halfling":
+                    Halfling.Lightfoot(character);
+                    break;
+                case "Stout Halfling":
+                    Halfling.Stout(character);
+                    break;
+                case "Human":
+                    Human.Base(character);
+                    break;
+                case "Variant Human":
+                    Human.Variant(character);
+                    break;
+                case "Minotaur":
+                    Minotaur.Base(character);
+                    break;
+                case "Shade":
+                    Shade.Base(character);
+                    break;
+                case "Tiefling":
+                    Tiefling.Base(character);
+                    break;
+                case "Feral Tiefling":
+                    Tiefling.Feral(character);
+                    break;
+                case "Demigod":
+                    Demigod.Base(character);
+                    break;
             }
-            if (race.Size == "Small")
-            {
-                character.Size = race.Size;
-            }
-            character.Speed += race.Speed;
-            if (character.Feats.ContainsKey("Athlete"))
-                {
-                character.Speedstring += $", Climb {character.Speed}ft";
-            }
-            character.Speedstring += race.Speedstring;
-            character.Vision = race.Vision;
-            //in cli the other traits are assigned
-            character.SkillProficiencies.UnionWith(race.SkillProficiencies);
-            if (race.ToolProficiencies.Contains("Musical Instrument"))
-            {
-                race.ToolProficiencies.Remove("Musical Instrument");
-                string msg = "Pick a musical instrument you'd like to be proficient with.";
-                int index = CLIHelper.PrintChoices(msg, Options.MusicalInstruments);
-                race.ToolProficiencies.Add(Options.MusicalInstruments[index]);
-            }
-            if (race.ToolProficiencies.Contains("Artisan's Tools"))
-            {
-                race.ToolProficiencies.Remove("Artisan's Tools");
-                string msg = "Pick a set of Artisan's Tools you'd like to be proficient with.";
-                int index = CLIHelper.PrintChoices(msg, Options.ArtisanTools);
-                race.ToolProficiencies.Add(Options.ArtisanTools[index]);
-            }
-            if (race.ToolProficiencies.Contains("Gaming Set"))
-            {
-                race.ToolProficiencies.Remove("Gaming Set");
-                string msg = "Pick a gaming set you'd like to be proficient with.";
-                int index = CLIHelper.PrintChoices(msg, Options.GamingSets);
-                race.ToolProficiencies.Add(Options.GamingSets[index]);
-            }
-            character.ToolProficiencies.UnionWith(race.ToolProficiencies);
-            character.Proficiencies.UnionWith(race.Proficiencies);
-            character.Cantrips.AddRange(race.Cantrips);
-            if (character.ChosenRace == "Human(Variant)")
-            {
-                Feats.AddFeat(character);
-            }
-            character.DragonColor = race.DragonColor;
-            character.TieflingMagic = race.TieflingMagic;
         }
-        public static void AddHeight(Character character, Race race)
-        {
-            string height = Console.ReadLine().Trim();
-            bool gettingheight = true;
-
-            while (gettingheight)
-            {
-                if (!height.Contains("\""))
-                {
-                    Console.WriteLine("Format error, try again.");
-                    height = Console.ReadLine().Trim();
-                }
-                else
-                {
-                    gettingheight = false;
-                }
-            }
-
-            character.Height = ConvertHeightToInches(height);
-        }
-        public static int ConvertHeightToInches(string heightString)
-        {
-            string[] height = heightString.Split(new char[] { '\'' });
-            string secondNumber = "";
-            int quoteIndex = height[1].IndexOf("\"");
-            secondNumber = height[1].Substring(0, quoteIndex);
-
-            int feet = int.Parse(height[0]) * 12;
-            int inches = int.Parse(secondNumber);
-            int heightInInches = feet + inches;
-
-            return heightInInches;
-        }
-        public static void AddLanguages(Character character, Race race)
-        {
-            string msg = "";
-            string errorMsg = "You already know that language, try again.";
-            if (!race.Languages.Contains("Choice2"))
-            {
-                msg = "This race gets to know one language of your choice, pick it now.";
-            }
-            if (race.Languages.Contains("Choice2"))
-            {
-                race.Languages.Remove("Choice2");
-                msg = "This race gets to know two languages of your choice, pick them now.";
-                string input = CLIHelper.GetNew(Options.Languages, race.Languages, msg, errorMsg);
-                race.Languages.Add(input);
-            }
-            if (race.Languages.Contains("Choice"))
-            {
-                race.Languages.Remove("Choice");
-                string input = CLIHelper.GetNew(Options.Languages, race.Languages, msg, errorMsg);
-                race.Languages.Add(input);
-            }
-            foreach (var item in race.Languages)
-            {
-                if (character.Languages.Contains(item))
-                {
-                    string newLang = CLIHelper.GetNew(Options.Languages, character.Languages, "Pick a new language", errorMsg);
-                    character.Languages.Add(newLang);
-                }
-            }
-            character.Languages.UnionWith(race.Languages);
-        }
-        public static void AddSpells(Character character)
+        public static void Spells(Character character)
         {
             switch (character.ChosenRace)
             {
@@ -295,7 +276,7 @@ namespace DnD_Character_Creator.CLI_Classes
                     break;
             }
         }
-        public static void AddHigherLvlFeature(Character character)
+        public static void HigherLvlFeatures(Character character)
         {
             if (character.Lvl >= 3)
             {

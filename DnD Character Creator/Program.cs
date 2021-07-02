@@ -1,10 +1,4 @@
-﻿using DnD_Character_Creator.Helper_Classes;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.NetworkInformation;
-
+﻿
 namespace DnD_Character_Creator
 {
     class Program
@@ -26,7 +20,6 @@ namespace DnD_Character_Creator
                 cli.RunAddTemplate(newCharacter);
                 cli.RunAddBackground(newCharacter);
                 cli.RunAddClass(newCharacter);
-                cli.PrintCharacter(newCharacter);
                 cli.WriteCharacterToDocument(newCharacter);
 
                 creatingCharacter = cli.FinalPrompt();

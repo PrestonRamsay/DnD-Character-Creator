@@ -1,13 +1,12 @@
 ﻿using DnD_Character_Creator.CharacterPieces.Spells;
-using DnD_Character_Creator.Classes;
 using DnD_Character_Creator.Helper_Classes;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
+namespace DnD_Character_Creator.CharacterPieces.Classes
 {
-    public static class WarlockSpecifics
+    public static class Warlock
     {
         public static string OtherworldlyPatron { get; set; }
         public static string PactBoon { get; set; }
@@ -19,11 +18,68 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             { 4, new List<string>() },
             { 5, new List<string>() }
         };
-        public static CharacterClass Features(Character character, CharacterClass result)
+        public static void Base(Character character)
         {
-            int lvl = result.Lvl;
+            List<string> classSkills = new List<string> { "Arcana", "Deception", "History", "Intimidation", "Investigation",
+                "Nature", "Religion" };
 
-            result.ClassFeatures.Add("Spellcasting", "use Cha for spell DCs, you use an Arcane Focus as a spell focus");
+            character.GP += 100;
+            character.HitDie = 8;
+            character.Proficiencies.Add("Light armor");
+            character.Proficiencies.Add("Simple weapons");
+            character.Saves.Add("Wis");
+            character.Saves.Add("Cha");
+
+            BEHelper.GetSkills(character, classSkills, 2);
+        }
+        public static void Equipment(Character character)
+        {
+            Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
+            CLIHelper.Print2Choices("Light crossbow and 20 bolts", "Any simple weapon");
+            int input1 = CLIHelper.GetNumberInRange(1, 2);
+
+            if (input1 == 1)
+            {
+                character.Equipment.Add(Options.SimpleRangedWeapons[0]);
+                character.Equipment.Add("20 bolts");
+            }
+            else
+            {
+                BEHelper.AddSimpleWeapon(character);
+            }
+
+            CLIHelper.Print2Choices("Component pouch", "Arcane focus");
+            int input2 = CLIHelper.GetNumberInRange(1, 2);
+            if (input2 == 1)
+            {
+                character.Equipment.Add("Component pouch");
+            }
+            else
+            {
+                var focuses = new List<string> { "Crystal", "Orb", "Rod", "Staff", "Wand" };
+                int index = CLIHelper.PrintChoices("Pick an arcane focus.", focuses);
+                character.Equipment.Add(Options.ArcaneFocuses[index]);
+            }
+
+            CLIHelper.Print2Choices("Scholar's Pack", "Dungeoneer's Pack");
+            int input3 = CLIHelper.GetNumberInRange(1, 2);
+            if (input3 == 1)
+            {
+                character.Equipment.Add(Options.Packs[6]);
+            }
+            else
+            {
+                character.Equipment.Add(Options.Packs[2]);
+            }
+
+            character.Equipment.Add(Options.LightArmor[1]);
+            character.Equipment.Add($"2 {Options.SimpleMeleeWeapons[1]}");
+        }
+        public static void Features(Character character)
+        {
+            int lvl = character.Lvl;
+
+            character.ClassFeatures.Add("Spellcasting", "use Cha for spell DCs, you use an Arcane Focus as a spell focus");
             string msg = "Pick an Otherworldly Patron that will give you features at levels 1, 6, 10, and 14.";
             var archetype = new List<string> { "Archfey", "Celestial", "The Fathomless", "Fiend", "Genie", "Hexblade",
                 "The Great Old One", "The Undying" };
@@ -33,28 +89,28 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             switch (OtherworldlyPatron)
             {
                 case "Archfey":
-                    Archfey(character, result);
+                    Archfey(character);
                     break;
                 case "Celestial":
-                    Celestial(character, result);
+                    Celestial(character);
                     break;
                 case "The Fathomless":
-                    TheFathomless(character, result);
+                    TheFathomless(character);
                     break;
                 case "Fiend":
-                    Fiend(character, result);
+                    Fiend(character);
                     break;
                 case "Genie":
-                    Genie(character, result);
+                    Genie(character);
                     break;
                 case "Hexblade":
-                    Hexblade(character, result);
+                    Hexblade(character);
                     break;
                 case "The Great Old One":
-                    TheGreatOldOne(character, result);
+                    TheGreatOldOne(character);
                     break;
                 case "The Undying":
-                    TheUndying(character, result);
+                    TheUndying(character);
                     break;
             }
 
@@ -67,22 +123,22 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 if (index == 0)
                 {
                     PactBoon = pactBoons[0];
-                    result.ClassFeatures.Add(PactBoon, "learn Find Familiar spell, can take special forms: Imp, Pseudodragon, Quasit, or Sprite - can forgo atk to have familiar atk");
+                    character.ClassFeatures.Add(PactBoon, "learn Find Familiar spell, can take special forms: Imp, Pseudodragon, Quasit, or Sprite - can forgo atk to have familiar atk");
                 }
                 else if (index == 1)
                 {
                     PactBoon = pactBoons[1];
-                    result.ClassFeatures.Add(PactBoon, "action, create pact Blade that counts as magical");
+                    character.ClassFeatures.Add(PactBoon, "action, create pact Blade that counts as magical");
                 }
                 else if (index == 2)
                 {
                     PactBoon = pactBoons[2];
-                    result.ClassFeatures.Add(PactBoon, "gain an amulet Talisman - PB/LR, when wearer fails a check, check + 1D4");
+                    character.ClassFeatures.Add(PactBoon, "gain an amulet Talisman - PB/LR, when wearer fails a check, check + 1D4");
                 }
                 else if (index == 3)
                 {
                     PactBoon = pactBoons[3];
-                    result.ClassFeatures.Add(PactBoon, "pick 3 cantrips from any spell list");
+                    character.ClassFeatures.Add(PactBoon, "pick 3 cantrips from any spell list");
                     var allCantrips = new List<string>();
                     foreach (var item in allCantrips)
                     {
@@ -91,14 +147,12 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                             allCantrips.Remove(item);
                         }
                     }
-                    string newCantrip = CLIHelper.GetNew(allCantrips, result.Cantrips, "Pick a cantrip", "You already know that cantrip");
-                    result.Cantrips.Add(newCantrip);
-                    allCantrips.Remove(newCantrip);
-                    newCantrip = CLIHelper.GetNew(allCantrips, result.Cantrips, "Pick a cantrip", "You already know that cantrip");
-                    result.Cantrips.Add(newCantrip);
-                    allCantrips.Remove(newCantrip);
-                    newCantrip = CLIHelper.GetNew(allCantrips, result.Cantrips, "Pick a cantrip", "You already know that cantrip");
-                    result.Cantrips.Add(newCantrip);
+                    for (int i = 0; i < 3; i++)
+                    {
+                        string newCantrip = CLIHelper.GetNew(allCantrips, character.Cantrips, "Pick a cantrip");
+                        character.Cantrips.Add(newCantrip);
+                        allCantrips.Remove(newCantrip);
+                    }
                 }
             }
             if (lvl >= 2)
@@ -115,17 +169,17 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                         invocations++;
                     }
                 }
-                result.ClassFeatures.Add("Invocations", "\n        ------------------------------------");
+                character.ClassFeatures.Add("Invocations", "\n        ------------------------------------");
                 var invocDictionary = Invocations(PactBoon, lvl);
                 List<string> invocList = CLIHelper.GetDictionaryOptions(invocDictionary, invocations, "Pick an new Invocation");
                 foreach (var item in invocList)
                 {
-                    result.ClassFeatures.Add(item, Options.AllInvocations[item]);
+                    character.ClassFeatures.Add(item, Options.AllInvocations[item]);
                 }
             }
             if (lvl >= 4)
             {
-                result.ClassFeatures.Add("Eldritch Versatility", "When you gain an Ability Score Improvement, change your Pact Boon, replace a cantrip, or replace a Mystic Arcanum spell");
+                character.ClassFeatures.Add("Eldritch Versatility", "When you gain an Ability Score Improvement, change your Pact Boon, replace a cantrip, or replace a Mystic Arcanum spell");
             }
             int mysticLvl = 5;
             for (int i = 11; i <= lvl; i += 2)
@@ -133,18 +187,18 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 if (i <= 17)
                 {
                     mysticLvl++;
-                    result.ClassFeatures.Add($"Mystic Arcanum({mysticLvl}th)", "1/LR cast a warlock spell of this lvl");
+                    character.ClassFeatures.Add($"Mystic Arcanum({mysticLvl}th)", "1/LR cast a warlock spell of this lvl");
                 }
             }
             if (lvl >= 20)
             {
-                result.ClassFeatures.Add("Eldritch Master", "1/LR, spend 1 min to regain all spell slots");
+                character.ClassFeatures.Add("Eldritch Master", "1/LR, spend 1 min to regain all spell slots");
             }
-            Spells(character, result);
+            Spells(character);
 
-            return result;
+            
         }
-        public static void Archfey(Character character, CharacterClass result)
+        public static void Archfey(Character character)
         {
             int lvl = character.Lvl;
             ExpandedSpells[1].Add("Faerie Fire");
@@ -158,21 +212,21 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             ExpandedSpells[5].Add("Dominate Person");
             ExpandedSpells[5].Add("Seeming");
 
-            result.ClassFeatures.Add("Fey Presence", "SR, action, 10ft, Wis save, charm creatures");
+            character.ClassFeatures.Add("Fey Presence", "SR, action, 10ft, Wis save, charm creatures");
             if (lvl >= 6)
             {
-                result.ClassFeatures.Add("Misty Escape", "SR, reaction, when you take dmg - teleport 60ft and become invisible for 1 turn");
+                character.ClassFeatures.Add("Misty Escape", "SR, reaction, when you take dmg - teleport 60ft and become invisible for 1 turn");
             }
             if (lvl >= 10)
             {
-                result.ClassFeatures.Add("Beguiling Defenses", "gain Immunity to charm, use reaction to turn charm back - Wis save, 1 min charm");
+                character.ClassFeatures.Add("Beguiling Defenses", "gain Immunity to charm, use reaction to turn charm back - Wis save, 1 min charm");
             }
             if (lvl >= 14)
             {
-                result.ClassFeatures.Add("Dark Delirium", "SR, action, 60ft, 1 min, 1 creature, Wis save, charm or frighten - they think their lost in a misty realm");
+                character.ClassFeatures.Add("Dark Delirium", "SR, action, 60ft, 1 min, 1 creature, Wis save, charm or frighten - they think their lost in a misty realm");
             }
         }
-        public static void Celestial(Character character, CharacterClass result)
+        public static void Celestial(Character character)
         {
             int lvl = character.Lvl;
             ExpandedSpells[1].Add("Cure Wounds");
@@ -185,25 +239,25 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             ExpandedSpells[4].Add("Wall of Fire");
             ExpandedSpells[5].Add("Flame Strike");
             ExpandedSpells[5].Add("Greater Restoration");
-            result.Cantrips.Add("Light");
-            result.Cantrips.Add("Sacred Flame");
+            character.Cantrips.Add("Light");
+            character.Cantrips.Add("Sacred Flame");
 
-            result.ClassFeatures.Add("Healing Light", "LR, gain D6 pool = 1 + lvl, bonus, 60ft, 1 creature, heal D6s - max dice spent at once = Cha");
+            character.ClassFeatures.Add("Healing Light", "LR, gain D6 pool = 1 + lvl, bonus, 60ft, 1 creature, heal D6s - max dice spent at once = Cha");
             if (lvl >= 6)
             {
-                result.ClassFeatures.Add("Radiant Soul", "gain Resistance to Fire, when you cast a Radiant or Fire dmg spell, dmg + Cha Radiant or Fire");
+                character.ClassFeatures.Add("Radiant Soul", "gain Resistance to Fire, when you cast a Radiant or Fire dmg spell, dmg + Cha Radiant or Fire");
             }
             if (lvl >= 10)
             {
-                result.ClassFeatures.Add("Celestial Resilience", "on SR/LR gain temp HP = lvl + Cha, choose up to 5 creatures - they gain temp HP = 1/2 lvl + Cha");
+                character.ClassFeatures.Add("Celestial Resilience", "on SR/LR gain temp HP = lvl + Cha, choose up to 5 creatures - they gain temp HP = 1/2 lvl + Cha");
             }
             if (lvl >= 14)
             {
-                result.ClassFeatures.Add("Searing Vengeance", "LR, when your turn starts with a death save, regain HP = 1/2 max HP and stand up " +
+                character.ClassFeatures.Add("Searing Vengeance", "LR, when your turn starts with a death save, regain HP = 1/2 max HP and stand up " +
                     "\n        each creature, 30ft, 2D8 + Cha Radiant dmg and blinded");
             }
         }
-        public static void TheFathomless(Character character, CharacterClass result)
+        public static void TheFathomless(Character character)
         {
             int lvl = character.Lvl;
             ExpandedSpells[1].Add("Create or Destroy Water");
@@ -223,32 +277,32 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 tentacle++;
             }
 
-            result.ClassFeatures.Add("Tentacle of the Deeps", $"PB/LR, bonus, 1 min, 60ft, create 10ft tentacle - make melee spell atk, {tentacle}D8 Cold, reduce speed by 10ft" +
+            character.ClassFeatures.Add("Tentacle of the Deeps", $"PB/LR, bonus, 1 min, 60ft, create 10ft tentacle - make melee spell atk, {tentacle}D8 Cold, reduce speed by 10ft" +
                 "\n        bonus, move tentacle 30ft and atk again");
-            result.ClassFeatures.Add("Gift of the Sea", "gain waterbreathing and Swim 40ft");
+            character.ClassFeatures.Add("Gift of the Sea", "gain waterbreathing and Swim 40ft");
             character.Speedstring += ", Swim 40ft";
             if (lvl >= 6)
             {
-                result.ClassFeatures.Add("Oceanic Soul", "gain Resistance to Cold dmg, if you and another creature are fully submerged - understand each other");
+                character.ClassFeatures.Add("Oceanic Soul", "gain Resistance to Cold dmg, if you and another creature are fully submerged - understand each other");
                 int dmg = 1;
                 if (lvl >= 10)
                 {
                     dmg++;
                 }
-                result.ClassFeatures.Add("Guardian Coil", $"reaction, 10ft, reduce dmg by {dmg}D8");
+                character.ClassFeatures.Add("Guardian Coil", $"reaction, 10ft, reduce dmg by {dmg}D8");
             }
             if (lvl >= 10)
             {
-                result.ClassFeatures.Add("Grasping Tentacles", "LR, cast Evard's Black Tentacles without using a spell slot" +
+                character.ClassFeatures.Add("Grasping Tentacles", "LR, cast Evard's Black Tentacles without using a spell slot" +
                     "\n        whenever you cast Evard's Black Tentacles, gain temp HP = lvl, dmg can't break conc");
-                result.Spells[4].Add("Evard's Black Tentacles");
+                character.Spells[4].Add("Evard's Black Tentacles");
             }
             if (lvl >= 14)
             {
-                result.ClassFeatures.Add("Fathomless Plunge", "action, 30ft, 5 creatures, teleport up to 1 mile in or 30ft from body of water you've seen (everyone must be within 30ft)");
+                character.ClassFeatures.Add("Fathomless Plunge", "action, 30ft, 5 creatures, teleport up to 1 mile in or 30ft from body of water you've seen (everyone must be within 30ft)");
             }
         }
-        public static void Fiend(Character character, CharacterClass result)
+        public static void Fiend(Character character)
         {
             int lvl = character.Lvl;
             ExpandedSpells[1].Add("Burning Hands");
@@ -262,21 +316,21 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             ExpandedSpells[5].Add("Flame Strike");
             ExpandedSpells[5].Add("Hallow");
 
-            result.ClassFeatures.Add("Dark One's Blessing", "on kill, gain temp HP = Cha + lvl");
+            character.ClassFeatures.Add("Dark One's Blessing", "on kill, gain temp HP = Cha + lvl");
             if (lvl >= 6)
             {
-                result.ClassFeatures.Add("Dark One's Own Luck", "SR, on ability check, Init, or save + 1D10");
+                character.ClassFeatures.Add("Dark One's Own Luck", "SR, on ability check, Init, or save + 1D10");
             }
             if (lvl >= 10)
             {
-                result.ClassFeatures.Add("Fiendish Resilience", "on SR/LR choose Resistance to one dmg type - bypassed by magical/silver weps");
+                character.ClassFeatures.Add("Fiendish Resilience", "on SR/LR choose Resistance to one dmg type - bypassed by magical/silver weps");
             }
             if (lvl >= 14)
             {
-                result.ClassFeatures.Add("Hurl Through Hell", "on hit, disappears til next turn - if not a fiend, take 10D10 Psychic dmg");
+                character.ClassFeatures.Add("Hurl Through Hell", "on hit, disappears til next turn - if not a fiend, take 10D10 Psychic dmg");
             }
         }
-        public static void Genie(Character character, CharacterClass result)
+        public static void Genie(Character character)
         {
             int lvl = character.Lvl;
             ExpandedSpells[1].Add("Detect Evil and Good");
@@ -328,24 +382,24 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     break;
             }
 
-            result.ClassFeatures.Add("Genie's Vessel", "AC = spell DC, HP = lvl + PB, Immunity to Poison and Psychic" +
+            character.ClassFeatures.Add("Genie's Vessel", "AC = spell DC, HP = lvl + PB, Immunity to Poison and Psychic" +
                 "\n        Bottled Respite(LR, action, PB x 2 hr, enter/exit extradimensional space inside the vessel)" +
                 $"\n        Genie's Wrath(1/turn, on hit, dmg + PB {dmgType})");
-            result.ClassFeatures["Spellcasting"] = "use Cha for spell DCs, use Arcane Focus or Genie Vessel as a spell focus";
+            character.ClassFeatures["Spellcasting"] = "use Cha for spell DCs, use Arcane Focus or Genie Vessel as a spell focus";
             if (lvl >= 6)
             {
-                result.ClassFeatures.Add("Elemental Gift", $"gain Resistance to {dmgType} / PB/LR, bonus, 10 min, gain Hover and Fly 30ft");
+                character.ClassFeatures.Add("Elemental Gift", $"gain Resistance to {dmgType} / PB/LR, bonus, 10 min, gain Hover and Fly 30ft");
             }
             if (lvl >= 10)
             {
-                result.ClassFeatures.Add("Sanctuary Vessel", "you can bring 5 creatures when you use Bottled Respite, bonus to eject / 10 min = SR, Hit Dice + PB for healing");
+                character.ClassFeatures.Add("Sanctuary Vessel", "you can bring 5 creatures when you use Bottled Respite, bonus to eject / 10 min = SR, Hit Dice + PB for healing");
             }
             if (lvl >= 14)
             {
-                result.ClassFeatures.Add("Limited Wish", "1D4 LR, action, gain effect of any 6th lvl or lower spell (cast time 1 action)");
+                character.ClassFeatures.Add("Limited Wish", "1D4 LR, action, gain effect of any 6th lvl or lower spell (cast time 1 action)");
             }
         }
-        public static void Hexblade(Character character, CharacterClass result)
+        public static void Hexblade(Character character)
         {
             int lvl = character.Lvl;
             ExpandedSpells[1].Add("Shield");
@@ -359,25 +413,25 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             ExpandedSpells[5].Add("Banishing Smite");
             ExpandedSpells[5].Add("Cone of Cold");
 
-            result.ClassFeatures.Add("Hexblade's Curse", "bonus, 30ft, 1 min, dmg + Prof, crit on 19, on death - regain HP = lvl + Cha");
-            result.ClassFeatures.Add("Hex Warrior", "on LR, touch One-Handed wep, use Cha for atk/dmg (Pact Weapon auto-gets this feature)");
-            result.Proficiencies.Add("Medium Armor");
-            result.Proficiencies.Add("Shields");
-            result.Proficiencies.Add("Martial Weapons");
+            character.ClassFeatures.Add("Hexblade's Curse", "bonus, 30ft, 1 min, dmg + Prof, crit on 19, on death - regain HP = lvl + Cha");
+            character.ClassFeatures.Add("Hex Warrior", "on LR, touch One-Handed wep, use Cha for atk/dmg (Pact Weapon auto-gets this feature)");
+            character.Proficiencies.Add("Medium Armor");
+            character.Proficiencies.Add("Shields");
+            character.Proficiencies.Add("Martial Weapons");
             if (lvl >= 6)
             {
-                result.ClassFeatures.Add("Accursed Specter", "LR, on kill, raise humanoid as specter - it gains temp HP = 1/2 lvl, atk + Cha, obeys verbal commands");
+                character.ClassFeatures.Add("Accursed Specter", "LR, on kill, raise humanoid as specter - it gains temp HP = 1/2 lvl, atk + Cha, obeys verbal commands");
             }
             if (lvl >= 10)
             {
-                result.ClassFeatures.Add("Armor of Hexes", "reaction, if Hexblade Curse target hits, roll 1D6 - if 4+ then atk misses");
+                character.ClassFeatures.Add("Armor of Hexes", "reaction, if Hexblade Curse target hits, roll 1D6 - if 4+ then atk misses");
             }
             if (lvl >= 14)
             {
-                result.ClassFeatures.Add("Master of Hexes", "Hexblade Curse target dies, 30ft, apply Curse to new target instead of regaining HP");
+                character.ClassFeatures.Add("Master of Hexes", "Hexblade Curse target dies, 30ft, apply Curse to new target instead of regaining HP");
             }
         }
-        public static void TheGreatOldOne(Character character, CharacterClass result)
+        public static void TheGreatOldOne(Character character)
         {
             int lvl = character.Lvl;
             ExpandedSpells[1].Add("Dissonant Whispers");
@@ -391,21 +445,21 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             ExpandedSpells[5].Add("Dominate Person");
             ExpandedSpells[5].Add("Telekinesis");
 
-            result.ClassFeatures.Add("Awakened Mind", "30ft, commmunicate telepathically without common language");
+            character.ClassFeatures.Add("Awakened Mind", "30ft, commmunicate telepathically without common language");
             if (lvl >= 6)
             {
-                result.ClassFeatures.Add("Entropic Ward", "SR, reaction, impose disadv on atk - if miss, gain adv on next atk");
+                character.ClassFeatures.Add("Entropic Ward", "SR, reaction, impose disadv on atk - if miss, gain adv on next atk");
             }
             if (lvl >= 10)
             {
-                result.ClassFeatures.Add("Thought Shield", "Resistance to Psychic, thoughts can't be telepathically read unless you allow it");
+                character.ClassFeatures.Add("Thought Shield", "Resistance to Psychic, thoughts can't be telepathically read unless you allow it");
             }
             if (lvl >= 14)
             {
-                result.ClassFeatures.Add("Create Thrall", "action, touch incapacitated humanoid, charmed until Remove Curse is cast, can communicate telepathically");
+                character.ClassFeatures.Add("Create Thrall", "action, touch incapacitated humanoid, charmed until Remove Curse is cast, can communicate telepathically");
             }
         }
-        public static void TheUndying(Character character, CharacterClass result)
+        public static void TheUndying(Character character)
         {
             int lvl = character.Lvl;
             ExpandedSpells[1].Add("False Life");
@@ -419,19 +473,19 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             ExpandedSpells[5].Add("Contagion");
             ExpandedSpells[5].Add("Legend Lore");
 
-            result.ClassFeatures.Add("Among the Dead", "adv on saves vs disease, undead must make Wis save to atk, on fail must choose new target");
-            result.Cantrips.Add("Spare the Dying");
+            character.ClassFeatures.Add("Among the Dead", "adv on saves vs disease, undead must make Wis save to atk, on fail must choose new target");
+            character.Cantrips.Add("Spare the Dying");
             if (lvl >= 6)
             {
-                result.ClassFeatures.Add("Defy Death", "LR, when you use Spare the Dying or you succeed on a death save, regain 1D8 + Con HP");
+                character.ClassFeatures.Add("Defy Death", "LR, when you use Spare the Dying or you succeed on a death save, regain 1D8 + Con HP");
             }
             if (lvl >= 10)
             {
-                result.ClassFeatures.Add("Undying Nature", "for every 10yr you only age 1 yr, can't be aged magically, you don't need to eat, drink, sleep, or breathe");
+                character.ClassFeatures.Add("Undying Nature", "for every 10yr you only age 1 yr, can't be aged magically, you don't need to eat, drink, sleep, or breathe");
             }
             if (lvl >= 14)
             {
-                result.ClassFeatures.Add("Indestructible Life", "SR, bonus, regain HP = 1D8 + lvl, can reattach severed limbs");
+                character.ClassFeatures.Add("Indestructible Life", "SR, bonus, regain HP = 1D8 + lvl, can reattach severed limbs");
             }
         }
         public static Dictionary<string, string> Invocations(string pact, int lvl)
@@ -514,13 +568,12 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
 
             return dict;
         }
-        public static void Spells(Character character, CharacterClass result)
+        public static void Spells(Character character)
         {
             int lvl = character.Lvl;
             string pickMsg = "Pick a cantrip.";
-            string str2 = "You already have that cantrip.";
             int spellLvl = 1;
-            AllSpells spells = new AllSpells("Warlock");
+            AllSpells spells = new AllSpells(character);
             foreach (var newLvl in ExpandedSpells.Keys)
             {
                 spells.Warlock[newLvl].AddRange(ExpandedSpells[newLvl]);
@@ -530,14 +583,13 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 spells.Warlock[9].Add("Wish");
             }
 
-            for (int i = 0; i < result.CantripsKnown; i++)
+            for (int i = 0; i < character.CantripsKnown; i++)
             {
-                string spell = CLIHelper.GetNew(WarlockSpells.Cantrips, result.Cantrips, pickMsg, str2);
-                result.Cantrips.Add(spell);
+                string spell = CLIHelper.GetNew(WarlockSpells.Cantrips, character.Cantrips, pickMsg);
+                character.Cantrips.Add(spell);
             }
-            str2 = "You already have that spell";
             pickMsg = "Pick a 1st level spell.";
-            for (int i = 1; i <= result.SpellsKnown; i++)
+            for (int i = 1; i <= character.SpellsKnown; i++)
             {
                 if (4 <= i && i <= 10 && i % 2 == 0)
                 {
@@ -555,8 +607,8 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 {
                     pickMsg = $"Pick a {spellLvl}th level spell.";
                 }
-                string spell = CLIHelper.GetNew(spells.Warlock[spellLvl], result.Spells[spellLvl], pickMsg, str2);
-                result.Spells[spellLvl].Add(spell);
+                string spell = CLIHelper.GetNew(spells.Warlock[spellLvl], character.Spells[spellLvl], pickMsg);
+                character.Spells[spellLvl].Add(spell);
                 spells.Warlock[spellLvl].Remove(spell);
             }
         }

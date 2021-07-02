@@ -115,17 +115,27 @@ namespace DnD_Character_Creator.CharacterPieces
                     break;
             }
             FeatNames.Sort();
+            foreach (var item in character.Feats.Keys)
+            {
+                if (FeatNames.Contains(item))
+                {
+                    FeatNames.Remove(item);
+                }
+            }
             string feat = CLIHelper.PrintChoices(Options.FeatDefinitions, FeatNames, "Pick a feat");
             character.Feats.Add(feat, Options.FeatDefinitions[feat]);
-            FeatNames.Remove(feat);
             AddFeatBenefits(character, feat);
         }
         public static void AddFeatBenefits(Character character, string feat)
         {
             string stat = "";
+            string lang = "";
+            string expertise = "";
+            var prof = new List<string>();
+
             if (OneStatFeats.Contains(feat))
             {
-                stat = Options.FeatDefinitions[feat].Substring(8, 3);
+                stat = Options.FeatDefinitions[feat].Substring(9, 3);
                 Stats.IncreaseStat(character, stat, 1);
             }
             var choices = new List<string>();
@@ -185,6 +195,7 @@ namespace DnD_Character_Creator.CharacterPieces
             {
                 string cantrip = "";
                 string spell = "";
+
                 switch (feat)
                 {
                     case "Arcane Initiate":
@@ -204,6 +215,7 @@ namespace DnD_Character_Creator.CharacterPieces
                         character.Spells[3].Add("Dispel Magic(1/LR, Cha to cast)");
                         break;
                     case "Fey Touched":
+                        choices.Clear();
                         choices.AddRange(AllSpells.FirstLvlDivination);
                         choices.AddRange(AllSpells.FirstLvlEnchantment);
                         choices.Sort();
@@ -240,6 +252,7 @@ namespace DnD_Character_Creator.CharacterPieces
                         character.Spells[1].Add(spell + $"ritual, ({stat} to cast)");
                         break;
                     case "Shadow Touched":
+                        choices.Clear();
                         choices.AddRange(AllSpells.FirstLvlIllusion);
                         choices.AddRange(AllSpells.FirstLvlNecromancy);
                         choices.Sort();
@@ -259,10 +272,14 @@ namespace DnD_Character_Creator.CharacterPieces
                         break;
                 }
             }
+            //all other feats
             switch (feat)
             {
                 case "Alert":
                     character.Init += 5;
+                    break;
+                case "Athlete":
+                    character.Speedstring += $", Climb {character.Speed}ft";
                     break;
                 case "Dual Wielder":
                     character.AC += 1;
@@ -305,13 +322,11 @@ namespace DnD_Character_Creator.CharacterPieces
                 case "Lingusit":
                     Console.WriteLine("You gain 3 languages of your choice. Pick the first language now");
                     string pickMsg = "Pick another language";
-                    string errorMsg = "You already have that language";
-                    string lang = CLIHelper.PrintChoices(Options.Languages);
-                    character.Languages.Add(lang);
-                    lang = CLIHelper.GetNew(Options.Languages, character.Languages, pickMsg, errorMsg);
-                    character.Languages.Add(lang);
-                    lang = CLIHelper.GetNew(Options.Languages, character.Languages, pickMsg, errorMsg);
-                    character.Languages.Add(lang);
+                    for (int i = 0; i < 3; i++)
+                    {
+                        lang = CLIHelper.GetNew(Options.Languages, character.Languages, pickMsg);
+                        character.Languages.Add(lang);
+                    }
                     break;
                 case "Martial Adept":
                     List<string> maneuvers = CLIHelper.GetDictionaryOptions(Options.Maneuvers, 2, "Pick a new maneuver");
@@ -330,11 +345,15 @@ namespace DnD_Character_Creator.CharacterPieces
                     {
                         metamagicList.Add(item);
                     }
+                    character.ClassFeatures.Add("Metamagic", "Gain 2 Metamgagic options, can only use 1 option at a time");
                     Console.WriteLine("You get 2 metamagic options of your choice");
-                    string metamagic = CLIHelper.PrintChoices(Options.Metamagic, metamagicList, "Pick an option");
-                    character.ClassFeatures.Add("Metamagic Options", "\n        ------------------------------------");
-                    character.ClassFeatures.Add(metamagic, Options.Metamagic[metamagic]);
-                    metamagicList.Remove(metamagic);
+                    for (int i = 0; i < 2; i++)
+                    {
+                        string metamagic = CLIHelper.PrintChoices(Options.Metamagic, metamagicList, "Pick an option");
+                        character.Metamagic.Add(metamagic);
+                        character.ClassFeatures["Metamagic"] += $"\n{metamagic}: {Options.Metamagic[metamagic]}";
+                        metamagicList.Remove(metamagic);
+                    }
                     break;
                 case "Mobile":
                     character.Speed += 10;
@@ -343,6 +362,14 @@ namespace DnD_Character_Creator.CharacterPieces
                     character.Proficiencies.Add("Heavy Armor");
                     break;
                 case "Prodigy":
+                    string skill = CLIHelper.GetNew(Options.Skills, character.SkillProficiencies, "Pick a skill to gain proficiency");
+                    character.SkillProficiencies.Add(skill);
+                    prof.AddRange(character.SkillProficiencies);
+                    expertise = CLIHelper.PrintChoices(prof);
+                    BEHelper.AddSkillExpertise(expertise, character);
+                    BEHelper.GetTool(character);
+                    lang = CLIHelper.GetNew(Options.Languages, character.Languages, "Pick a language");
+                    character.Languages.Add(lang);
                     break;
                 case "Resilient":
                     string resStat = Stats.IncreaseStat(character, 1, true);
@@ -351,12 +378,14 @@ namespace DnD_Character_Creator.CharacterPieces
                 case "Skill Expert":
                     Stats.IncreaseStat(character, 1);
                     Console.WriteLine("Pick a skill to gain Expertise in");
-                    var prof = new List<string>();
                     prof.AddRange(character.SkillProficiencies);
-                    string expertise = CLIHelper.PrintChoices(prof);
-                    character.Skills[expertise] += character.ProficiencyBonus;
+                    expertise = CLIHelper.PrintChoices(prof);
+                    BEHelper.AddSkillExpertise(expertise, character);
                     int index = CLIHelper.PrintChoices("Pick a skill to gain proficiency", Options.Skills);
                     character.SkillProficiencies.Add(Options.Skills[index]);
+                    break;
+                case "Skilled":
+                    GetSkillsOrTools(character);
                     break;
                 case "Squat Nimbleness":
                     var skills = new List<string> { "Acrobatics", "Athletics" };
@@ -366,6 +395,9 @@ namespace DnD_Character_Creator.CharacterPieces
                 case "Tavern Brawler":
                     character.Proficiencies.Add("Improvised Weapons");
                     character.Proficiencies.Add("Unarmed Strike");
+                    break;
+                case "Tough":
+                    character.HP += character.Lvl * 2;
                     break;
             }
         }
@@ -470,7 +502,7 @@ namespace DnD_Character_Creator.CharacterPieces
                 int num = CLIHelper.GetNumberInRange(1, 2);
                 if (num == 1)
                 {
-                    string skill = CLIHelper.GetNew(Options.Skills, character.SkillProficiencies, "Pick a skill", "You already have that skill");
+                    string skill = CLIHelper.GetNew(Options.Skills, character.SkillProficiencies, "Pick a skill");
                     character.SkillProficiencies.Add(skill);
                 }
                 else
@@ -481,29 +513,59 @@ namespace DnD_Character_Creator.CharacterPieces
                     allTools.AddRange(Options.MusicalInstruments);
                     allTools.Remove("Artisan's Tools");
                     allTools.Remove("Musical Instrument");
-                    string tool = CLIHelper.GetNew(allTools, character.ToolProficiencies, "Pick a tool", "You already have proficiency with that tool");
+                    string tool = CLIHelper.GetNew(allTools, character.ToolProficiencies, "Pick a tool");
                     character.ToolProficiencies.Add(tool);
                 }
             }
-            if (character.Feats.ContainsKey("Prodigy"))
+        }
+        public static void WeaponMaster(Character character)
+        {
+            var allWep = new List<string>();
+            allWep.AddRange(Options.SimpleMeleeWeapons);
+            allWep.AddRange(Options.MartialMeleeWeapons);
+            allWep.AddRange(Options.SimpleRangedWeapons);
+            allWep.AddRange(Options.MartialRangedWeapons);
+            var unknownWep = new List<string>();
+            foreach (var wep in allWep)
             {
-                Console.WriteLine("Pick a skill to gain Expertise in");
-                var prof = new List<string>();
-                prof.AddRange(character.SkillProficiencies);
-                string expertise = CLIHelper.PrintChoices(prof);
-                character.Skills[expertise] += character.ProficiencyBonus;
-                string skill = CLIHelper.GetNew(Options.Skills, character.SkillProficiencies, "Pick a skill", "You already have that skill");
-                character.SkillProficiencies.Add(skill);
-                var allTools = new List<string>();
-                allTools.AddRange(Options.Tools);
-                allTools.AddRange(Options.ArtisanTools);
-                allTools.AddRange(Options.MusicalInstruments);
-                allTools.Remove("Artisan's Tools");
-                allTools.Remove("Musical Instrument");
-                string tool = CLIHelper.GetNew(allTools, character.ToolProficiencies, "Pick a tool", "You already have proficiency with that tool");
-                character.ToolProficiencies.Add(tool);
-                string lang = CLIHelper.GetNew(Options.Languages, character.Languages, "Pick a language", "You already know that language");
-                character.Languages.Add(lang);
+                int index = wep.IndexOf("(");
+                string wepProf = wep.Substring(0, index) + "s";
+                if (!character.Proficiencies.Contains(wepProf))
+                {
+                    unknownWep.Add(wepProf);
+                }
+            }
+            if (character.Proficiencies.Contains("Simple Weapons"))
+            {
+                var simpleWep = new List<string>();
+                simpleWep.AddRange(Options.SimpleMeleeWeapons);
+                simpleWep.AddRange(Options.SimpleRangedWeapons);
+                foreach (var wep in simpleWep)
+                {
+                    int index = wep.IndexOf("(");
+                    string wepProf = wep.Substring(0, index) + "s";
+                    unknownWep.Remove(wepProf);
+                }
+            }
+            if (character.Proficiencies.Contains("Martial Weapons"))
+            {
+                var martialWep = new List<string>();
+                martialWep.AddRange(Options.MartialMeleeWeapons);
+                martialWep.AddRange(Options.MartialRangedWeapons);
+                foreach (var wep in martialWep)
+                {
+                    int index = wep.IndexOf("(");
+                    string wepProf = wep.Substring(0, index) + "s";
+                    unknownWep.Remove(wepProf);
+                }
+            }
+            unknownWep.Sort();
+            Console.WriteLine("Pick 4 weapons to gain proficiency with");
+            for (int i = 0; i < 4; i++)
+            {
+                string newWep = CLIHelper.PrintChoices(unknownWep);
+                character.Proficiencies.Add(newWep);
+                unknownWep.Remove(newWep);
             }
         }
     }

@@ -131,7 +131,7 @@ namespace DnD_Character_Creator.Helper_Classes
             "Halfling(Stout)",
             //"Hobgoblin of the Feywild",
             "Human",
-            "Human(Variant)",
+            "Variant Human",
             "Myconid(Compost)",
             "Myconid(Growth)",
             "Myconid(Sporemaster)",
@@ -314,7 +314,7 @@ namespace DnD_Character_Creator.Helper_Classes
             { "Elven Accuracy", "Increase Dex, Int, Wis, or Cha by 1 / when you have adv on an atk using Dex, Int, Wis, or Cha - reroll 1 die once" },
             { "Fade Away", "Increase Dex or Int by 1 / SR, reaction, when you take dmg, become invisible" },
             { "Fey Teleportation", "Increase Int or Cha by 1 / learn Sylvan / SR, cast Misty Step without using a spell slot" },
-            { "Fey Touched", "Increase Int, Wis, or Cha by 1 / gain a 1st lvl divination or enchantment spell / LR, cast Misty spell or 1st lvl spell" },
+            { "Fey Touched", "Increase Int, Wis, or Cha by 1 / gain a 1st lvl divination or enchantment spell / LR, cast Misty Step or 1st lvl spell" },
             { "Fighting Initiate", "gain a Fighting Style, you can replace it when you gain an Ability Score Improvement" },
             { "Finesse Weapon Master", "-5 atk = +10 dmg, Acrobatics check to gain adv" },
             { "Flames of Phlegethos", "Increase Int or Cha by 1 / reroll 1s on Fire dmg spells then for 1 turn - bright light 30ft/dim light 30ft, adj 1D4 Fire dmg" },
@@ -388,15 +388,15 @@ namespace DnD_Character_Creator.Helper_Classes
         public static List<string> MediumArmor { get; set; } = new List<string>
         {
             "Hide(+2 AC)(10gp, 12lb.)",
-            "Chain shirt(+3 AC)(50gp, 20lb.)",
-            "Scale mail(+4 AC, Stealth disadv)(50gp, 45lb.)",
+            "Chain Shirt(+3 AC)(50gp, 20lb.)",
+            "Scalemail(+4 AC, Stealth disadv)(50gp, 45lb.)",
             "Breastplate(+4 AC)(400gp, 20lb.)",
-            "Half plate(+5 AC, Stealth disadv)(750gp, 40lb.)"
+            "Half-plate(+5 AC, Stealth disadv)(750gp, 40lb.)"
         };
         public static List<string> HeavyArmor { get; set; } = new List<string>
         {
-            "Ring mail(+4 AC, Stealth disadv)(30gp, 40lb.)",
-            "Chain mail(+6 AC, Stealth disadv)(75gp, 55lb.)",
+            "Ringmail(+4 AC, Stealth disadv)(30gp, 40lb.)",
+            "Chainmail(+6 AC, Stealth disadv)(75gp, 55lb.)",
             "Splint(+7 AC, Stealth disadv)(200gp, 60lb.)",
             "Fullplate(+8 AC, Stealth disadv)(1,500gp, 65lb.)"
         };
@@ -407,7 +407,7 @@ namespace DnD_Character_Creator.Helper_Classes
             "Greatclub(1D8 Bludgeoning, Two-Handed)(2sp, 10lb.)",
             "Handaxe(1D6 Slashing, Light, Thrown 20/60)(5gp, 2lb.)",
             "Javelin(1D6 Piercing, Thrown 30/120)(5sp, 2lb.)",
-            "Light hammer(1D4 Bludgeoning, Light, Thrown 20/60)(2gp, 2lb.)",
+            "Light Hammer(1D4 Bludgeoning, Light, Thrown 20/60)(2gp, 2lb.)",
             "Mace(1D6 Bludgeoning)(5gp, 4lb.)",
             "Quarterstaff(1D6 Bludgeoning, Versatile-D8)(2sp, 4lb.)",
             "Sickle(1D4 Slashing, Light)(1gp, 2lb.)",
@@ -415,14 +415,14 @@ namespace DnD_Character_Creator.Helper_Classes
         };
         public static List<string> SimpleRangedWeapons { get; set; } = new List<string>
         {
-            "Light crossbow(1D8 Piercing, 80/320, Ammo, Loading, Two-Handed)(25gp, 5lb.)",
+            "Light Crossbow(1D8 Piercing, 80/320, Ammo, Loading, Two-Handed)(25gp, 5lb.)",
             "Dart(1D4 Piercing, Finesse, Thrown 20/60)(5cp, 1/4lb.)",
             "Shortbow(1D6 Piercing, 80/320, Ammo, Two-Handed)(25gp, 2lb.)",
             "Sling(1D4 Bludgeoning, 30/120, Ammo)(1sp, 0lb.)"
         };
         public static List<string> MartialMeleeWeapons { get; set; } = new List<string>
         {
-            "Battleaxe(1D8 Slashing Versatile-D10)(10gp, 4lb.)",
+            "Battleaxe(1D8 Slashing, Versatile-D10)(10gp, 4lb.)",
             "Flail(1D8 Bludgeoning)(10gp, 2lb.)",
             "Glaive(1D10 Slashing, Heavy, Reach, Two-Handed)(20gp, 6lb.)",
             "Greataxe(1D12 Slashing, Heavy, Two-Handed)(30gp, 7lb.)",
@@ -444,10 +444,25 @@ namespace DnD_Character_Creator.Helper_Classes
         public static List<string> MartialRangedWeapons { get; set; } = new List<string>
         {
             "Blowgun(1 Piercing, 25/100, Ammo, Loading)(10gp, 1lb.)",
-            "Hand crossbow(1D6 Piercing, 30/120, Ammo, Light, Loading)(75gp, 3lb.)",
-            "Heavy crossbow(1D10 Piercing, 100/400, Ammo, Heavy, Loading, Two-Handed)(50gp, 18lb.)",
+            "Hand Crossbow(1D6 Piercing, 30/120, Ammo, Light, Loading)(75gp, 3lb.)",
+            "Heavy Crossbow(1D10 Piercing, 100/400, Ammo, Heavy, Loading, Two-Handed)(50gp, 18lb.)",
             "Longbow(1D8 Piercing, 150/600, Ammo, Heavy, Two-Handed)(50gp, 2lb.)",
             "Net(Thrown 5/15, Special)(1gp, 3lb.)"
+        };
+        public static List<string> AdvancedMeleeWeapons { get; set; } = new List<string>
+        {
+            "Cavalry Hammer(1D8 Bludgeoning, Versatile-D10, Momentum-D12, Armor Piercing)(500gp, 3lb.)",
+            "Claymore(2D6 Slashing, 30/120, Brutal, Heavy, Two-Handed)(500gp, 7lb.)",
+            "Polearm(1D12 Piercing, 150/600, Guard, Heavy, Reach, Two-Handed)(500gp, 12lb.)",
+            "Sabre(1D8 Slashing, 100/400, Swift, Finesse)(500gp, 2lb.)"
+        };
+        public static List<string> AdvancedRangedWeapons { get; set; } = new List<string>
+        {
+            "Blackpowder Pistol(2D4 Piercing, 25/100, Ammo, Blackpowder, Light, Loading)(200gp, 4lb.)",
+            "Blackpowder Rifle(2D6 Piercing, 80/300, Ammo, Blackpowder, Loading, Two-Handed)(500gp, 10lb.)",
+            "Blunderbuss(2D6 Piercing, 20/30, Ammo, Blackpowder, Cumbersome, Loading, Scatter-line 10, Two-Handed)(750gp, 10lb.)",
+            "Flame Bellows(2D6 Fire, 15/-, Ammo, Cumbersome, Loading, Scatter-cone 15, Two-Handed)(750gp, 11lb.)",
+            "Repeater Crossbow(1D8 Piercing, 80/300, Ammo, Loading, Repeater, Two-Handed)(750gp, 7lb.)"
         };
         public static List<string> Firearms { get; set; } = new List<string>
         {
@@ -460,15 +475,14 @@ namespace DnD_Character_Creator.Helper_Classes
         };
         public static List<string> Packs { get; set; } = new List<string>
         {
-            "Burglar's Pack(backpack, 1000 ball bearings, 10ft of string, bell, 5 candles, crowbar, hammer, 10 pitons, hooded lantern," +
-            "\n        2 flasks of oil, 5 days of rations, tinderbox, waterskin, 50ft of rope)",
+            "Burglar's Pack(backpack, 1000 ball bearings, 10ft of string, bell, 5 candles, crowbar, hammer, 10 pitons, hooded lantern, 2 flasks of oil," +
+            "\n     5 days of rations, tinderbox, waterskin, 50ft of rope)",
             "Diplomat's Pack(chest, 2 cases for maps/scrolls, fine clothes, bottle of ink, ink pen, lamp, 2 flasks of oil, 5 sheets of paper," +
-            "\n        vial of perfume, sealing wax, soap)",
+            "\n     vial of perfume, sealing wax, soap)",
             "Dungeoneer's Pack(backpack, crowbar, hammer, 10 pitons, 10 torches, tinderbox, 10 days of rations, waterskin, 50ft of rope)",
             "Entertainer's Pack(backpack, bedroll, 2 costumes, 5 candles, 5 days of rations, waterskin, Disguise Kit",
             "Explorer's Pack(backpack, bedroll, mess kit, tinderbox, 10 torches, 10 days of rations, waterskin, 50ft of rope)",
-            "Priest's Pack(backpack, blanket, 10 candles, tinderbox, alms box, 2 blocks of incense, censer, vestments," +
-            "\n        2 days of rations, waterskin)",
+            "Priest's Pack(backpack, blanket, 10 candles, tinderbox, alms box, 2 blocks of incense, censer, vestments, 2 days of rations, waterskin)",
             "Scholar's Pack(backpack, book of lore, bottle of ink, ink pen, 10 sheets of parchment, little bag of sand, small knife)"
         };
         public static List<string> HolySymbols { get; set; } = new List<string>

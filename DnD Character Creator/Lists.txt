@@ -1,0 +1,38 @@
+﻿Classes
+
+Artificer - Alchemist, Armorer, Artillerist, Battle Smith
+Barbarian - Ancestral Guardian, Battlerager, Beast, Berserker, Storm Herald, Totem Warrior, Wild Magic, Zealot
+Bard - Creation, Eloquence, Glamour, Lore, Swords, Valor, Whispers
+Bloodhunter - Ghostslayer, Mutant, Profane Soul
+Cleric - Ambition, Arcana, Death, Forge, Grave, Knowledge, Life, Light, Nature, Order, Peace, Solidarity, Strength
+		Tempest, Trickery, Twilight, War, Water, Zeal
+Druid - Dreams, Land, Moon, Shepherd, Spores, Stars, Wildfire
+Fighter - Arcane Archer, Battle Master, Brawler, Cavalier, Champion, Echo Knight, Eldritch Knight, Gunslinger
+		Psi Warrior, Purple Dragon Knight, Rune Knight, Samurai
+Monk - Astral Self, Drunken Master, Four Elements, Kensai, Long Death, Mercy, Open Hand, Shadow, Sun Soul
+Paladin - Ancients, Conquest, Crown, Devotion, Glory, Redemption, Vengeance, Watchers, Oathbreaker
+Psion - Clairsentience(Seer), Metacreativity(Shaper), Psychokinesis(Savant), Psychometabolism(Egoist)
+		Psychoportation(Nomad), Telepathy(Telepath)
+Ranger - Beast Master, Fey Wanderer, Gloom Stalker, Horizon Walker, Hunter, Monster Slayer, Swarmkeeper
+Rogue - Arcane Trickster, Assassin, Inquisitive, Mastermind, Ninja, Phantom, Scout, Soulknife, Swashbuckler, Thief
+Sorcerer - Aberrant Mind, Clockwork Soul, Divine Soul, Draconic Bloodline, Phoenix, Pyromancer, Sea Sorcery
+		Shadow Magic, Stone Sorcery, Storm Sorcery, Wild Magic
+Swordmage - Assault Style, Ensnaring Style, Shielding
+Warlock - Archfey, Celestial, The Fathomless, Fiend, Genie, Hexblade, The Great Old One, The Undying
+Wizard - Abjuration, Chronurgy Magic, Conjuration, Divination, Enchantment, Evocation, Graviturgy Magic, Illusion
+		Necromancy, Order of Scribes, Transmutation, War Magic
+
+Backgrounds
+
+Acolyte, Charltan, Criminal, Entertainer, Folk Hero, Guild Artisan, Hermit, Noble, Outlander, Sage, Sailor, Soldier, Urchin
+
+GH Backgrounds
+
+Academic - Antiquarian, Archivist, Physician
+Aristocrat - Courtier, Envoy, Noble
+Clergy - Inquisitor, Preacher, Priest
+Common Folk - Villager, Entertainer, Merchant
+Criminal - Charlatan, Cutthroat, Burglar
+Militarist - Guard, Mercenary, Soldier
+Outlander - Beast Hunter, Pioneer, Explorer
+Seafarer - Sailor, Dockworker, Seagatherer

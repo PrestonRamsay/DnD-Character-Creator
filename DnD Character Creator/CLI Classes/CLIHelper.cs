@@ -1,8 +1,5 @@
-﻿using DnD_Character_Creator.Classes;
-using DnD_Character_Creator.Races;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DnD_Character_Creator
 {
@@ -27,7 +24,7 @@ namespace DnD_Character_Creator
             }
             while(gettingStringInList)
             {
-                userInput = Console.ReadLine().ToLower();
+                userInput = Console.ReadLine().ToLower().Trim();
                 if (listForHelper.Contains(userInput))
                 {
                     gettingStringInList = false;
@@ -38,39 +35,24 @@ namespace DnD_Character_Creator
                 }
             }
 
-            return CapitalizeFirstLetter(userInput);
+            return userInput;
         }
-        public static string GetNew(List<string> mainList, IEnumerable<string> knownList, string pickMsg, string alreadyHaveMsg)
+        public static string GetNew(List<string> mainList, IEnumerable<string> knownList, string pickMsg)
         {
-            int userInput = 0;
-            string newItem = String.Empty;
-            bool gettingStringInList = true;
-            var list1 = new List<string>();
-            var list2 = new List<string>();
-            list1.AddRange(mainList);
-            list2.AddRange(knownList);
+            var newMainList = new List<string>();
+            var newKnownList = new List<string>();
+            newMainList.AddRange(mainList);
+            newKnownList.AddRange(knownList);
 
-            do
+            foreach (var item in mainList)
             {
-                userInput = PrintChoices(pickMsg, list1);
-                newItem = list1[userInput];
-                if (list1.Contains(newItem))
+                if (newKnownList.Contains(item))
                 {
-                    if (!list2.Contains(newItem))
-                    {
-                        gettingStringInList = false;
-                    }
-                    else
-                    {
-                        Console.WriteLine(alreadyHaveMsg);
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("That is not a valid option");
+                    newMainList.Remove(item);
                 }
             }
-            while (gettingStringInList);
+            int index = PrintChoices(pickMsg, newMainList);
+            string newItem = newMainList[index];
 
             return CapitalizeFirstLetter(newItem);
         }
@@ -87,29 +69,6 @@ namespace DnD_Character_Creator
                 Console.Clear();
                 Console.WriteLine(msg + "\n");
                 string option = PrintChoices(dictOptions);
-                returnList.Add(option);
-                dictOptions.Remove(option);
-            }
-
-            return returnList;
-        }
-        public static List<string> GetDictionaryOptions(Dictionary<string, string> dict, List<string> list, int optionsNum, string msg)
-        {
-            string availableOptions = String.Join("", list);
-            var dictOptions = new Dictionary<string, string>();
-            foreach (var item in dict.Keys)
-            {
-                if (availableOptions.Contains(item))
-                {
-                    dictOptions.Add(item, dict[item]);
-                }
-            }
-            var returnList = new List<string>();
-            for (int i = 0; i < optionsNum; i++)
-            {
-                Console.Clear();
-                Console.WriteLine(msg + "\n");
-                string option = CLIHelper.PrintChoices(dictOptions);
                 returnList.Add(option);
                 dictOptions.Remove(option);
             }
@@ -250,37 +209,128 @@ namespace DnD_Character_Creator
 
             return GetNumberInRange(1, list.Length) - 1;
         }
-        public static void GetSkills(Race race, List<string> classSkills, int numOfSkills)
+        public static void AddHeight(Character character)
         {
-            string pickMsg = $"Pick {numOfSkills} skills from the list (enter them one at a time):";
-            string errorMsg = "You are already trained in that skill, pick a different skill.";
-            for (int i = 0; i < numOfSkills; i++)
+            string height = Console.ReadLine().Trim();
+            bool gettingheight = true;
+
+            while (gettingheight)
             {
-                string skill = GetNew(classSkills, race.SkillProficiencies, pickMsg, errorMsg);
-                race.SkillProficiencies.Add(skill);
-            }
-        }
-        public static void AddSpells(CharacterClass result, Dictionary<int, string> dict)
-        {
-            int spellLvl = 2;
-            for (int i = 5; i <= result.Lvl; i += 4)
-            {
-                result.Spells[spellLvl].Add(dict[spellLvl]);
-                spellLvl++;
-            }
-        }
-        public static void AddSpells(CharacterClass result, Dictionary<int, List<string>> dict)
-        {
-            int spellLvl = 1;
-            for (int i = 3; i <= result.Lvl; i += 2)
-            {
-                result.Spells[spellLvl].AddRange(dict[spellLvl]);
-                spellLvl++;
-                if (i == 5 || i == 9)
+                if (!height.Contains("\"") && !height.Contains("'"))
                 {
-                    i += 2;
+                    Console.WriteLine("Format error, try again.");
+                    height = Console.ReadLine().Trim();
+                }
+                else
+                {
+                    gettingheight = false;
                 }
             }
+
+            character.Height = ConvertHeightToInches(height);
+        }
+        public static int ConvertHeightToInches(string heightString)
+        {
+            string[] height = heightString.Split(new char[] { '\'' });
+            string secondNumber = "";
+            int quoteIndex = height[1].IndexOf("\"");
+            secondNumber = height[1].Substring(0, quoteIndex);
+
+            int feet = int.Parse(height[0]) * 12;
+            int inches = int.Parse(secondNumber);
+            int heightInInches = feet + inches;
+
+            return heightInInches;
+        }
+        public static void Alignment(Character character)
+        {
+            Console.Write("\nPick an alignment from: ");
+            foreach (string alignment in character.AlignmentOptions)
+            {
+                Console.Write(alignment + "  ");
+            }
+            Console.Write("\n");
+            character.Alignment = GetStringInList(character.AlignmentOptions).ToUpper();
+            if (character.ChosenRace == "Cambion")
+            {
+                if (character.Alignment == "L-E")
+                {
+                    character.Languages.Add("Infernal");
+                }
+                else if (character.Alignment == "C-E")
+                {
+                    character.Languages.Add("Abyssal");
+                }
+            }
+        }
+        public static void Age(Character character)
+        {
+            if (character.MaxAgeEnd > 100)
+            {
+                Console.WriteLine($"Enter your age. This race usually lives for " +
+                    $"{character.MaxAgeStart}-{character.MaxAgeEnd} years and is considered an adult at the age of " +
+                    $"{character.AdultAge}.");
+            }
+            else
+            {
+                Console.WriteLine($"Enter your age. This race usually lives for {character.MaxAgeStart} years" +
+                    $" and is considered an adult at the age of {character.AdultAge}.");
+            }
+            character.Age = CLIHelper.GetNumberInRange(character.AdultAge, character.MaxAgeStart + 50);
+        }
+        public static string AddSpecialty(Character character)
+        {
+            string backgroundString = character.ChosenBackground;
+            string returnString = String.Empty;
+
+            if (backgroundString == "Charltan")
+            {
+                returnString = $"Favorite Scam: {character.FavoriteScam}";
+            }
+            else if (backgroundString == "Criminal")
+            {
+                returnString = $"Specialty: {character.Specialty}";
+            }
+            else if (backgroundString == "Entertainer")
+            {
+                string routines = String.Join(", ", character.Routines);
+                returnString = $"Routines: {routines}";
+            }
+            else if (backgroundString == "Folk Hero")
+            {
+                returnString = $"Defining Event: {character.DefiningEvent}";
+            }
+            else if (backgroundString == "Guild Artisan")
+            {
+                returnString = $"Guild Business: {character.GuildBusiness}";
+            }
+            else if (backgroundString == "Hermit")
+            {
+                returnString = $"Life of Seclusion: {character.LifeOfSeclusion}";
+            }
+            else if (backgroundString == "Outlander")
+            {
+                returnString = $"Origin: {character.Origin}";
+            }
+            else if (backgroundString == "Sage")
+            {
+                returnString = $"Specialty: {character.Specialty}";
+            }
+            else if (backgroundString == "Soldier")
+            {
+                returnString = $"Specialty: {character.Specialty}";
+            }
+            if (character.ChosenClass == "Paladin")
+            {
+                string tenets = String.Join(", ", character.Tenets);
+                returnString += $"\nPaladin Tenets: {tenets}\n";
+                if (returnString.Length > 130)
+                {
+                    returnString = returnString.Substring(0, 130) + "\n" + returnString.Substring(130);
+                }
+            }
+
+            return returnString;
         }
     }
 }

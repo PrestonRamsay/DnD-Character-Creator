@@ -1,13 +1,11 @@
 ﻿using DnD_Character_Creator.CharacterPieces.Spells;
-using DnD_Character_Creator.Classes;
 using DnD_Character_Creator.Helper_Classes;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
+namespace DnD_Character_Creator.CharacterPieces.Classes
 {
-    public static class PsionSpecifics
+    public static class Psion
     {
         public static Dictionary<int, List<string>> ExpandedSpells { get; set; } = new Dictionary<int, List<string>>()
         {
@@ -19,18 +17,99 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             { 5, new List<string>() }
         };
         public static string CastingStat { get; set; }
-        public static CharacterClass Features(Character character, CharacterClass result)
+        public static void Base(Character character)
         {
-            int lvl = result.Lvl;
+            string msg = "Pick a type of Discipline that will determine your skill list, saves and give you features at levels 1, 6, and 14.";
+            var archetype = new List<string> { "Clairsentience(Seer)", "Metacreativity(Shaper)", "Psychokinesis(Savant)",
+                "Psychometabolism(Egoist)", "Psychoportation(Nomad)", "Telepathy(Telepath)" };
+            int input = CLIHelper.PrintChoices(msg, archetype);
+            character.Archetype = archetype[input];
+            var classSkills = new List<string>();
+
+            switch (character.Archetype)
+            {
+                case "Clairsentience(Seer)":
+                    classSkills = new List<string> { "Arcana", "History", "Insight", "Investigation", "Nature", "Perception", "Religion" };
+                    character.Saves.Add("Int");
+                    character.Saves.Add("Wis");
+                    break;
+                case "Metacreativity(Shaper)":
+                    classSkills = new List<string> { "Animal Handling", "Arcana", "Insight", "Nature", "Persuasion", "Religion", "Stealth" };
+                    character.Saves.Add("Wis");
+                    character.Saves.Add("Cha");
+                    break;
+                case "Psychokinesis(Savant)":
+                    classSkills = new List<string> { "Arcana", "Athletics", "Deception", "Intimidation", "Perception", "Survival" };
+                    character.Saves.Add("Con");
+                    character.Saves.Add("Cha");
+                    break;
+                case "Psychometabolism(Egoist)":
+                    classSkills = new List<string> { "Acrobatics", "Athletics", "Intimidation", "Perception", "Performance", "Sleight of Hand", "Stealth" };
+                    character.Saves.Add("Str");
+                    character.Saves.Add("Con");
+                    break;
+                case "Psychoportation(Nomad)":
+                    classSkills = new List<string> { "Acrobatics", "Athletics", "History", "Investigation", "Nature", "Perception", "Survival" };
+                    character.Saves.Add("Dex");
+                    character.Saves.Add("Int");
+                    break;
+                case "Telepathy(Telepath)":
+                    classSkills = new List<string> { "Arcana", "Deception", "Insight", "Intimidation", "Investigation", "Persuasion", "Stealth" };
+                    character.Saves.Add("Wis");
+                    character.Saves.Add("Cha");
+                    break;
+            }
+            character.GP += 75;
+            character.HitDie = 6;
+            character.Proficiencies.Add("Daggers");
+            character.Proficiencies.Add("Darts");
+            character.Proficiencies.Add("Slings");
+            character.Proficiencies.Add("Quarterstaffs");
+            character.Proficiencies.Add("Light crossbows");
+
+            BEHelper.GetSkills(character, classSkills, 2);
+        }
+        public static void Equipment(Character character)
+        {
+            Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
+            CLIHelper.Print2Choices("Light crossbow and 20 bolts", "Any simple weapon");
+            int input1 = CLIHelper.GetNumberInRange(1, 2);
+            int input2 = CLIHelper.PrintChoices("Pick a psi crystal personality for your spell focus", Options.PsiCrystals);
+            character.Equipment.Add(Options.PsiCrystals[input2]);
+            CLIHelper.Print2Choices("Scholar's Pack", "Explorer's Pack");
+            int input3 = CLIHelper.GetNumberInRange(1, 2);
+
+            if (input1 == 1)
+            {
+                character.Equipment.Add(Options.SimpleRangedWeapons[0]);
+                character.Equipment.Add("20 bolts");
+            }
+            else
+            {
+                BEHelper.AddSimpleWeapon(character);
+            }
+            if (input3 == 1)
+            {
+                character.Equipment.Add(Options.Packs[6]);
+            }
+            else
+            {
+                character.Equipment.Add(Options.Packs[4]);
+            }
+            character.Equipment.Add($"2 {Options.SimpleMeleeWeapons[1]}");
+        }
+        public static void Features(Character character)
+        {
+            int lvl = character.Lvl;
             var tuple = DeterminePowerPts(lvl);
             int pts = tuple.Item1;
             int maxLvl = tuple.Item2;
-            result.ClassFeatures.Add("Power Points", $"you have {pts} pts and you can cast up to {maxLvl} lvl spells(uses spell pts by lvl chart DMG pg 289)" +
+            character.ClassFeatures.Add("Power Points", $"you have {pts} pts and you can cast up to {maxLvl} lvl spells(uses spell pts by lvl chart DMG pg 289)" +
                 $"\n        there's a limit on how many times you can cast certain spell lvls, casting at higher lvls - pay pts = spell's new lvl, pt costs for spells below" +
                 $"\n        1st = 2pts(no limit)          4th = 6pts(5/LR)          7th = 10pts(2/LR)" +
                 $"\n        2nd = 3pts(no limit)          5th = 7pts(5/LR)          8th = 11pts(1/LR)" +
                 $"\n        3rd = 5pts(no limit)          6th = 9pts(2/LR)          9th = 13pts(1/LR)");
-            result.ClassFeatures.Add("Spellcasting Description", "Instead of arcane magic, you channel psionic energy to 'cast' your powers/spells" +
+            character.ClassFeatures.Add("Spellcasting Description", "Instead of arcane magic, you channel psionic energy to 'cast' your powers/spells" +
                 "\n        Some say psions are harnessing the energy of the Astral Plane, others think psions create psionic energy from their minds" +
                 "\n        When you use a summoning spell, the creature has the appearance of a silver Astral Construct(solidified ectoplasm)" +
                 "\n        Psychokinetic spells or atk spells are examples of you manipulating the form of your psionic energy to create various mental blasts" +
@@ -40,22 +119,22 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             switch (character.Archetype)
             {
                 case "Clairsentience(Seer)":
-                    Clairsentience(character, result);
+                    Clairsentience(character);
                     break;
                 case "Metacreativity(Shaper)":
-                    Metacreativity(character, result);
+                    Metacreativity(character);
                     break;
                 case "Psychokinesis(Savant)":
-                    Psychokinesis(character, result);
+                    Psychokinesis(character);
                     break;
                 case "Psychometabolism(Egoist)":
-                    Psychometabolism(character, result);
+                    Psychometabolism(character);
                     break;
                 case "Psychoportation(Nomad)":
-                    Psychoportation(character, result);
+                    Psychoportation(character);
                     break;
                 case "Telepathy(Telepath)":
-                    Telepathy(character, result);
+                    Telepathy(character);
                     break;
             }
             if (lvl >= 2)
@@ -81,7 +160,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 {
                     options++;
                 }
-                result.ClassFeatures.Add($"Psionic Combat Modes(D{psionicDie})", $"{CastingStat}/LR, reaction, 60ft, 1 creature, you have {options} modes");
+                character.ClassFeatures.Add($"Psionic Combat Modes(D{psionicDie})", $"{CastingStat}/LR, reaction, 60ft, 1 creature, you have {options} modes");
                 for (int i = 0; i < options; i++)
                 {
                     if (i == 0)
@@ -94,26 +173,26 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                     }
                     cmbMode = CLIHelper.PrintChoices(psionicDict, modesList, msg);
                     modesList.Remove(cmbMode);
-                    result.ClassFeatures["Psionic Combat Modes(D{psionicDie})"] += $"\n        {cmbMode}({psionicDict[cmbMode]})";
+                    character.ClassFeatures["Psionic Combat Modes(D{psionicDie})"] += $"\n        {cmbMode}({psionicDict[cmbMode]})";
                 }
             }
             if (lvl >= 4)
             {
-                result.ClassFeatures.Add("Psionic Versatility", "When you get an Ability Score Improvement, you can replace a Psionic Combat Mode option or Psion cantrip");
+                character.ClassFeatures.Add("Psionic Versatility", "When you get an Ability Score Improvement, you can replace a Psionic Combat Mode option or Psion cantrip");
             }
             if (lvl >= 5)
             {
-                result.ClassFeatures.Add("Astral Guidance", "expend 1 Psionic Combat Mode use, when you fail a check, reroll the check, must use new roll");
+                character.ClassFeatures.Add("Astral Guidance", "expend 1 Psionic Combat Mode use, when you fail a check, reroll the check, must use new roll");
             }
             if (lvl >= 20)
             {
-                result.ClassFeatures.Add("Superior Psionic Combat", "on Init, if you have no Psionic Combat Mode uses - regain 1 use");
+                character.ClassFeatures.Add("Superior Psionic Combat", "on Init, if you have no Psionic Combat Mode uses - regain 1 use");
             }
-            Spells(character, result);
+            Spells(character);
 
-            return result;
+            
         }
-        public static void Clairsentience(Character character, CharacterClass result)
+        public static void Clairsentience(Character character)
         {
             int lvl = character.Lvl;
             ExpandedSpells[0].Add("Guidance");
@@ -128,19 +207,19 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             ExpandedSpells[5].Add("Legend Lore");
             ExpandedSpells[5].Add("Scrying");
             CastingStat = "Wis";
-            result.ClassFeatures.Add("Spellcasting", $"use {CastingStat} for spell DCs, you use an Psi Crystal as a spell focus");
-            result.ClassFeatures.Add("Extended Senses", "LR or 2 power pts, action, 1 hr, 10ft, Wis creatures, share senses" +
+            character.ClassFeatures.Add("Spellcasting", $"use {CastingStat} for spell DCs, you use an Psi Crystal as a spell focus");
+            character.ClassFeatures.Add("Extended Senses", "LR or 2 power pts, action, 1 hr, 10ft, Wis creatures, share senses" +
                 "\n        gain Superior Darkvision, your senses have a radius of 180ft");
             if (lvl >= 6)
             {
-                result.ClassFeatures.Add("Expert Seer", "when you cast a lvl 2 or higher Divination spell, regain power pts = pt cost to cast");
+                character.ClassFeatures.Add("Expert Seer", "when you cast a lvl 2 or higher Divination spell, regain power pts = pt cost to cast");
             }
             if (lvl >= 14)
             {
-                result.ClassFeatures.Add("Actionable Foreknowledge", "expend 1 Psionic Combat Mode use, add roll to an ability check you make");
+                character.ClassFeatures.Add("Actionable Foreknowledge", "expend 1 Psionic Combat Mode use, add roll to an ability check you make");
             }
         }
-        public static void Metacreativity(Character character, CharacterClass result)
+        public static void Metacreativity(Character character)
         {
             int lvl = character.Lvl;
             ExpandedSpells[0].Add("Infestation");
@@ -174,18 +253,18 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             summonSpell = summonList[index];
             ExpandedSpells[5].Add(summonSpell);
             CastingStat = "Int";
-            result.ClassFeatures.Add("Spellcasting", $"use {CastingStat} for spell DCs, you use an Psi Crystal as a spell focus");
-            result.ClassFeatures.Add("Summon Astral Construct", "LR or 2 power pts, action, 1 hr, 30ft, uses your PB, defaults to Dodge, bonus to command, stat block separate");
+            character.ClassFeatures.Add("Spellcasting", $"use {CastingStat} for spell DCs, you use an Psi Crystal as a spell focus");
+            character.ClassFeatures.Add("Summon Astral Construct", "LR or 2 power pts, action, 1 hr, 30ft, uses your PB, defaults to Dodge, bonus to command, stat block separate");
             if (lvl >= 6)
             {
-                result.ClassFeatures.Add("Shaper Control", "astral construct actions +1D6(dmg or temp HP), spells with range not self can originate from your astral construct");
+                character.ClassFeatures.Add("Shaper Control", "astral construct actions +1D6(dmg or temp HP), spells with range not self can originate from your astral construct");
             }
             if (lvl >= 14)
             {
-                result.ClassFeatures.Add("Improved Astral Construct", "astral construct AC + 2, gains (See Invisibility) or (Invisibility as an action)");
+                character.ClassFeatures.Add("Improved Astral Construct", "astral construct AC + 2, gains (See Invisibility) or (Invisibility as an action)");
             }
         }
-        public static void Psychokinesis(Character character, CharacterClass result)
+        public static void Psychokinesis(Character character)
         {
             int lvl = character.Lvl;
             ExpandedSpells[0].Add("Eldritch Blast");
@@ -200,26 +279,26 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             ExpandedSpells[5].Add("Cone of Cold");
             ExpandedSpells[5].Add("Destructive Wave");
             CastingStat = "Str";
-            result.ClassFeatures.Add("Spellcasting", $"use {CastingStat} for spell DCs, you use an Psi Crystal as a spell focus");
+            character.ClassFeatures.Add("Spellcasting", $"use {CastingStat} for spell DCs, you use an Psi Crystal as a spell focus");
             var savantCantrips = new List<string> { "Acid Spalsh", "Chill Touch", "Fire Bolt", "Frostbite", "Lightning Lure",
                         "Mind Sliver", "Poison Spray", "Ray of Frost", "Sacred Flame", "Shocking Grasp", "Thunderclap" };
-            result.ClassFeatures.Add("Psionic Manipulation", "gain 2 cantrips from list");
+            character.ClassFeatures.Add("Psionic Manipulation", "gain 2 cantrips from list");
             Console.WriteLine("Psionic Manipulation: gain 2 cantrips from list");
             string newCantrip = CLIHelper.PrintChoices(savantCantrips);
-            result.Cantrips.Add(newCantrip);
+            character.Cantrips.Add(newCantrip);
             savantCantrips.Remove(newCantrip);
             newCantrip = CLIHelper.PrintChoices(savantCantrips);
-            result.Cantrips.Add(newCantrip);
+            character.Cantrips.Add(newCantrip);
             if (lvl >= 6)
             {
-                result.ClassFeatures.Add("Enhanced Psionic Powers", "when you cast a Force or Psychic dmg spell, dmg + Str");
+                character.ClassFeatures.Add("Enhanced Psionic Powers", "when you cast a Force or Psychic dmg spell, dmg + Str");
             }
             if (lvl >= 14)
             {
-                result.ClassFeatures.Add("Repelling Mind", "reaction, when hit by melee, Psychic dmg = lvl, Str save, push 20ft");
+                character.ClassFeatures.Add("Repelling Mind", "reaction, when hit by melee, Psychic dmg = lvl, Str save, push 20ft");
             }
         }
-        public static void Psychometabolism(Character character, CharacterClass result)
+        public static void Psychometabolism(Character character)
         {
             int lvl = character.Lvl;
             ExpandedSpells[0].Add("Resistance");
@@ -235,21 +314,21 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             ExpandedSpells[5].Add("Hold Monster");
             ExpandedSpells[5].Add("Skill Empowerment");
             CastingStat = "Con";
-            result.ClassFeatures.Add("Spellcasting", $"use {CastingStat} for spell DCs, you use an Psi Crystal as a spell focus");
-            result.ClassFeatures.Add("Psionic Resilience", "increase HP by 1 per lvl, AC = 13 + Dex");
+            character.ClassFeatures.Add("Spellcasting", $"use {CastingStat} for spell DCs, you use an Psi Crystal as a spell focus");
+            character.ClassFeatures.Add("Psionic Resilience", "increase HP by 1 per lvl, AC = 13 + Dex");
             character.HP += lvl;
             if (lvl >= 6)
             {
-                result.ClassFeatures.Add("Reactive Evolution", "PB/LR, reaction, when you take dmg, gain Resistance to dmg");
-                result.ClassFeatures.Add("Harden Body", $"SR, bonus, gain temp HP = 1D12 + Con");
+                character.ClassFeatures.Add("Reactive Evolution", "PB/LR, reaction, when you take dmg, gain Resistance to dmg");
+                character.ClassFeatures.Add("Harden Body", $"SR, bonus, gain temp HP = 1D12 + Con");
             }
             if (lvl >= 14)
             {
-                result.ClassFeatures.Add("Manipulate Biology", "bonus, 10 min, gain 1 option - (see invisible creatures 60ft), (gain Hover and Fly speed)" +
+                character.ClassFeatures.Add("Manipulate Biology", "bonus, 10 min, gain 1 option - (see invisible creatures 60ft), (gain Hover and Fly speed)" +
                     "\n        (gain Swim speed = speed x 2), or (become slime - move through 1 inch spaces, spend 5ft movement to escape nonmagical restraints/grapples)");
             }
         }
-        public static void Psychoportation(Character character, CharacterClass result)
+        public static void Psychoportation(Character character)
         {
             int lvl = character.Lvl;
             ExpandedSpells[0].Add("Light");
@@ -264,18 +343,18 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             ExpandedSpells[5].Add("Passwall");
             ExpandedSpells[5].Add("Teleportation Circle");
             CastingStat = "Dex";
-            result.ClassFeatures.Add("Spellcasting", $"use {CastingStat} for spell DCs, you use an Psi Crystal as a spell focus");
-            result.ClassFeatures.Add("Pyschic Blink", "SR, bonus, 5ft, 1 creature, teleport 30ft");
+            character.ClassFeatures.Add("Spellcasting", $"use {CastingStat} for spell DCs, you use an Psi Crystal as a spell focus");
+            character.ClassFeatures.Add("Pyschic Blink", "SR, bonus, 5ft, 1 creature, teleport 30ft");
             if (lvl >= 6)
             {
-                result.ClassFeatures.Add("Nomad's Escape", "SR, reaction, when you take dmg - teleport 60ft and become invisible for 1 turn");
+                character.ClassFeatures.Add("Nomad's Escape", "SR, reaction, when you take dmg - teleport 60ft and become invisible for 1 turn");
             }
             if (lvl >= 14)
             {
-                result.ClassFeatures.Add("Psionic Steps", "when you cast a Psion spell, teleport 15ft / when you take Dash action, teleport dist = movement");
+                character.ClassFeatures.Add("Psionic Steps", "when you cast a Psion spell, teleport 15ft / when you take Dash action, teleport dist = movement");
             }
         }
-        public static void Telepathy(Character character, CharacterClass result)
+        public static void Telepathy(Character character)
         {
             int lvl = character.Lvl;
             ExpandedSpells[0].Add("Message");
@@ -290,34 +369,32 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             ExpandedSpells[5].Add("Dominate Person");
             ExpandedSpells[5].Add("Rary's Telepathic Bond");
             CastingStat = "Cha";
-            result.ClassFeatures.Add("Spellcasting", $"use {CastingStat} for spell DCs, you use an Psi Crystal as a spell focus");
-            result.ClassFeatures.Add("Telepathic Speech", "bonus, lvl min, 30ft, 1 creature, speak telepathically from Cha miles");
+            character.ClassFeatures.Add("Spellcasting", $"use {CastingStat} for spell DCs, you use an Psi Crystal as a spell focus");
+            character.ClassFeatures.Add("Telepathic Speech", "bonus, lvl min, 30ft, 1 creature, speak telepathically from Cha miles");
             if (lvl >= 6)
             {
-                result.ClassFeatures.Add("Impenetrable Mind", "gain Immunity to charm and fear");
+                character.ClassFeatures.Add("Impenetrable Mind", "gain Immunity to charm and fear");
             }
             if (lvl >= 14)
             {
-                result.ClassFeatures.Add("Psychic Thrall", "LR, action, 30ft, 1 creature, must share lang, Wis save, charm 8 hr, obeys commands, grants gifts/favors as if close friend");
+                character.ClassFeatures.Add("Psychic Thrall", "LR, action, 30ft, 1 creature, must share lang, Wis save, charm 8 hr, obeys commands, grants gifts/favors as if close friend");
             }
         }
-        public static void Spells(Character character, CharacterClass result)
+        public static void Spells(Character character)
         {
             int lvl = character.Lvl;
             string pickMsg = "Pick a cantrip.";
-            string str = "You already have that cantrip.";
             int spellLvl = 1;
             AllSpells spells = new AllSpells("Psion");
-            result.Cantrips.AddRange(ExpandedSpells[0]);
+            character.Cantrips.AddRange(ExpandedSpells[0]);
 
-            for (int i = 0; i < result.CantripsKnown; i++)
+            for (int i = 0; i < character.CantripsKnown; i++)
             {
-                string spell = CLIHelper.GetNew(PsionSpells.Cantrips, result.Cantrips, pickMsg, str);
-                result.Cantrips.Add(spell);
+                string spell = CLIHelper.GetNew(PsionSpells.Cantrips, character.Cantrips, pickMsg);
+                character.Cantrips.Add(spell);
             }
             pickMsg = "Pick a 1st level spell.";
-            str = "You already have that spell";
-            for (int i = 1; i <= result.SpellsKnown; i++)
+            for (int i = 1; i <= character.SpellsKnown; i++)
             {
                 if (4 <= i && i <= 14 && i % 2 == 0)
                 {
@@ -335,8 +412,8 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 {
                     pickMsg = $"Pick a {spellLvl}th level spell.";
                 }
-                string spell = CLIHelper.GetNew(spells.Psion[spellLvl], result.Spells[spellLvl], pickMsg, str);
-                result.Spells[spellLvl].Add(spell);
+                string spell = CLIHelper.GetNew(spells.Psion[spellLvl], character.Spells[spellLvl], pickMsg);
+                character.Spells[spellLvl].Add(spell);
                 spells.Psion[spellLvl].Remove(spell);
             }
         }

@@ -7,12 +7,6 @@ namespace DnD_Character_Creator.Backgrounds
 {
     public class Background
     {
-        public HashSet<string> SkillProficiencies { get; set; } = new HashSet<string>();
-        public HashSet<string> ToolProficiencies { get; set; } = new HashSet<string>();
-        public HashSet<string> Languages { get; set; } = new HashSet<string>();
-        public List<string> Equipment { get; set; } = new List<string>();
-        public int GP { get; set; }
-        public string Feature { get; set; }
         public string[] PersonalityTrait { get; set; } = new string[8];
         public string[] Ideal { get; set; } = new string[6];
         public string[] Bond { get; set; } = new string[6];
@@ -24,74 +18,75 @@ namespace DnD_Character_Creator.Backgrounds
         public string[] GuildBusiness { get; protected set; } = new string[20];
         public string[] LifeOfSeclusion { get; protected set; } = new string[8];
         public string[] Origin { get; protected set; } = new string[10];
-        public static Background NewBackground(string backgroundString)
+        public static Background NewBackground(Character character)
         {
             var result = new Background();
 
-            switch (backgroundString)
+            switch (character.ChosenBackground)
             {
                 case "Acolyte":
-                    result = Acolyte();
+                    result = Acolyte(character);
                     break;
                 case "Charltan":
-                    result = Charltan();
+                    result = Charltan(character);
                     break;
                 case "Criminal":
-                    result = Criminal();
+                    result = Criminal(character);
                     break;
                 case "Entertainer":
-                    result = Entertainer();
+                    result = Entertainer(character);
                     break;
                 case "Folk Hero":
-                    result = FolkHero();
+                    result = FolkHero(character);
                     break;
                 case "Guild Artisan":
-                    result = GuildArtisan();
+                    result = GuildArtisan(character);
                     break;
                 case "Hermit":
-                    result = Hermit();
+                    result = Hermit(character);
                     break;
                 case "Noble":
-                    result = Noble();
+                    result = Noble(character);
                     break;
                 case "Outlander":
-                    result = Outlander();
+                    result = Outlander(character);
                     break;
                 case "Sage":
-                    result = Sage();
+                    result = Sage(character);
                     break;
                 case "Sailor":
-                    result = Sailor();
+                    result = Sailor(character);
                     break;
                 case "Soldier":
-                    result = Soldier();
+                    result = Soldier(character);
                     break;
                 case "Urchin":
-                    result = Urchin();
+                    result = Urchin(character);
                     break;
             }
 
             return result;
         }
-        public static Background Acolyte()
+        public static Background Acolyte(Character character)
         {
             Background result = new Background();
 
-            result.SkillProficiencies.Add("Insight");
-            result.SkillProficiencies.Add("Religion");
-            result.Languages.Add("Choice");
-            result.Languages.Add("Choice2");
-            result.Equipment.Add("Prayer robes");
-            result.Equipment.Add("Holy symbol");
-            result.Equipment.Add("Prayer book or Prayer wheel");
-            result.Equipment.Add("5 sticks of incense");
-            result.Equipment.Add("Vestments");
-            result.Equipment.Add("Belt pouch for coins");
-            result.GP = 15;
-            result.Feature = "Shelter of the Faithful: you can perform religious ceremonies of your deity, you and your party can expect to " +
-                "\n        receive free healing and care at a temple, shrine or other established presence, but you must provide the spell" +
-                "\n        components. You (and only you) will be supported for a modest lifestyle. You have a residence at your home temple," +
-                "\n        and the priests there will provide you assistance as long as it isn't hazardous.";
+            character.SkillProficiencies.Add("Insight");
+            character.SkillProficiencies.Add("Religion");
+            for (int i = 0; i < 2; i++)
+            {
+                BEHelper.AddLanguage(character, "background");
+            }
+            character.Equipment.Add("Prayer robes");
+            BEHelper.AddHolySymbol(character);
+            character.Equipment.Add("Prayer book or Prayer wheel");
+            character.Equipment.Add("5 sticks of incense");
+            character.Equipment.Add("Vestments");
+            character.Equipment.Add("Belt pouch for coins");
+            character.GP += 15;
+            character.BackgroundFeature = "Shelter of the Faithful: you can perform religious ceremonies of your deity, you and your party can expect to receive free healing and" +
+                "\n     care at a temple, shrine or other established presence, but you must provide the spell components. You (and only you) will be supported for" +
+                "\n     a modest lifestyle. You have a residence at your home temple, and the priests there will provide you assistance as long as it isn't hazardous.";
             result.PersonalityTrait[0] = "I idolize a particular hero of my faith, and constantly refer to that person’s deeds and example.";
             result.PersonalityTrait[1] = "I can find common ground between the fiercest enemies, empathizing with them and always working toward peace.";
             result.PersonalityTrait[2] = "I see omens in every event and action. The gods try to speak to us, we just need to listen.";
@@ -121,20 +116,20 @@ namespace DnD_Character_Creator.Backgrounds
 
             return result;
         }
-        public static Background Charltan()
+        public static Background Charltan(Character character)
         {
             Background result = new Background();
 
-            result.SkillProficiencies.Add("Deception");
-            result.SkillProficiencies.Add("Sleight of Hand");
-            result.ToolProficiencies.Add("Disguise Kit");
-            result.ToolProficiencies.Add("Forgery Kit");
-            result.Equipment.Add("Fine clothes");
-            result.Equipment.Add("Disguise Kit");
-            result.Equipment.Add("Belt pouch for coins");
-            result.GP = 15;
-            result.Feature = "False Identity: you have documentation, established acquaintances, and disguises for a second persona." +
-                "\n        You can also forge documents as long as you've seen as example of that kind of document/handwriting.";
+            character.SkillProficiencies.Add("Deception");
+            character.SkillProficiencies.Add("Sleight of Hand");
+            character.ToolProficiencies.Add("Disguise Kit");
+            character.ToolProficiencies.Add("Forgery Kit");
+            character.Equipment.Add("Fine clothes");
+            character.Equipment.Add("Disguise Kit");
+            character.Equipment.Add("Belt pouch for coins");
+            character.GP += 15;
+            character.BackgroundFeature = "False Identity: you have documentation, established acquaintances, and disguises for a second persona. You can also forge documents" +
+                "\n     as long as you've seen as example of that kind of document/handwriting.";
             result.FavoriteScam[0] = "I cheat at games of chance.";
             result.FavoriteScam[1] = "I shave coins or forge documents.";
             result.FavoriteScam[2] = "I insinuate myself into people’s lives to prey on their weakness and secure their fortunes.";
@@ -170,20 +165,22 @@ namespace DnD_Character_Creator.Backgrounds
 
             return result;
         }
-        public static Background Criminal()
+        public static Background Criminal(Character character)
         {
             Background result = new Background();
 
-            result.SkillProficiencies.Add("Deception");
-            result.SkillProficiencies.Add("Stealth");
-            result.ToolProficiencies.Add("Gaming set");
-            result.ToolProficiencies.Add("Thieves' Tools");
-            result.Equipment.Add("Dark common clothes with a hood");
-            result.Equipment.Add("Crowbar");
-            result.Equipment.Add("Belt pouch for coins");
-            result.GP = 15;
-            result.Feature = "Criminal Contact: you have a reliable contact who acts as your liason to a criminal network." +
-                "\n        You can get them messages over long distances because you know local/corrupt individuals who can deliver the messages.";
+            character.SkillProficiencies.Add("Deception");
+            character.SkillProficiencies.Add("Stealth");
+            string msg = "Pick a gaming set";
+            string game = CLIHelper.GetNew(Options.GamingSets, character.ToolProficiencies, msg);
+            character.ToolProficiencies.Add(game);
+            character.ToolProficiencies.Add("Thieves' Tools");
+            character.Equipment.Add("Dark common clothes with a hood");
+            character.Equipment.Add("Crowbar");
+            character.Equipment.Add("Belt pouch for coins");
+            character.GP += 15;
+            character.BackgroundFeature = "Criminal Contact: you have a reliable contact who acts as your liason to a criminal network. You can get them messages over" +
+                "\n     long distances because you know local/corrupt individuals who can deliver the messages.";
             result.PersonalityTrait[0] = "I always have a plan for what to do when things go wrong.";
             result.Specialty[0] = "Blackmailer";
             result.Specialty[1] = "Burglar";
@@ -222,7 +219,7 @@ namespace DnD_Character_Creator.Backgrounds
 
             return result;
         }
-        public static Background Entertainer()
+        public static Background Entertainer(Character character)
         {
             Background result = new Background();
 
@@ -232,29 +229,30 @@ namespace DnD_Character_Creator.Backgrounds
 
             if (choice == 1)
             {
-                result.Equipment.Add("Love letter from an admirer");
+                character.Equipment.Add("Love letter from an admirer");
             }
             else if (choice == 2)
             {
-                result.Equipment.Add("Lock of hair from an admirer");
+                character.Equipment.Add("Lock of hair from an admirer");
             }
             else
             {
-                result.Equipment.Add("Trinket from an admirer");
+                character.Equipment.Add("Trinket from an admirer");
             }
 
-            result.SkillProficiencies.Add("Acrobatics");
-            result.SkillProficiencies.Add("Performance");
-            result.ToolProficiencies.Add("Disguise Kit");
-            result.ToolProficiencies.Add("Musical instrument");
-            result.Equipment.Add("Costume");
-            result.Equipment.Add("Musical instrument");
-            result.Equipment.Add("Belt pouch for coins");
-            result.GP = 15;
-            result.Feature = "By Popular Demand: you can always find a place to perform, usually an inn or a tavern, but it could be a circus," +
-                "\n        theater or even a noble's court. The place you perform will provide you with free lodging and a modest/comfortable" +
-                "\n        level of food (as long as you perform each night). Your performances also make you a local figure - strangers recognize" +
-                "\n        you and usually like you.";
+            character.SkillProficiencies.Add("Acrobatics");
+            character.SkillProficiencies.Add("Performance");
+            character.ToolProficiencies.Add("Disguise Kit");
+            string pickMsg = "Pick a musical instrument you'd like to be proficient with";
+            string instrument = CLIHelper.GetNew(Options.MusicalInstruments, character.ToolProficiencies, pickMsg);
+            character.ToolProficiencies.Add(instrument);
+            character.Equipment.Add("Costume");
+            character.Equipment.Add(instrument);
+            character.Equipment.Add("Belt pouch for coins");
+            character.GP += 15;
+            character.BackgroundFeature = "By Popular Demand: you can always find a place to perform, usually an inn or a tavern, but it could be a circus, theater or even a" +
+                "\n     noble's court. The place you perform will provide you with free lodging and a modest/comfortable level of food (as long as you perform " +
+                "\n     each night). Your performances also make you a local figure - strangers recognize you and usually like you.";
             result.Routine[0] = "Actor";
             result.Routine[1] = "Dancer";
             result.Routine[2] = "Fire-eater";
@@ -294,22 +292,24 @@ namespace DnD_Character_Creator.Backgrounds
 
             return result;
         }
-        public static Background FolkHero()
+        public static Background FolkHero(Character character)
         {
             Background result = new Background();
 
-            result.SkillProficiencies.Add("Animal Handling");
-            result.SkillProficiencies.Add("Survival");
-            result.ToolProficiencies.Add("Artisan's Tools");
-            result.ToolProficiencies.Add("Vehicles(land)");
-            result.Equipment.Add("Common clothes");
-            result.Equipment.Add("Artisan's Tools");
-            result.Equipment.Add("Shovel");
-            result.Equipment.Add("Iron pot");
-            result.Equipment.Add("Belt pouch for coins");
-            result.GP = 10;
-            result.Feature = "Rustic Hospitality: common folk will give you a place to hide, rest, or recuperate unless you've shown you're a danger." +
-                "\n        They will shield you from the law or anyone searching from you, but they will not risk their lives.";
+            character.SkillProficiencies.Add("Animal Handling");
+            character.SkillProficiencies.Add("Survival");
+            string pickMsg = "Pick a set of Artisan's Tools you'd like to be proficient with";
+            string tool = CLIHelper.GetNew(Options.ArtisanTools, character.ToolProficiencies, pickMsg);
+            character.ToolProficiencies.Add(tool);
+            character.ToolProficiencies.Add("Vehicles(land)");
+            character.Equipment.Add("Common clothes");
+            character.Equipment.Add(tool);
+            character.Equipment.Add("Shovel");
+            character.Equipment.Add("Iron pot");
+            character.Equipment.Add("Belt pouch for coins");
+            character.GP += 10;
+            character.BackgroundFeature = "Rustic Hospitality: common folk will give you a place to hide, rest, or recuperate unless you've shown you're a danger. They will " +
+                "\n     shield you from the law or anyone searching from you, but they will not risk their lives.";
             result.DefiningEvent[0] = "I stood up to a tyrant’s agents.";
             result.DefiningEvent[1] = "I saved people during a natural disaster.";
             result.DefiningEvent[2] = "I stood alone against a terrible monster.";
@@ -350,25 +350,26 @@ namespace DnD_Character_Creator.Backgrounds
             return result;
         }
 
-        public static Background GuildArtisan()
+        public static Background GuildArtisan(Character character)
         {
             Background result = new Background();
 
-            result.SkillProficiencies.Add("Insight");
-            result.SkillProficiencies.Add("Persuasion");
-            result.ToolProficiencies.Add("Artisan's Tools");
-            result.Languages.Add("Choice");
-            result.Equipment.Add("Traveler's clothes");
-            result.Equipment.Add("Artisan's Tools,");
-            result.Equipment.Add("Letter of introduction from the guild");
-            result.Equipment.Add("Belt pouch for coins");
-            result.GP = 15;
-            result.Feature = "Guild Membership: guild members will provide yu with food and lodging if necessary (they'll also pay for your funeral" +
-                "\n        if necessary). The guild hall offers a place for you to meet others in your profession, potential patrons, allies, or" +
-                "\n        hirelings. Guilds wield tremendous political power - if accused of a crime, they will support you if a good case can be" +
-                "\n        made or if the crime is justifiable. You can also gain access to political figures, if you're in good standing, but a" +
-                "\n        donation of money or magical items to the guild coffers might be required. You must pay the guild 5GP per month." +
-                "\n        If you fall behind to can payback missed dues to remain in good standing.";
+            character.SkillProficiencies.Add("Insight");
+            character.SkillProficiencies.Add("Persuasion");
+            string pickMsg = "Pick a set of Artisan's Tools you'd like to be proficient with";
+            string tool = CLIHelper.GetNew(Options.ArtisanTools, character.ToolProficiencies, pickMsg);
+            character.ToolProficiencies.Add(tool);
+            BEHelper.AddLanguage(character, "background");
+            character.Equipment.Add("Traveler's clothes");
+            character.Equipment.Add(tool);
+            character.Equipment.Add("Letter of introduction from the guild");
+            character.Equipment.Add("Belt pouch for coins");
+            character.GP += 15;
+            character.BackgroundFeature = "Guild Membership: guild members will provide yu with food and lodging if necessary (they'll also pay for your funeral if necessary)." +
+                "\n     The guild hall offers a place for you to meet others in your profession, potential patrons, allies, or hirelings. Guilds wield tremendous" +
+                "\n     political power - if accused of a crime, they will support you if a good case can be made or if the crime is justifiable. You can gain " +
+                "\n     access to political figures, if you're in good standing, but a donation of money or magical items to the guild coffers might be required." +
+                "\n     You must pay the guild 5GP per month. If you fall behind to can payback missed dues to remain in good standing.";
             result.GuildBusiness[0] = "Alchemists and apothecaries";
             result.GuildBusiness[1] = "Armorers, locksmiths, and finesmiths";
             result.GuildBusiness[2] = "Brewers, distillers, and vintners";
@@ -418,22 +419,22 @@ namespace DnD_Character_Creator.Backgrounds
 
             return result;
         }
-        public static Background Hermit()
+        public static Background Hermit(Character character)
         {
             Background result = new Background();
 
-            result.SkillProficiencies.Add("Medicine");
-            result.SkillProficiencies.Add("Religion");
-            result.ToolProficiencies.Add("Herbalism Kit");
-            result.Languages.Add("Choice");
-            result.Equipment.Add("Common clothes");
-            result.Equipment.Add("Scroll case stuffed full of notes");
-            result.Equipment.Add("Winter blanket");
-            result.Equipment.Add("Herbalism Kit");
-            result.GP = 5;
-            result.Feature = "Discovery: your seclusion gave you access to a unique and powerful discovery. It could be: a great truth about" +
-                "\n        the cosmos/deities/powerful beings/forces of nature, a site no one has ever seen, an uncovered fact that has been long" +
-                "\n        forgotten, an unearthered relic, etc. Work with your DM to determine the details of your discovery.";
+            character.SkillProficiencies.Add("Medicine");
+            character.SkillProficiencies.Add("Religion");
+            character.ToolProficiencies.Add("Herbalism Kit");
+            BEHelper.AddLanguage(character, "background");
+            character.Equipment.Add("Common clothes");
+            character.Equipment.Add("Scroll case stuffed full of notes");
+            character.Equipment.Add("Winter blanket");
+            character.Equipment.Add("Herbalism Kit");
+            character.GP += 5;
+            character.BackgroundFeature = "Discovery: your seclusion gave you access to a unique and powerful discovery. It could be: a great truth about the" +
+                "\n     cosmos/deities/powerful beings/forces of nature, a site no one has ever seen, an uncovered fact that has been long forgotten, an" +
+                "\n     unearthered relic, etc. Work with your DM to determine the details of your discovery.";
             result.LifeOfSeclusion[0] = "I was searching for spiritual enlightenment.";
             result.LifeOfSeclusion[1] = "I was partaking of communal living in accordance with the dictates of a religious order.";
             result.LifeOfSeclusion[2] = "I was exiled for a crime I didn’t commit.";
@@ -471,23 +472,24 @@ namespace DnD_Character_Creator.Backgrounds
 
             return result;
         }
-        public static Background Noble()
+        public static Background Noble(Character character)
         {
             Background result = new Background();
 
-            result.SkillProficiencies.Add("History");
-            result.SkillProficiencies.Add("Persuasion");
-            result.ToolProficiencies.Add("Gaming set");
-            result.Languages.Add("Choice");
-            result.Equipment.Add("Fine clothes");
-            result.Equipment.Add("Signet ring");
-            result.Equipment.Add("Scroll of pedigree");
-            result.Equipment.Add("Coin purse");
-            result.GP = 25;
-            result.Feature = "Position of Privilege: people are inclined to think better of you, you are welcome in high society, and people assume" +
-                "\n        you have the right to be wherever you are. Common folk make every effort to accomodate you and avoid your displeasure." +
-                "\n        Other people of high birth treat you as a member of the same social sphere." +
-                "\n        You can secure an audience with a local noble if you need to.";
+            character.SkillProficiencies.Add("History");
+            character.SkillProficiencies.Add("Persuasion");
+            string msg = "Pick a gaming set";
+            string game = CLIHelper.GetNew(Options.GamingSets, character.ToolProficiencies, msg);
+            character.ToolProficiencies.Add(game);
+            BEHelper.AddLanguage(character, "background");
+            character.Equipment.Add("Fine clothes");
+            character.Equipment.Add("Signet ring");
+            character.Equipment.Add("Scroll of pedigree");
+            character.Equipment.Add("Coin purse");
+            character.GP += 25;
+            character.BackgroundFeature = "Position of Privilege: people are inclined to think better of you, you are welcome in high society, and people assume you have the right" +
+                "\n     to be wherever you are. Common folk make every effort to accomodate you and avoid your displeasure. Other people of high birth treat you as a" +
+                "\n     member of the same social sphere. You can secure an audience with a local noble if you need to.";
             result.PersonalityTrait[0] = "My eloquent flattery makes everyone I talk to feel like the most wonderful and important person in the world.";
             result.PersonalityTrait[1] = "The common folk love me for my kindness and generosity.";
             result.PersonalityTrait[2] = "No one could doubt by looking at my regal bearing that I am a cut above the unwashed masses.";
@@ -517,23 +519,24 @@ namespace DnD_Character_Creator.Backgrounds
 
             return result;
         }
-        public static Background Outlander()
+        public static Background Outlander(Character character)
         {
             Background result = new Background();
 
-            result.SkillProficiencies.Add("Athletics");
-            result.SkillProficiencies.Add("Survival");
-            result.ToolProficiencies.Add("Musical Instrument");
-            result.Languages.Add("Choice");
-            result.Equipment.Add("Traveler's clothes");
-            result.Equipment.Add("Staff");
-            result.Equipment.Add("Hunting trap");
-            result.Equipment.Add("Trophy from a killed animal");
-            result.Equipment.Add("Belt pouch for coins");
-            result.GP = 10;
-            result.Feature = "Wanderer: you can always recall the general layout of terrain, settlements, and other" +
-                "\n        features around you. You can find food and fresh water for yourself and up to 5 people each day," +
-                "\n        as long as the land offers berries, small game, water, etc.";
+            character.SkillProficiencies.Add("Athletics");
+            character.SkillProficiencies.Add("Survival");
+            string pickMsg = "Pick a musical instrument you'd like to be proficient with";
+            string instrument = CLIHelper.GetNew(Options.MusicalInstruments, character.ToolProficiencies, pickMsg);
+            character.ToolProficiencies.Add(instrument);
+            BEHelper.AddLanguage(character, "background");
+            character.Equipment.Add("Traveler's clothes");
+            character.Equipment.Add("Staff");
+            character.Equipment.Add("Hunting trap");
+            character.Equipment.Add("Trophy from a killed animal");
+            character.Equipment.Add("Belt pouch for coins");
+            character.GP += 10;
+            character.BackgroundFeature = "Wanderer: you can always recall the general layout of terrain, settlements, and other features around you. You can find food and" +
+                "\n     fresh water for yourself and up to 5 people each day, as long as the land offers berries, small game, water, etc.";
             result.Origin[0] = "Forester";
             result.Origin[1] = "Trapper";
             result.Origin[2] = "Homesteader";
@@ -573,22 +576,24 @@ namespace DnD_Character_Creator.Backgrounds
 
             return result;
         }
-        public static Background Sage()
+        public static Background Sage(Character character)
         {
             Background result = new Background();
 
-            result.SkillProficiencies.Add("Arcana");
-            result.SkillProficiencies.Add("History");
-            result.Languages.Add("Choice");
-            result.Languages.Add("Choice2");
-            result.Equipment.Add("Common clothes");
-            result.Equipment.Add("Quill and ink");
-            result.Equipment.Add("Small knife");
-            result.Equipment.Add("Letter from a dead colleague posing an unanswered question");
-            result.Equipment.Add("Belt pouch for coins");
-            result.GP = 10;
-            result.Feature = "Researcher: when you want to learn new lore, you usually know where to find it - whether it's" +
-                "\n        in a book, a sage or other creature knows it, etc. The DM may rule the knowledge is inaccessible.";
+            character.SkillProficiencies.Add("Arcana");
+            character.SkillProficiencies.Add("History"); 
+            for (int i = 0; i < 2; i++)
+            {
+                BEHelper.AddLanguage(character, "background");
+            }
+            character.Equipment.Add("Common clothes");
+            character.Equipment.Add("Quill and ink");
+            character.Equipment.Add("Small knife");
+            character.Equipment.Add("Letter from a dead colleague posing an unanswered question");
+            character.Equipment.Add("Belt pouch for coins");
+            character.GP += 10;
+            character.BackgroundFeature = "Researcher: when you want to learn new lore, you usually know where to find it - whether it's in a book, a sage or other creature" +
+                "\n     knows it, etc. The DM may rule the knowledge is inaccessible.";
             result.Specialty[0] = "Alchemist";
             result.Specialty[1] = "Astronomer";
             result.Specialty[2] = "Discredited academic";
@@ -626,7 +631,7 @@ namespace DnD_Character_Creator.Backgrounds
 
             return result;
         }
-        public static Background Sailor()
+        public static Background Sailor(Character character)
         {
             Background result = new Background();
             var luckyCharmExamples = new List<string>() { "rabbit foot", "small stone with a hole in the center", "random Trinket"};
@@ -637,25 +642,24 @@ namespace DnD_Character_Creator.Backgrounds
             if (choice == 1)
             {
                 string luckyCharm = CLIHelper.PrintChoices(luckyCharmExamples);
-                result.Equipment.Add(luckyCharm);
+                character.Equipment.Add(luckyCharm);
             }
             else
             {
-                result.Equipment.Add("Lucky charm");
+                character.Equipment.Add("Lucky charm");
             }
 
-            result.SkillProficiencies.Add("Athletics");
-            result.SkillProficiencies.Add("Perception");
-            result.ToolProficiencies.Add("Navigator's Tools");
-            result.ToolProficiencies.Add("Vehicles(water)");
-            result.Equipment.Add("Common clothes");
-            result.Equipment.Add("Belaying Pin(can be used as a club)");
-            result.Equipment.Add("50ft of silk rope");
-            result.Equipment.Add("Belt pouch for coins");
-            result.GP = 10;
-            result.Feature = "Ship's Passage: you can secure free passage on a sailing ship for you and your party. You won't determine the route" +
-                "\n        or what stops the ship will make, and the crew expects the party to assist them along the way." +
-                "\n        The DM decides how long the journey takes.";
+            character.SkillProficiencies.Add("Athletics");
+            character.SkillProficiencies.Add("Perception");
+            character.ToolProficiencies.Add("Navigator's Tools");
+            character.ToolProficiencies.Add("Vehicles(water)");
+            character.Equipment.Add("Common clothes");
+            character.Equipment.Add("Belaying Pin(can be used as a club)");
+            character.Equipment.Add("50ft of silk rope");
+            character.Equipment.Add("Belt pouch for coins");
+            character.GP += 10;
+            character.BackgroundFeature = "Ship's Passage: you can secure free passage on a sailing ship for you and your party. You won't determine the route or what stops the" +
+                "\n     ship will make, and the crew expects the party to assist them along the way. The DM decides how long the journey takes.";
             result.PersonalityTrait[0] = "My friends know they can rely on me, no matter what.";
             result.PersonalityTrait[1] = "I work hard so that I can play hard when the work is done.";
             result.PersonalityTrait[2] = "I enjoy sailing into new ports and making new friends over a flagon of ale.";
@@ -685,7 +689,7 @@ namespace DnD_Character_Creator.Backgrounds
 
             return result;
         }
-        public static Background Soldier()
+        public static Background Soldier(Character character)
         {
             Background result = new Background();
             Console.WriteLine("Pick 1 or 2 to add to your equipment");
@@ -694,11 +698,11 @@ namespace DnD_Character_Creator.Backgrounds
 
             if (gamingChoice == 1)
             {
-                result.Equipment.Add("Bone dice");
+                character.Equipment.Add("Bone dice");
             }
             else
             {
-                result.Equipment.Add("Deck of cards");
+                character.Equipment.Add("Deck of cards");
             }
 
             var trophyExamples = new List<string>() { "Dagger", "Broken blade", "Piece of a banner" };
@@ -709,31 +713,33 @@ namespace DnD_Character_Creator.Backgrounds
             if (trophyChoice == 1)
             {
                 string trophy = CLIHelper.PrintChoices(trophyExamples);
-                result.Equipment.Add(trophy + " from a fallen enemy");
+                character.Equipment.Add(trophy + " from a fallen enemy");
             }
             else if (trophyChoice == 2)
             {
 
-                result.Equipment.Add("Trophy taken from a fallen enemy");
+                character.Equipment.Add("Trophy taken from a fallen enemy");
             }
             else
             {
                 string trophy = Console.ReadLine().ToLower().Trim();
                 trophy = CLIHelper.CapitalizeFirstLetter(trophy);
-                result.Equipment.Add(trophy);
+                character.Equipment.Add(trophy);
             }
 
-            result.SkillProficiencies.Add("Athletics");
-            result.SkillProficiencies.Add("Intimidation");
-            result.ToolProficiencies.Add("Gaming set");
-            result.ToolProficiencies.Add("Vehicles(land)");
-            result.Equipment.Add("Common clothes");
-            result.Equipment.Add("Insignia of rank");
-            result.Equipment.Add("Belt pouch for coins");
-            result.GP = 15;
-            result.Feature = "Military Rank: soldiers loyal to your former military organization still recognize your authority," +
-                "\n        deferring to you if they are a lower rank. You can exert your influence over other soldiers and requisition simple" +
-                "\n        equipment or horses for temporary use. You can usually gain access to friendly military encampments/fortresses.";
+            character.SkillProficiencies.Add("Athletics");
+            character.SkillProficiencies.Add("Intimidation");
+            string msg = "Pick a gaming set";
+            string game = CLIHelper.GetNew(Options.GamingSets, character.ToolProficiencies, msg);
+            character.ToolProficiencies.Add(game);
+            character.ToolProficiencies.Add("Vehicles(land)");
+            character.Equipment.Add("Common clothes");
+            character.Equipment.Add("Insignia of rank");
+            character.Equipment.Add("Belt pouch for coins");
+            character.GP += 15;
+            character.BackgroundFeature = "Military Rank: soldiers loyal to your former military organization still recognize your authority, deferring to you if they are a lower rank." +
+                "\n     You can exert your influence over other soldiers and requisition simple equipment or horses for temporary use. You can usually gain access" +
+                "\n     to friendly military encampments/fortresses.";
             result.Specialty[0] = "Officer";
             result.Specialty[1] = "Scout";
             result.Specialty[2] = "Infantry";
@@ -771,23 +777,23 @@ namespace DnD_Character_Creator.Backgrounds
 
             return result;
         }
-        public static Background Urchin()
+        public static Background Urchin(Character character)
         {
             Background result = new Background();
 
-            result.SkillProficiencies.Add("Sleight of Hand");
-            result.SkillProficiencies.Add("Stealth");
-            result.ToolProficiencies.Add("Disguise Kit");
-            result.ToolProficiencies.Add("Thieves' Tools");
-            result.Equipment.Add("Common clothes");
-            result.Equipment.Add("Small knife");
-            result.Equipment.Add("Map of your home city");
-            result.Equipment.Add("Pet mouse");
-            result.Equipment.Add("Token to remember your parents by");
-            result.Equipment.Add("Belt pouch for coins");
-            result.GP = 15;
-            result.Feature = "City Secrets: you know secret passages through the urban sprawl. Outside of combat, you can travel through any two" +
-                "\n        locations in the city twice as fast as your speed normally allows.";
+            character.SkillProficiencies.Add("Sleight of Hand");
+            character.SkillProficiencies.Add("Stealth");
+            character.ToolProficiencies.Add("Disguise Kit");
+            character.ToolProficiencies.Add("Thieves' Tools");
+            character.Equipment.Add("Common clothes");
+            character.Equipment.Add("Small knife");
+            character.Equipment.Add("Map of your home city");
+            character.Equipment.Add("Pet mouse");
+            character.Equipment.Add("Token to remember your parents by");
+            character.Equipment.Add("Belt pouch for coins");
+            character.GP += 15;
+            character.BackgroundFeature = "City Secrets: you know secret passages through the urban sprawl. Outside of combat, you can travel through any two locations in the" +
+                "\n     city twice as fast as your speed normally allows.";
             result.PersonalityTrait[0] = "I hide scraps of food and trinkets away in my pockets.";
             result.PersonalityTrait[1] = "I ask a lot of questions.";
             result.PersonalityTrait[2] = "I like to squeeze into small places where no one else can get to me.";

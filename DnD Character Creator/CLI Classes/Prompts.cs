@@ -105,7 +105,7 @@ namespace DnD_Character_Creator
         {
             Console.Clear();
             Console.WriteLine($"If you'd like to pick your {backgroundPiece} enter '1'." +
-                            $"\n        If you want to roll it randomly enter '2'.");
+                            $"\nIf you want to roll it randomly enter '2'.");
             int answer = CLIHelper.GetNumberInRange(1, 2);
             int index = 0;
 
@@ -128,10 +128,9 @@ namespace DnD_Character_Creator
                     index = dieRoll;
 
 
-                    Console.WriteLine($"Your {backgroundPiece} is:" +
-                        $"\n        {backgroundProperty[index]}");
+                    Console.WriteLine($"Your {backgroundPiece} is: {backgroundProperty[index]}");
                     Console.WriteLine($"If you'd like to keep that {backgroundPiece} enter '1', if not hit enter." +
-                        $"\n        If you'd like to pick from the list instead, enter '2'.");
+                        $"\nIf you'd like to pick from the list instead, enter '2'.");
                     int input = CLIHelper.GetNumberInRange(1, 2);
 
                     if (input == 1)

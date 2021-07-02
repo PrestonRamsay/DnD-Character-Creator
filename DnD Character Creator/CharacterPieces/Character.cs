@@ -9,6 +9,7 @@ namespace DnD_Character_Creator
     {     
         public Character()
         {
+            MaxAgeEnd = 100;
             Template = false;
             ChosenTemplate = "";
             Archetype = "";
@@ -19,6 +20,9 @@ namespace DnD_Character_Creator
         }
         public string Name { get; set; }
         public int Age { get; set; }
+        public int AdultAge { get; set; }
+        public int MaxAgeStart { get; set; }
+        public int MaxAgeEnd { get; set; }
         public string ChosenRace { get; set; }
         public List<string> RacialTraits { get; set; } = new List<string>();
         public bool Template { get; set; }
@@ -27,11 +31,16 @@ namespace DnD_Character_Creator
         public Dictionary<string, string> Boons = new Dictionary<string, string>();
         public Dictionary<string, string> Flaws = new Dictionary<string, string>();
         public string Alignment { get; set; }
+        public List<string> AlignmentOptions { get; set; } = new List<string>();
         public string Deity { get; set; }
-        public string ChosenBackground { get; set; }        
-        public int Height { get; set; }
+        public string ChosenBackground { get; set; }
         public string Size { get; set; }
-        public int Weight { get; set; }            
+        public int Height { get; set; }
+        public int Weight { get; set; }
+        public int MinHeight { get; set; }
+        public int MaxHeight { get; set; }
+        public int MinWeight { get; set; }
+        public int MaxWeight { get; set; }
         public string EC { get; set; }
         public string HC { get; set; }
         public string SC { get; set; }
@@ -102,6 +111,7 @@ namespace DnD_Character_Creator
         public int ProficiencyBonus { get; set; }
         public int AC { get; set; }
         public int HP { get; set; }
+        public int HitDie { get; set; }
         public HashSet<string> Saves { get; set; } = new HashSet<string>();
 
         public HashSet<string> Languages { get; set; } = new HashSet<string> { "Common" };
@@ -146,6 +156,8 @@ namespace DnD_Character_Creator
         public int ProfessionDie { get; set; }
         public List<string> Equipment { get; set; } = new List<string>();
         public int GP { get; set; }
+        public Dictionary<string, string> Feats { get; set; } = new Dictionary<string, string>();
+        public List<string> Metamagic { get; set; } = new List<string>();
         public Dictionary<string, string> ClassFeatures { get; set; } = new Dictionary<string, string>();
         public int CantripsKnown { get; set; }
         public int SpellsKnown { get; set; }
@@ -174,7 +186,6 @@ namespace DnD_Character_Creator
             { 8, 0 },
             { 9, 0 }
         };
-        public Dictionary<string, string> Feats { get; set; } = new Dictionary<string, string>();
         public string DragonColor { get; set; }
         public string TieflingMagic { get; set; }
         public List<string> Tenets { get; set; } = new List<string>();

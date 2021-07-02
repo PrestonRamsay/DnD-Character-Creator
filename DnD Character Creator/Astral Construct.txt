@@ -1,4 +1,5 @@
-﻿
+﻿Astral Construct
+
 AC: 12 + PB		HP: 5 + (5 x lvl)		Speed: 30ft, Fly 30ft or Swim 30ft
 Str: 15 + 2
 Dex: 13 + 1

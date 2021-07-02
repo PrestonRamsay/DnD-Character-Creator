@@ -243,9 +243,259 @@ namespace DnD_Character_Creator
                 statWords.Remove(statWord);
             }
         }
-        public static void RacialStats(Character character, Race race)
+        public static List<Tuple<string, int>> RacialStats(string raceString)
         {
-            if (race.Name == "Human")
+            var stats = new List<Tuple<string, int>>();
+            int choice = 0;
+
+            switch (raceString)
+            {
+                case "Aasimar(Protector)":
+                    stats.Add(new Tuple<string, int>("Cha", 2));
+                    stats.Add(new Tuple<string, int>("Wis", 1));
+                    break;
+                case "Aasimar(Scourge)":
+                    stats.Add(new Tuple<string, int>("Cha", 2));
+                    stats.Add(new Tuple<string, int>("Con", 1));
+                    break;
+                case "Aasimar(Fallen)":
+                    stats.Add(new Tuple<string, int>("Cha", 2));
+                    stats.Add(new Tuple<string, int>("Str", 1));
+                    break;
+                case "Cambion":
+                    stats.Add(new Tuple<string, int>("Str", 1));
+                    stats.Add(new Tuple<string, int>("Dex", 1));
+                    stats.Add(new Tuple<string, int>("Cha", 1));
+                    break;
+                case "Changeling":
+                    stats.Add(new Tuple<string, int>("Cha", 2));
+                    Console.WriteLine("Pick a stat to increase by 1");
+                    CLIHelper.Print2Choices("Dex", "Int");
+                    choice = CLIHelper.GetNumberInRange(1, 2);
+                    if (choice == 1)
+                    {
+                        stats.Add(new Tuple<string, int>("Dex", 1));
+                    }
+                    else if (choice == 2)
+                    {
+                        stats.Add(new Tuple<string, int>("Int", 1));
+                    }
+                    break;
+                case "Dhampir":
+                    stats.Add(new Tuple<string, int>("Str", 2));
+                    Console.WriteLine("Pick a stat to increase by 1");
+                    CLIHelper.Print2Choices("Dex", "Cha");
+                    choice = CLIHelper.GetNumberInRange(1, 2);
+                    if (choice == 1)
+                    {
+                        stats.Add(new Tuple<string, int>("Dex", 1));
+                    }
+                    else if (choice == 2)
+                    {
+                        stats.Add(new Tuple<string, int>("Cha", 1));
+                    }
+                    break;
+                case "Dragonborn":
+                    stats.Add(new Tuple<string, int>("Str", 2));
+                    stats.Add(new Tuple<string, int>("Cha", 1));
+                    break;
+                case "Hill Dwarf":
+                    stats.Add(new Tuple<string, int>("Con", 2));
+                    stats.Add(new Tuple<string, int>("Wis", 1));
+                    break;
+                case "Mountain Dwarf":
+                    stats.Add(new Tuple<string, int>("Str", 2));
+                    stats.Add(new Tuple<string, int>("Con", 1));
+                    break;
+                case "Avariel":
+                    stats.Add(new Tuple<string, int>("Dex", 2));
+                    stats.Add(new Tuple<string, int>("Int", 1));
+                    break;
+                case "Drow":
+                    stats.Add(new Tuple<string, int>("Dex", 2));
+                    stats.Add(new Tuple<string, int>("Cha", 1));
+                    break;
+                case "Eladrin":
+                    stats.Add(new Tuple<string, int>("Dex", 2));
+                    stats.Add(new Tuple<string, int>("Cha", 1));
+                    break;
+                case "Moon Elf":
+                    stats.Add(new Tuple<string, int>("Dex", 2));
+                    stats.Add(new Tuple<string, int>("Int", 1));
+                    break;
+                case "Sea Elf":
+                    stats.Add(new Tuple<string, int>("Dex", 2));
+                    stats.Add(new Tuple<string, int>("Con", 1));
+                    break;
+                case "Shadar-Kai":
+                    stats.Add(new Tuple<string, int>("Dex", 2));
+                    stats.Add(new Tuple<string, int>("Con", 1));
+                    break;
+                case "High Elf":
+                    stats.Add(new Tuple<string, int>("Dex", 2));
+                    stats.Add(new Tuple<string, int>("Int", 1));
+                    break;
+                case "Wild Elf":
+                    stats.Add(new Tuple<string, int>("Dex", 2));
+                    stats.Add(new Tuple<string, int>("Str", 1));
+                    break;
+                case "Wood Elf":
+                    stats.Add(new Tuple<string, int>("Dex", 2));
+                    stats.Add(new Tuple<string, int>("Wis", 1));
+                    break;
+                case "Forest Gnome":
+                    stats.Add(new Tuple<string, int>("Int", 2));
+                    stats.Add(new Tuple<string, int>("Dex", 1));
+                    break;
+                case "Rock Gnome":
+                    stats.Add(new Tuple<string, int>("Int", 2));
+                    stats.Add(new Tuple<string, int>("Con", 1));
+                    break;
+                case "Goliath":
+                    stats.Add(new Tuple<string, int>("Str", 2));
+                    stats.Add(new Tuple<string, int>("Con", 1));
+                    break;
+                case "Half-Elf":
+                    var statOptions = new List<string>();
+                    statOptions.AddRange(Options.Stats);
+                    statOptions.Remove("Cha");
+                    string pickMsg = "Pick a stat to increase by 1.";
+                    int index = CLIHelper.PrintChoices(pickMsg, statOptions);
+                    string stat = statOptions[index];
+                    stats.Add(new Tuple<string, int>(stat, 1));
+                    statOptions.Remove(stat);
+                    pickMsg = "Pick another stat to increase by 1 (Note you can't pick the same stat that you picked last time.)";
+                    index = CLIHelper.PrintChoices(pickMsg, statOptions);
+                    stat = statOptions[index];
+                    stats.Add(new Tuple<string, int>(stat, 1));
+                    stats.Add(new Tuple<string, int>("Cha", 2));
+                    break;
+                case "Half-Orc":
+                    stats.Add(new Tuple<string, int>("Str", 2));
+                    stats.Add(new Tuple<string, int>("Con", 1));
+                    break;
+                case "Lightfoot Halfling":
+                    stats.Add(new Tuple<string, int>("Dex", 2));
+                    stats.Add(new Tuple<string, int>("Cha", 1));
+                    break;
+                case "Stout Halfling":
+                    stats.Add(new Tuple<string, int>("Dex", 2));
+                    stats.Add(new Tuple<string, int>("Con", 1));
+                    break;
+                case "Variant Human":
+                    statOptions = new List<string>();
+                    statOptions.AddRange(Options.Stats);
+                    pickMsg = "Pick a stat to increase by 1.";
+                    index = CLIHelper.PrintChoices(pickMsg, statOptions);
+                    stat = statOptions[index];
+                    stats.Add(new Tuple<string, int>(stat, 1));
+                    statOptions.Remove(stat);
+                    pickMsg = "Pick another stat to increase by 1 (Note you can't pick the same stat that you picked last time.)";
+                    index = CLIHelper.PrintChoices(pickMsg, statOptions);
+                    stat = statOptions[index];
+                    stats.Add(new Tuple<string, int>(stat, 1));
+                    break;
+                case "Minotaur":
+                    stats.Add(new Tuple<string, int>("Str", 2));
+                    stats.Add(new Tuple<string, int>("Con", 1));
+                    break;
+                case "Shade":
+                    stats.Add(new Tuple<string, int>("Dex", 2));
+                    Console.WriteLine("Pick a stat to increase by 1");
+                    CLIHelper.Print2Choices("Int", "Cha");
+                    choice = CLIHelper.GetNumberInRange(1, 2);
+                    if (choice == 1)
+                    {
+                        stats.Add(new Tuple<string, int>("Int", 1));
+                    }
+                    else if (choice == 2)
+                    {
+                        stats.Add(new Tuple<string, int>("Cha", 1));
+                    }
+                    break;
+                case "Tiefling":
+                    stats.Add(new Tuple<string, int>("Cha", 2));
+                    stats.Add(new Tuple<string, int>("Int", 1));
+                    break;
+                case "Feral Tiefling":
+                    stats.Add(new Tuple<string, int>("Dex", 2));
+                    stats.Add(new Tuple<string, int>("Int", 1));
+                    break;
+            }
+
+            return stats;
+        }
+        public static List<Tuple<string, int>> DemigodStats(string demigodDomain)
+        {
+            var stats = new List<Tuple<string, int>>();
+            stats.Add(new Tuple<string, int>("Con", 1));
+
+            switch (demigodDomain)
+            {
+                case "Beauty":
+                    stats.Add(new Tuple<string, int>("Cha", 2));
+                    break;
+                case "Knowledge":
+                    stats.Add(new Tuple<string, int>("Int", 2));
+                    break;
+                case "Life":
+                    stats.Add(new Tuple<string, int>("Wis", 2));
+                    break;
+                case "Luck":
+                    stats.Add(new Tuple<string, int>("Cha", 2));
+                    break;
+                case "Madness":
+                    stats.Add(new Tuple<string, int>("Wis", 1));
+                    stats.Add(new Tuple<string, int>("Cha", 1));
+                    break;
+                case "Music":
+                    stats.Add(new Tuple<string, int>("Cha", 2));
+                    break;
+                case "Protection":
+                    stats.Add(new Tuple<string, int>("Con", 2));
+                    stats.Add(new Tuple<string, int>("Str", 1));
+                    break;
+                case "Smithing":
+                    stats.Add(new Tuple<string, int>("Str", 1));
+                    stats.Add(new Tuple<string, int>("Int", 1));
+                    break;
+                case "The Earth":
+                    stats.Add(new Tuple<string, int>("Wis", 2));
+                    break;
+                case "The Hunt":
+                    stats.Add(new Tuple<string, int>("Dex", 2));
+                    break;
+                case "The Sea":
+                    stats.Add(new Tuple<string, int>("Dex", 1));
+                    break;
+                case "The Sky":
+                    stats.Add(new Tuple<string, int>("Str", 1));
+                    stats.Add(new Tuple<string, int>("Cha", 1));
+                    break;
+                case "The Sun":
+                    stats.Add(new Tuple<string, int>("Dex", 1));
+                    stats.Add(new Tuple<string, int>("Cha", 1));
+                    break;
+                case "Travel":
+                    stats.Add(new Tuple<string, int>("Dex", 2));
+                    break;
+                case "Trickery":
+                    stats.Add(new Tuple<string, int>("Dex", 2));
+                    break;
+                case "Undead":
+                    stats.Add(new Tuple<string, int>("Con", 2));
+                    stats.Add(new Tuple<string, int>("Wis", 1));
+                    break;
+                case "War":
+                    stats.Add(new Tuple<string, int>("Str", 2));
+                    break;
+            }
+
+            return stats;
+        }
+        public static void RacialStats(Character character, List<Tuple<string, int>> stats)
+        {
+            if (character.ChosenRace == "Human")
             {
                 foreach (var stat in character.Stats.Keys)
                 {
@@ -254,19 +504,10 @@ namespace DnD_Character_Creator
             }
             else
             {
-                string stat1 = race.Stat1.Item1;
-                int incAmt = race.Stat1.Item2;
-                IncreaseStat(character, stat1, incAmt);
-
-                string stat2 = race.Stat2.Item1;
-                incAmt = race.Stat2.Item2;
-                IncreaseStat(character, stat2, incAmt);
-
-                if (race.Stat3.Item1 != "Null")
+                for (int i = 0; i < stats.Count; i++)
                 {
-                    string stat3 = race.Stat3.Item1;
-                    incAmt = race.Stat3.Item2;
-                    IncreaseStat(character, stat3, incAmt);
+                    var stat = stats[i];
+                    IncreaseStat(character, stat.Item1, stat.Item2);
                 }
             }
         }
@@ -309,21 +550,21 @@ namespace DnD_Character_Creator
         }
         public static void AbilityScoreInc(Character character)
         {
-            Console.WriteLine("\n        You have an ability score increase, pick from the options.");
+            Console.WriteLine("\nYou have an ability score increase, pick from the options.");
             CLIHelper.Print3Choices("Increase 1 stat by 2", "Increase 2 stats by 1", "Pick a feat");
             int input = CLIHelper.GetNumberInRange(1, 3);
 
             if (input == 1)
             {
-                Console.Write($"\n        Your stats are ");
+                Console.Write($"\nYour stats are ");
                 foreach (var stat in Options.Stats)
                 {
                     Console.Write($"{stat}: {character.Stats[stat]}  ");
                 }
-                Console.WriteLine("\n        \n        Pick the stat you'd like to increase.");
+                Console.WriteLine("\n\nPick the stat you'd like to increase.");
                 IncreaseStat(character, 2);
                 Console.Clear();
-                Console.Write($"\n        Your stats are now ");
+                Console.Write($"\nYour stats are now ");
                 foreach (var stat in Options.Stats)
                 {
                     Console.Write($"{stat}: {character.Stats[stat]}  ");
@@ -332,17 +573,17 @@ namespace DnD_Character_Creator
             }
             else if (input == 2)
             {
-                Console.Write($"\n        Your stats are ");
+                Console.Write($"\nYour stats are ");
                 foreach (var stat in Options.Stats)
                 {
                     Console.Write($"{stat}: {character.Stats[stat]}  ");
                 }
-                Console.WriteLine("\n        \n        Pick the first stat you'd like to increase.");
+                Console.WriteLine("\n\nPick the first stat you'd like to increase.");
                 IncreaseStat(character, 1);
                 Console.WriteLine("Pick the second stat you'd like to increase.");
                 IncreaseStat(character, 1);
                 Console.Clear();
-                Console.Write($"\n        Your stats are now ");
+                Console.Write($"\nYour stats are now ");
                 foreach (var stat in Options.Stats)
                 {
                     Console.Write($"{stat}: {character.Stats[stat]}  ");

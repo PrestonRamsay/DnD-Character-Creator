@@ -1,5 +1,7 @@
 ﻿
+show known skills when deciding - background
+show spell def with prompts
+check all class features for 1/2 dmg and add space after new line
+add GH feats
 add spell descriptions
 add extended races
-add archetype methods to the class specifics for more readability
-convert character pieces to methods that add to character

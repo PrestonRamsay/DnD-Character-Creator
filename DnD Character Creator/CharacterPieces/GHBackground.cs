@@ -7,14 +7,6 @@ namespace DnD_Character_Creator.Backgrounds
 {
     public class GHBackground
     {
-        public HashSet<string> SkillProficiencies { get; set; } = new HashSet<string>();
-        public HashSet<string> ToolProficiencies { get; set; } = new HashSet<string>();
-        public List<string> Languages { get; set; } = new List<string>();
-        public List<string> Equipment { get; set; } = new List<string>();
-        public string Progression { get; protected set; }
-        public Dictionary<string, string> Talents { get; set; } = new Dictionary<string, string>();
-        public int GP { get; set; }
-        public string Feature { get; protected set; }
         public string[] PersonalityTrait { get; protected set; } = new string[8];
         public string[] Ideal { get; protected set; } = new string[6];
         public string[] Bond { get; protected set; } = new string[6];
@@ -26,32 +18,39 @@ namespace DnD_Character_Creator.Backgrounds
         {
             var result = new GHBackground();
 
-
             switch (character.ChosenBackground)
             {
                 case "Academic":
                     result = Academic(character);
+                    //Antiquarian, Archivist, Physician
                     break;
                 case "Aristocrat":
                     result = Aristocrat(character);
+                    //Courtier, Envoy, Noble
                     break;
                 case "Clergy":
                     result = Clergy(character);
+                    //Inquisitor, Preacher, Priest
                     break;
                 case "Common Folk":
                     result = CommonFolk(character);
+                    //Villager, Entertainer, Merchant
                     break;
                 case "Criminal":
                     result = Criminal(character);
+                    //Charltan, Cutthroat, Burglar
                     break;
                 case "Militarist":
                     result = Militarist(character);
+                    //Mercenary, Guard, Soldier
                     break;
                 case "Outlander":
                     result = Outlander(character);
+                    //Beast Hunter, Pioneer, Explorer
                     break;
                 case "Seafarer":
                     result = Seafarer(character);
+                    //Sailor, Dock Worker, Sea Gatherer
                     break;
             }
 
@@ -69,15 +68,34 @@ namespace DnD_Character_Creator.Backgrounds
 
             return new Tuple<string, int>( prof, rank );
         }
-        public static void GetTalents(List<string> talents, Character character, int rank)
+        public static void AddTalents(List<string> talents, Character character, int rank)
         {
             character.ProfessionDie += rank * 2;
-            List<string> pickedTalents = CLIHelper.GetDictionaryOptions(Options.Talents, talents, rank, "Pick your talent now");
+            List<string> pickedTalents = BEHelper.GetTalents(Options.Talents, talents, rank, "Pick your talent now");
             foreach (var item in pickedTalents)
             {
                 character.Talents.Add(item, Options.Talents[item]);
             }
             Console.Clear();
+        }
+        public static List<string> AddTool()
+        {
+            var allTools = new List<string>();
+            var justTools = new List<string>();
+            allTools.AddRange(Options.Tools);
+            allTools.AddRange(Options.ArtisanTools);
+            allTools.Remove("Artisan's Tools");
+            allTools.Remove("Musical Instrument");
+            foreach (var item in allTools)
+            {
+                if (item.Contains("Tools"))
+                {
+                    justTools.Add(item);
+                }
+            }
+            justTools.AddRange(Options.MusicalInstruments);
+
+            return justTools;
         }
         public static GHBackground Academic(Character character)
         {
@@ -85,22 +103,20 @@ namespace DnD_Character_Creator.Backgrounds
 
             var skills = new List<string> { "Arcana", "History", "Investigation", "Medicine", "Nature", "Religion" };
             string pickMsg = $"Pick a skill from the list";
-            string errorMsg = "You are already trained in that skill, pick a different skill.";
-            var skill = CLIHelper.GetNew(skills, character.SkillProficiencies, pickMsg, errorMsg);
-            result.SkillProficiencies.Add(skill);
+            var skill = CLIHelper.GetNew(skills, character.SkillProficiencies, pickMsg);
+            character.SkillProficiencies.Add(skill);
             pickMsg = "Pick a standard language";
-            errorMsg = "You already have that language try again";
-            string lang1 = CLIHelper.GetNew(Options.StandardLanguages, character.Languages, pickMsg, errorMsg);
-            result.Languages.Add(lang1);
+            string lang1 = CLIHelper.GetNew(Options.StandardLanguages, character.Languages, pickMsg);
+            character.Languages.Add(lang1);
             pickMsg = "Pick an exotic language";
-            string lang2 = CLIHelper.GetNew(Options.ExoticLanguages, character.Languages, pickMsg, errorMsg);
-            result.Languages.Add(lang2);
-            result.Equipment.Add("Common clothes");
-            result.Equipment.Add("Quill and ink");
-            result.Equipment.Add("Small knife");
-            result.Equipment.Add("Letter from a dead colleague posing an unanswered question");
-            result.Equipment.Add("Belt pouch for coins");
-            result.GP = 10;
+            string lang2 = CLIHelper.GetNew(Options.ExoticLanguages, character.Languages, pickMsg);
+            character.Languages.Add(lang2);
+            character.Equipment.Add("Common clothes");
+            character.Equipment.Add("Quill and ink");
+            character.Equipment.Add("Small knife");
+            character.Equipment.Add("Letter from a dead colleague posing an unanswered question");
+            character.Equipment.Add("Belt pouch for coins");
+            character.GP += 10;
 
             var professions = new List<string> { "Antiquarian", "Archivist", "Physician" };
             var tuple = GetRank(professions, character);
@@ -109,137 +125,136 @@ namespace DnD_Character_Creator.Backgrounds
 
             if (prof == "Antiquarian")
             {
-                result.SkillProficiencies.Add("History");
-                result.Equipment.Add("Fine brush");
-                result.Equipment.Add("Magnifying lens");
-                result.Equipment.Add("Small wooden crate to store relics");
-                result.Feature = "Insightful Discovery: spend 1hr, succeed on medium DC History check - uncover purposes and uses of any" +
-                    "\n        object, language, cultural practice, or similiar subject (including magic items)";
+                character.SkillProficiencies.Add("History");
+                character.Equipment.Add("Fine brush");
+                character.Equipment.Add("Magnifying lens");
+                character.Equipment.Add("Small wooden crate to store relics");
+                character.BackgroundFeature = "Insightful Discovery: spend 1hr, succeed on medium DC History check - uncover purposes and uses of any object, language," +
+                    "\n     cultural practice, or similiar subject (including magic items)";
 
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Museum Scholar";
-                    result.Equipment.Add("Holdings: A desk at library, college, or museum with access to common resources." +
-                        "\n        A map or letter detailing the location of a hidden treasure or relic.");
-                    result.Progression = "Acquire a small collection of antiquities that fellow antiquarians acknowledge.";
+                    character.Equipment.Add("Holdings: A desk at library, college, or museum with access to common resources." +
+                        "\n          A map or letter detailing the location of a hidden treasure or relic.");
+                    character.Progression = "Acquire a small collection of antiquities that fellow antiquarians acknowledge.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Adept Collector";
-                    result.Equipment.Add("Holdings: A small collection of prized antiquities and a quaint office to store/display them." +
-                        "\n        A hireling scholar who tends to your collection and undertakes research for you.");
-                    result.Progression = "Build multiple collections dedicated to diverse subjects. You must also accommodate your collections in a suitable gallery.";
+                    character.Equipment.Add("Holdings: A small collection of prized antiquities and a quaint office to store/display them." +
+                        "\n          A hireling scholar who tends to your collection and undertakes research for you.");
+                    character.Progression = "Build multiple collections dedicated to diverse subjects. You must also accommodate your collections in a suitable gallery.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Senior Professor";
-                    result.Equipment.Add("Holdings: An array of prized collections - each holds secrets to lost civilizations, forgotten magics or legends." +
-                        "\n        An extravagant gallery that displays and protects your collection." +
-                        "\n        A team of assistants and scholars who attend to the collection, conduct research, and explore the world to find more antiquities." +
-                        "\n        A small following within the world of academia who seek you out to discuss and learn about your collection.");
-                    result.Progression = "Create a great museum - collections must be extensive spanning many subjects, time periods, and cultures." +
-                        "\n        You must document a great finding about a lost subject, magic item, or tradition, and be cited in others’ work regarding the subject.";
+                    character.Equipment.Add("Holdings: An array of prized collections - each holds secrets to lost civilizations, forgotten magics or legends." +
+                        "\n          An extravagant gallery that displays and protects your collection." +
+                        "\n          A team of assistants and scholars who attend to the collection, conduct research, and explore the world to find more antiquities." +
+                        "\n          A small following within the world of academia who seek you out to discuss and learn about your collection.");
+                    character.Progression = "Create a great museum - collections must be extensive spanning many subjects, time periods, and cultures." +
+                        "\n     You must document a great finding about a lost subject, magic item, or tradition, and be cited in others’ work regarding the subject.";
                 }
                 else
                 {
                     character.ChosenBackground += " - Curator";
-                    result.Equipment.Add("Holdings: A great museum with collections that draw monarchs and common folk alike." +
-                        "\n        A dedicated team of antiquarians that manage your collection and museum, scouring the world for relics." +
-                        "\n        A position within a prestigious council of academics, who regard you as an esteemed peer and assist you with your studies.");
+                    character.Equipment.Add("Holdings: A great museum with collections that draw monarchs and common folk alike." +
+                        "\n          A dedicated team of antiquarians that manage your collection and museum, scouring the world for relics." +
+                        "\n          A position within a prestigious council of academics, who regard you as an esteemed peer and assist you with your studies.");
                 }
             }
             else if (prof == "Archivist")
             {
-                result.SkillProficiencies.Add("Investigation");
-                result.Equipment.Add("Ink pen");
-                result.Equipment.Add("Bottle of Ink");
-                result.Equipment.Add("Tin of pounce powder");
-                result.Feature = "Academic References: spend 1hr, succeed on medium DC Investigation check - find a contact within a library," +
-                    "\n        academy, or place of knowledge. Contact is friendly and will answer research questions";
+                character.SkillProficiencies.Add("Investigation");
+                character.Equipment.Add("Ink pen");
+                character.Equipment.Add("Bottle of Ink");
+                character.Equipment.Add("Tin of pounce powder");
+                character.BackgroundFeature = "Academic References: spend 1hr, succeed on medium DC Investigation check - find a contact within a library, academy, or place of knowledge." +
+                    "\n     Contact is friendly and will answer research questions";
 
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Scribe's Assistant";
-                    result.Equipment.Add("Holdings: A desk within a college, library, or museum with access to common resources." +
-                        "\n        A well-regarded text which is suspected to contain falsehoods, with made-up accounts and references.");
-                    result.Progression = "";
+                    character.Equipment.Add("Holdings: A desk within a college, library, or museum with access to common resources." +
+                        "\n          A well-regarded text which is suspected to contain falsehoods, with made-up accounts and references.");
+                    character.Progression = "To progress in this profession, you must fact-check and document your discovery of errors in a fraudulent, plagiarised, or mistaken tome.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Scribe";
-                    result.Equipment.Add("Holdings: An office with printing materials, binding equipment." +
-                        "\n        A dedicated hireling assistant who completes minor tasks for you." +
-                        "\n        Access to restricted sections of libraries and other places of collective knowledge.");
-                    result.Progression = "Complete and restore a catalogue of books or scrolls to be added to a library." +
-                        "\n        Your contribution to the library must be deemed a worthy addition by your superiors.";
+                    character.Equipment.Add("Holdings: An office with printing materials, binding equipment." +
+                        "\n          A dedicated hireling assistant who completes minor tasks for you." +
+                        "\n          Access to restricted sections of libraries and other places of collective knowledge.");
+                    character.Progression = "Complete and restore a catalogue of books or scrolls to be added to a library. Your contribution to the library" +
+                        "\n     must be deemed a worthy addition by your superiors.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Chief Librarian";
-                    result.Equipment.Add("Holdings: A great library containing texts collected over centuries." +
-                        "\n        A team of hirelings who attend the day-to-day running of the library, such as scribes, assistants, and scholars." +
-                        "\n        Your name is highly regarded within the world of academia." +
-                        "\n        Access to the entire library, including forbidden tomes and the knowledge they contain.");
-                    result.Progression = "Make an unprecedented contribution to the world of academia." +
-                        "\n        This may be the uncovering of a great truth, or the invention of a new methodology.";
+                    character.Equipment.Add("Holdings: A great library containing texts collected over centuries." +
+                        "\n          A team of hirelings who attend the day-to-day running of the library, such as scribes, assistants, and scholars." +
+                        "\n          Your name is highly regarded within the world of academia." +
+                        "\n          Access to the entire library, including forbidden tomes and the knowledge they contain.");
+                    character.Progression = "Make an unprecedented contribution to the world of academia. This may be the uncovering of a great truth, or the invention of a new methodology.";
                 }
                 else
                 {
                     character.ChosenBackground += " - Grand Loremaster";
-                    result.Equipment.Add("Holdings: You have become head of a knowledge-based institute(ministry, college, etc). You command the institution’s resources." +
-                        "\n        You have authority over all smaller institutions within your region, including access to their resources and hirelings." +
-                        "\n        You have access to sources of knowledge that have otherwise been sworn to secrecy." +
-                        "\n        Sources can include forbidden arcane practices, demons’ true names, and schematics for powerful artifacts.");
+                    character.Equipment.Add("Holdings: You have become head of a knowledge-based institute(ministry, college, etc). You command the institution’s resources." +
+                        "\n          You have authority over all smaller institutions within your region, including access to their resources and hirelings." +
+                        "\n          You have access to sources of knowledge that have otherwise been sworn to secrecy." +
+                        "\n          Sources can include forbidden arcane practices, demons’ true names, and schematics for powerful artifacts.");
                 }
             }
             else if (prof == "Physician")
             {
-                result.SkillProficiencies.Add("Medicine");
-                result.Equipment.Add("Bag filled with medicinal herbs");
-                result.Equipment.Add("Pestle & mortar");
-                result.Equipment.Add("Bandages");
-                result.Equipment.Add("Needle & thread");
-                result.Equipment.Add("Jar of leeches");
-                result.Feature = "Medical Diagnosis: spend 1hr, succeed on medium DC Medicine check - find the exact cause of an" +
-                    "\n        illness, injury, or death and if a nonmagical cure exists, you become aware of that cure";
+                character.SkillProficiencies.Add("Medicine");
+                character.Equipment.Add("Bag filled with medicinal herbs");
+                character.Equipment.Add("Pestle & mortar");
+                character.Equipment.Add("Bandages");
+                character.Equipment.Add("Needle & thread");
+                character.Equipment.Add("Jar of leeches");
+                character.BackgroundFeature = "Medical Diagnosis: spend 1hr, succeed on medium DC Medicine check - find the exact cause of an illness, injury, or death and" +
+                    "\n     if a nonmagical cure exists, you become aware of that cure";
 
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Surgeon’s Apprentice";
-                    result.Equipment.Add("Holdings: Lodging near the medical clinic, hospital, or infirmary where you work." +
-                        "\n        A copy of the medical codex Cause and Cures.");
-                    result.Progression = "Complete a variety of surgeries successfully, and be considered proficient by a mentor who has attained the rank of Barber Surgeon.";
+                    character.Equipment.Add("Holdings: Lodging near the medical clinic, hospital, or infirmary where you work." +
+                        "\n          A copy of the medical codex Cause and Cures.");
+                    character.Progression = "Complete a variety of surgeries successfully, and be considered proficient by a mentor who has attained the rank of Barber Surgeon.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Barber Surgeon";
-                    result.Equipment.Add("Holdings: A crude medical clinic known as a “Chop Shop”, to facilitate the surgeries you perform." +
-                        "\n        Up to half a dozen apprentices who follow your commands, assist you where possible, and aspire to become surgeons themselves.");
-                    result.Progression = "Obtain your medical licence by proving your skill and dedication to a Royal Physician.";
+                    character.Equipment.Add("Holdings: A crude medical clinic known as a “Chop Shop”, to facilitate the surgeries you perform." +
+                        "\n          Up to half a dozen apprentices who follow your commands, assist you where possible, and aspire to become surgeons themselves.");
+                    character.Progression = "Obtain your medical licence by proving your skill and dedication to a Royal Physician.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Doctor";
-                    result.Equipment.Add("Holdings: A medical clinic, equipped with an infirmary to care for long-term patients with a variety of illnesses." +
-                        "\n        A medical licence granted by a Royal Physician, granting you the right to treat individuals of any background." +
-                        "\n        A clinic staff of half a dozen Barber Surgeons and a team of apprentices." +
-                        "\n        A patient list of influential figures of various backgrounds who employ your practice for their medical needs.");
-                    result.Progression = "Build your practice into a hospital, with multiple Barber Surgeons and Doctors working alongside you." +
-                        "\n        You must also accomplish a great medical achievement (discover a cure to a disease or a medical practice breakthrough)";
+                    character.Equipment.Add("Holdings: A medical clinic, equipped with an infirmary to care for long-term patients with a variety of illnesses." +
+                        "\n          A medical licence granted by a Royal Physician, granting you the right to treat individuals of any background." +
+                        "\n          A clinic staff of half a dozen Barber Surgeons and a team of apprentices." +
+                        "\n          A patient list of influential figures of various backgrounds who employ your practice for their medical needs.");
+                    character.Progression = "Build your practice into a hospital, with multiple Barber Surgeons and Doctors working alongside you. You must also accomplish a great" +
+                        "\n     medical achievement (discover a cure to a disease or a medical practice breakthrough)";
                 }
                 else
                 {
                     character.ChosenBackground += " - Royal Physician";
-                    result.Equipment.Add("Holdings: A Royal Hospital(reserved for the upper class) complete with multiple wards dedicated to various specialisations." +
-                        "\n        An experienced team of physicians of all ranks, dedicated to running the Royal Hospital and advancing medical practices." +
-                        "\n        A client list consisting of Monarchs, powerful merchants, and other important individuals.");
+                    character.Equipment.Add("Holdings: A Royal Hospital(reserved for the upper class) complete with multiple wards dedicated to various specialisations." +
+                        "\n          An experienced team of physicians of all ranks, dedicated to running the Royal Hospital and advancing medical practices." +
+                        "\n          A client list consisting of Monarchs, powerful merchants, and other important individuals.");
                 }
             }
 
             var talents = new List<string> { "Biologist", "Botanist", "Copycat", "Diligent Research", "Disciplinarian", "Drunkard",
                 "Forecaster", "Gambler", "Local Historian", "Mystical Scholar", "Passionate Orator", "Pathologist", "Problem Solver",
                 "Runekeeper", "Sawbones", "Translator" };
-            GetTalents(talents, character, rank);
+            AddTalents(talents, character, rank);
 
             result.PersonalityTrait[0] = "I use polysyllabic words that convey the impression of great erudition.";
             result.PersonalityTrait[1] = "I've read every book in the world’s greatest libraries - or I like to boast that I have.";
@@ -276,20 +291,18 @@ namespace DnD_Character_Creator.Backgrounds
 
             var skills = new List<string> { "Deception", "History", "Insight", "Performance", "Persuasion", "Religion" };
             string pickMsg = $"Pick a skill from the list";
-            string errorMsg = "You are already trained in that skill, pick a different skill.";
-            var skill = CLIHelper.GetNew(skills, character.SkillProficiencies, pickMsg, errorMsg);
-            result.SkillProficiencies.Add(skill);
+            var skill = CLIHelper.GetNew(skills, character.SkillProficiencies, pickMsg);
+            character.SkillProficiencies.Add(skill);
             pickMsg = "Pick a standard language";
-            errorMsg = "You already have that language try again";
-            string lang1 = CLIHelper.GetNew(Options.StandardLanguages, character.Languages, pickMsg, errorMsg);
-            result.Languages.Add(lang1);
-            result.Equipment.Add("Fine clothes");
-            result.Equipment.Add("Piece of fine jewelry that displays your status");
-            result.Equipment.Add("Quill and ink");
-            result.Equipment.Add("Letter opener");
-            result.Equipment.Add("Parchment");
-            result.Equipment.Add("Coin purse");
-            result.GP = 25;
+            string lang1 = CLIHelper.GetNew(Options.StandardLanguages, character.Languages, pickMsg);
+            character.Languages.Add(lang1);
+            character.Equipment.Add("Fine clothes");
+            character.Equipment.Add("Piece of fine jewelry that displays your status");
+            character.Equipment.Add("Quill and ink");
+            character.Equipment.Add("Letter opener");
+            character.Equipment.Add("Parchment");
+            character.Equipment.Add("Coin purse");
+            character.GP += 25;
 
             var professions = new List<string> { "Courtier", "Envoy", "Noble" };
             var tuple = GetRank(professions, character);
@@ -298,118 +311,118 @@ namespace DnD_Character_Creator.Backgrounds
 
             if (prof == "Courtier")
             {
-                result.SkillProficiencies.Add("Deception");
-                result.Equipment.Add("A medallion or pin displaying your house patron");
-                result.Equipment.Add("Court clothes");
-                result.Feature = "Political Maneuvering: spend 1hr, succeed on medium DC Deception check - plant gossip true or false in gov't";
+                character.SkillProficiencies.Add("Deception");
+                character.Equipment.Add("A medallion or pin displaying your house patron");
+                character.Equipment.Add("Court clothes");
+                character.BackgroundFeature = "Political Maneuvering: spend 1hr, succeed on medium DC Deception check - plant gossip true or false in gov't";
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Chamber Keeper";
-                    result.Equipment.Add("Holdings: A room or lodging provided by your patron within their estate." +
-                        "\n        A scandalous secret relating to a member of your court.");
-                    result.Progression = "Obtain a minor title from your patron that reflects your station.";
+                    character.Equipment.Add("Holdings: A room or lodging provided by your patron within their estate." +
+                        "\n          A scandalous secret relating to a member of your court.");
+                    character.Progression = "Obtain a minor title from your patron that reflects your station.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Court Official";
-                    result.Equipment.Add("Holdings: The authority and resources associated with your minor title." +
-                        "\n        For example, a cofferer would control financial records, and perhaps even bank access." +
-                        "\n        Up to half a dozen servant hirelings to assist in your daily responsibilities.");
-                    result.Progression = "To be granted a greater court title by your patron that reflects your station.";
+                    character.Equipment.Add("Holdings: The authority and resources associated with your minor title." +
+                        "\n          For example, a cofferer would control financial records, and perhaps even bank access." +
+                        "\n          Up to half a dozen servant hirelings to assist in your daily responsibilities.");
+                    character.Progression = "To be granted a greater court title by your patron that reflects your station.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Court Patrician";
-                    result.Equipment.Add("Holdings: A greater court title and all the privileges that accompany it." +
-                        "\n        For example, the master of ceremonies would have personal access to their patrons’ family." +
-                        "\n        A team of servants and lesser Courtiers sworn to you either through authority or intrigue." +
-                        "\n        A private suite within your patron’s estate that provides easy access to court and extravagant luxury." +
-                        "\n        Informants and spies throughout the court who report intrigue and valuable information to you.");
-                    result.Progression = "Achieve complete control of your Court, through coercion, deception, or any other means.";
+                    character.Equipment.Add("Holdings: A greater court title and all the privileges that accompany it." +
+                        "\n          For example, the master of ceremonies would have personal access to their patrons’ family." +
+                        "\n          A team of servants and lesser Courtiers sworn to you either through authority or intrigue." +
+                        "\n          A private suite within your patron’s estate that provides easy access to court and extravagant luxury." +
+                        "\n          Informants and spies throughout the court who report intrigue and valuable information to you.");
+                    character.Progression = "Achieve complete control of your Court, through coercion, deception, or any other means.";
                 }
                 else
                 {
                     character.ChosenBackground += " - Royal Chamberlain";
-                    result.Equipment.Add("Holdings: Complete control of the court’s resources, such as finances, hirelings, and establishments." +
-                        "\n        Incriminating information relating to each member at court and their possible weaknesses." +
-                        "\n        Informants and spies across the region, who feed you intrigue regarding your court and others.");
+                    character.Equipment.Add("Holdings: Complete control of the court’s resources, such as finances, hirelings, and establishments." +
+                        "\n          Incriminating information relating to each member at court and their possible weaknesses." +
+                        "\n          Informants and spies across the region, who feed you intrigue regarding your court and others.");
                 }
             }
             else if (prof == "Envoy")
             {
-                result.SkillProficiencies.Add("Insight");
-                result.Equipment.Add("Royal seal allowing you to cross borders");
-                result.Equipment.Add("Diplomatic garb");
-                result.Feature = "Diplomatic Connections: spend 1hr, succeed on medium DC Insight check - find an ally within the aristocracy, guilds, etc" +
-                    "\n        Ally is friendly to you and will answer questions about nobility, politics, or high-society";
+                character.SkillProficiencies.Add("Insight");
+                character.Equipment.Add("Royal seal allowing you to cross borders");
+                character.Equipment.Add("Diplomatic garb");
+                character.BackgroundFeature = "Diplomatic Connections: spend 1hr, succeed on medium DC Insight check - find an ally within the aristocracy, guilds, etc" +
+                    "\n          Ally is friendly to you and will answer questions about nobility, politics, or high-society";
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Secretary";
-                    result.Equipment.Add("Holdings: Free lodging within any consulate you represent or work for." +
-                        "\n        A secret encrypted political message you cannot decipher.");
-                    result.Progression = "Assist in completing a dangerous or urgent diplomatic mission.";
+                    character.Equipment.Add("Holdings: Free lodging within any consulate you represent or work for." +
+                        "\n          A secret encrypted political message you cannot decipher.");
+                    character.Progression = "Assist in completing a dangerous or urgent diplomatic mission.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Councillor";
-                    result.Equipment.Add("Holdings: A personal assistant to help with organising, who accompanies you on diplomatic journeys." +
-                        "\n        Access to equipment and information known to the consulate.");
-                    result.Progression = "Complete your own diplomatic mission successfully.";
+                    character.Equipment.Add("Holdings: A personal assistant to help with organising, who accompanies you on diplomatic journeys." +
+                        "\n          Access to equipment and information known to the consulate.");
+                    character.Progression = "Complete your own diplomatic mission successfully.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Ambassador";
-                    result.Equipment.Add("Holdings: A team of Envoys to assist you at your consulate." +
-                        "\n        Provisions and resources sent to you by your home region to assist in diplomatic missions." +
-                        "\n        An encryption codex, used to decipher encoded messages sent to and from your home region.");
-                    result.Progression = "Negotiate an important treaty between nations, or uncover a great espionage conspiracy within your province.";
+                    character.Equipment.Add("Holdings: A team of Envoys to assist you at your consulate." +
+                        "\n          Provisions and resources sent to you by your home region to assist in diplomatic missions." +
+                        "\n          An encryption codex, used to decipher encoded messages sent to and from your home region.");
+                    character.Progression = "Negotiate an important treaty between nations, or uncover a great espionage conspiracy within your province.";
                 }
                 else
                 {
                     character.ChosenBackground += " - Grand Chancellor";
-                    result.Equipment.Add("Holdings: Access to restricted and classified documents." +
-                        "\n        You represent your monarch or other absolute authority in external relations." +
-                        "\n        You have access to any resources your monarch will provide you, and broad authority to use them.");
+                    character.Equipment.Add("Holdings: Access to restricted and classified documents." +
+                        "\n          You represent your monarch or other absolute authority in external relations." +
+                        "\n          You have access to any resources your monarch will provide you, and broad authority to use them.");
                 }
             }
             else if (prof == "Noble")
             {
-                result.SkillProficiencies.Add("Persuasion");
-                result.Equipment.Add("Signet ring engraved with family crest");
-                result.Feature = "Position of Privilege: spend 1hr, succeed on medium DC Persuasion check - reduce consequences for greater crimes" +
-                    "\n        ignore small crimes like trespassing, theft, possession of contraband, unarmed assault, etc";
+                character.SkillProficiencies.Add("Persuasion");
+                character.Equipment.Add("Signet ring engraved with family crest");
+                character.BackgroundFeature = "Position of Privilege: spend 1hr, succeed on medium DC Persuasion check - reduce consequences for greater crimes" +
+                    "\n          ignore small crimes like trespassing, theft, possession of contraband, unarmed assault, etc";
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Dishevelled Noble";
-                    result.Equipment.Add("Holdings: A ruined estate and noble title that carries little influence");
-                    result.Progression = "To be granted a barony, or holdings worthy of the title, by a Count or higher-ranking noble" +
-                        "\n        Additionally, you must restore your family household to a reputable state.";
+                    character.Equipment.Add("Holdings: A ruined estate and noble title that carries little influence");
+                    character.Progression = "To be granted a barony, or holdings worthy of the title, by a Count or higher-ranking noble. Additionally, you must restore your" +
+                        "\n     family household to a reputable state.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Lord Baron";
-                    result.Equipment.Add("Holdings: A barony estate, including resources and hirelings." +
-                        "\n        A baron’s title, granting you authority and affirming your social status to people in your region.");
-                    result.Progression = "Have a Duke or Monarch make you a Count, and construct a noble estate befitting a Count.";
+                    character.Equipment.Add("Holdings: A barony estate, including resources and hirelings." +
+                        "\n          A baron’s title, granting you authority and affirming your social status to people in your region.");
+                    character.Progression = "Have a Duke or Monarch make you a Count, and construct a noble estate befitting a Count.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Count";
-                    result.Equipment.Add("Holdings: A county estate, which includes resources and hirelings." +
-                        "\n        A count’s title, granting you authority and affirming your social status among other individuals of your region.");
-                    result.Progression = "Be granted the title of Duke by a Monarch, and construct a noble estate befitting a Duke.";
+                    character.Equipment.Add("Holdings: A county estate, which includes resources and hirelings." +
+                        "\n          A count’s title, granting you authority and affirming your social status among other individuals of your region.");
+                    character.Progression = "Be granted the title of Duke by a Monarch, and construct a noble estate befitting a Duke.";
                 }
                 else
                 {
                     character.ChosenBackground += " - Duke";
-                    result.Equipment.Add("Holdings: A Duke’s estate, which includes resources and hirelings." +
-                        "\n        A Duke’s title, granting you authority and social status among other individuals of your region.");
+                    character.Equipment.Add("Holdings: A Duke’s estate, which includes resources and hirelings." +
+                        "\n          A Duke’s title, granting you authority and social status among other individuals of your region.");
                 }
             }
 
             var talents = new List<string> { "Born In the Saddle", "Copycat", "Court Schemer", "Disciplinarian", "Drunkard", "Elusive",
                 "Figure of Authority", "Gambler", "Impressionist", "Local Historian", "Problem Solver", "Quick Fingers", "Translator" };
-            GetTalents(talents, character, rank);
+            AddTalents(talents, character, rank);
 
             result.PersonalityTrait[0] = "My eloquent flattery makes everyone I talk to feel like the most wonderful and important person in the world.";
             result.PersonalityTrait[1] = "The common folk love me for my kindness and generosity.";
@@ -446,23 +459,22 @@ namespace DnD_Character_Creator.Backgrounds
 
             var skills = new List<string> { "History", "Insight", "Intimidation", "Medicine", "Persuasion", "Religion" };
             string pickMsg = $"Pick a skill from the list";
-            string errorMsg = "You are already trained in that skill, pick a different skill.";
-            var skill = CLIHelper.GetNew(skills, character.SkillProficiencies, pickMsg, errorMsg);
-            result.SkillProficiencies.Add(skill);
+            
+            var skill = CLIHelper.GetNew(skills, character.SkillProficiencies, pickMsg);
+            character.SkillProficiencies.Add(skill);
             pickMsg = "Pick a standard language";
-            errorMsg = "You already have that language try again";
-            string lang1 = CLIHelper.GetNew(Options.StandardLanguages, character.Languages, pickMsg, errorMsg);
-            result.Languages.Add(lang1);
+            string lang1 = CLIHelper.GetNew(Options.StandardLanguages, character.Languages, pickMsg);
+            character.Languages.Add(lang1);
             pickMsg = "Pick an exotic language from:";
             var langList = new List<string> { "Abyssal", "Celestial", "Infernal" };
-            string lang2 = CLIHelper.GetNew(langList, character.Languages, pickMsg, errorMsg);
-            result.Languages.Add(lang2);
-            result.Equipment.Add("Prayer robes");
-            result.Equipment.Add("Holy symbol");
-            result.Equipment.Add("Prayer book or divine text");
-            result.Equipment.Add("Vestments");
-            result.Equipment.Add("Belt pouch for coins");
-            result.GP = 15;
+            string lang2 = CLIHelper.GetNew(langList, character.Languages, pickMsg);
+            character.Languages.Add(lang2);
+            character.Equipment.Add("Prayer robes");
+            BEHelper.AddHolySymbol(character);
+            character.Equipment.Add("Prayer book or divine text");
+            character.Equipment.Add("Vestments");
+            character.Equipment.Add("Belt pouch for coins");
+            character.GP += 15;
 
             var professions = new List<string> { "Inquisitor", "Preacher", "Priest" };
             var tuple = GetRank(professions, character);
@@ -471,123 +483,123 @@ namespace DnD_Character_Creator.Backgrounds
 
             if (prof == "Inquisitor")
             {
-                result.SkillProficiencies.Add("Intimidation");
-                result.Equipment.Add("Manacles");
-                result.Equipment.Add("A copy of the text \"Sins of the Heretic\"");
-                result.Equipment.Add("Leather strap");
-                result.Feature = "Eradicate Heresy: spend 1hr, succeed on medium DC Intimidation check - find informant and extract info" +
-                    "\n        Info like the location of local cults, witch covens, and other enemies of the Divine";
+                character.SkillProficiencies.Add("Intimidation");
+                character.Equipment.Add("Manacles");
+                character.Equipment.Add("A copy of the text \"Sins of the Heretic\"");
+                character.Equipment.Add("Leather strap");
+                character.BackgroundFeature = "Eradicate Heresy: spend 1hr, succeed on medium DC Intimidation check - find informant and extract info like the location of local" +
+                    "\n     cults, witch covens, and other enemies of the Divine";
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Initiate";
-                    result.Equipment.Add("Holdings: Free lodging at any religious institution that you currently serve." +
-                        "\n        You know someone from your childhood who is now with a witch coven, religious cult, or other enemy of the faith.");
-                    result.Progression = "Be promoted to the rank of Inquisitor by a Chapter Master.";
+                    character.Equipment.Add("Holdings: Free lodging at any religious institution that you currently serve." +
+                        "\n          You know someone from your childhood who is now with a witch coven, religious cult, or other enemy of the faith.");
+                    character.Progression = "Be promoted to the rank of Inquisitor by a Chapter Master.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Inquisitor";
-                    result.Equipment.Add("Holdings: Free lodging at any religious institution that you currently serve." +
-                        "\n        Access to info and equipment provided by the Order and temples of faith.");
-                    result.Progression = "Be promoted to Chapter Master by a Grand Theologist Inquisitor.";
+                    character.Equipment.Add("Holdings: Free lodging at any religious institution that you currently serve." +
+                        "\n          Access to info and equipment provided by the Order and temples of faith.");
+                    character.Progression = "Be promoted to Chapter Master by a Grand Theologist Inquisitor.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Chapter Master";
-                    result.Equipment.Add("Holdings: Free lodging at any religious institution that you currently serve." +
-                        "\n        Access to the restricted section of the chapter library, which contains all known weaknesses of supernatural entities." +
-                        "\n        If you have irrefutable evidence of their crimes, you have the authority to declare anyone an enemy of the faith.");
-                    result.Progression = "Being appointed to Grand Theologist Inquisitor by the head of your Order and a panel of ranking clergy.";
+                    character.Equipment.Add("Holdings: Free lodging at any religious institution that you currently serve." +
+                        "\n          Access to the restricted section of the chapter library, which contains all known weaknesses of supernatural entities." +
+                        "\n          If you have irrefutable evidence of their crimes, you have the authority to declare anyone an enemy of the faith.");
+                    character.Progression = "Being appointed to Grand Theologist Inquisitor by the head of your Order and a panel of ranking clergy.";
                 }
                 else
                 {
                     character.ChosenBackground += " - Grand Theologist Inquisitor";
-                    result.Equipment.Add("Holdings: Access to a council of Chapter Masters and other ranked clergy with whom you discuss matters of your Order." +
-                        "\n        You have the authority to appoint/dismiss chapter members to positions of power, both within the Inquisition and temples of the faith." +
-                        "\n        You have the ability to denounce those who you know(or suspect) to be enemies of the faith" +
-                        "\n        You can dispatch Inquisitor factions to investigate and impose the will of the faith.");
+                    character.Equipment.Add("Holdings: Access to a council of Chapter Masters and other ranked clergy with whom you discuss matters of your Order." +
+                        "\n          You have the authority to appoint/dismiss chapter members to positions of power, both within the Inquisition and temples of the faith." +
+                        "\n          You have the ability to denounce those who you know(or suspect) to be enemies of the faith" +
+                        "\n          You can dispatch Inquisitor factions to investigate and impose the will of the faith.");
                 }
             }
             else if (prof == "Preacher")
             {
-                result.SkillProficiencies.Add("Persuasion");
-                result.Equipment.Add("Flyers displaying propaganda");
-                result.Equipment.Add("Box to stand on");
-                result.Feature = "Propagate Agenda: spend 1hr, succeed on medium DC Persuasion check - you can influence the thoughts/opinions of locals" +
-                    "\n        can be used to do things like heighten the people's fear of magic or to bring them comfort/peace of mind";
+                character.SkillProficiencies.Add("Persuasion");
+                character.Equipment.Add("Flyers displaying propaganda");
+                character.Equipment.Add("Box to stand on");
+                character.BackgroundFeature = "Propagate Agenda: spend 1hr, succeed on medium DC Persuasion check - you can influence the thoughts/opinions of locals can be used to do" +
+                    "\n     things like heighten the people's fear of magic or to bring them comfort/peace of mind";
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Crier";
-                    result.Equipment.Add("Holdings: Free lodging at your local temple of the faith or religious institution." +
-                        "\n        Knowledge of a member of the ranked clergy using unlicensed magic or committing some other transgression.");
-                    result.Progression = "You have a small congregation of followers who come to hear your sermons each day.";
+                    character.Equipment.Add("Holdings: Free lodging at your local temple of the faith or religious institution." +
+                        "\n          Knowledge of a member of the ranked clergy using unlicensed magic or committing some other transgression.");
+                    character.Progression = "You have a small congregation of followers who come to hear your sermons each day.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Truth Speaker";
-                    result.Equipment.Add("Holdings: Free lodging at your local temple of the faith or religious institution." +
-                        "\n        You advise a group of criers in your province on religious matters and outline the agenda for each.");
-                    result.Progression = "You progress after having converted a significant number of people to your religion.";
+                    character.Equipment.Add("Holdings: Free lodging at your local temple of the faith or religious institution." +
+                        "\n          You advise a group of criers in your province on religious matters and outline the agenda for each.");
+                    character.Progression = "You progress after having converted a significant number of people to your religion.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Enlightened Evangelist";
-                    result.Equipment.Add("Holdings: Free lodging at your local temple of the faith or religious institution." +
-                        "\n        A letter that gives you religious immunity from Inquisitors, verifying that you are not a heretic." +
-                        "\n        A following of disciples who will accompany you to new unenlightened provinces to glorify your deity and you as its disciple.");
-                    result.Progression = "A member of your congregation observes you performing a miracle, drawing new converts to the faith.";
+                    character.Equipment.Add("Holdings: Free lodging at your local temple of the faith or religious institution." +
+                        "\n          A letter that gives you religious immunity from Inquisitors, verifying that you are not a heretic." +
+                        "\n          A following of disciples who will accompany you to new unenlightened provinces to glorify your deity and you as its disciple.");
+                    character.Progression = "A member of your congregation observes you performing a miracle, drawing new converts to the faith.";
                 }
                 else
                 {
                     character.ChosenBackground += " - Exalted Savior";
-                    result.Equipment.Add("Holdings: About a dozen faithful disciples that observe/convey your teachings & thousands of loyal followers." +
-                        "\n        A divine mandate bestowed by your deity or seraph that elevates you above the laws of humanity.");
+                    character.Equipment.Add("Holdings: About a dozen faithful disciples that observe/convey your teachings & thousands of loyal followers." +
+                        "\n          A divine mandate bestowed by your deity or seraph that elevates you above the laws of humanity.");
                 }
             }
             else if (prof == "Priest")
             {
-                result.SkillProficiencies.Add("Religion");
-                result.Equipment.Add("5 sticks of incense and an alms box");
-                result.Equipment.Add("Religious medallion stamped with the divine word");
-                result.Feature = "Religious Hierarchy: spend 1hr, succeed on medium DC Religion check - find an ally within the local clergy" +
-                    "\n        Ally is friendly to you and will answer questions about religion, the clergy’s agenda, and local religious matters";
+                character.SkillProficiencies.Add("Religion");
+                character.Equipment.Add("5 sticks of incense and an alms box");
+                character.Equipment.Add("Religious medallion stamped with the divine word");
+                character.BackgroundFeature = "Religious Hierarchy: spend 1hr, succeed on medium DC Religion check - find an ally within the local clergy" +
+                    "\nAlly is friendly to you and will answer questions about religion, the clergy’s agenda, and local religious matters";
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Acolyte";
-                    result.Equipment.Add("Holdings: You know of a senior clergy member who is exploiting the faith for personal gain." +
-                        "\n        Free lodging at your local temple of the faith.");
-                    result.Progression = "Be recommended for priesthood by a senior clergy member who has overseen your study of divine texts." +
+                    character.Equipment.Add("Holdings: You know of a senior clergy member who is exploiting the faith for personal gain." +
+                        "\n          Free lodging at your local temple of the faith.");
+                    character.Progression = "Be recommended for priesthood by a senior clergy member who has overseen your study of divine texts." +
                     "\n        You will be given a religious task that you must complete.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Priest";
-                    result.Equipment.Add("Holdings: You know of a senior clergy member who is exploiting the faith for personal gain." +
-                        "\n        Free lodging at your local temple of the faith." +
-                        "\n        A modest parish to oversee, including humble lodgings, and regularly receive locals for confession." +
-                        "\n        You have knowledge of a wealthy noble who possesses a 1st ed. book of scripture that the church greatly desires.");
-                    result.Progression = "Either expose the senior clergy member, or acquire the 1st ed. book of scripture.";
+                    character.Equipment.Add("Holdings: You know of a senior clergy member who is exploiting the faith for personal gain." +
+                        "\n          Free lodging at your local temple of the faith." +
+                        "\n          A modest parish to oversee, including humble lodgings, and regularly receive locals for confession." +
+                        "\n          You have knowledge of a wealthy noble who possesses a 1st ed. book of scripture that the church greatly desires.");
+                    character.Progression = "Either expose the senior clergy member, or acquire the 1st ed. book of scripture.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Bishop";
-                    result.Equipment.Add("Holdings: Well-appointed lodgings nearby a temple you steward (largest temple in your region)" +
-                        "\n        You oversee your own diocese in a major city, speaking on behalf of the faith and supervising the clergy there.");
-                    result.Progression = "You become Cardinal in the event that a Cardinal passes away or retires," +
-                    "\n        and the head of your faith appoints you in their stead due to your outstanding commitment to the faith.";
+                    character.Equipment.Add("Holdings: Well-appointed lodgings nearby a temple you steward (largest temple in your region)" +
+                        "\n          You oversee your own diocese in a major city, speaking on behalf of the faith and supervising the clergy there.");
+                    character.Progression = "You become Cardinal in the event that a Cardinal passes away or retires, and the head of your faith appoints you in their stead " +
+                        "\n     due to your outstanding commitment to the faith.";
                 }
                 else
                 {
                     character.ChosenBackground += " - Cardinal";
-                    result.Equipment.Add("Holdings: A number of divine districts that you oversee within your province." +
-                        "\n        Free lodging at any parish, divine district, and any institution under control of the faith that recognises you");
+                    character.Equipment.Add("Holdings: A number of divine districts that you oversee within your province." +
+                        "\n          Free lodging at any parish, divine district, and any institution under control of the faith that recognises you");
                 }
             }
 
             var talents = new List<string> { "Astute Intuition", "Cabal Lorekeeper", "Confessor", "Copycat", "Diligent Researcher",
                 "Disciplinarian", "Drunkard", "Figure of Authority", "Idolist", "Interrogator", "Local Historian", "Menacing Presence",
                 "Mystical Scholar", "Passionate Orator", "Pathologist", "Sawbones", "Shrewd Deduction" };
-            GetTalents(talents, character, rank);
+            AddTalents(talents, character, rank);
 
             result.PersonalityTrait[0] = "I idolize a particular hero of my faith, and constantly refer to that person’s deeds and example.";
             result.PersonalityTrait[1] = "I can find common ground between the fiercest enemies, empathizing with them and always working toward peace.";
@@ -624,24 +636,19 @@ namespace DnD_Character_Creator.Backgrounds
 
             var skills = new List<string> { "Animal Handling", "Athletics", "Insight", "Nature", "Persuasion" };
             string pickMsg = $"Pick a skill from the list";
-            string errorMsg = "You are already trained in that skill, pick a different skill.";
-            var skill = CLIHelper.GetNew(skills, character.SkillProficiencies, pickMsg, errorMsg);
-            result.SkillProficiencies.Add(skill);
+            var skill = CLIHelper.GetNew(skills, character.SkillProficiencies, pickMsg);
+            character.SkillProficiencies.Add(skill);
             pickMsg = "Pick a standard language";
-            errorMsg = "You already have that language try again";
-            string lang1 = CLIHelper.GetNew(Options.StandardLanguages, character.Languages, pickMsg, errorMsg);
-            result.Languages.Add(lang1);
-            pickMsg = "Pick a tool or instrument for your proficiencies/inventory";
-            var tools = new List<string>();
-            tools.AddRange(Options.ArtisanTools);
-            tools.AddRange(Options.MusicalInstruments);
-            int index = CLIHelper.PrintChoices(pickMsg, tools);
-            result.ToolProficiencies.Add(tools[index]);
-            result.Equipment.Add(tools[index]);
-            result.Equipment.Add("Common clothes");
-            result.Equipment.Add("Small drawstring sack");
-            result.Equipment.Add("Belt pouch for coins");
-            result.GP = 10;
+            string lang1 = CLIHelper.GetNew(Options.StandardLanguages, character.Languages, pickMsg);
+            character.Languages.Add(lang1);
+            var instrumentsTools = AddTool();
+            string tool = CLIHelper.GetNew(instrumentsTools, character.ToolProficiencies, "Pick a tool or instrument");
+            character.ToolProficiencies.Add(tool);
+            character.Equipment.Add(tool);
+            character.Equipment.Add("Common clothes");
+            character.Equipment.Add("Small drawstring sack");
+            character.Equipment.Add("Belt pouch for coins");
+            character.GP += 10;
 
             var professions = new List<string> { "Villager", "Entertainer", "Merchant" };
             var tuple = GetRank(professions, character);
@@ -650,40 +657,40 @@ namespace DnD_Character_Creator.Backgrounds
 
             if (prof == "Villager")
             {
-                result.SkillProficiencies.Add("Insight");
-                result.Equipment.Add("Iron pot");
-                result.Equipment.Add("Shovel");
-                result.Equipment.Add("Tinderbox");
-                result.Feature = "Local Gossip: spend 1hr, succeed on medium DC Insight check - learn of rumours about a certain subject" +
-                    "\n        info can include jobs, political intrigue, or info that people tend to keep from authorities";
+                character.SkillProficiencies.Add("Insight");
+                character.Equipment.Add("Iron pot");
+                character.Equipment.Add("Shovel");
+                character.Equipment.Add("Tinderbox");
+                character.BackgroundFeature = "Local Gossip: spend 1hr, succeed on medium DC Insight check - learn of rumours about a certain subject info can include jobs, political" +
+                    "\n     intrigue, or info that people tend to keep from authorities";
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Peasant";
-                    result.Equipment.Add("Holdings: A shack or hovel which you call home." +
-                        "\n        A deed to a heavily indebted farmstead which has been seized until its debts are cleared." +
-                        "\n        You may have acquired this deed through inheritance, gambling winnings, or some other means.");
-                    result.Progression = "Clear the debt on your deed and restore your farmstead to operating condition.";
+                    character.Equipment.Add("Holdings: A shack or hovel which you call home." +
+                        "\n          A deed to a heavily indebted farmstead which has been seized until its debts are cleared." +
+                        "\n          You may have acquired this deed through inheritance, gambling winnings, or some other means.");
+                    character.Progression = "Clear the debt on your deed and restore your farmstead to operating condition.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Land Owner";
-                    result.Equipment.Add("Holdings: A small farmstead, including livestock, crops, and stores suitable to the location." +
-                        "\n        Half a dozen unskilled hirelings who live and work on your farm.");
-                    result.Progression = "Become a respected and influential member of your local village.";
+                    character.Equipment.Add("Holdings: A small farmstead, including livestock, crops, and stores suitable to the location." +
+                        "\n          Half a dozen unskilled hirelings who live and work on your farm.");
+                    character.Progression = "Become a respected and influential member of your local village.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Council Member";
-                    result.Equipment.Add("Holdings: A skilled, professional hireling assistant(lawyer, accountant, etc) who helps manage your affairs." +
-                        "\n        Resources allocated by the Mayor for you to complete your duties as a council member.");
-                    result.Progression = "To be elected or appointed Mayor by a lord, council, electorate, or other means.";
+                    character.Equipment.Add("Holdings: A skilled, professional hireling assistant(lawyer, accountant, etc) who helps manage your affairs." +
+                        "\n          Resources allocated by the Mayor for you to complete your duties as a council member.");
+                    character.Progression = "To be elected or appointed Mayor by a lord, council, electorate, or other means.";
                 }
                 else
                 {
                     character.ChosenBackground += " - Mayor";
-                    result.Equipment.Add("Holdings: You have the resources of your village council at your disposal." +
-                        "\n        A team of skilled hirelings trained in professional services who assist you in your endeavours to run your holdings." +
-                        "\n        To maintain order within the settlement, your Monarch grants resources(gold, military support, etc).");
+                    character.Equipment.Add("Holdings: You have the resources of your village council at your disposal." +
+                        "\n          A team of skilled hirelings trained in professional services who assist you in your endeavours to run your holdings." +
+                        "\n          To maintain order within the settlement, your Monarch grants resources(gold, military support, etc).");
                 }
 
                 result.PersonalityTrait[0] = "I judge people by their actions, not their words.";
@@ -715,44 +722,42 @@ namespace DnD_Character_Creator.Backgrounds
             }
             else if (prof == "Entertainer")
             {
-                result.SkillProficiencies.Add("Performance");
-                result.Equipment.Add("Colorful performer's clothes");
-                result.Equipment.Add("Musical instrument");
-                result.Equipment.Add("Tuning fork");
-                result.Feature = "Find Fandom: spend 1hr, succeed on medium DC Performance check - find an ally within the local community leaders," +
-                    "\n        such as village elders, tavern owners, and other well-respected common folk." +
-                    "\n        Ally is friendly to you and will answer questions about life within the town, local news, and public opinions.";
+                character.SkillProficiencies.Add("Performance");
+                character.Equipment.Add("Colorful performer's clothes");
+                character.Equipment.Add("Musical instrument");
+                character.Equipment.Add("Tuning fork");
+                character.BackgroundFeature = "Find Fandom: spend 1hr, succeed on medium DC Performance check - find an ally within the local community leaders, such as village elders, tavern" +
+                    "\n     owners, and other well-respected common folk. Ally is friendly to you and will answer questions about life within the town, local news, and public opinions.";
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Stage Hand";
-                    result.Equipment.Add("Holdings: Lodging with an entertainers’ troupe, which includes food in exchange for regular performances." +
-                        "\n        An anonymous letter from a loyal admirer and fan who is desperate to meet you.");
-                    result.Progression = "The troupe leader asks you to fill in for an unreliable performer," +
-                    "\n        and offers you a permanent position in the troupe, owing to your musical or other talents.";
+                    character.Equipment.Add("Holdings: Lodging with an entertainers’ troupe, which includes food in exchange for regular performances." +
+                        "\n          An anonymous letter from a loyal admirer and fan who is desperate to meet you.");
+                    character.Progression = "The troupe leader asks you to fill in for an unreliable performer, and offers you a permanent position in the troupe, owing to your musical or other talents.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Performer";
-                    result.Equipment.Add("Holdings: Access to a troupe’s performing equipment/supplies, including instruments, concoctions, etc" +
-                        "\n        Free lodging and food at any establishment you perform in.");
-                    result.Progression = "A travelling noble or court official observes your performance," +
-                        "\n        and days later you receive a letter of invitation to perform at a court or estate.";
+                    character.Equipment.Add("Holdings: Access to a troupe’s performing equipment/supplies, including instruments, concoctions, etc" +
+                        "\n          Free lodging and food at any establishment you perform in.");
+                    character.Progression = "A travelling noble or court official observes your performance," +
+                        "\n          and days later you receive a letter of invitation to perform at a court or estate.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Troupe Leader";
-                    result.Equipment.Add("Holdings: A following of loyal fans, including several influential individuals." +
-                        "\n        A troupe of skilled performers who are adept in a variety of forms of entertainment." +
-                        "\n        Free lodging and food at any establishment your troupe performs in.");
-                    result.Progression = "You have been offered a large sum of money by a wealthy fan to perform for them on a semiregular basis.";
+                    character.Equipment.Add("Holdings: A following of loyal fans, including several influential individuals." +
+                        "\n          A troupe of skilled performers who are adept in a variety of forms of entertainment." +
+                        "\n          Free lodging and food at any establishment your troupe performs in.");
+                    character.Progression = "You have been offered a large sum of money by a wealthy fan to perform for them on a semiregular basis.";
                 }
                 else
                 {
                     character.ChosenBackground += " - Court Troubadour";
-                    result.Equipment.Add("Holdings: A following of loyal fans, including several influential individuals." +
-                        "\n        Contact with the troupe of skilled performers you used to lead." +
-                        "\n        Permanent lodgings at the noble estate or court where you are employed." +
-                        "\n        A scandalous secret about the lord of the manor or a prominent courtier, which you have irrefutable evidence of.");
+                    character.Equipment.Add("Holdings: A following of loyal fans, including several influential individuals." +
+                        "\n          Contact with the troupe of skilled performers you used to lead." +
+                        "\n          Permanent lodgings at the noble estate or court where you are employed." +
+                        "\n          A scandalous secret about the lord of the manor or a prominent courtier, which you have irrefutable evidence of.");
                 }
 
                 result.Routine[0] = "Actor";
@@ -794,42 +799,42 @@ namespace DnD_Character_Creator.Backgrounds
             }
             else if (prof == "Merchant")
             {
-                result.SkillProficiencies.Add("Investigation");
-                result.Equipment.Add("Fine clothes");
-                result.Equipment.Add("Abacus");
-                result.Equipment.Add("Quill and ink");
-                result.Equipment.Add("Empty inventory record");
-                result.Feature = "Appraisal: spend 1hr, succeed on medium DC Investigation check - learn the value of any trading good" +
-                    "\n        If you do so within a settlement, you can also find the most profitable location to sell the item or goods.";
+                character.SkillProficiencies.Add("Investigation");
+                character.Equipment.Add("Fine clothes");
+                character.Equipment.Add("Abacus");
+                character.Equipment.Add("Quill and ink");
+                character.Equipment.Add("Empty inventory record");
+                character.BackgroundFeature = "Appraisal: spend 1hr, succeed on medium DC Investigation check - learn the value of any trading good. If you do so within a settlement," +
+                    "\n     you can also find the most profitable location to sell the item or goods.";
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Clerk";
-                    result.Equipment.Add("Holdings: A small back room in a shop, which serves as an office and doubles as your sleeping quarters." +
-                        "\n        A leather-bound ledger book containing the accounting methods of your mentor and teacher.");
-                    result.Progression = "Acquire a loan, or save up funds, and find a suitable shop or storefront to start your own business.";
+                    character.Equipment.Add("Holdings: A small back room in a shop, which serves as an office and doubles as your sleeping quarters." +
+                        "\n          A leather-bound ledger book containing the accounting methods of your mentor and teacher.");
+                    character.Progression = "Acquire a loan, or save up funds, and find a suitable shop or storefront to start your own business.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Merchant";
-                    result.Equipment.Add("Holdings: A quaint store or shop front, in which you sell your specialised goods." +
-                        "\n        A clerk who maintains your store and runs it on a day-to-day basis in your absence.");
-                    result.Progression = "Own and maintain multiple successful businesses simultaneously.";
+                    character.Equipment.Add("Holdings: A quaint store or shop front, in which you sell your specialised goods." +
+                        "\n          A clerk who maintains your store and runs it on a day-to-day basis in your absence.");
+                    character.Progression = "Own and maintain multiple successful businesses simultaneously.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Magnate";
-                    result.Equipment.Add("Holdings: A series of successful businesses spanning multiple industries, and a network of suppliers." +
-                        "\n        A senior position in the regional Merchants Guild, including networks and guild benefits." +
-                        "\n        Teams of hirelings who work to keep the day-to-day operations of your businesses running smoothly.");
-                    result.Progression = "Defeat your largest competitor(drive them out of business, buy them out, or merge your businesses).";
+                    character.Equipment.Add("Holdings: A series of successful businesses spanning multiple industries, and a network of suppliers." +
+                        "\n          A senior position in the regional Merchants Guild, including networks and guild benefits." +
+                        "\n          Teams of hirelings who work to keep the day-to-day operations of your businesses running smoothly.");
+                    character.Progression = "Defeat your largest competitor(drive them out of business, buy them out, or merge your businesses).";
                 }
                 else
                 {
                     character.ChosenBackground += " - Guild Chancellor";
-                    result.Equipment.Add("Holdings: A Trade Certificate(Monarch signed), granting you an exclusive right to sell specialist goods." +
-                        "\n        No other business within may trade in this commodity without your consent." +
-                        "\n        Complete control of the regional Merchant Guild you originally joined." +
-                        "\n        A trade empire containing many businesses and subsidiaries, each serving your interests.");
+                    character.Equipment.Add("Holdings: A Trade Certificate(Monarch signed), granting you an exclusive right to sell specialist goods." +
+                        "\n          No other business within may trade in this commodity without your consent." +
+                        "\n          Complete control of the regional Merchant Guild you originally joined." +
+                        "\n          A trade empire containing many businesses and subsidiaries, each serving your interests.");
                 }
 
                 result.GuildBusiness[0] = "Alchemists and apothecaries";
@@ -882,7 +887,7 @@ namespace DnD_Character_Creator.Backgrounds
 
             var talents = new List<string> { "Beast Whisperer", "Biologist", "Botanist", "Calloused Hands", "Disciplinarian", "Drunkard",
                 "Elusive", "Flamboyant Presentation", "Forecaster", "Gambler", "Gut Feeling", "Hard-Working", "Navigator", "Wayfarer" };
-            GetTalents(talents, character, rank);
+            AddTalents(talents, character, rank);
 
             return result;
         }
@@ -892,16 +897,15 @@ namespace DnD_Character_Creator.Backgrounds
 
             var skills = new List<string> { "Acrobatics", "Athletics", "Deception", "Intimidation", "Sleight of Hand", "Stealth" };
             string pickMsg = $"Pick a skill from the list";
-            string errorMsg = "You are already trained in that skill, pick a different skill.";
-            var skill = CLIHelper.GetNew(skills, character.SkillProficiencies, pickMsg, errorMsg);
-            result.SkillProficiencies.Add(skill);
-            result.Languages.Add("Thieves' Cant");
-            result.ToolProficiencies.Add("Thieves' Tools");
-            result.Equipment.Add("Dark common clothes with a hood");
-            result.Equipment.Add("Thieves' Tools");
-            result.Equipment.Add("Fake currency");
-            result.Equipment.Add("Belt pouch for coins");
-            result.GP = 15;
+            var skill = CLIHelper.GetNew(skills, character.SkillProficiencies, pickMsg);
+            character.SkillProficiencies.Add(skill);
+            character.Languages.Add("Thieves' Cant");
+            character.ToolProficiencies.Add("Thieves' Tools");
+            character.Equipment.Add("Dark common clothes with a hood");
+            character.Equipment.Add("Thieves' Tools");
+            character.Equipment.Add("Fake currency");
+            character.Equipment.Add("Belt pouch for coins");
+            character.GP += 15;
 
             var professions = new List<string> { "Charltan", "Cutthroat", "Burglar" };
             var tuple = GetRank(professions, character);
@@ -910,38 +914,38 @@ namespace DnD_Character_Creator.Backgrounds
 
             if (prof == "Charltan")
             {
-                result.SkillProficiencies.Add("Deception");
-                result.Equipment.Add("Imitation fine clothes");
-                result.Equipment.Add("Lockbox with a secret compartment");
-                result.Equipment.Add("Forgery of a Merchant Guild membership");
-                result.Feature = "False Identity: spend 1hr, succeed on medium DC Deception check - create a new identity with a fake ID.";
+                character.SkillProficiencies.Add("Deception");
+                character.Equipment.Add("Imitation fine clothes");
+                character.Equipment.Add("Lockbox with a secret compartment");
+                character.Equipment.Add("Forgery of a Merchant Guild membership");
+                character.BackgroundFeature = "False Identity: spend 1hr, succeed on medium DC Deception check - create a new identity with a fake ID.";
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Peddler";
-                    result.Equipment.Add("Holdings: A stash of counterfeit items that you sell and scam people with." +
-                        "\n        A secluded stoop that you use as a shelter against the elements near your place of “business”.");
-                    result.Progression = "You create/are recruited by a gang of Hustlers to participate in more organized/larger-scale scams.";
+                    character.Equipment.Add("Holdings: A stash of counterfeit items that you sell and scam people with." +
+                        "\n          A secluded stoop that you use as a shelter against the elements near your place of “business”.");
+                    character.Progression = "You create/are recruited by a gang of Hustlers to participate in more organized/larger-scale scams.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Hustler";
-                    result.Equipment.Add("Holdings: A group of miscreants that assist your cons, you split the spoils with them.");
-                    result.Progression = "You must acquire or create plans for a large-scale con and procure the necessary elements.";
+                    character.Equipment.Add("Holdings: A group of miscreants that assist your cons, you split the spoils with them.");
+                    character.Progression = "You must acquire or create plans for a large-scale con and procure the necessary elements.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Con Artist";
-                    result.Equipment.Add("Holdings: A team of skilled forgers who can recreate items at your request with great accuracy." +
-                        "\n        An unmarked warehouse(in a disreputable part of town) to oversee your operations, you can store/create forged items there.");
-                    result.Progression = "Successfully executing a grand con that draws the outrage of a great noble household, religious faction," +
-                        "\n        or other powerful institution. It also makes you famous among other criminals.";
+                    character.Equipment.Add("Holdings: A team of skilled forgers who can recreate items at your request with great accuracy." +
+                        "\n          An unmarked warehouse(in a disreputable part of town) to oversee your operations, you can store/create forged items there.");
+                    character.Progression = "Successfully executing a grand con that draws the outrage of a great noble household, religious faction, or other powerful institution." +
+                        "\n     It also makes you famous among other criminals.";
                 }
                 else
                 {
                     character.ChosenBackground += " - Mastermind";
-                    result.Equipment.Add("Holdings: Many detailed plans of cons you have devised or procured." +
-                        "\n        A network of talented individuals who work at your behest, aiding you in orchestrating your ploys." +
-                        "\n        An unmarked warehouse(in a disreputable part of town) to oversee your operations, you can store/create forged items there.");
+                    character.Equipment.Add("Holdings: Many detailed plans of cons you have devised or procured." +
+                        "\n          A network of talented individuals who work at your behest, aiding you in orchestrating your ploys." +
+                        "\n          An unmarked warehouse(in a disreputable part of town) to oversee your operations, you can store/create forged items there.");
                 }
 
                 result.FavoriteScam[0] = "I cheat at games of chance.";
@@ -979,91 +983,91 @@ namespace DnD_Character_Creator.Backgrounds
             }
             else if (prof == "Cutthroat")
             {
-                result.SkillProficiencies.Add("Intimidation");
-                result.Equipment.Add("Bag of loaded dice");
-                result.Equipment.Add("Snuff box");
-                result.Equipment.Add("Pocket watch that runs five minutes fast");
-                result.Feature = "Underground Connections: spend 1hr, succeed on medium DC Intimidation check - find a contact in a local gang" +
-                    "\n        Contact is friendly to you and will will assist you with matters related to their criminal endeavours.";
+                character.SkillProficiencies.Add("Intimidation");
+                character.Equipment.Add("Bag of loaded dice");
+                character.Equipment.Add("Snuff box");
+                character.Equipment.Add("Pocket watch that runs five minutes fast");
+                character.BackgroundFeature = "Underground Connections: spend 1hr, succeed on medium DC Intimidation check - find a contact in a local gang. Contact is friendly to" +
+                    "\n     you and will will assist you with matters related to their criminal endeavours.";
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Tough";
-                    result.Equipment.Add("Holdings: A hideout where you can seek shelter from the elements, and from local law enforcement.");
-                    result.Progression = "Acquire a building to use as a centre of operations for your illicit activities," +
-                    "\n        and a handful of other criminals willing to follow your lead.";
+                    character.Equipment.Add("Holdings: A hideout where you can seek shelter from the elements, and from local law enforcement.");
+                    character.Progression = "Acquire a building to use as a centre of operations for your illicit activities," +
+                    "\n     and a handful of other criminals willing to follow your lead.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Crew Leader";
-                    result.Equipment.Add("Holdings: A group of thugs that you command, overseeing their various ploys." +
-                        "\n        Knowledge of back alleys and slipways that allow you and your group to escape unpursued by local law enforcement." +
-                        "\n        A rundown establishment that you and your fellow henchmen operate out of.");
-                    result.Progression = "Your group of thugs has progressed in size to exert control over an entire village or district within a city." +
-                    "\n        A sizable collection of shop owners that you can regularly exploit for 'protection'.";
+                    character.Equipment.Add("Holdings: A group of thugs that you command, overseeing their various ploys." +
+                        "\n          Knowledge of back alleys and slipways that allow you and your group to escape unpursued by local law enforcement." +
+                        "\n          A rundown establishment that you and your fellow henchmen operate out of.");
+                    character.Progression = "Your group of thugs has progressed in size to exert control over an entire village or district within a city. A sizable collection of shop" +
+                        "\n     owners that you can regularly exploit for 'protection'.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Gang Boss";
-                    result.Equipment.Add("Holdings: Multiple warehouses/fronts to launder and store your spoils until you find a suitable buyer." +
-                        "\n        A network of contacts that you use to acquire and sell illicit goods." +
-                        "\n        A sizable collection of shop owners that you can regularly exploit for 'protection'.");
-                    result.Progression = "You must overthrow a rival crime lord, or claim the territory of all surrounding rival gangs.";
+                    character.Equipment.Add("Holdings: Multiple warehouses/fronts to launder and store your spoils until you find a suitable buyer." +
+                        "\n          A network of contacts that you use to acquire and sell illicit goods." +
+                        "\n          A sizable collection of shop owners that you can regularly exploit for 'protection'.");
+                    character.Progression = "You must overthrow a rival crime lord, or claim the territory of all surrounding rival gangs.";
                 }
                 else
                 {
                     character.ChosenBackground += " - Crime Lord";
-                    result.Equipment.Add("Holdings: An expansive territory that you control, including a headquarters" +
-                        "\n        You oversee the criminals and businesses of the city taking a cut of their profits in exchange for 'protection'." +
-                        "\n        A number of personal secrets and incriminating evidence about high-ranking nobles, clergy, or business magnates." +
-                        "\n        A corrupt, influential state official who does your bidding and provides you with confidential information.");
+                    character.Equipment.Add("Holdings: An expansive territory that you control, including a headquarters" +
+                        "\n          You oversee the criminals and businesses of the city taking a cut of their profits in exchange for 'protection'." +
+                        "\n          A number of personal secrets and incriminating evidence about high-ranking nobles, clergy, or business magnates." +
+                        "\n          A corrupt, influential state official who does your bidding and provides you with confidential information.");
                 }
             }
             else if (prof == "Burglar")
             {
-                result.SkillProficiencies.Add("Perception");
-                result.Equipment.Add("Grappling hook and rope");
-                result.Equipment.Add("Kidskin gloves");
-                result.Equipment.Add("Glass cutter");
-                result.Equipment.Add("Vial of Flour");
-                result.Feature = "Surveillance: spend 1hr, succeed on medium DC Perception check - map the general layout of a building." +
-                    "\n        Map includes guard routes/rotation times, building entrances/exits, and the potential locations of valuables.";
+                character.SkillProficiencies.Add("Perception");
+                character.Equipment.Add("Grappling hook and rope");
+                character.Equipment.Add("Kidskin gloves");
+                character.Equipment.Add("Glass cutter");
+                character.Equipment.Add("Vial of Flour");
+                character.BackgroundFeature = "Surveillance: spend 1hr, succeed on medium DC Perception check - map the general layout of a building. Map includes guard routes/rotation" +
+                    "\n     times, building entrances/exits, and the potential locations of valuables.";
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Snatcher";
-                    result.Equipment.Add("Holdings: A safehouse in the poor district, used to store stolen goods and as an emergency lodging." +
-                        "\n        You have blueprints of the city including secret entrances and passageways.");
-                    result.Progression = "You rob a well-to-do store in a reputable district, gaining notoriety and a big payday.";
+                    character.Equipment.Add("Holdings: A safehouse in the poor district, used to store stolen goods and as an emergency lodging." +
+                        "\n          You have blueprints of the city including secret entrances and passageways.");
+                    character.Progression = "You rob a well-to-do store in a reputable district, gaining notoriety and a big payday.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Burglar Specialist";
-                    result.Equipment.Add("Holdings: A team of specialist thieves who operate under your instruction to execute more ambitious heists." +
-                        "\n        A contact working inside an establishment which you plan on robbing," +
-                        "\n        the contact provides you info(routine of the occupants, location of valuable items, escape routes, etc).");
-                    result.Progression = "Membership in an established Thieves’ Guild in a major city or town.";
+                    character.Equipment.Add("Holdings: A team of specialist thieves who operate under your instruction to execute more ambitious heists." +
+                        "\n          A contact working inside an establishment which you plan on robbing," +
+                        "\n          the contact provides you info(routine of the occupants, location of valuable items, escape routes, etc).");
+                    character.Progression = "Membership in an established Thieves’ Guild in a major city or town.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Heist Master";
-                    result.Equipment.Add("Holdings: Membership in the Thieves' Guild gives you access to new fences and buyers" +
-                        "\n        It also allows you to work with more experienced thieves and learn their methods" +
-                        "\n        You uncover evidence of an attempted assassination on the life of a Thieves' Guild member.");
-                    result.Progression = "You orchestrate a large-scale heist to rob the estate of a local noble.";
+                    character.Equipment.Add("Holdings: Membership in the Thieves' Guild gives you access to new fences and buyers" +
+                        "\n          It also allows you to work with more experienced thieves and learn their methods" +
+                        "\n          You uncover evidence of an attempted assassination on the life of a Thieves' Guild member.");
+                    character.Progression = "You orchestrate a large-scale heist to rob the estate of a local noble.";
                 }
                 else
                 {
                     character.ChosenBackground += " - Prince of Thieves";
-                    result.Equipment.Add("Holdings: A senior position in the Thieves’ Guild," +
-                        "\n        You instruct junior members in lockpicking, housebreaking, and evading law enforcers." +
-                        "\n        You own an estate with a household of staff to maintain it and serve you" +
-                        "\n        You also have your own circles of thieves, fences, and buyers to acquire/sell rare/valuable items for you");
+                    character.Equipment.Add("Holdings: A senior position in the Thieves’ Guild," +
+                        "\n          You instruct junior members in lockpicking, housebreaking, and evading law enforcers." +
+                        "\n          You own an estate with a household of staff to maintain it and serve you" +
+                        "\n          You also have your own circles of thieves, fences, and buyers to acquire/sell rare/valuable items for you");
                 }
             }
 
             var talents = new List<string> { "Bounty Hunter", "Quick Fingers", "Contortionist", "Copycat", "Disciplinarian", "Drunkard",
                 "Elusive", "Gambler", "Grifter", "Heister", "Impressionist", "Interrogator", "Menacing Presence", "Nimble Fingers",
                 "Renowned", "Ropesman", "Sentry", "Urban Sprinter" };
-            GetTalents(talents, character, rank);
+            AddTalents(talents, character, rank);
 
             if (prof != "Charltan")
             {
@@ -1104,15 +1108,16 @@ namespace DnD_Character_Creator.Backgrounds
             
             var skills = new List<string> { "Animal Handling", "Athletics", "Insight", "Intimidation", "Perception", "Survival" };
             string pickMsg = $"Pick a skill from the list";
-            string errorMsg = "You are already trained in that skill, pick a different skill.";
-            var skill = CLIHelper.GetNew(skills, character.SkillProficiencies, pickMsg, errorMsg);
-            result.SkillProficiencies.Add(skill);
-            result.ToolProficiencies.Add("Gaming set");
-            result.Equipment.Add("Common clothes");
-            result.Equipment.Add("Gaming set");
-            result.Equipment.Add("Insignia of rank");
-            result.Equipment.Add("Belt pouch for coins");
-            result.GP = 15;
+            var skill = CLIHelper.GetNew(skills, character.SkillProficiencies, pickMsg);
+            character.SkillProficiencies.Add(skill);
+            string msg = "Pick a gaming set";
+            string game = CLIHelper.GetNew(Options.GamingSets, character.ToolProficiencies, msg);
+            character.ToolProficiencies.Add(game);
+            character.Equipment.Add("Common clothes");
+            character.Equipment.Add("Gaming set");
+            character.Equipment.Add("Insignia of rank");
+            character.Equipment.Add("Belt pouch for coins");
+            character.GP += 15;
 
             var professions = new List<string> { "Mercenary", "Guard", "Soldier" };
             var tuple = GetRank(professions, character);
@@ -1121,116 +1126,118 @@ namespace DnD_Character_Creator.Backgrounds
 
             if (prof == "Mercenary")
             {
-                result.SkillProficiencies.Add("Intimidation");
-                result.Equipment.Add("Moleskin gloves");
-                result.Equipment.Add("Grappling net");
-                result.Equipment.Add("Flask of hard liquor");
-                result.Feature = "Independent Contractor: spend 1hr, succeed on medium DC Intimidation check - draw mercenary and adventuring jobs";
+                character.SkillProficiencies.Add("Intimidation");
+                character.Equipment.Add("Moleskin gloves");
+                character.Equipment.Add("Grappling net");
+                character.Equipment.Add("Flask of hard liquor");
+                character.BackgroundFeature = "Independent Contractor: spend 1hr, succeed on medium DC Intimidation check - draw mercenary and adventuring jobs";
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Hireling";
-                    result.Equipment.Add("Holdings: Lodging at any Free Sword’s guild house and use of Free Sword’s training grounds and facilities." +
-                        "\n        The contract for a dangerous bounty that your mentor died trying to complete.");
-                    result.Progression = "Complete a contract with a guild member who has a Free Sword licence.";
+                    character.Equipment.Add("Holdings: Lodging at any Free Sword’s guild house and use of Free Sword’s training grounds and facilities." +
+                        "\n          The contract for a dangerous bounty that your mentor died trying to complete.");
+                    character.Progression = "Complete a contract with a guild member who has a Free Sword licence.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Sellsword";
-                    result.Equipment.Add("Holdings: A Free Sword licence - allows you to accept your own mercenary contracts and collect rewards." +
-                        "\n        Access to hirelings belonging to the Free Swords guild, who you can contract for a small fee.");
-                    result.Progression = "Lead a team successfully through several highstakes encounters during mercenary contracts.";
+                    character.Equipment.Add("Holdings: A Free Sword licence - allows you to accept your own mercenary contracts and collect rewards." +
+                        "\n          Access to hirelings belonging to the Free Swords guild, who you can contract for a small fee.");
+                    character.Progression = "Lead a team successfully through several highstakes encounters during mercenary contracts.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Sword Commander";
-                    result.Equipment.Add("Holdings: A private room in a guild house and a retainer(goes to the guild house or accompanys you)." +
-                        "\n        Command authority over lower ranks and the power to employ them for jobs." +
-                        "\n        Access to restricted jobs that depend on sensitive information or extraordinary risk.");
-                    result.Progression = "Successfully complete a restricted job for a high-profile client.";
+                    character.Equipment.Add("Holdings: A private room in a guild house and a retainer(goes to the guild house or accompanys you)." +
+                        "\n          Command authority over lower ranks and the power to employ them for jobs." +
+                        "\n          Access to restricted jobs that depend on sensitive information or extraordinary risk.");
+                    character.Progression = "Successfully complete a restricted job for a high-profile client.";
                 }
                 else
                 {
                     character.ChosenBackground += " - Battlelord";
-                    result.Equipment.Add("Holdings: Command of the Free Swords guild(its members, managing contracts and training new members)." +
-                        "\n        A guild chapterhouse, which includes housing for you and your lieutenants as well as an extensive armoury." +
-                        "\n        Access to restricted jobs that depend on sensitive information or extraordinary risk.");
+                    character.Equipment.Add("Holdings: Command of the Free Swords guild(its members, managing contracts and training new members)." +
+                        "\n          A guild chapterhouse, which includes housing for you and your lieutenants as well as an extensive armoury." +
+                        "\n          Access to restricted jobs that depend on sensitive information or extraordinary risk.");
                 }
             }
             else if (prof == "Guard")
             {
-                result.SkillProficiencies.Add("Perception");
-                result.Equipment.Add("Manacles");
-                result.Equipment.Add("Pipe and tobacco box");
-                result.Equipment.Add("Badge of office");
-                result.Feature = "Informant: spend 1hr, succeed on medium DC Perception check - find a contact among constables/guards." +
-                    "\n        Contact is friendly to you and will answer questions regarding criminals, law enforcement, and investigations";
+                character.SkillProficiencies.Add("Perception");
+                character.Equipment.Add("Manacles");
+                character.Equipment.Add("Pipe and tobacco box");
+                character.Equipment.Add("Badge of office");
+                character.BackgroundFeature = "Informant: spend 1hr, succeed on medium DC Perception check - find a contact among constables/guards. Contact is friendly to you and will" +
+                    "\n     answer questions regarding criminals, law enforcement, and investigations";
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Town Militia";
-                    result.Equipment.Add("Holdings: A bunk bed to sleep in at your stationed guardhouse." +
-                        "\n        Sensitive information relating to an unsolved murder that you have not told anyone about.");
-                    result.Progression = "Solve a crime or uncover a major smuggling route.";
+                    character.Equipment.Add("Holdings: A bunk bed to sleep in at your stationed guardhouse." +
+                        "\n          Sensitive information relating to an unsolved murder that you have not told anyone about.");
+                    character.Progression = "Solve a crime or uncover a major smuggling route.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Captain of the Watch";
-                    result.Equipment.Add("Holdings: Your own room in a guardhouse of your choosing" +
-                        "\n        Access to city gates keys. A group of militia guards to train and organise.");
-                    result.Progression = "Catch a renowned criminal before they can escape the city, or another act worthy of a promotion.";
+                    character.Equipment.Add("Holdings: Your own room in a guardhouse of your choosing" +
+                        "\n          Access to city gates keys. A group of militia guards to train and organise.");
+                    character.Progression = "Catch a renowned criminal before they can escape the city, or another act worthy of a promotion.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Royal Guard";
-                    result.Equipment.Add("Holdings: Free lodging on the grounds of the palace or other place of work." +
-                        "\n        Unquestioned access to restricted areas of the city." +
-                        "\n        Permission to view the casefiles of ongoing investigations and past crimes" +
-                        "\n        You can also access documents detailing guard routes and rosters.");
-                    result.Progression = "Save a VIP from an assasination attempt, rescue a kidnapped princess, or anything of equal import to be promoted.";
+                    character.Equipment.Add("Holdings: Free lodging on the grounds of the palace or other place of work." +
+                        "\n          Unquestioned access to restricted areas of the city." +
+                        "\n          Permission to view the casefiles of ongoing investigations and past crimes" +
+                        "\n          You can also access documents detailing guard routes and rosters.");
+                    character.Progression = "Save a VIP from an assasination attempt, rescue a kidnapped princess, or anything of equal import to be promoted.";
                 }
                 else
                 {
                     character.ChosenBackground += " - Lord Commander";
-                    result.Equipment.Add("Holdings: ");
+                    character.Equipment.Add("Holdings: Command of the entire guard hierarchy within your area, authority to conscript new militia and impose martial law." +
+                        "\n          Command of a fortress within a major town or city, including its' weapons, defensive siege equipment, and squadrons of guards." +
+                        "\n          You report directly to the highest officials, and have the ear of the monarch on matters of the city’s defenses.");
                 }
             }
             else if (prof == "Soldier")
             {
-                result.SkillProficiencies.Add("Athletics");
-                result.Equipment.Add("Standard soldier garb");
-                result.Equipment.Add("Trophy from your first battle");
-                result.Equipment.Add("Letter from your family or a loved one");
-                result.Equipment.Add("Service medallion signifying rank");
-                result.Feature = "Combat Drills: spend 1hr, succeed on medium DC Athletics check - gain accurate estimate of drilled people" +
-                    "\n        Includes combat capabilities, equipment or fortifications. You determine how to improve short-term and long-term training";
+                character.SkillProficiencies.Add("Athletics");
+                character.Equipment.Add("Standard soldier garb");
+                character.Equipment.Add("Trophy from your first battle");
+                character.Equipment.Add("Letter from your family or a loved one");
+                character.Equipment.Add("Service medallion signifying rank");
+                character.BackgroundFeature = "Combat Drills: spend 1hr, succeed on medium DC Athletics check - gain accurate estimate of drilled people including combat capabilities," +
+                    "\n     equipment or fortifications. You determine how to improve short-term and long-term training";
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Foot Soldier";
-                    result.Equipment.Add("Holdings: A tent to sleep in and free food when in an encampment of your military." +
-                        "\n        A letter from a fallen enemy messenger that you either killed or found.");
-                    result.Progression = "Distinguish yourself. Bring vital info about enemy camp or movement(help win a battle or prevent defeat)." +
-                    "\n        Or perform exceptionally well in battle, turning the tide or capturing an enemy banner.";
+                    character.Equipment.Add("Holdings: A tent to sleep in and free food when in an encampment of your military." +
+                        "\n          A letter from a fallen enemy messenger that you either killed or found.");
+                    character.Progression = "Distinguish yourself. Bring vital info about enemy camp or movement(help win a battle or prevent defeat), OR perform exceptionally well" +
+                        "\n     in battle, turning the tide or capturing an enemy banner.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Sergeant";
-                    result.Equipment.Add("Holdings: Command over a small unit of Foot Soldiers - equipment and camp materials." +
-                        "\n        A valet who attends to your personal needs in the field and relays important messages when required.");
-                    result.Progression = "Maintain your troops’ discipline through multiple skirmishes.";
+                    character.Equipment.Add("Holdings: Command over a small unit of Foot Soldiers - equipment and camp materials." +
+                        "\n          A valet who attends to your personal needs in the field and relays important messages when required.");
+                    character.Progression = "Maintain your troops’ discipline through multiple skirmishes.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Lieutenant";
-                    result.Equipment.Add("Holdings: Command over a brigade of soldiers, a large military force." +
-                        "\n        A command tent that serves as your headquarters for battlefield operations." +
-                        "\n        A lieutenant's quarters that is comfortable, well-equiped, and well-guarded");
-                    result.Progression = "Decisively win an even battle or win a battle against the odds.";
+                    character.Equipment.Add("Holdings: Command over a brigade of soldiers, a large military force." +
+                        "\n          A command tent that serves as your headquarters for battlefield operations." +
+                        "\n          A lieutenant's quarters that is comfortable, well-equiped, and well-guarded");
+                    character.Progression = "Decisively win an even battle or win a battle against the odds.";
                 }
                 else
                 {
                     character.ChosenBackground += " - Field Marshal";
-                    result.Equipment.Add("Holdings: Command over a region’s military. A seat at council meetings relevant to military matters." +
-                        "\n        Residence in a manor in a city of your choosing in your region, it must be close to training grounds." +
-                        "\n        If you choose to participate in military attacks, accomodations of your choosing will be provided.");
+                    character.Equipment.Add("Holdings: Command over a region’s military. A seat at council meetings relevant to military matters." +
+                        "\n          Residence in a manor in a city of your choosing in your region, it must be close to training grounds." +
+                        "\n          If you choose to participate in military attacks, accomodations of your choosing will be provided.");
                 }
             }
 
@@ -1238,7 +1245,7 @@ namespace DnD_Character_Creator.Backgrounds
                 "Calloused Hands", "Copycat", "Disciplinarian", "Drunkard", "Figure of Authority", "Forecaster", "Gambler",
                 "Hard-Working", "Interrogator", "Menacing Presence", "Navigator", "Passionate Orator", "Recruiter", "Renowned",
                 "Sentry", "Shrewd Deduction", "Urban Sprinter", "Wayfarer" };
-            GetTalents(talents, character, rank);
+            AddTalents(talents, character, rank);
 
             result.PersonalityTrait[0] = "I'm always polite and respectful.";
             result.PersonalityTrait[1] = "I’m haunted by memories of war.I can’t get the images of violence out of my mind.";
@@ -1275,22 +1282,21 @@ namespace DnD_Character_Creator.Backgrounds
 
             var skills = new List<string> { "Animal Handling", "Athletics", "Medicine", "Nature", "Perception", "Stealth", "Survival" };
             string pickMsg = $"Pick a skill from the list";
-            string errorMsg = "You are already trained in that skill, pick a different skill.";
-            var skill = CLIHelper.GetNew(skills, character.SkillProficiencies, pickMsg, errorMsg);
-            result.SkillProficiencies.Add(skill);
-            result.ToolProficiencies.Add("Herbalism Kit");
+            
+            var skill = CLIHelper.GetNew(skills, character.SkillProficiencies, pickMsg);
+            character.SkillProficiencies.Add(skill);
+            character.ToolProficiencies.Add("Herbalism Kit");
             pickMsg = "Pick a standard language";
-            errorMsg = "You already have that language try again";
-            string lang1 = CLIHelper.GetNew(Options.StandardLanguages, character.Languages, pickMsg, errorMsg);
-            result.Languages.Add(lang1);
-            result.Equipment.Add("Traveler's clothes");
-            result.Equipment.Add("Tinderbox");
-            result.Equipment.Add("5 Torches");
-            result.Equipment.Add("Waterskin");
-            result.Equipment.Add("Hatchet");
-            result.Equipment.Add("Herbalism Kit");
-            result.Equipment.Add("Belt pouch for coins");
-            result.GP = 10;
+            string lang1 = CLIHelper.GetNew(Options.StandardLanguages, character.Languages, pickMsg);
+            character.Languages.Add(lang1);
+            character.Equipment.Add("Traveler's clothes");
+            character.Equipment.Add("Tinderbox");
+            character.Equipment.Add("5 Torches");
+            character.Equipment.Add("Waterskin");
+            character.Equipment.Add("Hatchet");
+            character.Equipment.Add("Herbalism Kit");
+            character.Equipment.Add("Belt pouch for coins");
+            character.GP += 10;
 
             var professions = new List<string> { "Beast Hunter", "Pioneer", "Explorer" };
             var tuple = GetRank(professions, character);
@@ -1299,134 +1305,134 @@ namespace DnD_Character_Creator.Backgrounds
 
             if (prof == "Beast Hunter")
             {
-                result.SkillProficiencies.Add("Survival");
-                result.Equipment.Add("Net");
-                result.Equipment.Add("Hunting trap");
-                result.Equipment.Add("30ft of rope");
+                character.SkillProficiencies.Add("Survival");
+                character.Equipment.Add("Net");
+                character.Equipment.Add("Hunting trap");
+                character.Equipment.Add("30ft of rope");
                 string listMsg = "Pick 1 or 2 to add to your equipment";
                 var list = new List<string> { "Vial of pheromones", "Pouch of bait" };
                 int bait = CLIHelper.PrintChoices(listMsg, list);
-                result.Equipment.Add(list[bait]);
-                result.Feature = "Track Quarry: spend 1hr, succeed on medium DC Survival check - track creatures who passed through an area." +
-                    "\n        If you are familiar with the type of creature, you learn the exact time and direction the creature went.";
+                character.Equipment.Add(list[bait]);
+                character.BackgroundFeature = "Track Quarry: spend 1hr, succeed on medium DC Survival check - track creatures who passed through an area. If you are familiar with the" +
+                    "\n     type of creature, you learn the exact time and direction the creature went.";
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Tracker";
-                    result.Equipment.Add("Holdings: You can find Beast Hunters' Lodges in the wilderness to rest and escape danger." +
-                        "\n        You have a lead as to the location of the lair of a powerful and dangerous creature.");
-                    result.Progression = "Prove to your mentor that you are competent to hunt on your own and teach the new and inexperienced.";
+                    character.Equipment.Add("Holdings: You can find Beast Hunters' Lodges in the wilderness to rest and escape danger." +
+                        "\n          You have a lead as to the location of the lair of a powerful and dangerous creature.");
+                    character.Progression = "Prove to your mentor that you are competent to hunt on your own and teach the new and inexperienced.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Trapper";
-                    result.Equipment.Add("Holdings: Up to a handful of apprentices who wish to learn the trade." +
-                        "\n        Use of equipment from a Beast Hunters' Lodges to hunt any beast you accept a contract to kill.");
-                    result.Progression = "Complete a contract to kill a particularly rare/dangerous beast for a community/influential individual." +
-                    "\n        You must determine the creature’s species, track it, and slay it.";
+                    character.Equipment.Add("Holdings: Up to a handful of apprentices who wish to learn the trade." +
+                        "\n          Use of equipment from a Beast Hunters' Lodges to hunt any beast you accept a contract to kill.");
+                    character.Progression = "Complete a contract to kill a particularly rare/dangerous beast for a community/influential individual. You must determine the" +
+                        "\n     creature’s species, track it, and slay it.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Venator";
-                    result.Equipment.Add("Holdings: A team of experienced hunters who assist you in large hunts and handle smaller jobs you assign." +
-                        "\n        Access to the Beast Hunters' Library, which contains all known weaknesses of beasts and monsters.");
-                    result.Progression = "Slay a legendary beast. The event must draw the awe of influential individuals across the land.";
+                    character.Equipment.Add("Holdings: A team of experienced hunters who assist you in large hunts and handle smaller jobs you assign." +
+                        "\n          Access to the Beast Hunters' Library, which contains all known weaknesses of beasts and monsters.");
+                    character.Progression = "Slay a legendary beast. The event must draw the awe of influential individuals across the land.";
                 }
                 else
                 {
                     character.ChosenBackground += " - Mythical Beast Hunter";
-                    result.Equipment.Add("Holdings: Control of the Beast Hunters guild, including resources and personnel." +
-                        "\n        You are famous across the land as a figure of legend." +
-                        "\n        A mighty weapon or artifact handed down to you by the guild, a satisfied customer, or an admirer." +
-                        "\n        An audience with any ruler at their convenience to discuss matters of beast hunting in their domain.");
+                    character.Equipment.Add("Holdings: Control of the Beast Hunters guild, including resources and personnel." +
+                        "\n          You are famous across the land as a figure of legend." +
+                        "\n          A mighty weapon or artifact handed down to you by the guild, a satisfied customer, or an admirer." +
+                        "\n          An audience with any ruler at their convenience to discuss matters of beast hunting in their domain.");
                 }
             }
             else if (prof == "Pioneer")
             {
-                result.SkillProficiencies.Add("Nature");
-                result.Equipment.Add("Shovel");
-                result.Equipment.Add("Hammer and nails");
-                result.Equipment.Add("Saw");
-                result.Equipment.Add("Spare leather");
-                result.Equipment.Add("Needle and Thread");
-                result.Feature = "Handyman by Necessity: spend 1hr, succeed on medium DC Nature check - find materials to mend any mundane item.";
+                character.SkillProficiencies.Add("Nature");
+                character.Equipment.Add("Shovel");
+                character.Equipment.Add("Hammer and nails");
+                character.Equipment.Add("Saw");
+                character.Equipment.Add("Spare leather");
+                character.Equipment.Add("Needle and Thread");
+                character.BackgroundFeature = "Handyman by Necessity: spend 1hr, succeed on medium DC Nature check - find materials to mend any mundane item.";
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Hermit";
-                    result.Equipment.Add("Holdings: Knowledge of a rare plant or animal, if domesticated, could be farmed for great gain.");
-                    result.Progression = "Build a house, or similar building, and the beginnings of a farm.";
+                    character.Equipment.Add("Holdings: Knowledge of a rare plant or animal, if domesticated, could be farmed for great gain.");
+                    character.Progression = "Build a house, or similar building, and the beginnings of a farm.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Secluded Cultivator";
-                    result.Equipment.Add("Holdings: A house you built and a small herd or a field of crops." +
+                    character.Equipment.Add("Holdings: A house you built and a small herd or a field of crops." +
                         "\n        A small family or group of farmhands who help tend your homestead.");
-                    result.Progression = "Gather a small community around your homestead.";
+                    character.Progression = "Gather a small community around your homestead.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Homestead Proprietor";
-                    result.Equipment.Add("Holdings: A sizable ranch/plantation of your chosen commodity, bringing significant profit each harvest." +
-                        "\n        A small, self-sufficient, village-sized community that takes care of your ranch/plantation." +
-                        "\n        The village will also listen to your opinion on difficult decisions or conflict resolution" +
-                        "\n        A trail/road that leads to the nearest town for traveling merchants to buy and sell wares.");
-                    result.Progression = "Acquire a rare or magical animal or plant to be farmed.";
+                    character.Equipment.Add("Holdings: A sizable ranch/plantation of your chosen commodity, bringing significant profit each harvest." +
+                        "\n          A small, self-sufficient, village-sized community that takes care of your ranch/plantation." +
+                        "\n          The village will also listen to your opinion on difficult decisions or conflict resolution" +
+                        "\n          A trail/road that leads to the nearest town for traveling merchants to buy and sell wares.");
+                    character.Progression = "Acquire a rare or magical animal or plant to be farmed.";
                 }
                 else
                 {
                     character.ChosenBackground += " - Governor";
-                    result.Equipment.Add("Holdings: As a local authority, you enter into the society of notable merchants, nobles, and royalty." +
-                        "\n        Powerful people approach you to buy what you offer and deal with your town." +
-                        "\n        An inn with a central courtyard that houses coming and going merchant caravans from across the land." +
-                        "\n        A large house for you and your family, suitable for receiving important visitors." +
-                        "\n        A small but disciplined militia to protect your homestead and its surroundings." +
-                        "\n        A political alliance with a neighbouring state that supports your independence.");
+                    character.Equipment.Add("Holdings: As a local authority, you enter into the society of notable merchants, nobles, and royalty." +
+                        "\n          Powerful people approach you to buy what you offer and deal with your town." +
+                        "\n          An inn with a central courtyard that houses coming and going merchant caravans from across the land." +
+                        "\n          A large house for you and your family, suitable for receiving important visitors." +
+                        "\n          A small but disciplined militia to protect your homestead and its surroundings." +
+                        "\n          A political alliance with a neighbouring state that supports your independence.");
                 }
             }
             else if (prof == "Explorer")
             {
-                result.SkillProficiencies.Add("Survival");
-                result.Equipment.Add("Compass");
-                result.Equipment.Add("Mapmaking Tools(quill, ink, parchment, calipers, ruler)");
-                result.Equipment.Add("10 days of rations");
-                result.Feature = "Known Shelters: spend 1hr, succeed on medium DC Survival check - find the nearest settlement" +
-                    "\n        Settlement may be hostile such as bandits, druids, or tribal people. If the settlement is not hostile" +
-                    "\n        Inhabitants are initially friendly and will let you seek shelter and trade among them.";
+                character.SkillProficiencies.Add("Survival");
+                character.Equipment.Add("Compass");
+                character.Equipment.Add("Mapmaking Tools(quill, ink, parchment, calipers, ruler)");
+                character.Equipment.Add("10 days of rations");
+                character.BackgroundFeature = "Known Shelters: spend 1hr, succeed on medium DC Survival check - find the nearest settlement (it could be hostile such as " +
+                    "\n     bandits, druids, or tribal people. If the settlement is not hostile, inhabitants are initially friendly and will let you seek shelter" +
+                    "\n     and trade among them.";
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Wanderer";
-                    result.Equipment.Add("Holdings: A letter from an old friend describing an anomaly within the wilds of your choice." +
-                        "\n        A hidden stash in the wilds you chose, containing rations, medical supplies, fresh water, and weapons.");
-                    result.Progression = "Discover an anomaly and document its location.";
+                    character.Equipment.Add("Holdings: A letter from an old friend describing an anomaly within the wilds of your choice." +
+                        "\n          A hidden stash in the wilds you chose, containing rations, medical supplies, fresh water, and weapons.");
+                    character.Progression = "Discover an anomaly and document its location.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Pathfinder";
-                    result.Equipment.Add("Holdings: Detailed knowledge of your chosen wilderness, including locations of interest and danger." +
-                        "\n        A contract with a local guild or faction to guide members through the area.");
-                    result.Progression = "Establish a new road or trade route between known settlements or landmarks that is safe to travel.";
+                    character.Equipment.Add("Holdings: Detailed knowledge of your chosen wilderness, including locations of interest and danger." +
+                        "\n          A contract with a local guild or faction to guide members through the area.");
+                    character.Progression = "Establish a new road or trade route between known settlements or landmarks that is safe to travel.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Royal Surveyor";
-                    result.Equipment.Add("Holdings: Resources to assist in your exploration provided by clients." +
-                        "\n        An assistant cartographer, scribe, or other related profession." +
-                        "\n        Maps and charts that have been procured by your assistant, detailing hidden routes.");
-                    result.Progression = "Complete an exploration mission of great notoriety, commissioned by a Monarch or other leader.";
+                    character.Equipment.Add("Holdings: Resources to assist in your exploration provided by clients." +
+                        "\n          An assistant cartographer, scribe, or other related profession." +
+                        "\n          Maps and charts that have been procured by your assistant, detailing hidden routes.");
+                    character.Progression = "Complete an exploration mission of great notoriety, commissioned by a Monarch or other leader.";
                 }
                 else
                 {
                     character.ChosenBackground += " - Horizon Master";
-                    result.Equipment.Add("Holdings: If your campaign permits it, you know of gateways to other planes of existence." +
-                        "\n        An ancient map leading to a lost landmark of great importance. It may contain wealth, power, or knowledge." +
-                        "\n        An exploration company of hirelings - labourers, soldiers, academics, carpenters, and many other professions." +
-                        "\n        A port/encampment at a strategic location that acts as a frontier post to launch exploration missions.");
+                    character.Equipment.Add("Holdings: If your campaign permits it, you know of gateways to other planes of existence." +
+                        "\n          An ancient map leading to a lost landmark of great importance. It may contain wealth, power, or knowledge." +
+                        "\n          An exploration company of hirelings - labourers, soldiers, academics, carpenters, and many other professions." +
+                        "\n          A port/encampment at a strategic location that acts as a frontier post to launch exploration missions.");
                 }
             }
 
             var talents = new List<string> { "Beast Whisperer", "Biologist", "Born in the Saddle", "Botanist", "Calloused Hands",
                 "Disciplinarian", "Drunkard", "Forecaster", "Gambler", "Gut Feeling", "Hard-Working", "Local Historian", "Navigator",
                 "Renowned", "Translator" };
-            GetTalents(talents, character, rank);
+            AddTalents(talents, character, rank);
 
             result.PersonalityTrait[0] = "I’m driven by a wanderlust that led me away from home.";
             result.PersonalityTrait[1] = "I watch over my friends as if they were a litter of newborn pups.";
@@ -1463,24 +1469,23 @@ namespace DnD_Character_Creator.Backgrounds
 
             var skills = new List<string> { "Athletics", "Perception", "Persuasion", "Sleight of Hand", "Survival" };
             string pickMsg = $"Pick a skill from the list";
-            string errorMsg = "You are already trained in that skill, pick a different skill.";
-            var skill = CLIHelper.GetNew(skills, character.SkillProficiencies, pickMsg, errorMsg);
-            result.SkillProficiencies.Add(skill);
-            result.ToolProficiencies.Add("Navigator's Tools");
-            result.ToolProficiencies.Add("Vehicles(water)");
+            
+            var skill = CLIHelper.GetNew(skills, character.SkillProficiencies, pickMsg);
+            character.SkillProficiencies.Add(skill);
+            character.ToolProficiencies.Add("Navigator's Tools");
+            character.ToolProficiencies.Add("Vehicles(water)");
             pickMsg = "Pick a standard language";
-            errorMsg = "You already have that language try again";
-            string lang1 = CLIHelper.GetNew(Options.StandardLanguages, character.Languages, pickMsg, errorMsg);
-            result.Languages.Add(lang1);
+            string lang1 = CLIHelper.GetNew(Options.StandardLanguages, character.Languages, pickMsg);
+            character.Languages.Add(lang1);
             pickMsg = "Pick an exotic language";
-            string lang2 = CLIHelper.GetNew(Options.ExoticLanguages, character.Languages, pickMsg, errorMsg);
-            result.Languages.Add(lang2);
-            result.Equipment.Add("Common clothes");
-            result.Equipment.Add("Belaying Pin(can be used as a club)");
-            result.Equipment.Add("Thread and blunt needle");
-            result.Equipment.Add("Bucket of tar");
-            result.Equipment.Add("Belt pouch for coins");
-            result.GP = 10;
+            string lang2 = CLIHelper.GetNew(Options.ExoticLanguages, character.Languages, pickMsg);
+            character.Languages.Add(lang2);
+            character.Equipment.Add("Common clothes");
+            character.Equipment.Add("Belaying Pin(can be used as a club)");
+            character.Equipment.Add("Thread and blunt needle");
+            character.Equipment.Add("Bucket of tar");
+            character.Equipment.Add("Belt pouch for coins");
+            character.GP += 10;
 
             var luckyCharmExamples = new List<string>() { "rabbit foot", "small stone with a hole in the center", "random Trinket" };
             Console.WriteLine("Sailors get a lucky charm as a part of their equipment. Pick an option to determine it.");
@@ -1490,11 +1495,11 @@ namespace DnD_Character_Creator.Backgrounds
             if (choice == 1)
             {
                 string luckyCharm = CLIHelper.PrintChoices(luckyCharmExamples);
-                result.Equipment.Add(luckyCharm);
+                character.Equipment.Add(luckyCharm);
             }
             else
             {
-                result.Equipment.Add("Lucky charm");
+                character.Equipment.Add("Lucky charm");
             }
 
             var professions = new List<string> { "Sailor", "Dock Worker", "Sea Gatherer" };
@@ -1504,136 +1509,135 @@ namespace DnD_Character_Creator.Backgrounds
 
             if (prof == "Sailor")
             {
-                result.SkillProficiencies.Add("Perception");
-                result.Equipment.Add("Sturdy clothes");
-                result.Equipment.Add("Large sack");
-                result.Equipment.Add("Dice");
-                result.Equipment.Add("Liquor Flask");
-                result.Feature = "Sea Passage: spend 1hr, succeed on medium DC Perception check - find a ship that will provide free passage" +
-                    "\n        to a location of your choice, provided any ships are traveling toward that location";
+                character.SkillProficiencies.Add("Perception");
+                character.Equipment.Add("Sturdy clothes");
+                character.Equipment.Add("Large sack");
+                character.Equipment.Add("Dice");
+                character.Equipment.Add("Liquor Flask");
+                character.BackgroundFeature = "Sea Passage: spend 1hr, succeed on medium DC Perception check - find a ship that will provide free passage to a location of" +
+                    "\n     your choice, provided any ships are traveling toward that location";
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Deck Hand";
-                    result.Equipment.Add("Holdings: Free lodging on your boat. Knowledge of a potential mutiny.");
-                    result.Progression = "Be promoted to Boatswain by a Captain.";
+                    character.Equipment.Add("Holdings: Free lodging on your boat. Knowledge of a potential mutiny.");
+                    character.Progression = "Be promoted to Boatswain by a Captain.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Boatswain";
-                    result.Equipment.Add("Holdings: Command over the deckhands on the ship when not under the orders of a higher rank." +
-                        "\n        An officer’s quarters which doubles as your cabin and living space.");
-                    result.Progression = "Be promoted to Ship Captain or become Captain of your own ship by other means.";
+                    character.Equipment.Add("Holdings: Command over the deckhands on the ship when not under the orders of a higher rank." +
+                        "\n          An officer’s quarters which doubles as your cabin and living space.");
+                    character.Progression = "Be promoted to Ship Captain or become Captain of your own ship by other means.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Ship Captain";
-                    result.Equipment.Add("Holdings: A ship, one you own or one you've been entrusted command of." +
-                        "\n        Command of a loyal crew that see to the operation and maintenance of your ship." +
-                        "\n        If you own the ship, you have complete control, but you have to pay for upkeep." +
-                        "\n        Even if the ship belongs to an admiralty or business interest, on board the ship you are the one in charge.");
-                    result.Progression = "Be promoted to Admiral by a higher authority, or by obtaining a fleet of your own.";
+                    character.Equipment.Add("Holdings: A ship, one you own or one you've been entrusted command of." +
+                        "\n          Command of a loyal crew that see to the operation and maintenance of your ship." +
+                        "\n          If you own the ship, you have complete control, but you have to pay for upkeep." +
+                        "\n          Even if the ship belongs to an admiralty or business interest, on board the ship you are the one in charge.");
+                    character.Progression = "Be promoted to Admiral by a higher authority, or by obtaining a fleet of your own.";
                 }
                 else
                 {
                     character.ChosenBackground += " - Fleet Admiral";
-                    result.Equipment.Add("Holdings: A fleet of ships that follow your every command." +
-                        "\n        Command of multiple loyal crews that see to the operation and maintenance of your fleet." +
-                        "\n        You are known in other lands for the tales of your victories and expertise." +
-                        "\n        Free lodging on any ship you are in command of, and any port or shipyard you are docked at.");
+                    character.Equipment.Add("Holdings: A fleet of ships that follow your every command." +
+                        "\n          Command of multiple loyal crews that see to the operation and maintenance of your fleet." +
+                        "\n          You are known in other lands for the tales of your victories and expertise." +
+                        "\n          Free lodging on any ship you are in command of, and any port or shipyard you are docked at.");
                 }
             }
             else if (prof == "Dock Worker")
             {
-                result.SkillProficiencies.Add("Investigation");
-                result.Equipment.Add("Leather strap");
-                result.Equipment.Add("30ft of rope");
-                result.Equipment.Add("Pulley");
-                result.Equipment.Add("Box of snuff");
-                result.Equipment.Add("Clipboard and quill");
-                result.Feature = "Liberate Ledgers: spend 1hr, succeed on medium DC Investigation check - you know the traffic of ships, wagons" +
-                    "\n        and merchandise at a trade hub. You can also discern where different goods, including contraband, are stored";
+                character.SkillProficiencies.Add("Investigation");
+                character.Equipment.Add("Leather strap");
+                character.Equipment.Add("30ft of rope");
+                character.Equipment.Add("Pulley");
+                character.Equipment.Add("Box of snuff");
+                character.Equipment.Add("Clipboard and quill");
+                character.BackgroundFeature = "Liberate Ledgers: spend 1hr, succeed on medium DC Investigation check - you know the traffic of ships, wagons and merchandise at a trade hub." +
+                    "\n     You can also discern where different goods, including contraband, are stored";
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Stock Clerk";
-                    result.Equipment.Add("Holdings: Lodging near the port or trade station you work at." +
-                        "\n        You know where the contraband is hidden and how to get in.");
-                    result.Progression = "Be promoted to Customs Inspector by a dock worker of a higher station.";
+                    character.Equipment.Add("Holdings: Lodging near the port or trade station you work at." +
+                        "\n          You know where the contraband is hidden and how to get in.");
+                    character.Progression = "Be promoted to Customs Inspector by a dock worker of a higher station.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Customs Inspector";
-                    result.Equipment.Add("Holdings: A list of fellow Customs Inspectors known for accepting bribes, and who bribed them." +
-                        "\n        A letter or clue revealing the smuggling operations of a criminal organisation." +
-                        "\n        Authority over low ranking dockworkers and port guards.");
-                    result.Progression = "Expose a large quantity of contraband or a criminal organisation.";
+                    character.Equipment.Add("Holdings: A list of fellow Customs Inspectors known for accepting bribes, and who bribed them." +
+                        "\n          A letter or clue revealing the smuggling operations of a criminal organisation." +
+                        "\n          Authority over low ranking dockworkers and port guards.");
+                    character.Progression = "Expose a large quantity of contraband or a criminal organisation.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Harbor Master";
-                    result.Equipment.Add("Holdings: Comfortable accommodation within the port town or city of your station." +
-                        "\n        Authority of all resources, funding, and personnel of the harbour you manage." +
-                        "\n        The authority to grant commodity licences, allowing the import or harvesting of the commodity.");
-                    result.Progression = "Be promoted by a Monarch or state leader.";
+                    character.Equipment.Add("Holdings: Comfortable accommodation within the port town or city of your station." +
+                        "\n          Authority of all resources, funding, and personnel of the harbour you manage." +
+                        "\n          The authority to grant commodity licences, allowing the import or harvesting of the commodity.");
+                    character.Progression = "Be promoted by a Monarch or state leader.";
                 }
                 else
                 {
                     character.ChosenBackground += " - Sealord";
-                    result.Equipment.Add("Holdings: Luxurious lodging near a mercantile district where you oversee the operations of the region." +
-                        "\n        Control over docking fees and other charges associated with trading posts and ports across the region." +
-                        "\n        Authority of all resources, funding, and personnel of the harbour you manage." +
-                        "\n        The authority to grant commodity licences, allowing the import or harvesting of the commodity." +
-                        "\n        A seat at any council meetings pertaining to trade or the sea in the kingdom.");
+                    character.Equipment.Add("Holdings: Luxurious lodging near a mercantile district where you oversee the operations of the region." +
+                        "\n          Control over docking fees and other charges associated with trading posts and ports across the region." +
+                        "\n          Authority of all resources, funding, and personnel of the harbour you manage." +
+                        "\n          The authority to grant commodity licences, allowing the import or harvesting of the commodity." +
+                        "\n          A seat at any council meetings pertaining to trade or the sea in the kingdom.");
                 }
             }
             else if (prof == "Sea Gatherer")
             {
-                result.SkillProficiencies.Add("Survival");
-                result.Equipment.Add("Bag of water weeds");
-                result.Equipment.Add("Shellfish trap");
-                result.Equipment.Add("Shucking knife");
-                result.Equipment.Add("Pouch of bait");
-                result.Equipment.Add("Straw sunhat");
-                result.Feature = "Knowledge of the Seas: spend 1hr, succeed on medium DC Survival check - earn money by finding sea treasures" +
-                                 "This can be anything - simple fishing, dangerous monster hunting, diving for wrecks and ruins, etc";
+                character.SkillProficiencies.Add("Survival");
+                character.Equipment.Add("Bag of water weeds");
+                character.Equipment.Add("Shellfish trap");
+                character.Equipment.Add("Shucking knife");
+                character.Equipment.Add("Pouch of bait");
+                character.Equipment.Add("Straw sunhat");
+                character.BackgroundFeature = "Knowledge of the Seas: spend 1hr, succeed on medium DC Survival check - earn money by finding sea treasures (can be anything" +
+                    "\n     ex: simple fishing, dangerous monster hunting, diving for wrecks and ruins, etc)";
                 if (rank == 1)
                 {
                     character.ChosenBackground += " - Dredge";
-                    result.Equipment.Add("Holdings: A small, wicker, one-person fishing boat." +
-                        "\n        Knowledge of the best fishing spots in the area.");
-                    result.Progression = "Acquire a trawling boat and a commodity license from a Harbour Master.";
+                    character.Equipment.Add("Holdings: A small, wicker, one-person fishing boat." +
+                        "\n          Knowledge of the best fishing spots in the area.");
+                    character.Progression = "Acquire a trawling boat and a commodity license from a Harbour Master.";
                 }
                 else if (rank == 2)
                 {
                     character.ChosenBackground += " - Trawler";
-                    result.Equipment.Add("Holdings: A single-masted trawling boat with a few assistants to crew it." +
-                        "\n        A rumour of a great sunken treasure and the identity of who currently holds the map to it.");
-                    result.Progression = "Complete a contract to kill a particularly rare and dangerous nautical monster or find a sunken treasure." +
-                        "\n        The contract must be completed for a wizard, merchant prince, or similarly influential individual.";
+                    character.Equipment.Add("Holdings: A single-masted trawling boat with a few assistants to crew it." +
+                        "\n          A rumour of a great sunken treasure and the identity of who currently holds the map to it.");
+                    character.Progression = "Complete a contract to kill a particularly rare and dangerous nautical monster or find a sunken treasure. The contract must be completed" +
+                        "\n          for a wizard, merchant prince, or similarly influential individual.";
                 }
                 else if (rank == 3)
                 {
                     character.ChosenBackground += " - Trawl Master";
-                    result.Equipment.Add("Holdings: A deep-sea trawling boat, equipped to spend months at sea." +
-                        "\n        A team of expert trawlers and divers to assist you in adventures and maintain your boat." +
-                        "\n        The audience of wizards and merchant princes who wish to hire you.");
-                    result.Progression = "Slay a major sea monster or find a sunken treasure that becomes legend." +
-                        "\n        The event must draw the awe of influential individuals across the land.";
+                    character.Equipment.Add("Holdings: A deep-sea trawling boat, equipped to spend months at sea." +
+                        "\n          A team of expert trawlers and divers to assist you in adventures and maintain your boat." +
+                        "\n          The audience of wizards and merchant princes who wish to hire you.");
+                    character.Progression = "Slay a major sea monster or find a sunken treasure that became a legend. The event must awe influential individuals across the land.";
                 }
                 else
                 {
                     character.ChosenBackground += " - Nautical Legend";
-                    result.Equipment.Add("Holdings: Control of a coastal island awarded to you by a Monarch in recognition of your feats." +
-                        "\n        The island houses a fortress, guild house, or similar structure where nautical legends gather." +
-                        "\n        A deep-sea trawling boat, equipped to spend months at sea. A team of expert trawlers/divers who maintain the boat." + 
-                        "\n        Repute across the land as a figure of legend. A mighty weapon or artifact(sunken treasure or reward)." +
-                        "\n        An audience with any ruler, at their convenience, to discuss matters of salvage/treasure hunting." +
-                        "\n        The audience of wizards and merchant princes who wish to hire you.");
+                    character.Equipment.Add("Holdings: Control of a coastal island awarded to you by a Monarch in recognition of your feats." +
+                        "\n          The island houses a fortress, guild house, or similar structure where nautical legends gather." +
+                        "\n          A deep-sea trawling boat, equipped to spend months at sea. A team of expert trawlers/divers who maintain the boat." + 
+                        "\n          Repute across the land as a figure of legend. A mighty weapon or artifact(sunken treasure or reward)." +
+                        "\n          An audience with any ruler, at their convenience, to discuss matters of salvage/treasure hunting." +
+                        "\n          The audience of wizards and merchant princes who wish to hire you.");
                 }
             }
 
             var talents = new List<string> { "Calloused Hands", "Copycat", "Disciplinarian", "Drunkard", "Forecaster", "Gambler","Gut Feeling",
                 "Hard-Worker", "Menacing Presence", "Navigator", "Recruiter", "Renowned", "Ropesman", "Sea Dog", "Sentry", "Wayfarer" };
-            GetTalents(talents, character, rank);
+            AddTalents(talents, character, rank);
 
             result.PersonalityTrait[0] = "My friends know they can rely on me, no matter what.";
             result.PersonalityTrait[1] = "I work hard so that I can play hard when the work is done.";

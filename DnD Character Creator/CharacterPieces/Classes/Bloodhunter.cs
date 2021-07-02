@@ -1,18 +1,66 @@
 ﻿using DnD_Character_Creator.CharacterPieces.Spells;
-using DnD_Character_Creator.Classes;
 using DnD_Character_Creator.Helper_Classes;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
+namespace DnD_Character_Creator.CharacterPieces.Classes
 {
-    public static class BloodhunterSpecifics
+    public static class Bloodhunter
     {
         public static string BloodhunterOrder { get; set; }
-        public static CharacterClass Features(Character character, CharacterClass result)
+        public static void Base(Character character)
         {
-            int lvl = result.Lvl;
+            var classSkills = new List<string> { "Acrobatics", "Arcana", "Athletics", "Insight", "Investigation", "Survival" };
+
+            character.GP += 125;
+            character.HitDie = 10;
+            character.Proficiencies.Add("Light armor");
+            character.Proficiencies.Add("Medium armor");
+            character.Proficiencies.Add("Simple weapons");
+            character.Proficiencies.Add("Martial weapons");
+            character.Saves.Add("Str");
+            character.Saves.Add("Wis");
+
+            BEHelper.GetSkills(character, classSkills, 2);
+        }
+        public static void Equipment(Character character)
+        {
+            Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
+            CLIHelper.Print2Choices("Any martial weapon", "Two simple weapons");
+            int input = CLIHelper.GetNumberInRange(1, 2);
+            if (input == 1)
+            {
+                character.Equipment.Add($"Martial Weapon");
+            }
+            else
+            {
+                BEHelper.AddSimpleMeleeWeapon(character);
+            }
+            CLIHelper.Print2Choices("Light crossbow", "Hand crossbow");
+            input = CLIHelper.GetNumberInRange(1, 2);
+            if (input == 1)
+            {
+                character.Equipment.Add(Options.SimpleRangedWeapons[0]);
+            }
+            else
+            {
+                character.Equipment.Add(Options.MartialRangedWeapons[1]);
+            }
+            CLIHelper.Print2Choices("Studded leather armor", "Scale mail");
+            input = CLIHelper.GetNumberInRange(1, 2);
+            if (input == 1)
+            {
+                character.Equipment.Add(Options.LightArmor[2]);
+            }
+            else
+            {
+                character.Equipment.Add(Options.MediumArmor[2]);
+            }
+            character.Equipment.Add(Options.Packs[4]);
+        }
+        public static void Features(Character character)
+        {
+            int lvl = character.Lvl;
             int index = -1;
             int dmg = 4;
             for (int i = 5; i <= lvl; i += 4)
@@ -38,7 +86,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 {
                     index = CLIHelper.PrintChoices(msg, primalRites);
                     string newRite = primalRites[index];
-                    string riteType = newRite.Substring(11);
+                    string riteType = newRite.Substring(12);
                     switch (riteType)
                     {
                         case "Flame":
@@ -59,7 +107,7 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 else
                 {
                     index = CLIHelper.PrintChoices(msg, esotericRites);
-                    string newRite = esotericRites[index].Substring(11);
+                    string newRite = esotericRites[index].Substring(12);
                     switch (newRite)
                     {
                         case "Dead":
@@ -75,9 +123,9 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 }
             }
             string riteDmg = String.Join(", ", dmgTypes);
-            result.ClassFeatures.Add("Hunter's Bane", "adv on Survival to track and Int to recall info about Fey, Fiends, and Undead" +
+            character.ClassFeatures.Add("Hunter's Bane", "adv on Survival to track and Int to recall info about Fey, Fiends, and Undead" +
                 "\ncan't be surprised by creature type while tracking that type, can only track 1 type at a time");
-            result.ClassFeatures.Add("Crimson Rite", $"bonus, reduce max HP by lvl, dmg + 1D{dmg} of 1 type, dmg type(s) = {riteDmg}");
+            character.ClassFeatures.Add("Crimson Rite", $"bonus, reduce max HP by lvl, dmg + 1D{dmg} of 1 type, dmg type(s) = {riteDmg}");
 
             if (lvl >= 2)
             {
@@ -87,35 +135,35 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 string fightStyle = CLIHelper.PrintChoices(Options.FightingStyles, styleList, fightStyleMsg);
                 string fightStyleKey = $"Fighting Style({fightStyle})";
                 string fightStyleValue = Options.FightingStyles[fightStyle];
-                result.ClassFeatures.Add(fightStyleKey, fightStyleValue);
+                character.ClassFeatures.Add(fightStyleKey, fightStyleValue);
             }
             if (lvl >= 3)
             {
                 msg = "Pick a Bloodhunter Order that will give you features at levels 3, 7, 10, 15, and 18.";
                 var archetypes = new List<string> { "Order of the Ghostslayer", "Order of the Mutant", "Order of the Profane Soul" };
                 int answer = CLIHelper.PrintChoices(msg, archetypes);
-                BloodhunterOrder = archetypes[answer].Substring(12);
+                BloodhunterOrder = archetypes[answer].Substring(13);
 
                 switch (BloodhunterOrder)
                 {
                     case "Ghostslayer":
-                        Ghostslayer(character, result);
+                        Ghostslayer(character);
                         break;
                     case "Mutant":
-                        Mutant(character, result);
+                        Mutant(character);
                         break;
                     case "Profane Soul":
-                        ProfaneSoul(character, result);
+                        ProfaneSoul(character);
                         break;
                 }
             }
             if (lvl >= 4)
             {
-                result.ClassFeatures.Add("Hunter's Versatility", "When you gain an Ability Score Improvement, replace a Fighting Style or a Crimson Rite option");
+                character.ClassFeatures.Add("Hunter's Versatility", "When you gain an Ability Score Improvement, replace a Fighting Style or a Crimson Rite option");
             }
             if (lvl >= 5)
             {
-                result.ClassFeatures.Add("Extra Attack", "When using an atk action, atk twice");
+                character.ClassFeatures.Add("Extra Attack", "When using an atk action, atk twice");
             }
             if (lvl >= 6)
             {
@@ -136,55 +184,55 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 {
                     bloodCurses.Add(item);
                 }
-                result.ClassFeatures.Add("Blood Maledict", $"{curseUses}/SR, target must have blood, creatures can only have 1 curse at a time, you know {cursesKnown} Blood Curse options");
+                character.ClassFeatures.Add("Blood Maledict", $"{curseUses}/SR, target must have blood, creatures can only have 1 curse at a time, you know {cursesKnown} Blood Curse options");
                 for (int i = 0; i < cursesKnown; i++)
                 {
                     string newCurse = CLIHelper.PrintChoices(Options.BloodCurses, bloodCurses, "Pick a Blood Curse option");
-                    result.ClassFeatures["Blood Maledict"] += $"\n{newCurse}({Options.BloodCurses[newCurse]})";
+                    character.ClassFeatures["Blood Maledict"] += $"\n{newCurse}({Options.BloodCurses[newCurse]})";
                     bloodCurses.Remove(newCurse);
                 }
             }
             if (lvl >= 9)
             {
-                result.ClassFeatures.Add("Grim Psychometry", "meditate for 10 min, Wis check, learn dark events/sinister purpose of an object touched by evil");
+                character.ClassFeatures.Add("Grim Psychometry", "meditate for 10 min, Wis check, learn dark events/sinister purpose of an object touched by evil");
             }
             if (lvl >= 11)
             {
-                result.ClassFeatures["Hunter's Bane"] = "gain adv on Insight and Intimidation";
-                result.ClassFeatures.Add("Dark Velocity", "speed +10ft, op atks against you suffer disadv");
+                character.ClassFeatures["Hunter's Bane"] = "gain adv on Insight and Intimidation";
+                character.ClassFeatures.Add("Dark Velocity", "speed +10ft, op atks against you suffer disadv");
                 character.Speed += 10;
             }
             if (lvl >= 14)
             {
-                result.ClassFeatures.Add("Hardened Soul", "gain Immunity to fear, gain adv vs charm");
+                character.ClassFeatures.Add("Hardened Soul", "gain Immunity to fear, gain adv vs charm");
             }
             if (lvl >= 17)
             {
-                result.ClassFeatures.Add("Enduring Form", "1/turn, 2 Hitdie, reroll death save");
+                character.ClassFeatures.Add("Enduring Form", "1/turn, 2 Hitdie, reroll death save");
             }
             if (lvl >= 20)
             {
-                result.ClassFeatures.Add("Sanguine Mastery", "Crimson Rite no longer reduces max HP, if HP < 1/4 max HP - all Crimson Rite dmg is maximized");
+                character.ClassFeatures.Add("Sanguine Mastery", "Crimson Rite no longer reduces max HP, if HP < 1/4 max HP - all Crimson Rite dmg is maximized");
             }
 
-            return result;
+            
         }
-        public static void Ghostslayer(Character character, CharacterClass result)
+        public static void Ghostslayer(Character character)
         {
             int lvl = character.Lvl;
-            result.ClassFeatures.Add("Cleansing Rite", "Crimson Rite dmg + Wis Radiant dmg");
+            character.ClassFeatures.Add("Cleansing Rite", "Crimson Rite dmg + Wis Radiant dmg");
             if (lvl >= 7)
             {
-                result.ClassFeatures.Add("Hallowed Veins", "Blood Curses can be used on any creature");
+                character.ClassFeatures.Add("Hallowed Veins", "Blood Curses can be used on any creature");
             }
             if (lvl >= 10)
             {
-                result.ClassFeatures.Add("Supernal Flurry", "LR, bonus, Wis rounds, gain extra atk / on kill, regain HP = Crimson Rite die");
+                character.ClassFeatures.Add("Supernal Flurry", "LR, bonus, Wis rounds, gain extra atk / on kill, regain HP = Crimson Rite die");
             }
             if (lvl >= 15)
             {
-                result.ClassFeatures["Supernal Flurry"] = "SR, bonus, Wis rounds, gain additional Attack action / on kill, regain HP = Crimson Rite die";
-                result.ClassFeatures.Add("Gravesight", "gain Darkvision 60ft, see invisibility 60ft");
+                character.ClassFeatures["Supernal Flurry"] = "SR, bonus, Wis rounds, gain additional Attack action / on kill, regain HP = Crimson Rite die";
+                character.ClassFeatures.Add("Gravesight", "gain Darkvision 60ft, see invisibility 60ft");
                 if (character.Vision.Contains("Lowlight"))
                 {
                     character.Vision = "Darkvision 60ft";
@@ -192,11 +240,11 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             }
             if (lvl >= 18)
             {
-                result.ClassFeatures.Add("Vengeful Spirit", "when you drop to 0 HP, next turn manifest spirit form that picks up weapons, has Immunity to non-magical dmg" +
+                character.ClassFeatures.Add("Vengeful Spirit", "when you drop to 0 HP, next turn manifest spirit form that picks up weapons, has Immunity to non-magical dmg" +
                     "\nhas no armor, can only take Move, Attack, and Bonus(offhand atk or Crimson Rite) actions");
             }
         }
-        public static void Mutant(Character character, CharacterClass result)
+        public static void Mutant(Character character)
         {
             int lvl = character.Lvl;
             int formulas = 3;
@@ -235,14 +283,14 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             {
                 mutagens.Add(item);
             }
-            result.ClassFeatures.Add("Mutagen Craft", "on SR, create a mutagen, consume as bonus, duration until SR, mutation score = lvl / 4, rounded up");
+            character.ClassFeatures.Add("Mutagen Craft", "on SR, create a mutagen, consume as bonus, duration until SR, mutation score = lvl / 4, rounded up");
             for (int i = 0; i < formulas; i++)
             {
                 string newMutagen = CLIHelper.PrintChoices(dict, mutagens, "Pick a new mutagen formula");
                 mutagens.Remove(newMutagen);
-                result.ClassFeatures["Mutagen Craft"] += $"\n{newMutagen}({dict[newMutagen]})";
+                character.ClassFeatures["Mutagen Craft"] += $"\n{newMutagen}({dict[newMutagen]})";
             }
-            if (result.ClassFeatures["Mutagen Craft"].Contains("Nighteye"))
+            if (character.ClassFeatures["Mutagen Craft"].Contains("Nighteye"))
             {
                 if (character.Vision.Contains("Lowlight"))
                 {
@@ -263,54 +311,53 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
             }
             if (lvl >= 7)
             {
-                result.ClassFeatures.Add("Advanced Mutagen Craft", "on SR, create 2 mutagens, must be different formulas");
+                character.ClassFeatures.Add("Advanced Mutagen Craft", "on SR, create 2 mutagens, must be different formulas");
             }
             if (lvl >= 10)
             {
-                result.ClassFeatures.Add("Robust Physiology", "gain Immunity to Poison dmg and poison(condition)");
+                character.ClassFeatures.Add("Robust Physiology", "gain Immunity to Poison dmg and poison(condition)");
             }
             if (lvl >= 15)
             {
-                result.ClassFeatures["Advanced Mutagen Craft"] = "on SR, create 3 mutagens, must be different formulas";
-                result.ClassFeatures.Add("Strange Metabolism", "SR, ignore the side effect from 1 mutagen after taking it");
+                character.ClassFeatures["Advanced Mutagen Craft"] = "on SR, create 3 mutagens, must be different formulas";
+                character.ClassFeatures.Add("Strange Metabolism", "SR, ignore the side effect from 1 mutagen after taking it");
             }
             if (lvl >= 18)
             {
-                result.ClassFeatures.Add("Exalted Mutation", "choose 1 mutagen formula to gain permanently, can't be changed or effected by Strange Metabolism");
+                character.ClassFeatures.Add("Exalted Mutation", "choose 1 mutagen formula to gain permanently, can't be changed or effected by Strange Metabolism");
             }
         }
-        public static void ProfaneSoul(Character character, CharacterClass result)
+        public static void ProfaneSoul(Character character)
         {
             int lvl = character.Lvl;
-            result.ClassFeatures.Add("Pact Magic", "gain spells from the Warlock list, use Wis for spell DCs");
-            result.ClassFeatures.Add("Lethal Focus", "you use a weapon as a spell focus");
+            character.ClassFeatures.Add("Pact Magic", "gain spells from the Warlock list, use Wis for spell DCs");
+            character.ClassFeatures.Add("Lethal Focus", "you use a weapon as a spell focus");
             if (lvl >= 7)
             {
-                result.ClassFeatures.Add("Mystic Frenzy", "bonus, when you cast a cantrip, make a wep atk");
+                character.ClassFeatures.Add("Mystic Frenzy", "bonus, when you cast a cantrip, make a wep atk");
             }
             if (lvl >= 10)
             {
-                result.ClassFeatures.Add("Diabolic Channel", "action, non-cantrip spell with cast time of 1 action, make an wep atk - if hit all spell atk hit, if adv then save has disadv");
-                result.ClassFeatures.Add("Rite Bond", "gain Resistance to any Crimson Rite dmg types you are actively using");
+                character.ClassFeatures.Add("Diabolic Channel", "action, non-cantrip spell with cast time of 1 action, make an wep atk - if hit all spell atk hit, if adv then save has disadv");
+                character.ClassFeatures.Add("Rite Bond", "gain Resistance to any Crimson Rite dmg types you are actively using");
             }
             if (lvl >= 15)
             {
-                result.ClassFeatures.Add("Arcane Impulse", "SR, reaction, when enemy atk misses, cast a spell with cast time of 1 action");
+                character.ClassFeatures.Add("Arcane Impulse", "SR, reaction, when enemy atk misses, cast a spell with cast time of 1 action");
             }
             if (lvl >= 18)
             {
-                result.ClassFeatures.Add("Soul Syphon", "regain a spell slot when you kill a CR 15+ creature");
+                character.ClassFeatures.Add("Soul Syphon", "regain a spell slot when you kill a CR 15+ creature");
             }
-            Spells(character, result);
+            Spells(character);
         }
-        public static void Spells(Character character, CharacterClass result)
+        public static void Spells(Character character)
         {
-            AllSpells spells = new AllSpells("Warlock");
-            result.Cantrips.AddRange(character.Cantrips);
-            result.CantripsKnown = 2;
-            result.SpellsKnown = 2;
+            AllSpells spells = new AllSpells(character);
+            character.Cantrips.AddRange(character.Cantrips);
+            character.CantripsKnown = 2;
+            character.SpellsKnown = 2;
             string pickMsg = "Pick a spell.";
-            string errorMsg = "You already have that spell";
             string spell = "";
             int slotLvl = 1;
             int slots = 1;
@@ -323,40 +370,40 @@ namespace DnD_Character_Creator.CharacterPieces.ClassSpecifics
                 }
                 if (i == 7 || i == 11 || i == 18)
                 {
-                    result.SpellSlots[slotLvl] = 0;
+                    character.SpellSlots[slotLvl] = 0;
                     slotLvl++;
                 }
-                result.SpellSlots[slotLvl] = slots;
+                character.SpellSlots[slotLvl] = slots;
                 //spells known
                 if (i == 10)
                 {
-                    result.CantripsKnown++;
+                    character.CantripsKnown++;
                 }
                 if (i % 2 != 0 && i <= 17)
                 {
-                    result.SpellsKnown++;
+                    character.SpellsKnown++;
                 }
                 if (i == 18 || i == 20)
                 {
-                    result.SpellsKnown++;
+                    character.SpellsKnown++;
                 }
             }
             //add spells
-            for (int i = 0; i < result.CantripsKnown; i++)
+            for (int i = 0; i < character.CantripsKnown; i++)
             {
-                spell = CLIHelper.GetNew(spells.Warlock[0], result.Cantrips, pickMsg, errorMsg);
-                result.Cantrips.Add(spell);
+                spell = CLIHelper.GetNew(spells.Warlock[0], character.Cantrips, pickMsg);
+                character.Cantrips.Add(spell);
                 spells.Warlock[0].Remove(spell);
             }
             slotLvl = 1;
-            for (int i = 0; i < result.SpellsKnown; i++)
+            for (int i = 0; i < character.SpellsKnown; i++)
             {
                 if (i == 3 || i == 5 || i == 9)
                 {
                     slotLvl++;
                 }
-                spell = CLIHelper.GetNew(spells.Warlock[slotLvl], result.Spells[slotLvl], pickMsg, errorMsg);
-                result.Spells[slotLvl].Add(spell);
+                spell = CLIHelper.GetNew(spells.Warlock[slotLvl], character.Spells[slotLvl], pickMsg);
+                character.Spells[slotLvl].Add(spell);
                 spells.Warlock[slotLvl].Remove(spell);
             }
         }

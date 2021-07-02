@@ -1,5 +1,0 @@
-﻿
-each character piece(class, race, background) are methods that modify the character class
-each class, race, and background will have a method for the different implementation
-stats, options and clihelper are biggest carry overs
-clihelper revamp
