@@ -106,9 +106,9 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             int maxLvl = tuple.Item2;
             character.ClassFeatures.Add("Power Points", $"you have {pts} pts and you can cast up to {maxLvl} lvl spells(uses spell pts by lvl chart DMG pg 289)" +
                 $"\n        there's a limit on how many times you can cast certain spell lvls, casting at higher lvls - pay pts = spell's new lvl, pt costs for spells below" +
-                $"\n        1st = 2pts(no limit)          4th = 6pts(5/LR)          7th = 10pts(2/LR)" +
-                $"\n        2nd = 3pts(no limit)          5th = 7pts(5/LR)          8th = 11pts(1/LR)" +
-                $"\n        3rd = 5pts(no limit)          6th = 9pts(2/LR)          9th = 13pts(1/LR)");
+                $"\n        1st = 2pts(9/LR)          4th = 6pts(6/LR)          7th = 10pts(3/LR)" +
+                $"\n        2nd = 3pts(8/LR)          5th = 7pts(5/LR)          8th = 11pts(2/LR)" +
+                $"\n        3rd = 5pts(7/LR)          6th = 9pts(4/LR)          9th = 13pts(1/LR)");
             character.ClassFeatures.Add("Spellcasting Description", "Instead of arcane magic, you channel psionic energy to 'cast' your powers/spells" +
                 "\n        Some say psions are harnessing the energy of the Astral Plane, others think psions create psionic energy from their minds" +
                 "\n        When you use a summoning spell, the creature has the appearance of a silver Astral Construct(solidified ectoplasm)" +
@@ -382,11 +382,11 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         }
         public static void Spells(Character character)
         {
-            int lvl = character.Lvl;
+            character.Cantrips.AddRange(ExpandedSpells[0]);
+            BEHelper.AddPrimSpells(character, ExpandedSpells);
             string pickMsg = "Pick a cantrip.";
             int spellLvl = 1;
-            AllSpells spells = new AllSpells("Psion");
-            character.Cantrips.AddRange(ExpandedSpells[0]);
+            AllSpells spells = new AllSpells(character);
 
             for (int i = 0; i < character.CantripsKnown; i++)
             {
@@ -440,7 +440,7 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             int maxLvl = 1;
             for (int i = 3; i <= lvl; i += 2)
             {
-                if (lvl >= 17)
+                if (lvl <= 17)
                 {
                     maxLvl++;
                 }

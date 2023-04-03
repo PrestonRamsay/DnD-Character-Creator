@@ -211,23 +211,35 @@ namespace DnD_Character_Creator
         }
         public static void AddHeight(Character character)
         {
-            string height = Console.ReadLine().Trim();
+            int ht = 0;
             bool gettingheight = true;
+            string minHt = ConvertHeight(character.MinHeight);
+            string maxHt = ConvertHeight(character.MaxHeight);
 
             while (gettingheight)
             {
-                if (!height.Contains("\"") && !height.Contains("'"))
+                string height = Console.ReadLine().Trim();
+
+                if (!height.Contains("\"") || !height.Contains("\'"))
                 {
                     Console.WriteLine("Format error, try again.");
-                    height = Console.ReadLine().Trim();
                 }
                 else
                 {
-                    gettingheight = false;
+                    ht = ConvertHeightToInches(height);
+
+                    if (character.MinHeight <= ht && ht <= character.MaxHeight)
+                    {
+                        gettingheight = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"That is not between {minHt} and {maxHt}, try again.");
+                    }
                 }
             }
 
-            character.Height = ConvertHeightToInches(height);
+            character.Height = ht;
         }
         public static int ConvertHeightToInches(string heightString)
         {
@@ -320,7 +332,7 @@ namespace DnD_Character_Creator
             {
                 returnString = $"Specialty: {character.Specialty}";
             }
-            if (character.ChosenClass == "Paladin")
+            if (character.ChosenClass == "Paladin" || character.ChosenClassII == "Paladin")
             {
                 string tenets = String.Join(", ", character.Tenets);
                 returnString += $"\nPaladin Tenets: {tenets}\n";

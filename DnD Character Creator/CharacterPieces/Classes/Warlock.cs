@@ -78,8 +78,15 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         public static void Features(Character character)
         {
             int lvl = character.Lvl;
-
-            character.ClassFeatures.Add("Spellcasting", "use Cha for spell DCs, you use an Arcane Focus as a spell focus");
+            try
+            {
+                character.ClassFeatures.Add("Spellcasting", "use Cha for spell DCs, you use an Arcane Focus as a spell focus");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("*Note* You have 2 classes with spellcasting");
+                throw;
+            }
             string msg = "Pick an Otherworldly Patron that will give you features at levels 1, 6, 10, and 14.";
             var archetype = new List<string> { "Archfey", "Celestial", "The Fathomless", "Fiend", "Genie", "Hexblade",
                 "The Great Old One", "The Undying" };

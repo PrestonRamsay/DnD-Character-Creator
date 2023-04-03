@@ -33,7 +33,7 @@ namespace DnD_Character_Creator.CharacterPieces.Races
             pickMsg = "Changelings get 2 skill proficiencies of their choice, pick them now";
             for (int i = 0; i < 2; i++)
             {
-                string input = CLIHelper.GetNew(Options.Skills, character.SkillProficiencies, pickMsg);
+                string input = CLIHelper.GetNew(skills, character.SkillProficiencies, pickMsg);
                 character.SkillProficiencies.Add(input);
             }
             BEHelper.GetTool(character);

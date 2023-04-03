@@ -50,29 +50,55 @@ namespace DnD_Character_Creator.Helper_Classes
         }
         public static void DetermineHP(Character character)
         {
+            character.HP += character.HitDie + character.ConMod;
             Console.WriteLine("Would you like to roll for your HP or take the average?");
             CLIHelper.Print2Choices("Take average", "Roll");
             int input = CLIHelper.GetNumberInRange(1, 2);
-            int firstLvlHP = character.HitDie + character.ConMod;
-            int remainingLvls = character.Lvl - 1;
+            int con = character.ConMod;
+            int hitDie = character.HitDie;
 
-            if (input == 1)
+            if (character.CrossClass)
             {
-                int hitDieAvg = (character.HitDie / 2) + 1;
-                character.HP += firstLvlHP + (remainingLvls * (hitDieAvg + character.ConMod));
+                if (input == 1)
+                {
+                    character.HP += AverageHP(hitDie, character.BaseClassLvl, con);
+                    character.HP += AverageHP(character.HitDieII, character.OffClassLvl, con);
+                }
+                else
+                {
+                    character.HP += RolledHP(hitDie, character.BaseClassLvl, con);
+                    character.HP += RolledHP(character.HitDieII, character.OffClassLvl, con);
+                }
             }
             else
             {
-                DieRoll hitDie = new DieRoll(character.HitDie);
-                int HP = firstLvlHP;
-
-                for (int i = 0; i < remainingLvls; i++)
+                if (input == 1)
                 {
-                    HP += (hitDie.RollDie() + character.ConMod);
+                    character.HP += AverageHP(hitDie, character.Lvl, con);
                 }
-
-                character.HP += HP;
+                else
+                {
+                    character.HP += RolledHP(hitDie, character.Lvl, con);
+                }
             }
+        }
+        public static int AverageHP(int hitDie, int lvl, int con)
+        {
+            int hitDieAvg = (hitDie / 2) + 1;
+
+            return lvl * (hitDieAvg + con);
+        }
+        public static int RolledHP(int hitDie, int lvl, int con)
+        {
+            DieRoll rHitDie = new DieRoll(hitDie);
+            int HP = 0;
+
+            for (int i = 0; i < lvl; i++)
+            {
+                HP += (rHitDie.RollDie() + con);
+            }
+
+            return HP;
         }
         public static void ModifySkills(Character character)
         {
@@ -142,11 +168,19 @@ namespace DnD_Character_Creator.Helper_Classes
         }
         public static void AddSpellsKnown(Character character)
         {
-            string classString = character.ChosenClass;
-            int lvl = character.Lvl;
+            string classStr = character.ChosenClass;
+            int lvl = 0;
+            if (character.CrossClass)
+            {
+                lvl = character.BaseClassLvl;
+            }
+            else
+            {
+                lvl = character.Lvl;
+            }
             var cantrips = new List<string> { "Artificer", "Bard", "Cleric", "Druid", "Psion", "Sorcerer", "Swordmage", "Warlock", "Wizard" };
 
-            if (cantrips.Contains(classString))
+            if (cantrips.Contains(classStr))
             {
                 character.CantripsKnown = 2;
                 if (lvl >= 4)
@@ -157,17 +191,17 @@ namespace DnD_Character_Creator.Helper_Classes
                 {
                     character.CantripsKnown++;
                 }
-                if (classString == "Cleric" || classString == "Wizard")
+                if (classStr == "Cleric" || classStr == "Wizard")
                 {
                     character.CantripsKnown++;
                 }
-                if (classString == "Sorcerer")
+                if (classStr == "Sorcerer")
                 {
                     character.CantripsKnown += 2;
                 }
             }
             //end cantrips
-            if (classString == "Bard")
+            if (classStr == "Bard")
             {
                 character.SpellsKnown = 4;
                 for (int i = 2; i <= lvl; i++)
@@ -182,7 +216,18 @@ namespace DnD_Character_Creator.Helper_Classes
                     }
                 }
             }
-            if (classString == "Sorcerer" || classString == "Swordmage")
+            if (classStr == "Ranger")
+            {
+                if (lvl >= 2)
+                {
+                    character.SpellsKnown = 2;
+                }
+                for (int i = 3; i < lvl; i += 2)
+                {
+                    character.SpellsKnown++;
+                }
+            }
+            if (classStr == "Sorcerer" || classStr == "Swordmage")
             {
                 character.SpellsKnown = 2;
                 for (int i = 2; i <= lvl; i++)
@@ -193,7 +238,7 @@ namespace DnD_Character_Creator.Helper_Classes
                     }
                 }
             }
-            if (classString == "Psion" || classString == "Warlock")
+            if (classStr == "Psion" || classStr == "Warlock")
             {
                 character.SpellsKnown = 2;
                 for (int i = 2; i <= lvl; i++)
@@ -208,7 +253,15 @@ namespace DnD_Character_Creator.Helper_Classes
         public static void AddSpellSlots(Character character)
         {
             string classString = character.ChosenClass;
-            int lvl = character.Lvl;
+            int lvl = 0;
+            if (character.CrossClass)
+            {
+                lvl = character.BaseClassLvl;
+            }
+            else
+            {
+                lvl = character.Lvl;
+            }
             var primaryCasters = new List<string> { "Bard", "Cleric", "Druid", "Sorcerer", "Wizard" };
 
             if (primaryCasters.Contains(classString))
@@ -296,8 +349,14 @@ namespace DnD_Character_Creator.Helper_Classes
                 }
             }
         }
-        public static void NewClass(Character character)
+        public static void NewClass(Character character, int lvl)
         {
+            int maintainLvl = character.Lvl;
+
+            if (character.CrossClass)
+            {
+                character.Lvl = lvl;
+            }
             switch (character.ChosenClass)
             {
                 case "Artificer":
@@ -348,6 +407,198 @@ namespace DnD_Character_Creator.Helper_Classes
                 case "Wizard":
                     AddWizard(character);
                     break;
+            }
+            if (character.CrossClass)
+            {
+                character.Lvl = maintainLvl;
+            }
+        }
+        public static void OffClass(Character character, int lvl)
+        {
+            int maintainLvl = character.Lvl;
+            string skill, msg, pickMsg = "";
+            int index = -1;
+            List<string> classSkills = new List<string>();
+
+            if (character.CrossClass)
+            {
+                character.Lvl = lvl;
+            }
+            switch (character.ChosenClassII)
+            {
+                case "Artificer":
+                    character.HitDieII = 6;
+                    Artificer.Features(character);
+                    character.Archetype = Artificer.ArtificerSpecialist;
+                    break;
+                case "Barbarian":
+                    character.HitDieII = 12;
+                    character.Proficiencies.Add("Shields");
+                    character.Proficiencies.Add("Simple weapons");
+                    character.Proficiencies.Add("Martial weapons");
+                    Barbarian.Features(character);
+                    character.Archetype = Barbarian.PathName;
+                    break;
+                case "Bard":
+                    character.HitDieII = 8;
+                    character.Proficiencies.Add("Light armor");
+                    skill = CLIHelper.GetNew(Options.Skills, character.SkillProficiencies, "Pick a skill to gain proficiency with");
+                    character.SkillProficiencies.Add(skill);
+
+                    var instruments = new List<string>();
+                    instruments.AddRange(Options.MusicalInstruments);
+                    foreach(var item in character.ToolProficiencies)
+                    {
+                        if (instruments.Contains(item))
+                        {
+                            instruments.Remove(item);
+                        }
+                    }
+                    msg = "Pick a musical instrument to gain proficiency with";
+                    index = CLIHelper.PrintChoices(msg, instruments);
+                    string instrument = instruments[index];
+                    character.ToolProficiencies.Add(instrument);
+
+                    Bard.Features(character);
+                    character.Archetype = Bard.BardicCollege;
+                    break;
+                case "Bloodhunter":
+                    character.HitDieII = 10;
+                    Bloodhunter.Features(character);
+                    character.Archetype = Bloodhunter.BloodhunterOrder;
+                    break;
+                case "Cleric":
+                    character.HitDieII = 8;
+                    character.Proficiencies.Add("Light armor");
+                    character.Proficiencies.Add("Medium armor");
+                    character.Proficiencies.Add("Shields");
+                    Cleric.Features(character);
+                    character.Archetype = Cleric.DivineDomain;
+                    break;
+                case "Druid":
+                    character.HitDieII = 8;
+                    character.Proficiencies.Add("Light armor");
+                    character.Proficiencies.Add("Medium armor");
+                    character.Proficiencies.Add("Shields");
+                    Druid.Features(character);
+                    character.Archetype = Druid.DruidCircle;
+                    if (character.Archetype == "Stars")
+                    {
+                        string focus = "";
+                        foreach (var item in character.Equipment)
+                        {
+                            if (character.Equipment.Contains("Druidic Focus"))
+                            {
+                                focus = item;
+                            }
+                        }
+                        character.Equipment.Remove(focus);
+                        msg = "Pick a star map to be your new spell focus";
+                        var starMaps = new List<string>();
+                        foreach (var item in Options.StarMaps)
+                        {
+                            starMaps.Add(item.Substring(8, item.Length - 1));
+                        }
+                        index = CLIHelper.PrintChoices(msg, starMaps);
+                        character.Equipment.Add(Options.StarMaps[index]);
+                    }
+                    break;
+                case "Fighter":
+                    character.HitDieII = 10;
+                    character.Proficiencies.Add("Light armor");
+                    character.Proficiencies.Add("Medium armor");
+                    character.Proficiencies.Add("Shields");
+                    character.Proficiencies.Add("Simple weapons");
+                    character.Proficiencies.Add("Martial weapons");
+                    Fighter.Features(character);
+                    character.Archetype = Fighter.MartialArchetype;
+                    break;
+                case "Monk":
+                    character.HitDieII = 8;
+                    character.Proficiencies.Add("Simple weapons");
+                    character.Proficiencies.Add("Shortswords");
+                    Monk.Features(character);
+                    character.Archetype = Monk.MonasticTradition;
+                    break;
+                case "Paladin":
+                    character.HitDieII = 10;
+                    character.Proficiencies.Add("Light armor");
+                    character.Proficiencies.Add("Medium armor");
+                    character.Proficiencies.Add("Shields");
+                    character.Proficiencies.Add("Simple weapons");
+                    character.Proficiencies.Add("Martial weapons");
+                    Paladin.Features(character);
+                    character.Archetype = Paladin.SacredOath;
+                    break;
+                case "Psion":
+                    character.HitDieII = 6;
+                    Psion.Features(character);
+                    break;
+                case "Ranger":
+                    character.HitDieII = 10;
+                    character.Proficiencies.Add("Light armor");
+                    character.Proficiencies.Add("Medium armor");
+                    character.Proficiencies.Add("Shields");
+                    character.Proficiencies.Add("Simple weapons");
+                    character.Proficiencies.Add("Martial weapons");
+
+                    classSkills = new List<string> { "Animal Handling", "Athletics", "Insight", "Investigation", "Nature",
+                        "Perception", "Stealth", "Survival" };
+                    pickMsg = $"Pick a skill from the Ranger's skill list";
+                    skill = CLIHelper.GetNew(classSkills, character.SkillProficiencies, pickMsg);
+                    character.SkillProficiencies.Add(skill);
+
+                    Ranger.Features(character);
+                    character.Archetype = Ranger.RangerArchetype;
+                    break;
+                case "Rogue":
+                    character.HitDieII = 8;
+                    character.Proficiencies.Add("Light armor");
+                    character.ToolProficiencies.Add("Thieves' Tools");
+
+                    classSkills = new List<string> { "Acrobatics", "Animal Handling", "Athletics", "Deception", "Insight",
+                        "Intimidation", "Investigation", "Perception", "Performance", "Persuasion", "Sleight of Hand", "Stealth" };
+                    pickMsg = $"Pick a skill from the Rogue's skill list";
+                    skill = CLIHelper.GetNew(classSkills, character.SkillProficiencies, pickMsg);
+                    character.SkillProficiencies.Add(skill);
+
+                    Rogue.Features(character);
+                    character.Archetype = Rogue.RoguishArchetype;
+                    break;
+                case "Sorcerer":
+                    character.HitDieII = 6;
+                    Sorcerer.Features(character);
+                    character.Archetype = Sorcerer.SorcerousOrigin;
+                    break;
+                case "Swordmage":
+                    character.HitDieII = 10;
+                    Swordmage.Features(character); 
+                    var swords = new List<string> { "Claymore", "Greatsword", "Longsword", "Rapier", "Sabre", "Scimitar", "Shortsword" };
+                    character.Proficiencies.Add("Light armor");
+                    character.Proficiencies.Add("Medium armor");
+                    character.Proficiencies.Add("Simple weapons");
+                    foreach (var item in swords)
+                    {
+                        character.Proficiencies.Add(item + "s");
+                    }
+                    character.Archetype = Swordmage.ArcaneSwordStyle;
+                    break;
+                case "Warlock":
+                    character.HitDieII = 8;
+                    character.Proficiencies.Add("Light armor");
+                    character.Proficiencies.Add("Simple weapons");
+                    Warlock.Features(character);
+                    character.Archetype = Warlock.OtherworldlyPatron;
+                    break;
+                case "Wizard":
+                    character.HitDieII = 6;
+                    Wizard.Features(character);
+                    character.Archetype = Wizard.ArcaneTradition;
+                    break;
+            }
+            if (character.CrossClass)
+            {
+                character.Lvl = maintainLvl;
             }
         }
         public static void AddArtificer(Character character)

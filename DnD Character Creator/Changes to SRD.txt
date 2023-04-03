@@ -1,7 +1,6 @@
 ﻿
-includeds all the optional class features from tasha's cauldron
+includes all the optional class features from tasha's cauldron
 	- cleric's blessed strike altered as a choice between divine strike/potent spellcasting instead of a replacement
-	- monk's dedicated weapon doesn't apply to versatile weapons either
 barbarian(storm herald) - change env on SR instead of lvl up
 cleric(ice, tempest) - ice domain is homebrew, tempest has alternate domain spells
 monk(way of four elements) - reduced ki pt costs
@@ -11,3 +10,4 @@ grim hollow advanced background holdings
 new feats
 
 racial changes documented seperately
+created on homebrewery - swordmage, wep perks, updated barb, (ranger base should add beast master)

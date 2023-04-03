@@ -88,7 +88,15 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         public static void Features(Character character)
         {
             int lvl = character.Lvl;
-            character.ClassFeatures.Add("Spellcasting", "use Cha for spell DCs, you use an Arcane Focus as a spell focus");
+            try
+            {
+                character.ClassFeatures.Add("Spellcasting1", "use Cha for spell DCs, you use an Arcane Focus as a spell focus");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("*Note* You have 2 classes with spellcasting");
+                throw;
+            }
 
             string msg = "Pick a Sorcerous Origin that will give you features at levels 1, 6, 14, and 18.";
             var archetypes = new List<string> { "Aberrant Mind", "Clockwork Soul", "Divine Soul", "Draconic Bloodline", "Phoenix", "Pyromancer",
@@ -460,6 +468,7 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             character.Proficiencies.Add("Shields");
             character.Proficiencies.Add("Simple weapons");
             character.Proficiencies.Add("Martial weapons");
+
             character.ClassFeatures.Add("Stone's Durability", "increase HP by 1 per lvl, AC = 13 + Dex");
             character.HP += lvl;
             if (lvl >= 6)

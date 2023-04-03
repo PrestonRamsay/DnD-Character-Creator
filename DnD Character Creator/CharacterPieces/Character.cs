@@ -9,6 +9,7 @@ namespace DnD_Character_Creator
     {     
         public Character()
         {
+            CrossClass = false;
             MaxAgeEnd = 100;
             Template = false;
             ChosenTemplate = "";
@@ -48,8 +49,18 @@ namespace DnD_Character_Creator
         public string Speedstring { get; set; }
         public string Vision { get; set; }
         public string ChosenClass { get; set; }
+        public bool CrossClass { get; set; }
+        public string ChosenClassII { get; set; }
         public string Archetype { get; set; }
         public int Lvl { get; set; }
+        public int BaseClassLvl { get; set; }
+        public int OffClassLvl
+        {
+            get
+            {
+                return Lvl - BaseClassLvl;
+            }
+        }
         public double XP { get; set; }
         public int StatMax { get; set; }
         public Dictionary<string, int> Stats = new Dictionary<string, int>
@@ -112,6 +123,7 @@ namespace DnD_Character_Creator
         public int AC { get; set; }
         public int HP { get; set; }
         public int HitDie { get; set; }
+        public int HitDieII { get; set; }
         public HashSet<string> Saves { get; set; } = new HashSet<string>();
 
         public HashSet<string> Languages { get; set; } = new HashSet<string> { "Common" };
@@ -190,5 +202,6 @@ namespace DnD_Character_Creator
         public string TieflingMagic { get; set; }
         public List<string> Tenets { get; set; } = new List<string>();
         public string DemigodDomain { get; set; }
+        public string CastingStat { get; set; }
     }
 }

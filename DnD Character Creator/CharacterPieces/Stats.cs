@@ -26,7 +26,7 @@ namespace DnD_Character_Creator
                     break;
                 case "Buy":
                     Buy(stats);
-                    IncreaseBy2D6(stats, statMax);
+                    //IncreaseBy2D6(stats, statMax);
                     break;
                 case "Custom":
                     Custom(stats, statMax);
@@ -448,6 +448,11 @@ namespace DnD_Character_Creator
                     stats.Add(new Tuple<string, int>("Wis", 1));
                     stats.Add(new Tuple<string, int>("Cha", 1));
                     break;
+                case "Magic":
+                    var list = new List<string> { "Int", "Wis", "Cha" };
+                    int index = CLIHelper.PrintChoices("Pick a stat for your spellcasting", list);
+                    stats.Add(new Tuple<string, int>(list[index], 2));
+                    break;
                 case "Music":
                     stats.Add(new Tuple<string, int>("Cha", 2));
                     break;
@@ -497,10 +502,12 @@ namespace DnD_Character_Creator
         {
             if (character.ChosenRace == "Human")
             {
-                foreach (var stat in character.Stats.Keys)
-                {
-                    character.Stats[stat] += 1;
-                }
+                character.Stats["Str"] += 1;
+                character.Stats["Dex"] += 1;
+                character.Stats["Con"] += 1;
+                character.Stats["Int"] += 1;
+                character.Stats["Wis"] += 1;
+                character.Stats["Cha"] += 1;
             }
             else
             {
@@ -523,7 +530,40 @@ namespace DnD_Character_Creator
         }
         public static void IncreaseStatByLvl(Character character)
         {
-            for (int i = 1; i <= character.Lvl; i++)
+            int lvl = character.Lvl;
+
+            if (character.CrossClass)
+            {
+                lvl = character.BaseClassLvl;
+            }
+            for (int i = 1; i <= lvl; i++)
+            {
+                if (i != 20)
+                {
+                    if (i % 4 == 0 || i == 19)
+                    {
+                        AbilityScoreInc(character);
+                    }
+                }
+                if (character.ChosenClass == "Fighter")
+                {
+                    if (i == 6 || i == 14)
+                    {
+                        AbilityScoreInc(character);
+                    }
+                }
+                if (character.ChosenClass == "Rogue")
+                {
+                    if (i == 10)
+                    {
+                        AbilityScoreInc(character);
+                    }
+                }
+            }
+        }
+        public static void IncreaseStatByLvl(Character character, int lvl)
+        {
+            for (int i = 1; i <= lvl; i++)
             {
                 if (i != 20)
                 {

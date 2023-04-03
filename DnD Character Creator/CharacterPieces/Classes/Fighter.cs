@@ -433,7 +433,16 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             int lvl = character.Lvl;
             character.ClassFeatures.Add("Weapon Bond", "1hr ritual to bond, can't be disarmed, bonus to teleport to hand, " +
                 "\n        can bond with 2 weapons(can only summon 1 at a time)");
-            character.ClassFeatures.Add("Spellcasting", "use Int for spell DCs, you use a component pouch to cast spells");
+            try
+            {
+                character.ClassFeatures.Add("Spellcasting", "use Int for spell DCs, you use a component pouch to cast spells");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("*Note* You have 2 classes with spellcasting");
+                throw;
+            }
+
             if (lvl >= 7)
             {
                 character.ClassFeatures.Add("War Magic", "after casting cantrip, bonus, make wep atk");
@@ -653,9 +662,9 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             character.Cantrips.AddRange(character.Cantrips);
             character.CantripsKnown = 2;
             character.SpellsKnown = 3;
-            int slotLvl = 1;
             character.SpellSlots[1] += 2;
             string pickSpell = "Pick a spell.";
+            int slotLvl = 1;
             string cantrip = "";
             string spell = "";
 

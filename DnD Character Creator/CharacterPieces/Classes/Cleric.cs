@@ -87,8 +87,16 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         public static void Features(Character character)
         {
             int lvl = character.Lvl;
-
-            character.ClassFeatures.Add("Spellcasting", "use Wis for spell DCs, you use a Holy Symbol as a spell focus");
+            try
+            {
+                character.ClassFeatures.Add("Spellcasting", "use Wis for spell DCs, you use a Holy Symbol as a spell focus");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("*Note* You have 2 classes with spellcasting");
+                throw;
+            }
+            
             string msg = "Pick a Divine Domain that will give you features at levels 2, 6, 8, and 17.";
             var archetype = new List<string> { "Ambition", "Arcana", "Death", "Forge", "Grave", "Knowledge", "Life", "Light",
                 "Nature", "Order", "Peace", "Solidarity", "Strength", "Tempest", "Trickery", "Twilight", "War", "Water", "Zeal" };
@@ -247,8 +255,9 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             character.ClassFeatures.Add("Arcane Initiate", "gain prof in Arcana and learn 2 Wizard cantrips");
             character.SkillProficiencies.Add("Arcana");
             Console.WriteLine("Arcane Initiate: gain prof in Arcana and 2 Wizard cantrips");
+            AllSpells spells = new AllSpells("Wizard");
             var wizCantrips = new List<string>();
-            wizCantrips.AddRange(WizardSpells.Cantrips);
+            wizCantrips.AddRange(spells.Wizard[0]);
             string cantrip = CLIHelper.PrintChoices(wizCantrips);
             character.Cantrips.Add(cantrip);
             wizCantrips.Remove(cantrip);
@@ -287,10 +296,9 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
                 character.ClassFeatures.Add("Arcane Mastery", "gain 6th, 7th, 8th, and 9th lvl Wizard spells (one each) as Domain spells");
                 Console.WriteLine("Arcane Mastery: gain 6th, 7th, 8th, and 9th lvl Wizard spells (one each) as Domain spells");
                 int wizSpellLvl = 6;
-                AllSpells wizSpells = new AllSpells(character);
                 for (int i = 0; i < 4; i++)
                 {
-                    string spell = CLIHelper.PrintChoices(wizSpells.Wizard[wizSpellLvl]);
+                    string spell = CLIHelper.PrintChoices(spells.Wizard[wizSpellLvl]);
                     character.Spells[wizSpellLvl].Add(spell + "*");
                     wizSpellLvl++;
                 }
@@ -989,10 +997,8 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         }
         public static void Spells(Character character)
         {
-            int lvl = character.Lvl;
             BEHelper.AddPrimSpells(character, DomainSpells);
             string pickMsg = "Pick a cantrip.";
-            int spellLvl = 1;
             AllSpells spells = new AllSpells(character);
             for (int i = 0; i < character.CantripsKnown; i++)
             {
@@ -1001,42 +1007,26 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
                 spells.Cleric[0].Remove(spell);
             }
             pickMsg = "Pick a 1st level spell.";
-            for (int i = 1; i <= lvl; i++)
+            foreach (var slotLvl in character.SpellSlots.Keys)
             {
-                if (i % 2 != 0)
+                if (slotLvl == 2)
                 {
-                    if (3 <= i && i <= 17)
-                    {
-                        spellLvl++;
-                    }
-                    if (i == 3)
-                    {
-                        pickMsg = "Pick a 2nd level spell.";
-                    }
-                    if (i == 5)
-                    {
-                        pickMsg = "Pick a 3rd level spell.";
-                    }
-                    if (i >= 7)
-                    {
-                        pickMsg = $"Pick a {spellLvl}th level spell.";
-                    }
-                    if (lvl <= 5)
-                    {
-                        string spell2 = CLIHelper.GetNew(spells.Cleric[spellLvl], character.Spells[spellLvl], pickMsg);
-                        character.Spells[spellLvl].Add(spell2);
-                    }
-                    if (lvl >= 13)
-                    {
-                        string spell2 = CLIHelper.GetNew(spells.Cleric[spellLvl], character.Spells[spellLvl], pickMsg);
-                        character.Spells[spellLvl].Add(spell2);
-                    }
+                    pickMsg = "Pick a 2nd level spell.";
                 }
-                if (lvl <= 11)
+                if (slotLvl == 3)
                 {
-                    string spell = CLIHelper.GetNew(spells.Cleric[spellLvl], character.Spells[spellLvl], pickMsg);
-                    character.Spells[spellLvl].Add(spell);
-                    spells.Cleric[spellLvl].Remove(spell);
+                    pickMsg = "Pick a 3rd level spell.";
+                }
+                if (slotLvl >= 4)
+                {
+                    pickMsg = $"Pick a {slotLvl}th level spell.";
+                }
+                int slots = character.SpellSlots[slotLvl];
+                for (int i = 0; i < slots; i++)
+                {
+                    string spell = CLIHelper.GetNew(spells.Cleric[slotLvl], character.Spells[slotLvl], pickMsg);
+                    character.Spells[slotLvl].Add(spell);
+                    spells.Cleric[slotLvl].Remove(spell);
                 }
             }
         }

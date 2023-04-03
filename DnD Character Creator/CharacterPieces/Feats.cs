@@ -115,16 +115,16 @@ namespace DnD_Character_Creator.CharacterPieces
                     break;
             }
             FeatNames.Sort();
-            foreach (var item in character.Feats.Keys)
+            foreach (var feat in character.Feats.Keys)
             {
-                if (FeatNames.Contains(item))
+                if (FeatNames.Contains(feat))
                 {
-                    FeatNames.Remove(item);
+                    FeatNames.Remove(feat);
                 }
             }
-            string feat = CLIHelper.PrintChoices(Options.FeatDefinitions, FeatNames, "Pick a feat");
-            character.Feats.Add(feat, Options.FeatDefinitions[feat]);
-            AddFeatBenefits(character, feat);
+            string newFeat = CLIHelper.PrintChoices(Options.FeatDefinitions, FeatNames, "Pick a feat");
+            character.Feats.Add(newFeat, Options.FeatDefinitions[newFeat]);
+            AddFeatBenefits(character, newFeat);
         }
         public static void AddFeatBenefits(Character character, string feat)
         {
@@ -224,7 +224,7 @@ namespace DnD_Character_Creator.CharacterPieces
                         character.Spells[1].Add(spell + "(Fey Touched)");
                         break;
                     case "Magic Initiate":
-                        Tuple<Dictionary<int, List<string>>, string> spellClass = PickClassForSpells();
+                        Tuple<Dictionary<int, List<string>>, string> spellClass = PickClassForSpells(character);
                         Dictionary<int, List<string>> spellList = spellClass.Item1;
                         stat = spellClass.Item2;
                         Console.WriteLine("Pick 2 cantrips");
@@ -399,16 +399,34 @@ namespace DnD_Character_Creator.CharacterPieces
                 case "Tough":
                     character.HP += character.Lvl * 2;
                     break;
+                case "Unarmored Defense":
+                    character.Feats.Remove("Unarmored Defense");
+                    Console.WriteLine("Pick a Stat that determines your AC benefits");
+                    CLIHelper.Print2Choices("Con", "Wis");
+                    int input = CLIHelper.GetNumberInRange(1, 2);
+
+                    if (input == 1)
+                    {
+                        character.Feats.Add("Unarmored Defense(Con)", "while wearing no armor, AC = 10 + Dex + Con");
+                    }
+                    else
+                    {
+                        character.Feats.Add("Unarmored Defense(Wis)", "while wearing no armor, AC = 10 + Dex + Wis");
+                    }
+                    break;
             }
         }
-        public static Tuple<Dictionary<int, List<string>>, string> PickClassForSpells()
+        public static Tuple<Dictionary<int, List<string>>, string> PickClassForSpells(Character character)
         {
             var result = new Dictionary<int, List<string>>();
-            string stat = "";
+            var tempChar = new Character();
+            tempChar.Lvl = character.Lvl;
             var classes = new List<string> { "Bard", "Cleric", "Druid", "Sorcerer", "Warlock", "Wizard" };
             int index = CLIHelper.PrintChoices("Pick a class that will determine the spells you can gain", classes);
             string spellcastingClass = classes[index];
-            AllSpells spells = new AllSpells(spellcastingClass);
+            tempChar.ChosenClass = spellcastingClass;
+            AllSpells spells = new AllSpells(tempChar);
+            string stat = "";
 
             switch (spellcastingClass)
             {

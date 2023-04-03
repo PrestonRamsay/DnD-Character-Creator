@@ -1,4 +1,6 @@
-﻿using DnD_Character_Creator.Helper_Classes;
+﻿using DnD_Character_Creator.CharacterPieces.Spells;
+using DnD_Character_Creator.Helper_Classes;
+using System.Collections.Generic;
 
 namespace DnD_Character_Creator.CharacterPieces.Races
 {
@@ -61,6 +63,13 @@ namespace DnD_Character_Creator.CharacterPieces.Races
                     character.SkillProficiencies.Add("Persuasion");
                     character.Cantrips.Add("Create Bonfire(Cha to cast)");
                     character.Cantrips.Add("Dancing Lights(Cha to cast)");
+                    break;
+                case "Magic":
+                    character.RacialTraits.Add($"Child of the Arcane: cast Detect Magic and Mage Armor at-will ({character.CastingStat} to cast)");
+                    character.RacialTraits.Add("Natural Magician: prof in Arcana and adv on Arcana checks");
+                    int cantripIndex = CLIHelper.PrintChoices("Pick a cantrip to learn.", AllSpells.AllCantrips);
+                    string cantrip = AllSpells.AllCantrips[cantripIndex];
+                    character.Cantrips.Add($"{cantrip}({character.CastingStat} to cast)");
                     break;
                 case "Music":
                     character.RacialTraits.Add("Child of Music: creatures with Int 8 or less are charmed by music");

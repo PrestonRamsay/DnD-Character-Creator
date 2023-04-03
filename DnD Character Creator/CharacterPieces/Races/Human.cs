@@ -49,8 +49,7 @@ namespace DnD_Character_Creator.CharacterPieces.Races
             string pickMsg = "You get to pick an extra skill proficiency. Enter the skill you'd like here.";
             string skill = CLIHelper.GetNew(Options.Skills, character.SkillProficiencies, pickMsg);
             character.SkillProficiencies.Add(skill);
-            Console.WriteLine("You get to pick 2 Feats");
-            Feats.AddFeat(character);
+            Console.WriteLine("You get to pick a Feat");
             Feats.AddFeat(character);
         }
     }

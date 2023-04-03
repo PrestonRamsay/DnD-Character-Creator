@@ -66,8 +66,15 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         public static void Features(Character character)
         {
             int lvl = character.Lvl;
-
-            character.ClassFeatures.Add("Spellcasting", "use Int for spell DCs, you use an Arcane Focus as a spell focus");
+            try
+            {
+                character.ClassFeatures.Add("Spellcasting", "use Int for spell DCs, you use an Arcane Focus as a spell focus");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("*Note* You have 2 classes with spellcasting");
+                throw;
+            }
             character.ClassFeatures.Add("Arcane Recovery", "1/day after SR, gain spell slots <= 1/2 lvl, no lvl 6 slots or higher");
 
             if (lvl >= 2)
@@ -409,26 +416,19 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         public static void Spells(Character character)
         {
             int lvl = character.Lvl;
-            var cantrips = new List<string>();
-            cantrips.AddRange(WizardSpells.Cantrips);
-            if (ArcaneTradition == "Chronurgy Magic" || ArcaneTradition == "Graviturgy Magic")
-            {
-                cantrips.Add("Sapping Sting");
-                cantrips.Sort();
-            }
-            string pickMsg = "Pick a cantrip.";
-            for (int i = 0; i < character.CantripsKnown; i++)
-            {
-                string spell = CLIHelper.GetNew(cantrips, character.Cantrips, pickMsg);
-                character.Cantrips.Add(spell);
-                cantrips.Remove(spell);
-            }
-            pickMsg = "Pick a 1st level spell.";
             AllSpells spells = new AllSpells(character);
             if (ArcaneTradition == "Chronurgy Magic" || ArcaneTradition == "Graviturgy Magic")
             {
                 AddDunamancySpells(spells.Wizard, ArcaneTradition);
             }
+            AllSpells.GetSpellDesc(spells.Wizard);
+            string pickMsg = "Pick a cantrip.";
+            for (int i = 0; i < character.CantripsKnown; i++)
+            {
+                string spell = CLIHelper.GetNew(spells.Wizard[0], character.Cantrips, pickMsg);
+                character.Cantrips.Add(spell);
+            }
+            pickMsg = "Pick a 1st level spell.";
             for (int i = 0; i < 6; i++)
             {
                 string spell = CLIHelper.GetNew(spells.Wizard[1], character.Spells[1], pickMsg);
@@ -481,6 +481,7 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
                 dict[8].Add("Dark Star");
                 dict[9].Add("Ravenous Void");
             }
+            dict[0].Add("Sapping Sting");
             dict[2].Add("Fortune's Favor");
             dict[2].Add("Wristpocket");
             dict[3].Add("Pulse Wave");

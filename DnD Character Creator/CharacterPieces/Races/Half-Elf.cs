@@ -8,10 +8,6 @@ namespace DnD_Character_Creator.CharacterPieces.Races
         public static void Base(Character character)
         {
             character.RacialTraits.Add("Fey Ancestry: gain Advantage on saves vs charms and magic can't put you to sleep");
-            character.RacialTraits.Add("Dilettante: pick a 1st lvl class feature from any class");
-            Console.WriteLine("Pick a 1st lvl class feature for Dilettante, you will have to add this feature manually");
-            string feature = CLIHelper.PrintChoices(Options.Lvl1Features);
-            character.ClassFeatures.Add(feature, Options.Lvl1Features[feature]);
 
             character.MinHeight = 60;
             character.MaxHeight = 72;
@@ -25,12 +21,29 @@ namespace DnD_Character_Creator.CharacterPieces.Races
             character.Languages.Add("Elven");
             BEHelper.AddLanguage(character, "race");
 
-            Console.WriteLine("Half-Elves are very versatile. You get you pick two extra skill proficiencies.");
-            string pickMsg = "Pick a skill";
-            for (int i = 0; i < 2; i++)
+            Console.WriteLine("You have a choice between gaining 2 skill proficiencies or 1 skill proficiency and the Dilettante trait");
+            string dilettante = "Dilettante: pick a 1st lvl class feature from any class";
+            CLIHelper.Print2Choices("2 extra skill proficiencies", dilettante);
+            int input = CLIHelper.GetNumberInRange(1, 2);
+
+            if (input == 1)
             {
+                string pickMsg = "Pick a skill";
+                for (int i = 0; i < 2; i++)
+                {
+                    string skill = CLIHelper.GetNew(Options.Skills, character.SkillProficiencies, pickMsg);
+                    character.SkillProficiencies.Add(skill);
+                }
+            }
+            else
+            {
+                string pickMsg = "Pick a skill";
                 string skill = CLIHelper.GetNew(Options.Skills, character.SkillProficiencies, pickMsg);
                 character.SkillProficiencies.Add(skill);
+                character.RacialTraits.Add("Dilettante: pick a 1st lvl class feature from any class");
+                Console.WriteLine("Pick a 1st lvl class feature for Dilettante, you will have to add this feature manually");
+                string feature = CLIHelper.PrintChoices(Options.Lvl1Features);
+                character.ClassFeatures.Add(feature, Options.Lvl1Features[feature]);
             }
         }
     }

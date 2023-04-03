@@ -186,7 +186,7 @@ namespace DnD_Character_Creator.CLI_Classes
             }
             if (lvl >= 7)
             {
-                character.Spells[4].Add(str2);
+                character.Spells[4].Add(str3);
             }
         }
         public static void DemigodSpells(Character character)
@@ -208,11 +208,25 @@ namespace DnD_Character_Creator.CLI_Classes
                     HelpAddSpells(character, comprehendLang, spell);
                     break;
                 case "Life":
-                    var list = new List<string> { "Cure Wounds(1/LR, Wis to cast)", "Healing Word(1/LR, Wis to cast)" };
-                    index = CLIHelper.PrintChoices("Pick a spell", list);
-                    spell = $"{list[index]}(1/LR, Wis to cast)";
+                    spellList = new List<string> { "Cure Wounds(1/LR, Wis to cast)", "Healing Word(1/LR, Wis to cast)" };
+                    index = CLIHelper.PrintChoices("Pick a spell", spellList);
+                    spell = $"{spellList[index]}(1/LR, Wis to cast)";
                     string prayerOfHealing = "Prayer of Healing(1/LR, Wis to cast)";
                     HelpAddSpells(character, spell, prayerOfHealing);
+                    break;
+                case "Madness":
+                    string tashasHideousLaughter = "Tasha's Hideous Laughter(1/LR, Cha to cast)";
+                    string crownOfMadness = "Crown of Madness(1/LR, Cha to cast)";
+                    HelpAddSpells(character, tashasHideousLaughter, crownOfMadness);
+                    break;
+                case "Magic":
+                    string chromaticOrb = $"Chromatic Orb(1/LR, {character.CastingStat} to cast)";
+                    string enhanceAbility = $"Enhance Ability(1/LR, {character.CastingStat} to cast)";
+                    string counterspell = $"Counterspell(1/LR, {character.CastingStat} to cast)";
+                    string dispelMagic = $"Dispel Magic(1/LR, {character.CastingStat} to cast)";
+                    spellList = new List<string> { counterspell, dispelMagic };
+                    spell = CLIHelper.PrintChoices(spellList);
+                    HelpAddSpells(character, chromaticOrb, enhanceAbility, spell);
                     break;
                 case "Music":
                     index = CLIHelper.PrintChoices("Pick a first level spell", BardSpells.FirstLvls);
@@ -220,11 +234,6 @@ namespace DnD_Character_Creator.CLI_Classes
                     index = CLIHelper.PrintChoices("Pick a second level spell", BardSpells.SecondLvls);
                     string spell2 = $"{BardSpells.SecondLvls[index]}(1/LR, Cha to cast)";
                     HelpAddSpells(character, spell, spell2);
-                    break;
-                case "Madness":
-                    string tashasHideousLaughter = "Tasha's Hideous Laughter(1/LR, Cha to cast)";
-                    string crownOfMadness = "Crown of Madness(1/LR, Cha to cast)";
-                    HelpAddSpells(character, tashasHideousLaughter, crownOfMadness);
                     break;
                 case "Protection":
                     string sanctuary = "Sanctuary(1/LR, Cha to cast)";

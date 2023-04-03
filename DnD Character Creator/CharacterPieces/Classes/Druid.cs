@@ -95,7 +95,15 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
 
             character.ClassFeatures.Add("Druidic","DC 15 to spot a message");
             character.Languages.Add("Druidic");
-            character.ClassFeatures.Add("Spellcasting", "use Wis for spell DCs, you use a Druidic Focus as a spell focus");
+            try
+            {
+                character.ClassFeatures.Add("Spellcasting", "use Wis for spell DCs, you use a Druidic Focus as a spell focus");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("*Note* You have 2 classes with spellcasting");
+                throw;
+            }
 
             if (lvl >= 2)
             {
@@ -168,11 +176,11 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             character.ClassFeatures.Add("Balm of the Summer Court", "LR, bonus, 120ft, one creature, # of D6 = lvl, spend up to 1/2 lvl to heal #D6 + # temp HP");
             if (lvl >= 6)
             {
-                character.ClassFeatures.Add("Hearth of Moonlight and Shadow", "30ft, during rest +5 on Stealth and Perception and no light escapes ");
+                character.ClassFeatures.Add("Hearth of Moonlight and Shadow", "30ft, during rest +5 on Stealth and Perception and no light escapes");
             }
             if (lvl >= 10)
             {
-                character.ClassFeatures.Add("Hidden Paths", "Wis/LR, bonus, teleport 60ft or action, teleport an ally 30ft");
+                character.ClassFeatures.Add("Hidden Paths", "(Wis/LR) bonus, teleport 60ft / action, teleport an ally 30ft");
             }
             if (lvl >= 14)
             {
@@ -400,7 +408,7 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
                 character.ClassFeatures["Starry Form"] = "bonus, 10 min, expend Wild Shape use, bright light 10ft/dim light 10ft - pick a form to gain benefits" +
                 "\n        Archer(when activated or bonus, ranged spell atk, 60ft, 2D8 + Wis Radiant dmg)" +
                 "\n        Chalice(30ft, 1 creature, when you cast a heal spell, restore HP = 2D8 + Wis)" +
-                "\n        Dragon(gain Fly 20ft and Hvoer, when you make an Int or Wis check or a Con save, treats rolls 9 or lower as a 10)";
+                "\n        Dragon(gain Fly 20ft and Hover, when you make an Int or Wis check or a Con save, treats rolls 9 or lower as a 10)";
             }
             if (lvl >= 14)
             {
@@ -440,7 +448,6 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             BEHelper.AddPrimSpells(character, CircleSpells);
             int lvl = character.Lvl;
             string pickMsg = "Pick a cantrip.";
-            int spellLvl = 1;
             AllSpells spells = new AllSpells(character);
             for (int i = 0; i < character.CantripsKnown; i++)
             {
@@ -449,42 +456,26 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
                 spells.Druid[0].Remove(spell);
             }
             pickMsg = "Pick a 1st level spell.";
-            for (int i = 1; i <= lvl; i++)
+            foreach (var slotLvl in character.SpellSlots.Keys)
             {
-                if (i % 2 != 0)
+                if (slotLvl == 2)
                 {
-                    if (3 <= i && i <= 17)
-                    {
-                        spellLvl++;
-                    }
-                    if (i == 3)
-                    {
-                        pickMsg = "Pick a 2nd level spell.";
-                    }
-                    if (i == 5)
-                    {
-                        pickMsg = "Pick a 3rd level spell.";
-                    }
-                    if (i >= 7)
-                    {
-                        pickMsg = $"Pick a {spellLvl}th level spell.";
-                    }
-                    if (lvl <= 5)
-                    {
-                        string spell2 = CLIHelper.GetNew(spells.Druid[spellLvl], character.Spells[spellLvl], pickMsg);
-                        character.Spells[spellLvl].Add(spell2);
-                    }
-                    if (lvl >= 13)
-                    {
-                        string spell2 = CLIHelper.GetNew(spells.Druid[spellLvl], character.Spells[spellLvl], pickMsg);
-                        character.Spells[spellLvl].Add(spell2);
-                    }
+                    pickMsg = "Pick a 2nd level spell.";
                 }
-                if (lvl <= 11)
+                if (slotLvl == 3)
                 {
-                    string spell = CLIHelper.GetNew(spells.Druid[spellLvl], character.Spells[spellLvl], pickMsg);
-                    character.Spells[spellLvl].Add(spell);
-                    spells.Druid[spellLvl].Remove(spell);
+                    pickMsg = "Pick a 3rd level spell.";
+                }
+                if (slotLvl >= 4)
+                {
+                    pickMsg = $"Pick a {slotLvl}th level spell.";
+                }
+                int slots = character.SpellSlots[slotLvl];
+                for (int i = 0; i < slots; i++)
+                {
+                    string spell = CLIHelper.GetNew(spells.Druid[slotLvl], character.Spells[slotLvl], pickMsg);
+                    character.Spells[slotLvl].Add(spell);
+                    spells.Druid[slotLvl].Remove(spell);
                 }
             }
         }

@@ -86,9 +86,9 @@ namespace DnD_Character_Creator.Helper_Classes
                     {
                         spell = spell.Substring(0, spell.IndexOf("("));
                     }
-                    else if (spell.Contains("*"))
+                    if (spell.Contains("*"))
                     {
-                        spell = spell.Substring(spell.Length - 1);
+                        spell = spell.Substring(0, spell.Length - 1);
                     }
                     if (AllSpells.Descriptions.ContainsKey(spell))
                     {

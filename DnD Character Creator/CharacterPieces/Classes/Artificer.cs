@@ -65,7 +65,15 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             character.ClassFeatures.Add("Magical Tinkering", "action, must have spell focus, give Tiny nonmagical object one of four properties" +
                 "\n        (bright light 5ft/dim light 5ft), (tapping plays 6 sec recorded message, can be heard from 10ft)" +
                 "\n        (emits odor or nonverbal sound, can be perceived from 10ft), or (visual effect on object's surface - pic, up to 25 words, etc)");
-            character.ClassFeatures.Add("Spellcasting", "use Int for spell DCs, you use Thieves' Tools or Artisan's Tools as a spell focus");
+            try
+            {
+                character.ClassFeatures.Add("Spellcasting", "use Int for spell DCs, you use Thieves' Tools or Artisan's Tools as a spell focus");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("*Note* You have 2 classes with spellcasting");
+                throw;
+            }
 
             if (lvl >= 2)
             {

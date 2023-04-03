@@ -14,7 +14,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Dancing Lights",
             "Fire Bolt",
             "Frostbite",
-            "Green-Flame blade",
+            "Green-Flame Blade",
             "Light",
             "Lightning Lure",
             "Ray of Frost",

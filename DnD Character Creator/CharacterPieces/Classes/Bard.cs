@@ -89,6 +89,7 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             int lvl = character.Lvl;
             int bardicInspiration = 6;
             int songOfRest = 6;
+            string magicalSecrets = "gain 2 new spells from any class";
 
             for (int i = 0; i <= lvl; i++)
             {
@@ -103,7 +104,15 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             }
 
             character.ClassFeatures.Add($"Bardic Inspiration(D{bardicInspiration})", "Cha/LR, bonus, 60ft, use on ally, add to atk, save, or ability check");
-            character.ClassFeatures.Add("Spellcasting", "use Cha for spell DCs, you use a musical instrument as a spell focus");
+            try
+            {
+                character.ClassFeatures.Add("Spellcasting", "use Cha for spell DCs, you use a musical instrument as a spell focus");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("*Note* You have 2 classes with spellcasting");
+                throw;
+            }
 
             if (lvl >= 2)
             {
@@ -183,7 +192,7 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             }
             if (lvl >= 10)
             {
-                character.ClassFeatures.Add("Magical Secrets", "gain 2 new spells from any class (pick them separately)");
+                character.ClassFeatures.Add("Magical Secrets", magicalSecrets);
                 character.ClassFeatures.Add("Expertise II", "pick 2 skills, or 1 skill and 1 tool prof, double PB");
                 Console.WriteLine("Would you like to gain Expertise in 2 skills or 1 skill and 1 tool prof?");
                 CLIHelper.Print2Choices("2 skills", "1 skill and 1 tool prof");
@@ -212,11 +221,11 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             }
             if (lvl >= 14)
             {
-                character.ClassFeatures.Add("Magical Secrets II", "gain 2 new spells from any class (pick them separately)");
+                character.ClassFeatures.Add("Magical Secrets II", magicalSecrets);
             }
             if (lvl >= 18)
             {
-                character.ClassFeatures.Add("Magical Secrets III", "gain 2 new spells from any class (pick them separately)");
+                character.ClassFeatures.Add("Magical Secrets III", magicalSecrets);
             }
             if (lvl >= 20)
             {
@@ -381,9 +390,25 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         {
             string pickMsg = "Pick a cantrip.";
             int spellLvl = 1;
+            var charSpells = new List<string>();
+            var spellNames = new List<string>();
+            foreach (var spell in character.Spells[spellLvl])
+            {
+                if (spell.Contains(":"))
+                {
+                    int index = spell.IndexOf(":");
+                    string spellName = spell.Substring(0, index);
+                    charSpells.Add(spellName);
+                }
+            }
+            foreach (var spell in AllSpells.Descriptions.Keys)
+            {
+                spellNames.Add(spell);
+            }
             AllSpells spells = new AllSpells(character);
+            List<int> magicalSecrets = new List<int> { 13, 14, 17, 18, 21, 22 };
 
-            for (int i = 0; i < character.CantripsKnown; i++)
+            for (int i = 1; i <= character.CantripsKnown; i++)
             {
                 string spell = CLIHelper.GetNew(spells.Bard[0], character.Cantrips, pickMsg);
                 character.Cantrips.Add(spell);
@@ -416,7 +441,13 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
                 {
                     pickMsg = $"Pick a {spellLvl}th level spell.";
                 }
-                if (i != 13 || i != 14 || i != 17 || i != 18 || i != 21 || i != 22)
+                if (magicalSecrets.Contains(i))
+                {
+                    string newSpell = CLIHelper.GetNew(spellNames, charSpells, pickMsg);
+                    character.Spells[spellLvl].Add(newSpell);
+                    spellNames.Remove(newSpell);
+                }
+                else
                 {
                     string spell = CLIHelper.GetNew(spells.Bard[spellLvl], character.Spells[spellLvl], pickMsg);
                     character.Spells[spellLvl].Add(spell);

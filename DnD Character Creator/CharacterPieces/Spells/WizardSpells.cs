@@ -20,7 +20,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Fire Bolt",
             "Friends",
             "Frostbite",
-            "Green-Flame blade",
+            "Green-Flame Blade",
             "Gust",
             "Infestation",
             "Light",

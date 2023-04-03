@@ -15,8 +15,10 @@ namespace DnD_Character_Creator
             {
                 Console.WriteLine($"({i + 1}) {pieceList[i]}");
             }
+
             int num = 1;
             string choice = "";
+
             if (characterPiece == "race")
             {
                 //num = 0;
@@ -29,7 +31,7 @@ namespace DnD_Character_Creator
             //}
             //else
             //{
-                choice = pieceList[newPiece];
+            choice = pieceList[newPiece];
             //}
             if (characterPiece == "race")
             {
@@ -37,6 +39,46 @@ namespace DnD_Character_Creator
             }
 
             return choice;
+        }
+        public static void PickOption(string characterPiece, List<string> pieceList, Character character)
+        {
+            Console.WriteLine($"Pick a {characterPiece} you'd like your character to have.");
+            int lvl = character.Lvl;
+
+            if (characterPiece == "class")
+            {
+                Console.WriteLine("Has your character cross-classed? Y/N");
+                string answer = Console.ReadLine().ToLower();
+                if (answer == "y")
+                {
+                    character.CrossClass = true;
+                    Console.WriteLine("Pick your base class first");
+                }
+            }
+            for (int i = 0; i < pieceList.Count; i++)
+            {
+                Console.WriteLine($"({i + 1}) {pieceList[i]}");
+            }
+            int newPiece = CLIHelper.GetNumberInRange(1, pieceList.Count) - 1;
+            string choice = pieceList[newPiece];
+            character.ChosenClass = choice;
+
+            if (character.CrossClass)
+            {
+                Console.WriteLine($"What level {choice} are you? Must be between 1 and {lvl}.");
+                int baseLvl = CLIHelper.GetNumberInRange(1, lvl);
+                character.BaseClassLvl = baseLvl;
+
+                Console.WriteLine("What is your second class?");
+                pieceList.Remove(choice);
+                for (int i = 0; i < pieceList.Count; i++)
+                {
+                    Console.WriteLine($"({i + 1}) {pieceList[i]}");
+                }
+                newPiece = CLIHelper.GetNumberInRange(1, pieceList.Count) - 1;
+                choice = pieceList[newPiece];
+                character.ChosenClassII = choice;
+            }
         }
         public static string FindRace(string race)
         {

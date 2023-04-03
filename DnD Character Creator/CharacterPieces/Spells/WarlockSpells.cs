@@ -15,7 +15,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             "Eldritch Blast",
             "Friends",
             "Frostbite",
-            "Green-Flame blade",
+            "Green-Flame Blade",
             "Infestation",
             "Lightning Lure",
             "Mage Hand",

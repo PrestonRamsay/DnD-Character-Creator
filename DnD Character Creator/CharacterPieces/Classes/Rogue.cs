@@ -249,8 +249,16 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         }
         public static void ArcaneTrickster(Character character)
         {
-            int lvl = character.Lvl;
-            character.ClassFeatures.Add("Spellcasting", "use Int for spell DCs, you use a component pouch to cast spells");
+            int lvl = character.Lvl; 
+            try
+            {
+                character.ClassFeatures.Add("Spellcasting", "use Int for spell DCs, you use a component pouch to cast spells");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("*Note* You have 2 classes with spellcasting");
+                throw;
+            }
             character.ClassFeatures.Add("Mage Hand Legerdemain", "bonus, when you cast Mage Hand, make hand invisible and - stow or retrieve an object carried or worn" +
                     "\n        by another creature, use Thieves' Tools at a range - Sleight of Hand check vs creature to notice");
             if (lvl >= 9)

@@ -159,7 +159,7 @@ namespace DnD_Character_Creator.Backgrounds
             result.Flaw[0] = "I can’t resist a pretty face.";
             result.Flaw[1] = "I'm always in debt. I spend my ill-gotten gains on decadent luxuries faster than I bring them in...";
             result.Flaw[2] = "I’m convinced that no one could ever fool me the way I fool others.";
-            result.Flaw[3] = "I’m too greedy for my own good.I can’t resist taking a risk if there’s money involved.";
+            result.Flaw[3] = "I’m too greedy for my own good. I can’t resist taking a risk if there’s money involved.";
             result.Flaw[4] = "I can’t resist swindling people who are more powerful than me.";
             result.Flaw[5] = "I hate to admit it/will hate myself for it, but I'll run to preserve my own hide if the going gets tough.";
 

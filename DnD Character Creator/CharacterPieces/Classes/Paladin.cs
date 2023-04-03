@@ -8,6 +8,14 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
     public static class Paladin
     {
         public static string SacredOath { get; set; }
+        public static Dictionary<int, List<string>> OathSpells { get; set; } = new Dictionary<int, List<string>>()
+        {
+            { 1, new List<string>() },
+            { 2, new List<string>() },
+            { 3, new List<string>() },
+            { 4, new List<string>() },
+            { 5, new List<string>() }
+        };
         public static void Base(Character character)
         {
             List<string> classSkills = new List<string> { "Athletics", "Insight", "Intimidation", "Medicine", "Persuasion", "Religion" };
@@ -65,14 +73,6 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             character.Equipment.Add(Options.HeavyArmor[3]);
             BEHelper.AddHolySymbol(character);
         }
-        public static Dictionary<int, List<string>> OathSpells { get; set; } = new Dictionary<int, List<string>>()
-        {
-            { 1, new List<string>() },
-            { 2, new List<string>() },
-            { 3, new List<string>() },
-            { 4, new List<string>() },
-            { 5, new List<string>() }
-        };
         public static void Features(Character character)
         {
             int lvl = character.Lvl;
@@ -85,7 +85,15 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             if (lvl >= 2)
             {
                 character.ClassFeatures.Add("Divine Smite", "2D8 Radiant + 1D8/lvl(above 1), +1D8 if undead/fiend");
-                character.ClassFeatures.Add("Spellcasting", "use Cha for spell DCs, you use a Holy Symbol as a spell focus");
+                try
+                {
+                    character.ClassFeatures.Add("Spellcasting", "use Cha for spell DCs, you use a Holy Symbol as a spell focus");
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("*Note* You have 2 classes with spellcasting");
+                    throw;
+                }
                 string fightStyleMsg = "Pick a fighting style.";
                 List<string> styleList = new List<string> { "Blessed Warrior", "Blind Fighting", "Defense", "Dueling", "Great Weapon Fighting",
                     "Interception", "Protection" };
@@ -361,7 +369,7 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             OathSpells[5].Add("Flame Strike*");
 
             character.ClassFeatures.Add("Channel Divinity(Peerless Athlete)", "bonus, 10 min, gain adv on Acrobatics and Athletics, push/lift/drag twice as much, jump distance +10ft");
-            character.ClassFeatures.Add("Channel Divinity(Inspiring Smire)", "bonus, 30ft, after smiting, distribute temp HP = 2D8 + lvl among you and allies");
+            character.ClassFeatures.Add("Channel Divinity(Inspiring Smite)", "bonus, 30ft, after smiting, distribute temp HP = 2D8 + lvl among you and allies");
             if (lvl >= 7)
             {
                 character.ClassFeatures.Add("Aura of Alacrity", "adj allies gain speed +10ft");
@@ -507,7 +515,7 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         {
             BEHelper.AddSecSpells(character, OathSpells);
             string pickMsg = "Pick a 1st level spell.";
-            AllSpells spells = new AllSpells("Paladin");
+            AllSpells spells = new AllSpells(character);
             foreach (var slotLvl in character.SpellSlots.Keys)
             {
                 if (slotLvl == 2)

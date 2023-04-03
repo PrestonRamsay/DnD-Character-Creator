@@ -18,7 +18,7 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         };
         public static void Base(Character character)
         {
-            var classSkills = new List<string> { "Acrobatics", "Arcana", "Athletics", "History", "Insight", "Intimidation",
+            var classSkills = new List<string> { "Acrobatics", "Arcana", "Athletics", "Deception", "History", "Intimidation",
                 "Perception", "Persuasion" };
             var swords = new List<string> { "Claymore", "Greatsword", "Longsword", "Rapier", "Sabre", "Scimitar", "Shortsword" };
 
@@ -78,7 +78,15 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         {
             int lvl = character.Lvl;
             character.ClassFeatures.Add("Weaponized Arcana", "use Cha for atk/dmg with melee");
-            character.ClassFeatures.Add("Spellcasting", "use Cha for spell DCs, you use your sword as a spell focus");
+            try
+            {
+                character.ClassFeatures.Add("Spellcasting", "use Cha for spell DCs, you use your sword as a spell focus");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("*Note* You have 2 classes with spellcasting");
+                throw;
+            }
 
             if (lvl >= 2)
             {

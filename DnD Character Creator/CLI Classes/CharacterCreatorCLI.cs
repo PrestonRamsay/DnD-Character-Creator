@@ -59,21 +59,22 @@ namespace DnD_Character_Creator
             }
             Console.Clear();
             Console.WriteLine($"You've picked {character.ChosenRace}.\n");
-            character.ChosenClass = Prompts.PickOption("class", Options.Classes);
+
+            Prompts.PickOption("class", Options.Classes, character);
             Console.Clear();
             Console.WriteLine($"You've picked {character.ChosenClass}.\n");
 
-            Console.WriteLine("Do you want to add a Template to your character? Y/N");
-            string answer = Console.ReadLine().ToLower();
-            if (answer == "y")
-            {
-                character.Template = true;
-                string pickMsg = "Pick from the list of templates.";
-                int index = CLIHelper.PrintChoices(pickMsg, Options.Templates);
-                character.ChosenTemplate = Options.Templates[index];
-                Console.Clear();
-                Console.WriteLine($"You've picked {character.ChosenTemplate}.");
-            }
+            //Console.WriteLine("Do you want to add a Template to your character? Y/N");
+            //string answer = Console.ReadLine().ToLower();
+            //if (answer == "y")
+            //{
+            //    character.Template = true;
+            //    string pickMsg = "Pick from the list of templates.";
+            //    int index = CLIHelper.PrintChoices(pickMsg, Options.Templates);
+            //    character.ChosenTemplate = Options.Templates[index];
+            //    Console.Clear();
+            //    Console.WriteLine($"You've picked {character.ChosenTemplate}.");
+            //}
         }
         public void RunAddStats(Character character)
         {
@@ -95,7 +96,7 @@ namespace DnD_Character_Creator
             if (character.ChosenRace == "Demigod")
             {
                 racialStats = Stats.DemigodStats(character.DemigodDomain);
-
+                character.CastingStat = racialStats[1].Item1;
             }
             else
             {
@@ -120,6 +121,10 @@ namespace DnD_Character_Creator
             string answer = Console.ReadLine();
             Console.Clear();
             Stats.IncreaseStatByLvl(character);
+            if (character.CrossClass)
+            {
+                Stats.IncreaseStatByLvl(character, character.OffClassLvl);
+            }
             Console.Clear();
             Console.Write($"\nYour stats are now ");
             foreach (var stat in Options.Stats)
@@ -197,7 +202,15 @@ namespace DnD_Character_Creator
 
             AddClass.AddSpellsKnown(character);
             AddClass.AddSpellSlots(character);
-            AddClass.NewClass(character);
+            if (character.CrossClass)
+            {
+                AddClass.NewClass(character, character.BaseClassLvl);
+                AddClass.OffClass(character, character.OffClassLvl);
+            }
+            else
+            {
+                AddClass.NewClass(character, character.Lvl);
+            }
 
             if (character.DemigodDomain == "Knowledge")
             {
@@ -343,11 +356,11 @@ namespace DnD_Character_Creator
                     {
                         sw.Write($"| Spells Known: {character.SpellsKnown}");
                     }
-                    string cantrips = string.Join("\n", character.Cantrips);
+                    string cantrips = string.Join("\n     ", character.Cantrips);
                     sw.WriteLine($"0 - {cantrips}");
                     foreach (int spellLvl in character.Spells.Keys)
                     {
-                        string currentSpells = string.Join("\n", character.Spells[spellLvl]);
+                        string currentSpells = string.Join("\n     ", character.Spells[spellLvl]);
                         sw.WriteLine($"{spellLvl} - {currentSpells}");
                     }
                 }

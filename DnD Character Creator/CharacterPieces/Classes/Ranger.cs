@@ -177,7 +177,15 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
 
             if (lvl >= 2)
             {
-                character.ClassFeatures.Add("Spellcasting", "use Cha for spell DCs, you use a component pouch to cast spells");
+                try
+                {
+                    character.ClassFeatures.Add("Spellcasting", "use Cha for spell DCs, you use a component pouch to cast spells");
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("*Note* You have 2 classes with spellcasting");
+                    throw;
+                }
                 string fightStyleMsg = "Pick a fighting style.";
                 List<string> styleList = new List<string> { "Archery", "Blind Fighting", "Defense", "Druidic Warrior", "Dueling",
                     "Thrown Weapon Fighting", "Two-Weapon Fighting" };
@@ -548,27 +556,29 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             }
             string pickMsg = "Pick a 1st level spell.";
             AllSpells spells = new AllSpells(character);
-            foreach (var slotLvl in character.SpellSlots.Keys)
+
+            for (int i = 1; i <= character.SpellsKnown; i++)
             {
-                if (slotLvl == 2)
+                int spellLvl = 1;
+                if (i >= 4 && i % 2 == 0)
+                {
+                    spellLvl++;
+                }
+                if (i == 4)
                 {
                     pickMsg = "Pick a 2nd level spell.";
                 }
-                if (slotLvl == 3)
+                if (i == 6)
                 {
                     pickMsg = "Pick a 3rd level spell.";
                 }
-                if (slotLvl >= 4)
+                if (i >= 8)
                 {
-                    pickMsg = $"Pick a {slotLvl}th level spell.";
+                    pickMsg = $"Pick a {spellLvl}th level spell.";
                 }
-                int slots = character.SpellSlots[slotLvl];
-                for (int i = 0; i < slots; i++)
-                {
-                    string spell = CLIHelper.GetNew(spells.Ranger[slotLvl], character.Spells[slotLvl], pickMsg);
-                    character.Spells[slotLvl].Add(spell);
-                    spells.Ranger[slotLvl].Remove(spell);
-                }
+                string spell = CLIHelper.GetNew(spells.Ranger[spellLvl], character.Spells[spellLvl], pickMsg);
+                character.Spells[spellLvl].Add(spell);
+                spells.Ranger[spellLvl].Remove(spell);
             }
         }
     }
