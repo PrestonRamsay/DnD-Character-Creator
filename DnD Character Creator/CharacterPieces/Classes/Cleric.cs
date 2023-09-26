@@ -1009,18 +1009,7 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             pickMsg = "Pick a 1st level spell.";
             foreach (var slotLvl in character.SpellSlots.Keys)
             {
-                if (slotLvl == 2)
-                {
-                    pickMsg = "Pick a 2nd level spell.";
-                }
-                if (slotLvl == 3)
-                {
-                    pickMsg = "Pick a 3rd level spell.";
-                }
-                if (slotLvl >= 4)
-                {
-                    pickMsg = $"Pick a {slotLvl}th level spell.";
-                }
+                pickMsg = CLIHelper.pickSpellLevel(slotLvl, pickMsg);
                 int slots = character.SpellSlots[slotLvl];
                 for (int i = 0; i < slots; i++)
                 {

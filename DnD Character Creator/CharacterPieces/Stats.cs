@@ -137,23 +137,15 @@ namespace DnD_Character_Creator
         {
             int[] costs = new int[8];
             Dictionary<int, int> costOf = new Dictionary<int, int>();
+            costOf.Add(8, 0);
+            costOf.Add(9, 1);
+            costOf.Add(10, 2);
+            costOf.Add(11, 3);
+            costOf.Add(12, 4);
+            costOf.Add(13, 5);
+            costOf.Add(14, 7);
+            costOf.Add(15, 9);
 
-            for (int i = 0; i < costs.Length; i++)
-            {
-                if (i < 6)
-                {
-                    costs[i] = i;
-                }
-                else if (i == 6)
-                {
-                    costs[i] = i + 1;
-                }
-                else
-                {
-                    costs[i] = i + 2;
-                }
-                costOf.Add(8 + i, costs[i]);
-            }
             return costOf;
         }
         private static void IncreaseBy2D6(List<int> stats, int statMax)
@@ -221,6 +213,10 @@ namespace DnD_Character_Creator
             List<string> statWords = new List<string>();
             statWords.AddRange(Options.Stats);
 
+            if(CLIHelper.randomizeStats(character, statNums))
+            {
+                return;
+            }
             while (statNums.Count > 0)
             {
                 Console.ForegroundColor = ConsoleColor.White;
@@ -242,6 +238,20 @@ namespace DnD_Character_Creator
                 statNums.RemoveAt(statIndex);
                 statWords.Remove(statWord);
             }
+        }
+        public static List<Tuple<string, int>> TashaStats()
+        {
+            List<string> statWords = new List<string>();
+            statWords.AddRange(Options.Stats);
+            var stats = new List<Tuple<string, int>>();
+
+            int index = CLIHelper.PrintChoices("Select a stat to increase by 2 by entering the number next to it.", statWords);
+            stats.Add(new Tuple<string, int>(statWords[index], 2));
+            statWords.Remove(statWords[index]);
+            index = CLIHelper.PrintChoices("Select a stat to increase by 1 by entering the number next to it.", statWords);
+            stats.Add(new Tuple<string, int>(statWords[index], 1));
+
+            return stats;
         }
         public static List<Tuple<string, int>> RacialStats(string raceString)
         {
@@ -343,6 +353,22 @@ namespace DnD_Character_Creator
                     stats.Add(new Tuple<string, int>("Dex", 2));
                     stats.Add(new Tuple<string, int>("Wis", 1));
                     break;
+                case "Air Genasi":
+                    stats.Add(new Tuple<string, int>("Con", 2));
+                    stats.Add(new Tuple<string, int>("Dex", 1));
+                    break;
+                case "Earth Genasi":
+                    stats.Add(new Tuple<string, int>("Con", 2));
+                    stats.Add(new Tuple<string, int>("Str", 1));
+                    break;
+                case "Fire Genasi":
+                    stats.Add(new Tuple<string, int>("Con", 2));
+                    stats.Add(new Tuple<string, int>("Int", 1));
+                    break;
+                case "Water Genasi":
+                    stats.Add(new Tuple<string, int>("Con", 2));
+                    stats.Add(new Tuple<string, int>("Wis", 1));
+                    break;
                 case "Forest Gnome":
                     stats.Add(new Tuple<string, int>("Int", 2));
                     stats.Add(new Tuple<string, int>("Dex", 1));
@@ -350,6 +376,10 @@ namespace DnD_Character_Creator
                 case "Rock Gnome":
                     stats.Add(new Tuple<string, int>("Int", 2));
                     stats.Add(new Tuple<string, int>("Con", 1));
+                    break;
+                case "Deep Gnome":
+                    stats.Add(new Tuple<string, int>("Int", 2));
+                    stats.Add(new Tuple<string, int>("Dex", 1));
                     break;
                 case "Goliath":
                     stats.Add(new Tuple<string, int>("Str", 2));

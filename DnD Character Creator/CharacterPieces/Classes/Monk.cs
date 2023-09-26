@@ -336,15 +336,17 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             var masks = new List<string> { "Raven", "Blank white", "Crying visage", "Laughing visage", "Skull", "Butterfly" };
             character.Equipment.Add(CLIHelper.PrintChoices(masks));
             character.ClassFeatures.Add("Implements of Mercy", "gain prof in Insight, Medicine and Herbalism Kit");
-            character.ClassFeatures.Add("Hand of Healing", "action, 1 ki pt, touch, restore HP = Martial Arts die + Wis / forgo an atk to use during Flurry of Blows");
+            character.ClassFeatures.Add("Hand of Healing", "action, 1 ki pt, touch, restore HP = Martial Arts die + Wis / forgo an atk to use during Flurry of Blows for 0 ki pt");
+            character.ClassFeatures.Add("Hand of Harm", "1/turn, on hit, 1 ki pt, Martial Arts die + Wis Necrotic dmg");
             if (lvl >= 6)
             {
-                character.ClassFeatures.Add("Hand of Harm", "1/turn, on hit, 1 ki pt, Martial Arts die + Wis Necrotic dmg");
+                character.ClassFeatures.Add("Physician's Touch", "Hand of Healing can also cure disease or remove blind, deaf, paralyze, posion, stun" +
+                    "\n        Hand of Harm can inflict poison condition(disadv on atks/ability checks)");
             }
             if (lvl >= 11)
             {
-                character.ClassFeatures.Add("Physician's Touch", "Hand of Healing can also cure disease or remove blind, deaf, paralyze, posion, stun" +
-                    "\n        Hand of Harm can influct poison condition(disadv on atks/ability checks)");
+                character.ClassFeatures.Add("Flurry of Healing and Harm", "replace any atk when using Flurry of Blows with a hand of healing for 0 ki pt, " +
+                    "\n         when using Flurry of Blows - add hand of harm for 0 ki pt");
             }
             if (lvl >= 17)
             {

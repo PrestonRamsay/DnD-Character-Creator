@@ -344,5 +344,67 @@ namespace DnD_Character_Creator
 
             return returnString;
         }
+        public static string pickSpellLevel(int slotLvl, string pickMsg)
+        {
+            if (slotLvl == 2)
+            {
+                pickMsg = "Pick a 2nd level spell.";
+            }
+            if (slotLvl == 3)
+            {
+                pickMsg = "Pick a 3rd level spell.";
+            }
+            if (slotLvl >= 4)
+            {
+                pickMsg = $"Pick a {slotLvl}th level spell.";
+            }
+            return pickMsg;
+        }
+        public static string pickSpellLevel(int i, int lvlTwo, int lvlThree, int higherLvl, string pickMsg, int spellLvl)
+        {
+            if (i == lvlTwo)
+            {
+                pickMsg = "Pick a 2nd level spell.";
+            }
+            if (i == lvlThree)
+            {
+                pickMsg = "Pick a 3rd level spell.";
+            }
+            if (i >= higherLvl)
+            {
+                pickMsg = $"Pick a {spellLvl}th level spell.";
+            }
+            return pickMsg;
+        }
+        public static void currentSpells(Character character)
+        {
+            Console.WriteLine("Your Current Spells");
+            Console.WriteLine("-------------------");
+
+            for (int spellLvl = 1; spellLvl <= 9; spellLvl++)
+            {
+                var spells = character.Spells[spellLvl];
+
+                for (int i = 0; i < spells.Count; i++)
+                {
+                    Console.WriteLine($"{spells[i]}");
+                }
+            }
+            Console.WriteLine("-------------------\n");
+        }
+        public static bool randomizeStats(Character character, List<int> statNums)
+        {
+            Console.WriteLine("Randomize stats? Y/N");
+            string answer = Console.ReadLine().ToLower();
+            if (answer == "y")
+            {
+                for (int i = 0; i < statNums.Count; i++)
+                {
+                    character.Stats[Helper_Classes.Options.Stats[i]] = statNums[i];
+                }
+                return true;
+            }
+            return false;
+        }
     }
 }

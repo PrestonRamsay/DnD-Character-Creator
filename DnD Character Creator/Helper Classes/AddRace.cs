@@ -64,11 +64,26 @@ namespace DnD_Character_Creator.CLI_Classes
                 case "Wood Elf":
                     Elf.Wood(character);
                     break;
+                case "Air Genasi":
+                    Genasi.Air(character);
+                    break;
+                case "Earth Genasi":
+                    Genasi.Earth(character);
+                    break;
+                case "Fire Genasi":
+                    Genasi.Fire(character);
+                    break;
+                case "Water Genasi":
+                    Genasi.Water(character);
+                    break;
                 case "Forest Gnome":
                     Gnome.Forest(character);
                     break;
                 case "Rock Gnome":
                     Gnome.Rock(character);
+                    break;
+                case "Deep Gnome":
+                    Gnome.Deep(character);
                     break;
                 case "Goliath":
                     Goliath.Base(character);
@@ -110,6 +125,8 @@ namespace DnD_Character_Creator.CLI_Classes
         }
         public static void Spells(Character character)
         {
+            string burningHands = "";
+
             switch (character.ChosenRace)
             {
                 case "Cambion":
@@ -133,6 +150,24 @@ namespace DnD_Character_Creator.CLI_Classes
                     string animalFriendship = "Animal Friendship(1/LR, Wis to cast)";
                     HelpAddSpells(character, animalFriendship);
                     break;
+                case "Air Genasi":
+                    string gustOfWind = "Gust of Wind(1/LR, Con to cast)";
+                    string fly = "Fly(1/LR, Con to cast)";
+                    HelpAddSpells(character, gustOfWind, fly);
+                    break;
+                case "Earth Genasi":
+                    string meldwithStone = "Meld With Stone(1/LR, Con to cast)";
+                    HelpAddSpells(character, meldwithStone);
+                    break;
+                case "Fire Genasi":
+                    burningHands = "Burning Hands(1/LR, Con to cast)";
+                    HelpAddSpells(character, burningHands);
+                    break;
+                case "Water Genasi":
+                    string createDestroyWater = "Create/Destroy Water(1/LR, Con to cast)";
+                    string wallOfWater = "Wall of Water(1/LR, Con to cast)";
+                    HelpAddSpells(character, createDestroyWater, wallOfWater);
+                    break;
                 case "Forest Gnome":
                     string silentImage = "Silent Image(1/LR, Int to cast)";
                     HelpAddSpells(character, silentImage);
@@ -141,7 +176,7 @@ namespace DnD_Character_Creator.CLI_Classes
                     if (character.TieflingMagic == "Infernal Legacy")
                     {
                         string hellishRebuke = "Hellish Rebuke(1/LR, Cha to cast)";
-                        string burningHands = "Burning Hands(1/LR, Cha to cast)";
+                        burningHands = "Burning Hands(1/LR, Cha to cast)";
                         HelpAddSpells(character, hellishRebuke, burningHands);
                     }
                     else if (character.TieflingMagic == "Devil's Tongue")
@@ -316,6 +351,9 @@ namespace DnD_Character_Creator.CLI_Classes
                         break;
                     case "Dhampir":
                         character.RacialTraits.Add("Vampiric Gaze: 1/SR, Charm Person, Cha to cast");
+                        break;
+                    case "Fire Genasi":
+                        character.RacialTraits.Add("Embody Flame*: 1/LR, 1 min, 10ft, if creature starts turn 1/2 lvl fire dmg");
                         break;
                     case "Shadar-Kai":
                         character.RacialTraits.Remove("Blessing of the Raven Queen: bonus, LR, teleport 30ft");

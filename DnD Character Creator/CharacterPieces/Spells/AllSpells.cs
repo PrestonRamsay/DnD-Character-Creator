@@ -55,6 +55,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
         {
             Lvl = character.Lvl;
             string classStr = character.ChosenClass;
+            string offClassStr = character.ChosenClassII;
             string archetype = character.Archetype;
             if (classStr == "Artificer" || classStr == "Fighter" || classStr == "Rogue" || classStr == "Wizard")
             {
@@ -93,6 +94,156 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
                 }
             }
             switch (classStr)
+            {
+                case "Artificer":
+                    Artificer.Add(0, ArtificerSpells.Cantrips);
+                    Artificer.Add(1, ArtificerSpells.FirstLvls);
+                    Artificer.Add(2, ArtificerSpells.SecondLvls);
+                    Artificer.Add(3, ArtificerSpells.ThirdLvls);
+                    Artificer.Add(4, ArtificerSpells.FourthLvls);
+                    Artificer.Add(5, ArtificerSpells.FifthLvls);
+                    GetSpellDesc(Artificer);
+                    break;
+                case "Bard":
+                    Bard.Add(0, BardSpells.Cantrips);
+                    Bard.Add(1, BardSpells.FirstLvls);
+                    Bard.Add(2, BardSpells.SecondLvls);
+                    Bard.Add(3, BardSpells.ThirdLvls);
+                    Bard.Add(4, BardSpells.FourthLvls);
+                    Bard.Add(5, BardSpells.FifthLvls);
+                    Bard.Add(6, BardSpells.SixthLvls);
+                    Bard.Add(7, BardSpells.SeventhLvls);
+                    Bard.Add(8, BardSpells.EigthLvls);
+                    Bard.Add(9, BardSpells.NinthLvls);
+                    GetSpellDesc(Bard);
+                    break;
+                case "Bloodhunter":
+                    Warlock.Add(0, WarlockSpells.Cantrips);
+                    Warlock.Add(1, WarlockSpells.FirstLvls);
+                    Warlock.Add(2, WarlockSpells.SecondLvls);
+                    Warlock.Add(3, WarlockSpells.ThirdLvls);
+                    Warlock.Add(4, WarlockSpells.FourthLvls);
+                    GetSpellDesc(Warlock);
+                    break;
+                case "Cleric":
+                    Cleric.Add(0, ClericSpells.Cantrips);
+                    Cleric.Add(1, ClericSpells.FirstLvls);
+                    Cleric.Add(2, ClericSpells.SecondLvls);
+                    Cleric.Add(3, ClericSpells.ThirdLvls);
+                    Cleric.Add(4, ClericSpells.FourthLvls);
+                    Cleric.Add(5, ClericSpells.FifthLvls);
+                    Cleric.Add(6, ClericSpells.SixthLvls);
+                    Cleric.Add(7, ClericSpells.SeventhLvls);
+                    Cleric.Add(8, ClericSpells.EigthLvls);
+                    Cleric.Add(9, ClericSpells.NinthLvls);
+                    GetSpellDesc(Cleric);
+                    break;
+                case "Druid":
+                    Druid.Add(0, DruidSpells.Cantrips);
+                    Druid.Add(1, DruidSpells.FirstLvls);
+                    Druid.Add(2, DruidSpells.SecondLvls);
+                    Druid.Add(3, DruidSpells.ThirdLvls);
+                    Druid.Add(4, DruidSpells.FourthLvls);
+                    Druid.Add(5, DruidSpells.FifthLvls);
+                    Druid.Add(6, DruidSpells.SixthLvls);
+                    Druid.Add(7, DruidSpells.SeventhLvls);
+                    Druid.Add(8, DruidSpells.EigthLvls);
+                    Druid.Add(9, DruidSpells.NinthLvls);
+                    GetSpellDesc(Druid);
+                    break;
+                case "Fighter":
+                    Fighter.Add(0, FighterSpells.Cantrips);
+                    Fighter.Add(1, FighterSpells.FirstLvls);
+                    Fighter.Add(2, FighterSpells.SecondLvls);
+                    Fighter.Add(3, FighterSpells.ThirdLvls);
+                    Fighter.Add(4, FighterSpells.FourthLvls);
+                    GetSpellDesc(Fighter);
+                    Wizard.Add(0, WizardSpells.Cantrips);
+                    Wizard.Add(1, WizardSpells.FirstLvls);
+                    Wizard.Add(2, WizardSpells.SecondLvls);
+                    Wizard.Add(3, WizardSpells.ThirdLvls);
+                    Wizard.Add(4, WizardSpells.FourthLvls);
+                    GetSpellDesc(Wizard);
+                    break;
+                case "Paladin":
+                    Paladin.Add(1, PaladinSpells.FirstLvls);
+                    Paladin.Add(2, PaladinSpells.SecondLvls);
+                    Paladin.Add(3, PaladinSpells.ThirdLvls);
+                    Paladin.Add(4, PaladinSpells.FourthLvls);
+                    Paladin.Add(5, PaladinSpells.FifthLvls);
+                    GetSpellDesc(Paladin);
+                    break;
+                case "Ranger":
+                    Ranger.Add(1, RangerSpells.FirstLvls);
+                    Ranger.Add(2, RangerSpells.SecondLvls);
+                    Ranger.Add(3, RangerSpells.ThirdLvls);
+                    Ranger.Add(4, RangerSpells.FourthLvls);
+                    Ranger.Add(5, RangerSpells.FifthLvls);
+                    GetSpellDesc(Ranger);
+                    break;
+                case "Rogue":
+                    Rogue.Add(0, RogueSpells.Cantrips);
+                    Rogue.Add(1, RogueSpells.FirstLvls);
+                    Rogue.Add(2, RogueSpells.SecondLvls);
+                    Rogue.Add(3, RogueSpells.ThirdLvls);
+                    Rogue.Add(4, RogueSpells.FourthLvls);
+                    GetSpellDesc(Rogue);
+                    Wizard.Add(0, WizardSpells.Cantrips);
+                    Wizard.Add(1, WizardSpells.FirstLvls);
+                    Wizard.Add(2, WizardSpells.SecondLvls);
+                    Wizard.Add(3, WizardSpells.ThirdLvls);
+                    Wizard.Add(4, WizardSpells.FourthLvls);
+                    GetSpellDesc(Wizard);
+                    break;
+                case "Psion":
+                    Psion.Add(0, PsionSpells.Cantrips);
+                    Psion.Add(1, PsionSpells.FirstLvls);
+                    Psion.Add(2, PsionSpells.SecondLvls);
+                    Psion.Add(3, PsionSpells.ThirdLvls);
+                    Psion.Add(4, PsionSpells.FourthLvls);
+                    Psion.Add(5, PsionSpells.FifthLvls);
+                    Psion.Add(6, PsionSpells.SixthLvls);
+                    Psion.Add(7, PsionSpells.SeventhLvls);
+                    Psion.Add(8, PsionSpells.EigthLvls);
+                    Psion.Add(9, PsionSpells.NinthLvls);
+                    GetSpellDesc(Psion);
+                    break;
+                case "Swordmage":
+                    Swordmage.Add(0, SwordmageSpells.Cantrips);
+                    Swordmage.Add(1, SwordmageSpells.FirstLvls);
+                    Swordmage.Add(2, SwordmageSpells.SecondLvls);
+                    Swordmage.Add(3, SwordmageSpells.ThirdLvls);
+                    Swordmage.Add(4, SwordmageSpells.FourthLvls);
+                    Swordmage.Add(5, SwordmageSpells.FifthLvls);
+                    GetSpellDesc(Swordmage);
+                    break;
+                case "Warlock":
+                    Warlock.Add(0, WarlockSpells.Cantrips);
+                    Warlock.Add(1, WarlockSpells.FirstLvls);
+                    Warlock.Add(2, WarlockSpells.SecondLvls);
+                    Warlock.Add(3, WarlockSpells.ThirdLvls);
+                    Warlock.Add(4, WarlockSpells.FourthLvls);
+                    Warlock.Add(5, WarlockSpells.FifthLvls);
+                    Warlock.Add(6, WarlockSpells.SixthLvls);
+                    Warlock.Add(7, WarlockSpells.SeventhLvls);
+                    Warlock.Add(8, WarlockSpells.EigthLvls);
+                    Warlock.Add(9, WarlockSpells.NinthLvls);
+                    GetSpellDesc(Warlock);
+                    break;
+                case "Wizard":
+                    Wizard.Add(0, WizardSpells.Cantrips);
+                    Wizard.Add(1, WizardSpells.FirstLvls);
+                    Wizard.Add(2, WizardSpells.SecondLvls);
+                    Wizard.Add(3, WizardSpells.ThirdLvls);
+                    Wizard.Add(4, WizardSpells.FourthLvls);
+                    Wizard.Add(5, WizardSpells.FifthLvls);
+                    Wizard.Add(6, WizardSpells.SixthLvls);
+                    Wizard.Add(7, WizardSpells.SeventhLvls);
+                    Wizard.Add(8, WizardSpells.EigthLvls);
+                    Wizard.Add(9, WizardSpells.NinthLvls);
+                    break;
+            }
+            switch (offClassStr)
             {
                 case "Artificer":
                     Artificer.Add(0, ArtificerSpells.Cantrips);

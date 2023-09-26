@@ -252,22 +252,13 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
 
             for (int i = 1; i <= character.SpellsKnown; i++)
             {
+                var lvlsToIncSpellLvl = new List<int> { 6, 9, 12, 14 };
 
-                if (i == 6)
+                if (lvlsToIncSpellLvl.Contains(i))
                 {
                     spellLvl++;
-                    pickMsg = "Pick a 2nd level spell.";
                 }
-                if (i == 10)
-                {
-                    spellLvl++;
-                    pickMsg = "Pick a 3rd level spell.";
-                }
-                if (i == 12 || i == 14)
-                {
-                    spellLvl++;
-                    pickMsg = $"Pick a {spellLvl}th level spell.";
-                }
+                pickMsg = CLIHelper.pickSpellLevel(i, 6, 9, 12, pickMsg, spellLvl);
                 string spell = CLIHelper.GetNew(spells.Swordmage[spellLvl], character.Spells[spellLvl], pickMsg);
                 character.Spells[spellLvl].Add(spell);
                 spells.Swordmage[spellLvl].Remove(spell);

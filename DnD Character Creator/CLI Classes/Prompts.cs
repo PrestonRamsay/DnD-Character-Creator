@@ -83,6 +83,7 @@ namespace DnD_Character_Creator
         public static string FindRace(string race)
         {
             string pickMsg = "Pick your subrace now.";
+            var races = new List<string> { "Aasimar", "Dwarf", "Gnome", "Genasi", "Halfling", "Human", "Tiefling" };
             var subraces = new List<string>();
             int index = -1;
             if (race == "Elf")
@@ -91,6 +92,9 @@ namespace DnD_Character_Creator
                 subraces.Add("Drow");
                 subraces.Add("Eladrin");
                 subraces.Add("Shadar-Kai");
+                Elves.AddRange(subraces);
+                index = CLIHelper.PrintChoices(pickMsg, subraces);
+                race = subraces[index];
             }
             foreach (var subrace in Options.SubRaces)
             {
@@ -99,39 +103,11 @@ namespace DnD_Character_Creator
                     subraces.Add(subrace);
                 }
             }
-            switch (race)
+            if (races.Contains(race))
             {
-                case "Aasimar":
-                    index = CLIHelper.PrintChoices(pickMsg, subraces);
-                    race = subraces[index];
-                    break;
-                case "Dwarf":
-                    index = CLIHelper.PrintChoices(pickMsg, subraces);
-                    race = subraces[index];
-                    break;
-                case "Elf":
-                    Elves.AddRange(subraces);
-                    index = CLIHelper.PrintChoices(pickMsg, subraces);
-                    race = subraces[index];
-                    break;
-                case "Gnome":
-                    index = CLIHelper.PrintChoices(pickMsg, subraces);
-                    race = subraces[index];
-                    break;
-                case "Halfling":
-                    index = CLIHelper.PrintChoices(pickMsg, subraces);
-                    race = subraces[index];
-                    break;
-                case "Human":
-                    index = CLIHelper.PrintChoices(pickMsg, subraces);
-                    race = subraces[index];
-                    break;
-                case "Tiefling":
-                    index = CLIHelper.PrintChoices(pickMsg, subraces);
-                    race = subraces[index];
-                    break;
+                index = CLIHelper.PrintChoices(pickMsg, subraces);
+                race = subraces[index];
             }
-
 
             return race;
         }

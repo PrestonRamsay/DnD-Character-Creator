@@ -400,18 +400,7 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
                 {
                     spellLvl++;
                 }
-                if (i == 4)
-                {
-                    pickMsg = "Pick a 2nd level spell.";
-                }
-                if (i == 6)
-                {
-                    pickMsg = "Pick a 3rd level spell.";
-                }
-                if (i >= 8)
-                {
-                    pickMsg = $"Pick a {spellLvl}th level spell.";
-                }
+                pickMsg = CLIHelper.pickSpellLevel(i, 4, 6, 8, pickMsg, spellLvl);
                 string spell = CLIHelper.GetNew(spells.Psion[spellLvl], character.Spells[spellLvl], pickMsg);
                 character.Spells[spellLvl].Add(spell);
                 spells.Psion[spellLvl].Remove(spell);

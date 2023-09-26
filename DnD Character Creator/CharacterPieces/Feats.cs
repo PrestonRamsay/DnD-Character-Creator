@@ -122,6 +122,7 @@ namespace DnD_Character_Creator.CharacterPieces
                     FeatNames.Remove(feat);
                 }
             }
+            Console.Clear();
             string newFeat = CLIHelper.PrintChoices(Options.FeatDefinitions, FeatNames, "Pick a feat");
             character.Feats.Add(newFeat, Options.FeatDefinitions[newFeat]);
             AddFeatBenefits(character, newFeat);

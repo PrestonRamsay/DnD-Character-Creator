@@ -16,9 +16,9 @@ namespace DnD_Character_Creator
 
                 cli.RunGetLvl(newCharacter);
                 cli.RunAddStats(newCharacter);
-                //cli.RunAddRace(newCharacter);
-                //cli.RunAddTemplate(newCharacter);
-                //cli.RunAddBackground(newCharacter);
+                cli.RunAddRace(newCharacter);
+                cli.RunAddTemplate(newCharacter);
+                cli.RunAddBackground(newCharacter);
                 cli.RunAddClass(newCharacter);
                 cli.WriteCharacterToDocument(newCharacter);
 

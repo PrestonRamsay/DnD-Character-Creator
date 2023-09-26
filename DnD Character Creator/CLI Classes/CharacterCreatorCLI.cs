@@ -102,6 +102,12 @@ namespace DnD_Character_Creator
             {
                 racialStats = Stats.RacialStats(character.ChosenRace);
             }
+            CLIHelper.Print2Choices("Vanilla Racial Stats", "Tasha's Racial Stats");
+            input = CLIHelper.GetNumberInRange(1, 2);
+            if (input == 2)
+            {
+                racialStats = Stats.TashaStats();
+            }
             Stats.RacialStats(character, racialStats);
 
             if (character.Template == true)

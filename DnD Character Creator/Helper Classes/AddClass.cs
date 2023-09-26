@@ -256,7 +256,8 @@ namespace DnD_Character_Creator.Helper_Classes
             int lvl = 0;
             if (character.CrossClass)
             {
-                lvl = character.BaseClassLvl;
+                CalculateCrossClassSlots(character);
+                return;
             }
             else
             {
@@ -266,54 +267,11 @@ namespace DnD_Character_Creator.Helper_Classes
 
             if (primaryCasters.Contains(classString))
             {
-                int spellSlotLvl = 0;
-                int lvlToInc = 5;
-                for (int i = 1; i <= lvl; i++)
-                {
-                    if (i % 2 != 0 && i <= 17)
-                    {
-                        spellSlotLvl++;
-                        if (i <= 5)
-                        {
-                            character.SpellSlots[spellSlotLvl] += 2;
-                        }
-                        else
-                        {
-                            character.SpellSlots[spellSlotLvl] += 1;
-                        }
-                    }
-                    if (i % 2 == 0 && i <= 10)
-                    {
-                        character.SpellSlots[spellSlotLvl]++;
-                    }
-                    if (i >= 18)
-                    {
-                        character.SpellSlots[lvlToInc]++;
-                        lvlToInc++;
-                    }
-                }
+                CalculatePrimaryCasterSlots(character, lvl);
             }
             if (classString == "Warlock")
             {
-                int spellSlotLvl = 2;
-
-                for (int i = 1; i <= lvl; i++)
-                {
-                    if (i <= 2)
-                    {
-                        character.SpellSlots[1]++;
-                    }
-                    if (i % 2 != 0 && i <= 9)
-                    {
-                        character.SpellSlots.Remove(spellSlotLvl - 1);
-                        character.SpellSlots[spellSlotLvl] += 2;
-                        spellSlotLvl++;
-                    }
-                    if (i == 11 || i == 17)
-                    {
-                        character.SpellSlots[5]++;
-                    }
-                }
+                CalculateWarlockSlots(character, lvl);
             }
             var secondaryCasters = new List<string> { "Artificer", "Paladin", "Ranger", "Swordmage" };
             if (secondaryCasters.Contains(classString))
@@ -346,6 +304,101 @@ namespace DnD_Character_Creator.Helper_Classes
                         spellSlotLvl++;
                         character.SpellSlots[spellSlotLvl]++;
                     }
+                }
+            }
+        }
+        public static void CalculateCrossClassSlots(Character character)
+        {
+            string classString = character.ChosenClass;
+            string offClassString = character.ChosenClassII;
+
+            int lvl = 0;
+            var primaryCasters = new List<string> { "Bard", "Cleric", "Druid", "Sorcerer", "Wizard" };
+            var secondaryCasters = new List<string> { "Artificer", "Paladin", "Ranger", "Swordmage" };
+            var dipCasters = new List<string> { "Fighter", "Rogue" };
+
+            if (primaryCasters.Contains(classString))
+            {
+                lvl += character.BaseClassLvl;
+            }
+            if (primaryCasters.Contains(offClassString))
+            {
+                lvl += character.OffClassLvl;
+            }
+            if (secondaryCasters.Contains(classString))
+            {
+                lvl += (character.BaseClassLvl) / 2;
+            }
+            if (secondaryCasters.Contains(offClassString))
+            {
+                lvl += (character.OffClassLvl) / 2;
+            }
+            if (dipCasters.Contains(classString))
+            {
+                lvl += (character.BaseClassLvl) / 3;
+            }
+            if (dipCasters.Contains(offClassString))
+            {
+                lvl += (character.OffClassLvl) / 3;
+            }
+            CalculatePrimaryCasterSlots(character, lvl);
+            if (classString == "Warlock")
+            {
+                CalculateWarlockSlots(character, character.BaseClassLvl);
+            }
+            if (offClassString == "Warlock")
+            {
+                CalculateWarlockSlots(character, character.OffClassLvl);
+            }
+        }
+        public static void CalculateWarlockSlots(Character character, int lvl)
+        {
+            int spellSlotLvl = 2;
+
+            for (int i = 1; i <= lvl; i++)
+            {
+                if (i <= 2)
+                {
+                    character.SpellSlots[1]++;
+                }
+                if (i % 2 != 0 && i <= 9)
+                {
+                    character.SpellSlots.Remove(spellSlotLvl - 1);
+                    character.SpellSlots[spellSlotLvl] += 2;
+                    spellSlotLvl++;
+                }
+                if (i == 11 || i == 17)
+                {
+                    character.SpellSlots[5]++;
+                }
+            }
+        }
+        public static void CalculatePrimaryCasterSlots(Character character, int lvl)
+        {
+            int spellSlotLvl = 0;
+            int lvlToInc = 5;
+            for (int i = 1; i <= lvl; i++)
+            {
+                if (i % 2 != 0 && i <= 17)
+                {
+                    spellSlotLvl++;
+                    if (i <= 5)
+                    {
+                        character.SpellSlots[spellSlotLvl] += 2;
+                    }
+                    else
+                    {
+                        character.SpellSlots[spellSlotLvl] += 1;
+                    }
+                }
+                if (i % 2 == 0 && i <= 10)
+                {
+                    character.SpellSlots[spellSlotLvl]++;
+                }
+                if (i >= 18)
+                {
+                    character.SpellSlots[lvlToInc]++;
+                    lvlToInc++;
                 }
             }
         }

@@ -441,19 +441,7 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
                 if (3 <= i && i <= 17 && i % 2 != 0)
                 {
                     spellLvl++;
-
-                    if (i == 3)
-                    {
-                        pickMsg = "Pick a 2nd level spell.";
-                    }
-                    if (i == 5)
-                    {
-                        pickMsg = "Pick a 3rd level spell.";
-                    }
-                    if (i >= 7)
-                    {
-                        pickMsg = $"Pick a {spellLvl}th level spell.";
-                    }
+                    pickMsg = CLIHelper.pickSpellLevel(i, 3, 5, 7, pickMsg, spellLvl);
                 }
                 string spell = CLIHelper.GetNew(spells.Wizard[spellLvl], character.Spells[spellLvl], pickMsg);
                 character.Spells[spellLvl].Add(spell);

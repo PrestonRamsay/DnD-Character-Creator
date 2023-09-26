@@ -319,21 +319,12 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             AllSpells spells = new AllSpells(character);
             foreach (var slotLvl in character.SpellSlots.Keys)
             {
-                if (slotLvl == 2)
-                {
-                    pickMsg = "Pick a 2nd level spell.";
-                }
-                if (slotLvl == 3)
-                {
-                    pickMsg = "Pick a 3rd level spell.";
-                }
-                if (slotLvl >= 4)
-                {
-                    pickMsg = $"Pick a {slotLvl}th level spell.";
-                }
+                pickMsg = CLIHelper.pickSpellLevel(slotLvl, pickMsg);
                 int slots = character.SpellSlots[slotLvl];
                 for (int i = 0; i < slots; i++)
                 {
+                    Console.Clear();
+                    CLIHelper.currentSpells(character);
                     string spell = CLIHelper.GetNew(spells.Artificer[slotLvl], character.Spells[slotLvl], pickMsg);
                     character.Spells[slotLvl].Add(spell);
                     spells.Artificer[slotLvl].Remove(spell);

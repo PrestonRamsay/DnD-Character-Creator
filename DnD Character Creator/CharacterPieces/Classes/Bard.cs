@@ -305,8 +305,8 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
                 string skill = CLIHelper.GetNew(Options.Skills, character.SkillProficiencies, msg);
                 character.SkillProficiencies.Add(skill);
             }
-
             character.ClassFeatures.Add("Cutting Words", "60ft, minus Bardic Inspiration from atk, dmg, ability check");
+
             if (lvl >= 6)
             {
                 character.ClassFeatures.Add("Additional Magical Secrets", "gain 2 new spells from any class (pick them separately)");
@@ -429,18 +429,7 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
                         spellLvl++;
                     }
                 }
-                if (i == 6)
-                {
-                    pickMsg = "Pick a 2nd level spell.";
-                }
-                if (i == 8)
-                {
-                    pickMsg = "Pick a 3rd level spell.";
-                }
-                if (i >= 10)
-                {
-                    pickMsg = $"Pick a {spellLvl}th level spell.";
-                }
+                pickMsg = CLIHelper.pickSpellLevel(i, 6, 8, 10, pickMsg, spellLvl);
                 if (magicalSecrets.Contains(i))
                 {
                     string newSpell = CLIHelper.GetNew(spellNames, charSpells, pickMsg);

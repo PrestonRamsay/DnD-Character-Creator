@@ -48,5 +48,26 @@ namespace DnD_Character_Creator.CharacterPieces.Races
             character.MaxAgeEnd = 500;
             character.Languages.Add("Gnomish");
         }
+        public static void Deep(Character character)
+        {
+            character.RacialTraits.Add("Gnome Cunning: you gain Advantage on Int, Wis, and Cha saves vs magic");
+            character.RacialTraits.Add("Stone Camouflage: adv on Stealth when hiding underground or in rocky terrain");
+            character.RacialTraits.Add("Natural Explorer(Underdark): no difficult terrain, move stealthily at normal pace, forage x 2, learn exact number/size of creatures");
+            character.MinHeight = 36;
+            character.MaxHeight = 48;
+            character.Size = "Small";
+            character.MinWeight = 80;
+            character.MaxWeight = 120;
+            character.Speed += 25;
+            character.Vision = "Superior Darkvision 120ft";
+            character.AlignmentOptions.Add("TN");
+            character.AdultAge = 25;
+            character.MaxAgeStart = 200;
+            character.MaxAgeEnd = 250;
+            character.Languages.Add("Gnomish");
+            character.Languages.Add("Undercommon");
+            character.ToolProficiencies.Add("Mason's Tools");
+            character.ToolProficiencies.Add("Cobbler's Tools");
+        }
     }
 }
