@@ -926,6 +926,7 @@ namespace DnD_Character_Creator.Helper_Classes
             { "Arcane Recovery", "1/day after SR, gain spell slots <= 1/2 lvl, no lvl 6 slots or higher" },
             { "Awakened Mind", "30ft, commmunicate telepathically without common language" },
             { "Bardic Inspiration(D6)", "Cha/LR, bonus, 60ft, use on ally, add to atk, save, or ability check" },
+            { "Blessing of the Forge", "LR, enchant one item, +1 AC or +1 atk/dmg" },
             { "Blessing of the Trickster", "action, give ally adv on Stealth for 1 hr" },
             { "Blessings of Knowledge", "gain 2 languages and 2 skills" },
             { "Canny", "gain Expertise in 1 skill, gain 2 languages" },
