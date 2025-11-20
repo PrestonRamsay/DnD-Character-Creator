@@ -34,14 +34,14 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         public static void Equipment(Character character)
         {
             Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
-            CLIHelper.Print2Choices("Mace", "Warhammer (if proficient)");
-            int input1 = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Mace", "Warhammer (if proficient)");
+            int input1 = CLIHelper.GetChoiceFromPair("Mace", "Warhammer (if proficient)");
             CLIHelper.Print3Choices("Scale mail", "Leather armor", "Chain mail (if proficient)");
             int input2 = CLIHelper.GetNumberInRange(1, 3);
-            CLIHelper.Print2Choices("Light crossbow and 20 bolts", "Any simple weapon");
-            int input3 = CLIHelper.GetNumberInRange(1, 2);
-            CLIHelper.Print2Choices("Priest's Pack", "Explorer's Pack");
-            int input4 = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Light crossbow and 20 bolts", "Any simple weapon");
+            int input3 = CLIHelper.GetChoiceFromPair("Light crossbow and 20 bolts", "Any simple weapon");
+            //CLIHelper.Print2Choices("Priest's Pack", "Explorer's Pack");
+            int input4 = CLIHelper.GetChoiceFromPair("Priest's Pack", "Explorer's Pack");
 
             if (input1 == 1)
             {
@@ -598,8 +598,9 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             Console.WriteLine("Pick a skill to gain proficiency in");
             string skillProf = String.Join(", ", character.SkillProficiencies);
             Console.WriteLine($"Your skill proficiencies are: {skillProf}");
-            CLIHelper.Print2Choices("Intimidation", "Persuasion");
-            int num = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Intimidation", "Persuasion");
+            int num = CLIHelper.GetChoiceFromPair("Intimidation", "Persuasion");
+
             if (num == 1)
             {
                 character.SkillProficiencies.Add("Intimidation");

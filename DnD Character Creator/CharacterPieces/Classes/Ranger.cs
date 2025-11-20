@@ -44,12 +44,12 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         public static void Equipment(Character character)
         {
             Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
-            CLIHelper.Print2Choices("Scale mail", "Leather armor");
-            int input1 = CLIHelper.GetNumberInRange(1, 2);
-            CLIHelper.Print2Choices("Two shortswords", "Two simple melee weapons");
-            int input2 = CLIHelper.GetNumberInRange(1, 2);
-            CLIHelper.Print2Choices("Dungeoneer's Pack", "Explorer's Pack");
-            int input3 = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Scale mail", "Leather armor");
+            int input1 = CLIHelper.GetChoiceFromPair("Scale mail", "Leather armor");
+            //CLIHelper.Print2Choices("Two shortswords", "Two simple melee weapons");
+            int input2 = CLIHelper.GetChoiceFromPair("Two shortswords", "Two simple melee weapons");
+            //CLIHelper.Print2Choices("Dungeoneer's Pack", "Explorer's Pack");
+            int input3 = CLIHelper.GetChoiceFromPair("Dungeoneer's Pack", "Explorer's Pack");
 
             if (input1 == 1)
             {
@@ -94,8 +94,8 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
                 favoredNum++;
             }
             Console.WriteLine("Pick a Ranger class feature");
-            CLIHelper.Print2Choices("Natural Explorer", "Deft Explorer");
-            int num = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Natural Explorer", "Deft Explorer");
+            int num = CLIHelper.GetChoiceFromPair("Natural Explorer", "Deft Explorer");
             if (num == 1)
             {
                 List<string> terrainTypes = new List<string> { "Arctic", "Coast", "Desert", "Forest", "Grassland", "Mountain", "Swamp","Underdark" };
@@ -129,8 +129,8 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
                     character.ClassFeatures.Add("Roving", "speed +5ft, gain a Climb or Swim speed");
                     character.Speed += 5;
                     Console.WriteLine("Gain a Climb or Swim speed");
-                    CLIHelper.Print2Choices("Climb speed", "Swim speed");
-                    num = CLIHelper.GetNumberInRange(1, 2);
+                    //CLIHelper.Print2Choices("Climb speed", "Swim speed");
+                    num = CLIHelper.GetChoiceFromPair("Climb speed", "Swim speed");
                     if (num == 1)
                     {
                         character.Speedstring += $", Climb {character.Speed}ft";
@@ -146,8 +146,8 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
                 }
             }
             Console.WriteLine("Pick a Ranger class feature");
-            CLIHelper.Print2Choices("Favored Enemy", "Favored Foe");
-            num = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Favored Enemy", "Favored Foe");
+            num = CLIHelper.GetChoiceFromPair("Favored Enemy", "Favored Foe");
             if (num == 1)
             {
                 List<string> enemyTypes = new List<string> { "Aberrations", "Beasts", "Celestials", "Constructs", "Dragons", "Elementals", "Fey",
@@ -205,8 +205,8 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             if (lvl >= 3)
             {
                 Console.WriteLine("Pick a Ranger class feature");
-                CLIHelper.Print2Choices("Primeval Awareness", "Primal Awareness");
-                num = CLIHelper.GetNumberInRange(1, 2);
+                //CLIHelper.Print2Choices("Primeval Awareness", "Primal Awareness");
+                num = CLIHelper.GetChoiceFromPair("Primeval Awareness", "Primal Awareness");
                 if (num == 1)
                 {
                     character.ClassFeatures.Add("Primeval Awareness", "expend spell slot, 1 min per spell lvl sense presence of aberrations, celestials," +
@@ -268,8 +268,8 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             if (lvl >= 10)
             {
                 Console.WriteLine("Pick a Ranger class feature");
-                CLIHelper.Print2Choices("Hide in Plain Sight", "Nature's Veil");
-                num = CLIHelper.GetNumberInRange(1, 2);
+                //CLIHelper.Print2Choices("Hide in Plain Sight", "Nature's Veil");
+                num = CLIHelper.GetChoiceFromPair("Hide in Plain Sight", "Nature's Veil");
                 if (num == 1)
                 {
                     character.ClassFeatures.Add("Hide in Plain Sight", "spend 1 min to camouflage self, gain +10 to Stealth without moving");
@@ -461,8 +461,8 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             if (lvl >= 11)
             {
                 Console.WriteLine(msg);
-                CLIHelper.Print2Choices("Volley", "Whirlwind Attack");
-                int choice = CLIHelper.GetNumberInRange(1, 2);
+                //CLIHelper.Print2Choices("Volley", "Whirlwind Attack");
+                int choice = CLIHelper.GetChoiceFromPair("Volley", "Whirlwind Attack");
                 if (choice == 1)
                 {
                     character.ClassFeatures.Add("Volley", "action, atk all creatures you can see within 10ft");

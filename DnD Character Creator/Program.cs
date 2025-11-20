@@ -14,12 +14,12 @@ namespace DnD_Character_Creator
                 cli = new CharacterCreatorCLI();
                 Character newCharacter = new Character();
 
-                cli.RunGetLvl(newCharacter);
-                cli.RunAddStats(newCharacter);
-                cli.RunAddRace(newCharacter);
-                cli.RunAddTemplate(newCharacter);
+                //cli.RunGetLvl(newCharacter);
+                //cli.RunAddStats(newCharacter);
+                //cli.RunAddRace(newCharacter);
+                ////cli.RunAddTemplate(newCharacter);
                 cli.RunAddBackground(newCharacter);
-                cli.RunAddClass(newCharacter);
+                //cli.RunAddClass(newCharacter);
                 cli.WriteCharacterToDocument(newCharacter);
 
                 creatingCharacter = cli.FinalPrompt();

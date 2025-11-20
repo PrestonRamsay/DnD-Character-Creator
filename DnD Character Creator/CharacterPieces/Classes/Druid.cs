@@ -46,8 +46,8 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         public static void Equipment(Character character)
         {
             Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
-            CLIHelper.Print2Choices("Scimitar", "Any simple melee weapon");
-            int input2 = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Scimitar", "Any simple melee weapon");
+            int input2 = CLIHelper.GetChoiceFromPair("Scimitar", "Any simple melee weapon");
             if (input2 == 1)
             {
                 character.Equipment.Add(Options.MartialMeleeWeapons[12]);
@@ -56,8 +56,8 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             {
                 BEHelper.AddSimpleMeleeWeapon(character);
             }
-            CLIHelper.Print2Choices("Wooden shield", "Any simple weapon");
-            int input1 = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Wooden shield", "Any simple weapon");
+            int input1 = CLIHelper.GetChoiceFromPair("Wooden shield", "Any simple weapon");
             if (input1 == 1)
             {
                 character.Equipment.Add("Wooden shield(+2 AC)(10gp, 6lb.)");

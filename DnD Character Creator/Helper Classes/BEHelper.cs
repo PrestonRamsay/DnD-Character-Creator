@@ -1,4 +1,5 @@
-﻿using DnD_Character_Creator.CharacterPieces.Spells;
+﻿using DnD_Character_Creator.Backgrounds;
+using DnD_Character_Creator.CharacterPieces.Spells;
 using System;
 using System.Collections.Generic;
 
@@ -6,6 +7,26 @@ namespace DnD_Character_Creator.Helper_Classes
 {
     public static class BEHelper
     {
+        public static void AddGHBackground(Character character, Background backgroundObject)
+        {
+            Console.WriteLine("Do you want Grim Hollow Advanced Backgrounds? Y/N");
+            var yesNo = new List<string> { "y", "n" };
+            string answer = CLIHelper.GetStringInList(yesNo);
+
+            if (answer == "y")
+            {
+                character.ChosenBackground = Prompts.PickOption("background", Options.GHBackgrounds);
+                Console.Clear();
+                Console.WriteLine($"You've picked {character.ChosenBackground}.\n");
+                var GHFillerObject = GHBackground.NewBackground(character);
+                //backgroundObject = AddBackground.AddGHBackground(GHFillerObject);
+            }
+            else if (answer == "n")
+            {
+                character.ChosenBackground = Prompts.PickOption("background", Options.Backgrounds);
+                AddBackground.NewBackground(character);
+            }
+        }
         public static void AddLanguage(Character character, string piece)
         {
             string msg = $"This {piece} gets to know one language of your choice, pick it now.";

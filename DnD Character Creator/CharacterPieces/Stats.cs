@@ -280,8 +280,8 @@ namespace DnD_Character_Creator
                 case "Changeling":
                     stats.Add(new Tuple<string, int>("Cha", 2));
                     Console.WriteLine("Pick a stat to increase by 1");
-                    CLIHelper.Print2Choices("Dex", "Int");
-                    choice = CLIHelper.GetNumberInRange(1, 2);
+                    //CLIHelper.Print2Choices("Dex", "Int");
+                    choice = CLIHelper.GetChoiceFromPair("Dex", "Int");
                     if (choice == 1)
                     {
                         stats.Add(new Tuple<string, int>("Dex", 1));
@@ -294,8 +294,8 @@ namespace DnD_Character_Creator
                 case "Dhampir":
                     stats.Add(new Tuple<string, int>("Str", 2));
                     Console.WriteLine("Pick a stat to increase by 1");
-                    CLIHelper.Print2Choices("Dex", "Cha");
-                    choice = CLIHelper.GetNumberInRange(1, 2);
+                    //CLIHelper.Print2Choices("Dex", "Cha");
+                    choice = CLIHelper.GetChoiceFromPair("Dex", "Cha");
                     if (choice == 1)
                     {
                         stats.Add(new Tuple<string, int>("Dex", 1));
@@ -432,8 +432,8 @@ namespace DnD_Character_Creator
                 case "Shade":
                     stats.Add(new Tuple<string, int>("Dex", 2));
                     Console.WriteLine("Pick a stat to increase by 1");
-                    CLIHelper.Print2Choices("Int", "Cha");
-                    choice = CLIHelper.GetNumberInRange(1, 2);
+                    //CLIHelper.Print2Choices("Int", "Cha");
+                    choice = CLIHelper.GetChoiceFromPair("Int", "Cha");
                     if (choice == 1)
                     {
                         stats.Add(new Tuple<string, int>("Int", 1));

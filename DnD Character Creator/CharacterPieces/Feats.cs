@@ -403,8 +403,8 @@ namespace DnD_Character_Creator.CharacterPieces
                 case "Unarmored Defense":
                     character.Feats.Remove("Unarmored Defense");
                     Console.WriteLine("Pick a Stat that determines your AC benefits");
-                    CLIHelper.Print2Choices("Con", "Wis");
-                    int input = CLIHelper.GetNumberInRange(1, 2);
+                    //CLIHelper.Print2Choices("Con", "Wis");
+                    int input = CLIHelper.GetChoiceFromPair("Con", "Wis");
 
                     if (input == 1)
                     {
@@ -517,8 +517,8 @@ namespace DnD_Character_Creator.CharacterPieces
             for (int i = 0; i < 3; i++)
             {
                 Console.WriteLine("Do you want a skill proficiency or a tool proficiency?");
-                CLIHelper.Print2Choices("Skill proficiency", "Tool proficiency");
-                int num = CLIHelper.GetNumberInRange(1, 2);
+                //CLIHelper.Print2Choices("Skill proficiency", "Tool proficiency");
+                int num = CLIHelper.GetChoiceFromPair("Skill proficiency", "Tool proficiency");
                 if (num == 1)
                 {
                     string skill = CLIHelper.GetNew(Options.Skills, character.SkillProficiencies, "Pick a skill");

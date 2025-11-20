@@ -26,10 +26,12 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         public static void Equipment(Character character)
         {
             Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
-            CLIHelper.Print2Choices("Greataxe", "Any martial melee weapon");
-            int input1 = CLIHelper.GetNumberInRange(1, 2);
-            CLIHelper.Print2Choices("Two handaxes", "Any simple weapon");
-            int input2 = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Greataxe", "Any martial melee weapon");
+            //int input1 = CLIHelper.GetChoiceFromPair("", "");
+            int input1 = CLIHelper.GetChoiceFromPair("Greataxe", "Any martial melee weapon");
+            //CLIHelper.Print2Choices("Two handaxes", "Any simple weapon");
+            //int input2 = CLIHelper.GetChoiceFromPair("", "");
+            int input2 = CLIHelper.GetChoiceFromPair("Two handaxes", "Any simple weapon");
 
             if (input1 == 1)
             {

@@ -26,8 +26,10 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         public static void Equipment(Character character)
         {
             Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
-            CLIHelper.Print2Choices("Any martial weapon", "Two simple weapons");
-            int input = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Any martial weapon", "Two simple weapons");
+            //int input = CLIHelper.GetChoiceFromPair("", "");
+            int input = CLIHelper.GetChoiceFromPair("Any martial weapon", "Two simple weapons");
+
             if (input == 1)
             {
                 character.Equipment.Add($"Martial Weapon");
@@ -36,8 +38,8 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             {
                 BEHelper.AddSimpleMeleeWeapon(character);
             }
-            CLIHelper.Print2Choices("Light crossbow", "Hand crossbow");
-            input = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Light crossbow", "Hand crossbow");
+            input = CLIHelper.GetChoiceFromPair("Light crossbow", "Hand crossbow");
             if (input == 1)
             {
                 character.Equipment.Add(Options.SimpleRangedWeapons[0]);
@@ -46,8 +48,8 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             {
                 character.Equipment.Add(Options.MartialRangedWeapons[1]);
             }
-            CLIHelper.Print2Choices("Studded leather armor", "Scale mail");
-            input = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Studded leather armor", "Scale mail");
+            input = CLIHelper.GetChoiceFromPair("Studded leather armor", "Scale mail");
             if (input == 1)
             {
                 character.Equipment.Add(Options.LightArmor[2]);

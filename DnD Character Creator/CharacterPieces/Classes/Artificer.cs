@@ -45,8 +45,9 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             BEHelper.AddSimpleMeleeWeapon(character);
             character.Equipment.Add(Options.SimpleRangedWeapons[0]);
             character.Equipment.Add("20 bolts");
-            CLIHelper.Print2Choices("Studded leather armor", "Scale mail");
-            int input = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Studded leather armor", "Scale mail");
+            //int input = CLIHelper.GetChoiceFromPair("", "");
+            int input = CLIHelper.GetChoiceFromPair("Studded leather armor", "Scale mail");
 
             if (input == 1)
             {

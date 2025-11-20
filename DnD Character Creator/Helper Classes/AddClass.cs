@@ -52,8 +52,8 @@ namespace DnD_Character_Creator.Helper_Classes
         {
             character.HP += character.HitDie + character.ConMod;
             Console.WriteLine("Would you like to roll for your HP or take the average?");
-            CLIHelper.Print2Choices("Take average", "Roll");
-            int input = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Take average", "Roll");
+            int input = CLIHelper.GetChoiceFromPair("Take average", "Roll");
             int con = character.ConMod;
             int hitDie = character.HitDie;
 

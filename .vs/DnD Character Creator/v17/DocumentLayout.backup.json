@@ -1,0 +1,156 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\prest\\Documents\\RPG\\D\u0026D 5th Edition\\Character Creator\\DnD-Character-Creator\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A1A6B03D-750C-4372-8E51-D49A05C987AC}|DnD Character Creator\\DnD Character Creator.csproj|c:\\users\\prest\\documents\\rpg\\d\u0026d 5th edition\\character creator\\dnd-character-creator\\dnd character creator\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1A6B03D-750C-4372-8E51-D49A05C987AC}|DnD Character Creator\\DnD Character Creator.csproj|solutionrelative:dnd character creator\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1A6B03D-750C-4372-8E51-D49A05C987AC}|DnD Character Creator\\DnD Character Creator.csproj|c:\\users\\prest\\documents\\rpg\\d\u0026d 5th edition\\character creator\\dnd-character-creator\\dnd character creator\\characterpieces\\spells\\allspells.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1A6B03D-750C-4372-8E51-D49A05C987AC}|DnD Character Creator\\DnD Character Creator.csproj|solutionrelative:dnd character creator\\characterpieces\\spells\\allspells.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1A6B03D-750C-4372-8E51-D49A05C987AC}|DnD Character Creator\\DnD Character Creator.csproj|c:\\users\\prest\\documents\\rpg\\d\u0026d 5th edition\\character creator\\dnd-character-creator\\dnd character creator\\characterpieces\\classes\\wizard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1A6B03D-750C-4372-8E51-D49A05C987AC}|DnD Character Creator\\DnD Character Creator.csproj|solutionrelative:dnd character creator\\characterpieces\\classes\\wizard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1A6B03D-750C-4372-8E51-D49A05C987AC}|DnD Character Creator\\DnD Character Creator.csproj|c:\\users\\prest\\documents\\rpg\\d\u0026d 5th edition\\character creator\\dnd-character-creator\\dnd character creator\\characterpieces\\classes\\artificer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1A6B03D-750C-4372-8E51-D49A05C987AC}|DnD Character Creator\\DnD Character Creator.csproj|solutionrelative:dnd character creator\\characterpieces\\classes\\artificer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1A6B03D-750C-4372-8E51-D49A05C987AC}|DnD Character Creator\\DnD Character Creator.csproj|c:\\users\\prest\\documents\\rpg\\d\u0026d 5th edition\\character creator\\dnd-character-creator\\dnd character creator\\cli classes\\clihelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1A6B03D-750C-4372-8E51-D49A05C987AC}|DnD Character Creator\\DnD Character Creator.csproj|solutionrelative:dnd character creator\\cli classes\\clihelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1A6B03D-750C-4372-8E51-D49A05C987AC}|DnD Character Creator\\DnD Character Creator.csproj|c:\\users\\prest\\documents\\rpg\\d\u0026d 5th edition\\character creator\\dnd-character-creator\\dnd character creator\\thingstodo.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A1A6B03D-750C-4372-8E51-D49A05C987AC}|DnD Character Creator\\DnD Character Creator.csproj|solutionrelative:dnd character creator\\thingstodo.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1A6B03D-750C-4372-8E51-D49A05C987AC}|DnD Character Creator\\DnD Character Creator.csproj|c:\\users\\prest\\documents\\rpg\\d\u0026d 5th edition\\character creator\\dnd-character-creator\\dnd character creator\\characterpieces\\backgrounds\\clancrafter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1A6B03D-750C-4372-8E51-D49A05C987AC}|DnD Character Creator\\DnD Character Creator.csproj|solutionrelative:dnd character creator\\characterpieces\\backgrounds\\clancrafter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1A6B03D-750C-4372-8E51-D49A05C987AC}|DnD Character Creator\\DnD Character Creator.csproj|c:\\users\\prest\\documents\\rpg\\d\u0026d 5th edition\\character creator\\dnd-character-creator\\dnd character creator\\characterpieces\\backgrounds\\archaeologist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1A6B03D-750C-4372-8E51-D49A05C987AC}|DnD Character Creator\\DnD Character Creator.csproj|solutionrelative:dnd character creator\\characterpieces\\backgrounds\\archaeologist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\prest\\Documents\\RPG\\D\u0026D 5th Edition\\Character Creator\\DnD-Character-Creator\\DnD Character Creator\\Program.cs",
+              "RelativeDocumentMoniker": "DnD Character Creator\\Program.cs",
+              "ToolTip": "C:\\Users\\prest\\Documents\\RPG\\D\u0026D 5th Edition\\Character Creator\\DnD-Character-Creator\\DnD Character Creator\\Program.cs",
+              "RelativeToolTip": "DnD Character Creator\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T07:26:27.823Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Wizard.cs",
+              "DocumentMoniker": "C:\\Users\\prest\\Documents\\RPG\\D\u0026D 5th Edition\\Character Creator\\DnD-Character-Creator\\DnD Character Creator\\CharacterPieces\\Classes\\Wizard.cs",
+              "RelativeDocumentMoniker": "DnD Character Creator\\CharacterPieces\\Classes\\Wizard.cs",
+              "ToolTip": "C:\\Users\\prest\\Documents\\RPG\\D\u0026D 5th Edition\\Character Creator\\DnD-Character-Creator\\DnD Character Creator\\CharacterPieces\\Classes\\Wizard.cs",
+              "RelativeToolTip": "DnD Character Creator\\CharacterPieces\\Classes\\Wizard.cs",
+              "ViewState": "AgIAAJABAAAAAAAAAAAUwKcBAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T07:24:33.464Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AllSpells.cs",
+              "DocumentMoniker": "C:\\Users\\prest\\Documents\\RPG\\D\u0026D 5th Edition\\Character Creator\\DnD-Character-Creator\\DnD Character Creator\\CharacterPieces\\Spells\\AllSpells.cs",
+              "RelativeDocumentMoniker": "DnD Character Creator\\CharacterPieces\\Spells\\AllSpells.cs",
+              "ToolTip": "C:\\Users\\prest\\Documents\\RPG\\D\u0026D 5th Edition\\Character Creator\\DnD-Character-Creator\\DnD Character Creator\\CharacterPieces\\Spells\\AllSpells.cs",
+              "RelativeToolTip": "DnD Character Creator\\CharacterPieces\\Spells\\AllSpells.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAADwvxgAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T07:23:40.62Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Artificer.cs",
+              "DocumentMoniker": "C:\\Users\\prest\\Documents\\RPG\\D\u0026D 5th Edition\\Character Creator\\DnD-Character-Creator\\DnD Character Creator\\CharacterPieces\\Classes\\Artificer.cs",
+              "RelativeDocumentMoniker": "DnD Character Creator\\CharacterPieces\\Classes\\Artificer.cs",
+              "ToolTip": "C:\\Users\\prest\\Documents\\RPG\\D\u0026D 5th Edition\\Character Creator\\DnD-Character-Creator\\DnD Character Creator\\CharacterPieces\\Classes\\Artificer.cs",
+              "RelativeToolTip": "DnD Character Creator\\CharacterPieces\\Classes\\Artificer.cs",
+              "ViewState": "AgIAACgBAAAAAAAAAAAnwEgBAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T07:19:54.47Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ThingsToDo.txt",
+              "DocumentMoniker": "C:\\Users\\prest\\Documents\\RPG\\D\u0026D 5th Edition\\Character Creator\\DnD-Character-Creator\\DnD Character Creator\\ThingsToDo.txt",
+              "RelativeDocumentMoniker": "DnD Character Creator\\ThingsToDo.txt",
+              "ToolTip": "C:\\Users\\prest\\Documents\\RPG\\D\u0026D 5th Edition\\Character Creator\\DnD-Character-Creator\\DnD Character Creator\\ThingsToDo.txt",
+              "RelativeToolTip": "DnD Character Creator\\ThingsToDo.txt",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2025-11-20T07:14:36.283Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CLIHelper.cs",
+              "DocumentMoniker": "C:\\Users\\prest\\Documents\\RPG\\D\u0026D 5th Edition\\Character Creator\\DnD-Character-Creator\\DnD Character Creator\\CLI Classes\\CLIHelper.cs",
+              "RelativeDocumentMoniker": "DnD Character Creator\\CLI Classes\\CLIHelper.cs",
+              "ToolTip": "C:\\Users\\prest\\Documents\\RPG\\D\u0026D 5th Edition\\Character Creator\\DnD-Character-Creator\\DnD Character Creator\\CLI Classes\\CLIHelper.cs",
+              "RelativeToolTip": "DnD Character Creator\\CLI Classes\\CLIHelper.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAnwC4AAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T22:35:43.501Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ClanCrafter.cs",
+              "DocumentMoniker": "C:\\Users\\prest\\Documents\\RPG\\D\u0026D 5th Edition\\Character Creator\\DnD-Character-Creator\\DnD Character Creator\\CharacterPieces\\Backgrounds\\ClanCrafter.cs",
+              "RelativeDocumentMoniker": "DnD Character Creator\\CharacterPieces\\Backgrounds\\ClanCrafter.cs",
+              "ToolTip": "C:\\Users\\prest\\Documents\\RPG\\D\u0026D 5th Edition\\Character Creator\\DnD-Character-Creator\\DnD Character Creator\\CharacterPieces\\Backgrounds\\ClanCrafter.cs",
+              "RelativeToolTip": "DnD Character Creator\\CharacterPieces\\Backgrounds\\ClanCrafter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T04:21:07.788Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Archaeologist.cs",
+              "DocumentMoniker": "C:\\Users\\prest\\Documents\\RPG\\D\u0026D 5th Edition\\Character Creator\\DnD-Character-Creator\\DnD Character Creator\\CharacterPieces\\Backgrounds\\Archaeologist.cs",
+              "RelativeDocumentMoniker": "DnD Character Creator\\CharacterPieces\\Backgrounds\\Archaeologist.cs",
+              "ToolTip": "C:\\Users\\prest\\Documents\\RPG\\D\u0026D 5th Edition\\Character Creator\\DnD-Character-Creator\\DnD Character Creator\\CharacterPieces\\Backgrounds\\Archaeologist.cs",
+              "RelativeToolTip": "DnD Character Creator\\CharacterPieces\\Backgrounds\\Archaeologist.cs",
+              "ViewState": "AgIAADsAAAAAAAAAAAAwwEUAAABTAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T22:50:06.475Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

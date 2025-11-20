@@ -29,14 +29,18 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         public static void Equipment(Character character)
         {
             Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
-            CLIHelper.Print2Choices("Fullplate", "Leather, longbow, and 20 arrows");
-            int input1 = CLIHelper.GetNumberInRange(1, 2);
-            CLIHelper.Print2Choices("Any martial weapon, and a shield", "Two martial weapons");
-            int input2 = CLIHelper.GetNumberInRange(1, 2);
-            CLIHelper.Print2Choices("Light crossbow and 20 bolts", "Two handaxes");
-            int input3 = CLIHelper.GetNumberInRange(1, 2);
-            CLIHelper.Print2Choices("Dungeoneer's Pack", "Explorer's Pack");
-            int input4 = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Fullplate", "Leather, longbow, and 20 arrows");
+            //int input1 = CLIHelper.GetChoiceFromPair("", "");
+            int input1 = CLIHelper.GetChoiceFromPair("Fullplate", "Leather, longbow, and 20 arrows");
+            //CLIHelper.Print2Choices("Any martial weapon, and a shield", "Two martial weapons");
+            //int input2 = CLIHelper.GetChoiceFromPair("", "");
+            int input2 = CLIHelper.GetChoiceFromPair("Any martial weapon, and a shield", "Two martial weapons");
+            //CLIHelper.Print2Choices("Light crossbow and 20 bolts", "Two handaxes");
+            //int input4 = CLIHelper.GetChoiceFromPair("", "");
+            int input3 = CLIHelper.GetChoiceFromPair("Light crossbow and 20 bolts", "Two handaxes");
+            //CLIHelper.Print2Choices("Dungeoneer's Pack", "Explorer's Pack");
+            //int input4 = CLIHelper.GetNumberInRange(1, 2);
+            int input4 = CLIHelper.GetChoiceFromPair("Light crossbow and 20 bolts", "Two handaxes");
 
             if (input1 == 1)
             {
@@ -338,8 +342,8 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         {
             int lvl = character.Lvl;
             string pickLang = "Pick a language";
-            CLIHelper.Print2Choices("Pick a skill", pickLang);
-            int choice = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Pick a skill", pickLang);
+            int choice = CLIHelper.GetChoiceFromPair("Pick a skill", pickLang);
             if (choice == 1)
             {
                 var skills = new List<string> { "Animal Handling", "History", "Insight", "Performance", "Persuasion" };
@@ -616,8 +620,8 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         {
             int lvl = character.Lvl;
             string pickLang = "Pick a language";
-            CLIHelper.Print2Choices("Pick a skill", pickLang);
-            int choice = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Pick a skill", pickLang);
+            int choice = CLIHelper.GetChoiceFromPair("Pick a skill", pickLang);
             if (choice == 1)
             {
                 var skills = new List<string> { "History", "Insight", "Performance", "Persuasion" };

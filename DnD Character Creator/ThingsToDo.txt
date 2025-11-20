@@ -1,12 +1,11 @@
 ﻿
+backgrounds (17/35)
+
+add spell descriptions (164/508)(44 \n)
+add extended races
+check all class features for 1/2 dmg and add space after new line
+add GH feats
+
 AC?
 stat in spells
 cantrips desc
-
-break backgrounds out into lists
-check all class features for 1/2 dmg and add space after new line
-cross-classing?
-add GH feats
-add spell descriptions (164/508)(44 \n)
-show spell def with prompts
-add extended races

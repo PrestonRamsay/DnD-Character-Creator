@@ -36,12 +36,12 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         public static void Equipment(Character character)
         {
             Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
-            CLIHelper.Print2Choices("Any martial weapon and a shield", "Two martial weapons");
-            int input1 = CLIHelper.GetNumberInRange(1, 2);
-            CLIHelper.Print2Choices("5 Javelins", "Any simple weapon");
-            int input2 = CLIHelper.GetNumberInRange(1, 2);
-            CLIHelper.Print2Choices("Priest's Pack", "Explorer's Pack");
-            int input3 = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Any martial weapon and a shield", "Two martial weapons");
+            int input1 = CLIHelper.GetChoiceFromPair("Any martial weapon and a shield", "Two martial weapons");
+            //CLIHelper.Print2Choices("5 Javelins", "Any simple weapon");
+            int input2 = CLIHelper.GetChoiceFromPair("5 Javelins", "Any simple weapon");
+            //CLIHelper.Print2Choices("Priest's Pack", "Explorer's Pack");
+            int input3 = CLIHelper.GetChoiceFromPair("Priest's Pack", "Explorer's Pack");
 
             if (input1 == 1)
             {

@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "Rtn+RHoSlIdr/T0OmwNOAARjMVhmZOWgnCSGuQcSG3F/D1BzdyOzqvZwKXCAJvZqHq0kVy93y0gdiI0mMWjJ9Q==",
+  "dgSpecHash": "JRUbo9/b6qs=",
   "success": true,
-  "projectFilePath": "C:\\Users\\15136\\Documents\\Projects\\DnD-Character-Creator\\DnD Character Creator\\DnD Character Creator.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\prest\\Documents\\RPG\\D&D 5th Edition\\Character Creator\\DnD-Character-Creator\\DnD Character Creator\\DnD Character Creator.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\prest\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.1.0\\microsoft.windowsdesktop.app.ref.3.1.0.nupkg.sha512",
+    "C:\\Users\\prest\\.nuget\\packages\\microsoft.netcore.app.ref\\3.1.0\\microsoft.netcore.app.ref.3.1.0.nupkg.sha512",
+    "C:\\Users\\prest\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.10\\microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512",
+    "C:\\Users\\prest\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.32\\microsoft.netcore.app.host.win-x64.3.1.32.nupkg.sha512"
+  ],
   "logs": []
 }

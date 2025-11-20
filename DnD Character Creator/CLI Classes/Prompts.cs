@@ -170,8 +170,8 @@ namespace DnD_Character_Creator
         {
             string returnString = "";
             Console.WriteLine("Would you like a Official Race or an Extended Race?\n        ");
-            CLIHelper.Print2Choices("Official Race(SRD)", "Extended Race(Homebrew)");
-            int choice = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Official Race(SRD)", "Extended Race(Homebrew)");
+            int choice = CLIHelper.GetChoiceFromPair("Official Race(SRD)", "Extended Race(Homebrew)");
             Console.Clear();
             if (choice == 1)
             {

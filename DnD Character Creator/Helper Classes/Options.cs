@@ -1,7 +1,9 @@
-﻿using System;
+﻿using DnD_Character_Creator.CharacterPieces.Backgrounds;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using static System.Collections.Specialized.BitVector32;
 
 namespace DnD_Character_Creator.Helper_Classes
 {
@@ -236,17 +238,42 @@ namespace DnD_Character_Creator.Helper_Classes
         public static List<string> Backgrounds { get; set; } = new List<string>
         {
             "Acolyte",
-            "Charltan",
+            "Anthropologist",
+            "Archaeologist",
+            "Athlete",
+            "Charlatan",
+            "City Watch",
+            "Clan Crafter",
+            "Cloistered Scholar",
+            "Courtier",
             "Criminal",
             "Entertainer",
+            "Faceless",
+            "Faction Agent",
+            "Far Traveler",
+            "Feylost",
+            "Fisher",
             "Folk Hero",
+            "Gladiator",
             "Guild Artisan",
+            "Haunted One",
             "Hermit",
+            "House Agent",
+            "Inheritor",
+            "Investigator",
+            "Knight of the Order",
+            "Marine",
+            "Mercenary Veteran",
             "Noble",
             "Outlander",
+            "Pirate",
             "Sage",
             "Sailor",
+            "Shipwright",
+            "Smuggler",
             "Soldier",
+            "Spy",
+            "Urban Bounty Hunter",
             "Urchin"
         };
         public static List<string> GHBackgrounds { get; set; } = new List<string>

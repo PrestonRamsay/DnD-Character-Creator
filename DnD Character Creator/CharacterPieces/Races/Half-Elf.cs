@@ -23,8 +23,8 @@ namespace DnD_Character_Creator.CharacterPieces.Races
 
             Console.WriteLine("You have a choice between gaining 2 skill proficiencies or 1 skill proficiency and the Dilettante trait");
             string dilettante = "Dilettante: pick a 1st lvl class feature from any class";
-            CLIHelper.Print2Choices("2 extra skill proficiencies", dilettante);
-            int input = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("2 extra skill proficiencies", dilettante);
+            int input = CLIHelper.GetChoiceFromPair("2 extra skill proficiencies", dilettante);
 
             if (input == 1)
             {

@@ -79,8 +79,8 @@ namespace DnD_Character_Creator
         public void RunAddStats(Character character)
         {
             Console.WriteLine("\nSelect an option based on your DM's preferences:");
-            CLIHelper.Print2Choices("Stats will max at 20", "Enter stat maximum");
-            int input = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Stats will max at 20", "Enter stat maximum");
+            int input = CLIHelper.GetChoiceFromPair("Stats will max at 20", "Enter stat maximum");
             if (input == 2)
             {
                 Console.WriteLine($"Enter the max for your character's stats now");
@@ -102,8 +102,8 @@ namespace DnD_Character_Creator
             {
                 racialStats = Stats.RacialStats(character.ChosenRace);
             }
-            CLIHelper.Print2Choices("Vanilla Racial Stats", "Tasha's Racial Stats");
-            input = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Vanilla Racial Stats", "Tasha's Racial Stats");
+            input = CLIHelper.GetChoiceFromPair("Vanilla Racial Stats", "Tasha's Racial Stats");
             if (input == 2)
             {
                 racialStats = Stats.TashaStats();
@@ -139,6 +139,21 @@ namespace DnD_Character_Creator
             }
             Console.WriteLine("\nYou've finished your character's stats!\n");
         }
+        public void RunAddBackground(Character character)
+        {
+            //var backgroundObject = new Background();
+            {
+                //BEHelper.AddGHBackground(character, backgroundObject);
+                character.ChosenBackground = Prompts.PickOption("background", Options.Backgrounds);
+                AddBackground.NewBackground(character);
+                //backgroundObject = Background.NewBackground(character);
+            }
+            //AddBackground.PersonalCharacteristics(character, backgroundObject);
+            //AddBackground.BackgroundSpecifics(character, backgroundObject);
+
+            Console.Clear();
+            Console.WriteLine("\nYou've finished adding your background!\n");
+        }
         public void RunAddTemplate(Character character)
         {
             if (character.Template == true)
@@ -173,34 +188,6 @@ namespace DnD_Character_Creator
 
             Console.Clear();
             Console.WriteLine("\nYou've finished adding your race!\n");
-        }
-        public void RunAddBackground(Character character)
-        {
-            var backgroundObject = new Background();
-
-            Console.WriteLine("Do you want Grim Hollow Advanced Backgrounds? Y/N");
-            var yesNo = new List<string> { "y", "n" };
-            string answer = CLIHelper.GetStringInList(yesNo);
-
-            if (answer == "y")
-            {
-                character.ChosenBackground = Prompts.PickOption("background", Options.GHBackgrounds);
-                Console.Clear();
-                Console.WriteLine($"You've picked {character.ChosenBackground}.\n");
-                var GHFillerObject = GHBackground.NewBackground(character);
-                backgroundObject = AddBackground.AddGHBackground(GHFillerObject);
-            }
-            else if (answer == "n")
-            {
-                character.ChosenBackground = Prompts.PickOption("background", Options.Backgrounds);
-                backgroundObject = Background.NewBackground(character);
-            }
-
-            AddBackground.PersonalCharacteristics(character, backgroundObject);
-            AddBackground.BackgroundSpecifics(character, backgroundObject);
-
-            Console.Clear();
-            Console.WriteLine("\nYou've finished adding your background!\n");
         }
         public void RunAddClass(Character character)
         {

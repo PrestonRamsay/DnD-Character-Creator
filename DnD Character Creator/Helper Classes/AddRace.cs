@@ -116,7 +116,7 @@ namespace DnD_Character_Creator.CLI_Classes
                     Tiefling.Base(character);
                     break;
                 case "Feral Tiefling":
-                    Tiefling.Feral(character);
+                    Tiefling.Base(character);
                     break;
                 case "Demigod":
                     Demigod.Base(character);

@@ -24,3 +24,17 @@ C:\Users\15136\Documents\Projects\DnD-Character-Creator\DnD Character Creator\ob
 C:\Users\15136\Documents\Projects\DnD-Character-Creator\DnD Character Creator\obj\Debug\netcoreapp3.1\DnD Character Creator.dll
 C:\Users\15136\Documents\Projects\DnD-Character-Creator\DnD Character Creator\obj\Debug\netcoreapp3.1\DnD Character Creator.pdb
 C:\Users\15136\Documents\Projects\DnD-Character-Creator\DnD Character Creator\obj\Debug\netcoreapp3.1\DnD Character Creator.genruntimeconfig.cache
+C:\Users\prest\Documents\RPG\D&D 5th Edition\Character Creator\DnD-Character-Creator\DnD Character Creator\bin\Debug\netcoreapp3.1\DnD Character Creator.exe
+C:\Users\prest\Documents\RPG\D&D 5th Edition\Character Creator\DnD-Character-Creator\DnD Character Creator\bin\Debug\netcoreapp3.1\DnD Character Creator.deps.json
+C:\Users\prest\Documents\RPG\D&D 5th Edition\Character Creator\DnD-Character-Creator\DnD Character Creator\bin\Debug\netcoreapp3.1\DnD Character Creator.runtimeconfig.json
+C:\Users\prest\Documents\RPG\D&D 5th Edition\Character Creator\DnD-Character-Creator\DnD Character Creator\bin\Debug\netcoreapp3.1\DnD Character Creator.runtimeconfig.dev.json
+C:\Users\prest\Documents\RPG\D&D 5th Edition\Character Creator\DnD-Character-Creator\DnD Character Creator\bin\Debug\netcoreapp3.1\DnD Character Creator.dll
+C:\Users\prest\Documents\RPG\D&D 5th Edition\Character Creator\DnD-Character-Creator\DnD Character Creator\bin\Debug\netcoreapp3.1\DnD Character Creator.pdb
+C:\Users\prest\Documents\RPG\D&D 5th Edition\Character Creator\DnD-Character-Creator\DnD Character Creator\obj\Debug\netcoreapp3.1\DnD Character Creator.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\prest\Documents\RPG\D&D 5th Edition\Character Creator\DnD-Character-Creator\DnD Character Creator\obj\Debug\netcoreapp3.1\DnD Character Creator.AssemblyInfoInputs.cache
+C:\Users\prest\Documents\RPG\D&D 5th Edition\Character Creator\DnD-Character-Creator\DnD Character Creator\obj\Debug\netcoreapp3.1\DnD Character Creator.AssemblyInfo.cs
+C:\Users\prest\Documents\RPG\D&D 5th Edition\Character Creator\DnD-Character-Creator\DnD Character Creator\obj\Debug\netcoreapp3.1\DnD Character Creator.csproj.CoreCompileInputs.cache
+C:\Users\prest\Documents\RPG\D&D 5th Edition\Character Creator\DnD-Character-Creator\DnD Character Creator\obj\Debug\netcoreapp3.1\DnD Character Creator.sourcelink.json
+C:\Users\prest\Documents\RPG\D&D 5th Edition\Character Creator\DnD-Character-Creator\DnD Character Creator\obj\Debug\netcoreapp3.1\DnD Character Creator.dll
+C:\Users\prest\Documents\RPG\D&D 5th Edition\Character Creator\DnD-Character-Creator\DnD Character Creator\obj\Debug\netcoreapp3.1\DnD Character Creator.pdb
+C:\Users\prest\Documents\RPG\D&D 5th Edition\Character Creator\DnD-Character-Creator\DnD Character Creator\obj\Debug\netcoreapp3.1\DnD Character Creator.genruntimeconfig.cache

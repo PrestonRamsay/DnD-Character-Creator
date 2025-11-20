@@ -40,8 +40,8 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         {
             var swords = new List<string> { "Claymore", "Greatsword", "Longsword", "Rapier", "Sabre", "Scimitar", "Shortsword" };
             Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
-            CLIHelper.Print2Choices("Scalemail", "Leather");
-            int input1 = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Scalemail", "Leather");
+            int input1 = CLIHelper.GetChoiceFromPair("Scalemail", "Leather");
             string sword = CLIHelper.PrintChoices(swords);
             var allMelee = new List<string>();
             allMelee.AddRange(Options.MartialMeleeWeapons);
@@ -54,8 +54,8 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
                 }
             }
             BEHelper.AddSimpleWeapon(character);
-            CLIHelper.Print2Choices("Dungeoneer's Pack", "Explorer's Pack");
-            int input2 = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Dungeoneer's Pack", "Explorer's Pack");
+            int input2 = CLIHelper.GetChoiceFromPair("Dungeoneer's Pack", "Explorer's Pack");
 
             if (input1 == 1)
             {

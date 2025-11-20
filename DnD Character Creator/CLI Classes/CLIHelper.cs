@@ -131,14 +131,23 @@ namespace DnD_Character_Creator
 
             return returnString;
         }
-        public static void Print2Choices(string str1, string str2)
+        public static int GetChoiceFromPair(string str1, string str2)
         {
             var list = new List<string> { str1, str2 };
             for (int i = 0; i < list.Count; i++)
             {
                 Console.WriteLine($"({i + 1}) {list[i]}");
             }
+            return GetNumberInRange(1, 2);
         }
+        //public static void Print2Choices(string str1, string str2)
+        //{
+        //    var list = new List<string> { str1, str2 };
+        //    for (int i = 0; i < list.Count; i++)
+        //    {
+        //        Console.WriteLine($"({i + 1}) {list[i]}");
+        //    }
+        //}
         public static void Print3Choices(string str1, string str2, string str3)
         {
             var list = new List<string> { str1, str2, str3 };
@@ -294,44 +303,49 @@ namespace DnD_Character_Creator
         {
             string backgroundString = character.ChosenBackground;
             string returnString = String.Empty;
+            string routines = "";
 
-            if (backgroundString == "Charltan")
-            {
-                returnString = $"Favorite Scam: {character.FavoriteScam}";
-            }
-            else if (backgroundString == "Criminal")
+            if(backgroundString.Contains("Criminal") || backgroundString == "Sage" || backgroundString == "Soldier")
             {
                 returnString = $"Specialty: {character.Specialty}";
             }
-            else if (backgroundString == "Entertainer")
+
+            switch (backgroundString)
             {
-                string routines = String.Join(", ", character.Routines);
-                returnString = $"Routines: {routines}";
+                case "Archaeologist":
+                    returnString = $"Signature Object: {character.BackgroundCharacteristic}";
+                    break;
+                case "Athlete":
+                    returnString = $"Favored Event: {character.BackgroundCharacteristic}";
+                    break;
+                case "Charltan":
+                    returnString = $"Favorite Scam: {character.FavoriteScam}";
+                    break;
+                case "Entertainer":
+                    routines = String.Join(", ", character.Routines);
+                    returnString = $"Routines: {routines}";
+                    break;
+                case "Entertainer(Gladiator)":
+                    routines = String.Join(", ", character.Routines);
+                    returnString = $"Routines: {routines}";
+                    break;
+                case "Folk Hero":
+                    returnString = $"Defining Event: {character.DefiningEvent}";
+                    break;
+                case "Guild Artisan":
+                    returnString = $"Guild Business: {character.GuildBusiness}";
+                    break;
+                case "Guild Merchant":
+                    returnString = $"Guild Business: {character.GuildBusiness}";
+                    break;
+                case "Hermit":
+                    returnString = $"Life of Seclusion: {character.LifeOfSeclusion}";
+                    break;
+                case "Outlander":
+                    returnString = $"Origin: {character.Origin}";
+                    break;
             }
-            else if (backgroundString == "Folk Hero")
-            {
-                returnString = $"Defining Event: {character.DefiningEvent}";
-            }
-            else if (backgroundString == "Guild Artisan")
-            {
-                returnString = $"Guild Business: {character.GuildBusiness}";
-            }
-            else if (backgroundString == "Hermit")
-            {
-                returnString = $"Life of Seclusion: {character.LifeOfSeclusion}";
-            }
-            else if (backgroundString == "Outlander")
-            {
-                returnString = $"Origin: {character.Origin}";
-            }
-            else if (backgroundString == "Sage")
-            {
-                returnString = $"Specialty: {character.Specialty}";
-            }
-            else if (backgroundString == "Soldier")
-            {
-                returnString = $"Specialty: {character.Specialty}";
-            }
+
             if (character.ChosenClass == "Paladin" || character.ChosenClassII == "Paladin")
             {
                 string tenets = String.Join(", ", character.Tenets);

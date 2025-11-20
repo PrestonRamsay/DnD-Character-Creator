@@ -30,10 +30,10 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         public static void Equipment(Character character)
         {
             Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
-            CLIHelper.Print2Choices("Rapier", "Shortsword");
-            int input1 = CLIHelper.GetNumberInRange(1, 2);
-            CLIHelper.Print2Choices("Shortbow and a quiver of 20 arrows", "Shortsword");
-            int input2 = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Rapier", "Shortsword");
+            int input1 = CLIHelper.GetChoiceFromPair("Rapier", "Shortsword");
+            //CLIHelper.Print2Choices("Shortbow and a quiver of 20 arrows", "Shortsword");
+            int input2 = CLIHelper.GetChoiceFromPair("Shortbow and a quiver of 20 arrows", "Shortsword");
             CLIHelper.Print3Choices("Burglar's Pack", "Dungeoneer's Pack", "Explorer's Pack");
             int input3 = CLIHelper.GetNumberInRange(1, 3);
 
@@ -96,8 +96,8 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             if (RoguishArchetype != "Ninja")
             {
                 Console.WriteLine("Would you like to gain Expertise in 2 skills or 1 skill and 1 tool prof?");
-                CLIHelper.Print2Choices("2 skills", "1 skill and 1 tool prof");
-                num = CLIHelper.GetNumberInRange(1, 2);
+                //CLIHelper.Print2Choices("2 skills", "1 skill and 1 tool prof");
+                num = CLIHelper.GetChoiceFromPair("2 skills", "1 skill and 1 tool prof");
                 prof.AddRange(character.SkillProficiencies);
                 if (num == 1)
                 {
@@ -122,8 +122,8 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             {
                 BEHelper.AddSkillExpertise("Acrobatics", character);
                 Console.WriteLine("Would you like to gain Expertise in a skill or a tool proficiency?");
-                CLIHelper.Print2Choices("Skill", "Tool Proficiency");
-                num = CLIHelper.GetNumberInRange(1, 2);
+                //CLIHelper.Print2Choices("Skill", "Tool Proficiency");
+                num = CLIHelper.GetChoiceFromPair("Skill", "Tool Proficiency");
                 if (num == 1)
                 {
                     prof.AddRange(character.SkillProficiencies);
@@ -196,8 +196,8 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
             {
                 character.ClassFeatures.Add("Expertise II", "pick 2 skills, or 1 skill and 1 tool prof, double PB");
                 Console.WriteLine("Would you like to gain Expertise in 2 skills or 1 skill and 1 tool prof?");
-                CLIHelper.Print2Choices("2 skills", "1 skill and 1 tool prof");
-                num = CLIHelper.GetNumberInRange(1, 2);
+                //CLIHelper.Print2Choices("2 skills", "1 skill and 1 tool prof");
+                num = CLIHelper.GetChoiceFromPair("2 skills", "1 skill and 1 tool prof");
                 prof = new List<string>();
                 prof.AddRange(character.SkillProficiencies);
                 if (num == 1)

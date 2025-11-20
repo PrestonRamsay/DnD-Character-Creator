@@ -163,6 +163,7 @@ namespace DnD_Character_Creator
         public string GuildBusiness { get; set; }
         public string LifeOfSeclusion { get; set; }
         public string Origin { get; set; }
+        public string BackgroundCharacteristic { get; set; }
         public string Progression { get; set; }
         public Dictionary<string, string> Talents { get; set; } = new Dictionary<string, string>();
         public int ProfessionDie { get; set; }

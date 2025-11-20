@@ -35,8 +35,8 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
         public static void Equipment(Character character)
         {
             Console.WriteLine("You have the choice for some of your equipment. Pick a number.");
-            CLIHelper.Print2Choices("Light crossbow and 20 bolts", "Any simple weapon");
-            int input1 = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Light crossbow and 20 bolts", "Any simple weapon");
+            int input1 = CLIHelper.GetChoiceFromPair("Light crossbow and 20 bolts", "Any simple weapon");
 
             if (input1 == 1)
             {
@@ -48,8 +48,8 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
                 BEHelper.AddSimpleWeapon(character);
             }
 
-            CLIHelper.Print2Choices("Component pouch", "Arcane focus");
-            int input2 = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Component pouch", "Arcane focus");
+            int input2 = CLIHelper.GetChoiceFromPair("Component pouch", "Arcane focus");
             if (input2 == 1)
             {
                 character.Equipment.Add("Component pouch");
@@ -61,8 +61,8 @@ namespace DnD_Character_Creator.CharacterPieces.Classes
                 character.Equipment.Add(Options.ArcaneFocuses[index]);
             }
 
-            CLIHelper.Print2Choices("Scholar's Pack", "Dungeoneer's Pack");
-            int input3 = CLIHelper.GetNumberInRange(1, 2);
+            //CLIHelper.Print2Choices("Scholar's Pack", "Dungeoneer's Pack");
+            int input3 = CLIHelper.GetChoiceFromPair("Scholar's Pack", "Dungeoneer's Pack");
             if (input3 == 1)
             {
                 character.Equipment.Add(Options.Packs[6]);

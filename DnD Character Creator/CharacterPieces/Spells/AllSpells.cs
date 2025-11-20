@@ -825,7 +825,7 @@ namespace DnD_Character_Creator.CharacterPieces.Spells
             { "Guardian of Nature", "bonus, conc 1 min, transform into Primal Beast(speed +10ft, gain Darkvision 120ft, gain adv on Str-based atks, melee dmg + 1D6)" +
                 "\n     or Great Tree(gain 10 temp HP, gain adv on Con saves, gain adv on Dex/Wis-based atks / 15ft radius, difficult terrain)" },
             { "Guards and Wards", "" },
-            { "Guidance", "" },
+            { "Guidance", "conc 1 min, +1d4 to a check" },
             { "Guiding Bolt", "120ft, ranged spell atk, 4D6 Radiant and gain adv on next atk vs target" },
             { "Gust", "30ft, choose 1 of 3 effects: (1)Str save, push 5ft (2)not worn/carried 5lb object, push 10ft (3)harmless sensory effect using air" },
             { "Gust of Wind", "" },
